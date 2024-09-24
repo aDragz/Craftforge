@@ -131,6 +131,12 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Applications
             //Load themes
 
             loadThemesList();
+
+            //Grab current theme
+            string currentTheme = Properties.Settings.Default.Theme;
+
+            //Set the current theme textbox
+            themeList.Text = currentTheme;
         }
 
         private void loadThemesList()
