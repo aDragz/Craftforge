@@ -1,0 +1,24 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Minecraft_Multiplayer_Host.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="Vanilla" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="Spigot" Type="System.String" Scope="User">
+      <Value Profile="(Default)">java -jar BuildTools.jar --rev {version}</Value>
+    </Setting>
+    <Setting Name="SpigotBuildTools" Type="System.String" Scope="User">
+      <Value Profile="(Default)">https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar</Value>
+    </Setting>
+    <Setting Name="Paper" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="Theme" Type="System.String" Scope="User">
+      <Value Profile="(Default)">default</Value>
+    </Setting>
+    <Setting Name="Style" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Classic</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
