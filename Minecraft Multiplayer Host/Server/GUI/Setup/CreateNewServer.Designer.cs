@@ -93,7 +93,7 @@
             this.motdTextBox.Name = "motdTextBox";
             this.motdTextBox.Size = new System.Drawing.Size(1046, 39);
             this.motdTextBox.TabIndex = 16;
-            this.motdTextBox.Text = "ur mum";
+            this.motdTextBox.Text = "motd";
             this.motdTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // IpTextBox

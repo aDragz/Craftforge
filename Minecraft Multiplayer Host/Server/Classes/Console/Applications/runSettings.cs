@@ -19,7 +19,6 @@ namespace Minecraft_Multiplayer_Host.Server.Classes.Console.Applications
                     if (form.WindowState == FormWindowState.Minimized)
                         form.WindowState = FormWindowState.Normal;
                     
-
                     form.Focus();
                     return;
                 }

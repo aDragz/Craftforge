@@ -59,25 +59,5 @@ namespace Minecraft_Multiplayer_Host.Properties {
                 resourceCulture = value;
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap _2024_08_30_00_33_59 {
-            get {
-                object obj = ResourceManager.GetObject("2024-08-30_00.33.59", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap _2024_08_30_00_39_36 {
-            get {
-                object obj = ResourceManager.GetObject("2024-08-30_00.39.36", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
     }
 }
