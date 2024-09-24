@@ -31,8 +31,7 @@ namespace Minecraft_Multiplayer_Host.Server.Themes.Classes.Applications
                             //Set background colour
                             control.BackColor = ColorTranslator.FromHtml(theme.Terminal_Background_Colour);
                         }
-
-                        if (control is Button)
+                        else if (control is Button)
                         {
 
                             control.ForeColor = ColorTranslator.FromHtml(theme.Terminal_Button_Colour_Fore);

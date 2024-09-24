@@ -32,8 +32,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.serverStatusNetwork = new System.Windows.Forms.Timer(this.components);
             this.serverTabs = new System.Windows.Forms.TabControl();
             this.generalPage = new System.Windows.Forms.TabPage();
@@ -85,12 +83,11 @@
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileLocationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openLogsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.serverTabsPanel = new System.Windows.Forms.Panel();
             this.removeTab = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.removeTabClick = new System.Windows.Forms.ToolStripMenuItem();
-            this.statusStrip1.SuspendLayout();
+            this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.serverTabs.SuspendLayout();
             this.generalPage.SuspendLayout();
             this.serverStatusPanel.SuspendLayout();
@@ -101,23 +98,8 @@
             this.settingsPage.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.removeTab.SuspendLayout();
+            this.statusStrip.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // statusStrip1
-            // 
-            this.statusStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.statusLabel});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 1002);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1898, 22);
-            this.statusStrip1.TabIndex = 7;
-            this.statusStrip1.Text = "statusStrip1";
-            // 
-            // statusLabel
-            // 
-            this.statusLabel.Name = "statusLabel";
-            this.statusLabel.Size = new System.Drawing.Size(0, 15);
             // 
             // serverStatusNetwork
             // 
@@ -585,38 +567,38 @@
             // startupToolStripMenuItem
             // 
             this.startupToolStripMenuItem.Name = "startupToolStripMenuItem";
-            this.startupToolStripMenuItem.Size = new System.Drawing.Size(222, 34);
+            this.startupToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
             this.startupToolStripMenuItem.Text = "Startup";
             this.startupToolStripMenuItem.Click += new System.EventHandler(this.startupToolStripMenuItem_Click);
             // 
             // dToolStripMenuItem
             // 
             this.dToolStripMenuItem.Name = "dToolStripMenuItem";
-            this.dToolStripMenuItem.Size = new System.Drawing.Size(222, 34);
+            this.dToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
             this.dToolStripMenuItem.Text = "Hide Window";
             this.dToolStripMenuItem.Click += new System.EventHandler(this.dToolStripMenuItem_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(219, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(267, 6);
             // 
             // settingsToolStripMenuItem1
             // 
             this.settingsToolStripMenuItem1.Name = "settingsToolStripMenuItem1";
-            this.settingsToolStripMenuItem1.Size = new System.Drawing.Size(222, 34);
+            this.settingsToolStripMenuItem1.Size = new System.Drawing.Size(270, 34);
             this.settingsToolStripMenuItem1.Text = "Settings";
             this.settingsToolStripMenuItem1.Click += new System.EventHandler(this.settingsToolStripMenuItem1_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(219, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(267, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(222, 34);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -624,9 +606,7 @@
             // 
             this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openFileLocationToolStripMenuItem,
-            this.openLogsToolStripMenuItem,
-            this.toolStripSeparator2,
-            this.settingsToolStripMenuItem});
+            this.openLogsToolStripMenuItem});
             this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
             this.viewToolStripMenuItem.Size = new System.Drawing.Size(65, 29);
             this.viewToolStripMenuItem.Text = "View";
@@ -634,27 +614,16 @@
             // openFileLocationToolStripMenuItem
             // 
             this.openFileLocationToolStripMenuItem.Name = "openFileLocationToolStripMenuItem";
-            this.openFileLocationToolStripMenuItem.Size = new System.Drawing.Size(261, 34);
+            this.openFileLocationToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
             this.openFileLocationToolStripMenuItem.Text = "Open File Location";
             this.openFileLocationToolStripMenuItem.Click += new System.EventHandler(this.openFileLocationToolStripMenuItem_Click);
             // 
             // openLogsToolStripMenuItem
             // 
             this.openLogsToolStripMenuItem.Name = "openLogsToolStripMenuItem";
-            this.openLogsToolStripMenuItem.Size = new System.Drawing.Size(261, 34);
+            this.openLogsToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
             this.openLogsToolStripMenuItem.Text = "Open logs";
             this.openLogsToolStripMenuItem.Click += new System.EventHandler(this.openLogsToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(258, 6);
-            // 
-            // settingsToolStripMenuItem
-            // 
-            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(261, 34);
-            this.settingsToolStripMenuItem.Text = "Settings";
             // 
             // serverTabsPanel
             // 
@@ -663,7 +632,7 @@
             this.serverTabsPanel.AutoScroll = true;
             this.serverTabsPanel.Location = new System.Drawing.Point(0, 33);
             this.serverTabsPanel.Name = "serverTabsPanel";
-            this.serverTabsPanel.Size = new System.Drawing.Size(150, 969);
+            this.serverTabsPanel.Size = new System.Drawing.Size(150, 960);
             this.serverTabsPanel.TabIndex = 15;
             // 
             // removeTab
@@ -680,6 +649,23 @@
             this.removeTabClick.Size = new System.Drawing.Size(180, 32);
             this.removeTabClick.Text = "Remove Tab";
             // 
+            // statusLabel
+            // 
+            this.statusLabel.Name = "statusLabel";
+            this.statusLabel.Size = new System.Drawing.Size(0, 21);
+            // 
+            // statusStrip
+            // 
+            this.statusStrip.ImageScalingSize = new System.Drawing.Size(24, 24);
+            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.statusLabel});
+            this.statusStrip.Location = new System.Drawing.Point(0, 1002);
+            this.statusStrip.Name = "statusStrip";
+            this.statusStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
+            this.statusStrip.Size = new System.Drawing.Size(1898, 22);
+            this.statusStrip.TabIndex = 7;
+            this.statusStrip.Text = "statusBar";
+            // 
             // Terminal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -688,15 +674,13 @@
             this.Controls.Add(this.serverTabsPanel);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.serverTabs);
-            this.Controls.Add(this.statusStrip1);
+            this.Controls.Add(this.statusStrip);
             this.MinimumSize = new System.Drawing.Size(1280, 720);
             this.Name = "Terminal";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Terminal";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.terminal_Close);
             this.Load += new System.EventHandler(this.Terminal_Load);
-            this.statusStrip1.ResumeLayout(false);
-            this.statusStrip1.PerformLayout();
             this.serverTabs.ResumeLayout(false);
             this.generalPage.ResumeLayout(false);
             this.serverStatusPanel.ResumeLayout(false);
@@ -711,6 +695,8 @@
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.removeTab.ResumeLayout(false);
+            this.statusStrip.ResumeLayout(false);
+            this.statusStrip.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -719,8 +705,6 @@
         #endregion
         private System.Windows.Forms.Timer serverStatusNetwork;
         private System.Windows.Forms.TabPage generalPage;
-        public System.Windows.Forms.ToolStripStatusLabel statusLabel;
-        public System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.Button startBtn;
         private System.Windows.Forms.TabPage filesPage;
         private System.Windows.Forms.Button stopBtn;
@@ -770,11 +754,11 @@
         private System.Windows.Forms.TabPage logPage;
         public System.Windows.Forms.RichTextBox logsOutput;
         private System.Windows.Forms.ToolStripMenuItem dToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.FlowLayoutPanel folderList;
-        private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem1;
+        public System.Windows.Forms.ToolStripStatusLabel statusLabel;
+        public System.Windows.Forms.StatusStrip statusStrip;
     }
 }
 

@@ -38,6 +38,8 @@ namespace Minecraft_Multiplayer_Host.Server.Themes.Classes.Applications
                 }
             }
 
+            terminal.statusStrip.BackColor = ColorTranslator.FromHtml(theme.Terminal_StatusBar_Colour);
+
             serverTabsPanel.BackColor = ColorTranslator.FromHtml(theme.Terminal_SideBar_Colour); // Fixed: Added 'terminal.' to access serverTabsPanel
         }
     }

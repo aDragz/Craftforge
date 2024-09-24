@@ -22,6 +22,8 @@ namespace Minecraft_Multiplayer_Host.Server.Themes.Themes
         public string Terminal_Background_Colour { get; set; }
         public string Terminal_SideBar_Colour { get; set; }
 
+        public string Terminal_StatusBar_Colour { get; set; }
+
         private static readonly string location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\Minecraft-Multiplayer-Host\\Themes");
 
         public void writeFile()
@@ -58,6 +60,8 @@ namespace Minecraft_Multiplayer_Host.Server.Themes.Themes
 
             theme.Terminal_Background_Colour = "255, 255, 255, 255";
             theme.Terminal_SideBar_Colour = "255, 255, 255, 255";
+
+            theme.Terminal_StatusBar_Colour = "255, 255, 255, 255";
 
             theme.writeFile();
         }
@@ -120,6 +124,12 @@ namespace Minecraft_Multiplayer_Host.Server.Themes.Themes
                 if (settings.Terminal_Terminal_Colour_Fore == null)
                 {
                     settings.Terminal_Terminal_Colour_Fore = defaultSettings.Terminal_Terminal_Colour_Fore;
+                }
+
+                //Status Bar
+                if (settings.Terminal_StatusBar_Colour == null)
+                {
+                    settings.Terminal_StatusBar_Colour = defaultSettings.Terminal_StatusBar_Colour;
                 }
 
                 return settings;
