@@ -28,37 +28,32 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Theme");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Test");
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Buttons", new System.Windows.Forms.TreeNode[] {
-            treeNode2});
-            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Colour");
-            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Appearance", new System.Windows.Forms.TreeNode[] {
-            treeNode1,
-            treeNode3,
-            treeNode4});
-            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Default Tab");
-            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("Startup", new System.Windows.Forms.TreeNode[] {
-            treeNode6});
+            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Theme");
+            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Test");
+            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Buttons", new System.Windows.Forms.TreeNode[] {
+            treeNode9});
+            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("Colour");
+            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("Appearance", new System.Windows.Forms.TreeNode[] {
+            treeNode8,
+            treeNode10,
+            treeNode11});
+            System.Windows.Forms.TreeNode treeNode13 = new System.Windows.Forms.TreeNode("Default Tab");
+            System.Windows.Forms.TreeNode treeNode14 = new System.Windows.Forms.TreeNode("Startup", new System.Windows.Forms.TreeNode[] {
+            treeNode13});
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.saveBtn = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.Appearance = new System.Windows.Forms.TabPage();
             this.themeList = new System.Windows.Forms.ComboBox();
-            this.Spigot = new System.Windows.Forms.TextBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.Test = new System.Windows.Forms.Label();
             this.Theme = new System.Windows.Forms.Label();
             this.Startup = new System.Windows.Forms.TabPage();
-            this.SpigotBuildTools = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.Appearance.SuspendLayout();
-            this.Startup.SuspendLayout();
             this.SuspendLayout();
             // 
             // treeView1
@@ -66,23 +61,23 @@
             this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeView1.Location = new System.Drawing.Point(0, 0);
             this.treeView1.Name = "treeView1";
-            treeNode1.Name = "themeList";
-            treeNode1.Text = "Theme";
-            treeNode2.Name = "Test";
-            treeNode2.Text = "Test";
-            treeNode3.Name = "AppearanceButtons";
-            treeNode3.Text = "Buttons";
-            treeNode4.Name = "AppearanceColour";
-            treeNode4.Text = "Colour";
-            treeNode5.Name = "Appearance";
-            treeNode5.Text = "Appearance";
-            treeNode6.Name = "StartupDefaultTab";
-            treeNode6.Text = "Default Tab";
-            treeNode7.Name = "Startup";
-            treeNode7.Text = "Startup";
+            treeNode8.Name = "themeList";
+            treeNode8.Text = "Theme";
+            treeNode9.Name = "Test";
+            treeNode9.Text = "Test";
+            treeNode10.Name = "AppearanceButtons";
+            treeNode10.Text = "Buttons";
+            treeNode11.Name = "AppearanceColour";
+            treeNode11.Text = "Colour";
+            treeNode12.Name = "Appearance";
+            treeNode12.Text = "Appearance";
+            treeNode13.Name = "StartupDefaultTab";
+            treeNode13.Text = "Default Tab";
+            treeNode14.Name = "Startup";
+            treeNode14.Text = "Startup";
             this.treeView1.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode5,
-            treeNode7});
+            treeNode12,
+            treeNode14});
             this.treeView1.Size = new System.Drawing.Size(419, 664);
             this.treeView1.TabIndex = 0;
             this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
@@ -130,9 +125,6 @@
             // 
             this.Appearance.AutoScroll = true;
             this.Appearance.Controls.Add(this.themeList);
-            this.Appearance.Controls.Add(this.Spigot);
-            this.Appearance.Controls.Add(this.textBox1);
-            this.Appearance.Controls.Add(this.Test);
             this.Appearance.Controls.Add(this.Theme);
             this.Appearance.Location = new System.Drawing.Point(4, 29);
             this.Appearance.Name = "Appearance";
@@ -151,29 +143,6 @@
             this.themeList.TabIndex = 6;
             this.themeList.SelectedIndexChanged += new System.EventHandler(this.themeList_SelectedIndexChanged);
             // 
-            // Spigot
-            // 
-            this.Spigot.Location = new System.Drawing.Point(214, 402);
-            this.Spigot.Name = "Spigot";
-            this.Spigot.Size = new System.Drawing.Size(405, 26);
-            this.Spigot.TabIndex = 5;
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(185, 253);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 26);
-            this.textBox1.TabIndex = 3;
-            // 
-            // Test
-            // 
-            this.Test.AutoSize = true;
-            this.Test.Location = new System.Drawing.Point(431, 5780);
-            this.Test.Name = "Test";
-            this.Test.Size = new System.Drawing.Size(51, 20);
-            this.Test.TabIndex = 2;
-            this.Test.Text = "label1";
-            // 
             // Theme
             // 
             this.Theme.AutoSize = true;
@@ -185,7 +154,6 @@
             // 
             // Startup
             // 
-            this.Startup.Controls.Add(this.SpigotBuildTools);
             this.Startup.Location = new System.Drawing.Point(4, 29);
             this.Startup.Name = "Startup";
             this.Startup.Padding = new System.Windows.Forms.Padding(3);
@@ -193,13 +161,6 @@
             this.Startup.TabIndex = 1;
             this.Startup.Text = "Startup";
             this.Startup.UseVisualStyleBackColor = true;
-            // 
-            // SpigotBuildTools
-            // 
-            this.SpigotBuildTools.Location = new System.Drawing.Point(161, 302);
-            this.SpigotBuildTools.Name = "SpigotBuildTools";
-            this.SpigotBuildTools.Size = new System.Drawing.Size(505, 26);
-            this.SpigotBuildTools.TabIndex = 5;
             // 
             // settings
             // 
@@ -218,8 +179,6 @@
             this.tabControl1.ResumeLayout(false);
             this.Appearance.ResumeLayout(false);
             this.Appearance.PerformLayout();
-            this.Startup.ResumeLayout(false);
-            this.Startup.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -232,10 +191,6 @@
         private System.Windows.Forms.TabPage Appearance;
         private System.Windows.Forms.TabPage Startup;
         private System.Windows.Forms.Label Theme;
-        private System.Windows.Forms.Label Test;
-        private System.Windows.Forms.TextBox Spigot;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox SpigotBuildTools;
         private System.Windows.Forms.Button saveBtn;
         private System.Windows.Forms.ComboBox themeList;
     }
