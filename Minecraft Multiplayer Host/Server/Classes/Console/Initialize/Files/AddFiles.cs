@@ -90,6 +90,8 @@ namespace Minecraft_Multiplayer_Host.Server.Classes.Console.Initialize.Files
                 return;
             }
 
+            panel.ContextMenu = CreateContextMenu(panel, directory, serverName);
+
             // Add folders
             foreach (String folder in folders)
             {
@@ -139,11 +141,12 @@ namespace Minecraft_Multiplayer_Host.Server.Classes.Console.Initialize.Files
                 newPictureBox.DoubleClick += (sender, e) => clickEvent(folder, directory, serverName, panel);
                 newLabel.DoubleClick += (sender, e) => clickEvent(folder, directory, serverName, panel);
 
-                newPictureBox.ContextMenu = CreateCustomContextMenu(panel, directory, serverName, newPictureBox);
-                newLabel.ContextMenu = CreateCustomContextMenu(panel, directory, serverName, newLabel);
-                newPanel.ContextMenu = CreateCustomContextMenu(panel, directory, serverName, newPanel);
-
-                panel.ContextMenu = CreateContextMenu(panel, directory, serverName);
+                if (Path.GetFileName(folder) != "...")
+                {
+                    newPictureBox.ContextMenu = CreateCustomContextMenu(panel, directory, serverName, newPictureBox);
+                    newLabel.ContextMenu = CreateCustomContextMenu(panel, directory, serverName, newLabel);
+                    newPanel.ContextMenu = CreateCustomContextMenu(panel, directory, serverName, newPanel);
+                }
 
                 // Add the panel to the flow layout panel
                 panel.Controls.Add(newPanel);
@@ -156,7 +159,7 @@ namespace Minecraft_Multiplayer_Host.Server.Classes.Console.Initialize.Files
 
             if (isDirectory)
             {
-                if (System.IO.Path.GetFileName(fileName) == "...")
+                if (Path.GetFileName(fileName) == "...")
                 {
                     //Go back
                     directory = System.IO.Directory.GetParent(directory).FullName;
@@ -213,16 +216,26 @@ namespace Minecraft_Multiplayer_Host.Server.Classes.Console.Initialize.Files
         {
             ContextMenu customContextMenu = CreateContextMenu(panel, directory, serverName);
 
+            MenuItem openFiles = new MenuItem("Open File");
             MenuItem deleteFiles = new MenuItem("Delete File");
             MenuItem spacer = new MenuItem("-");
 
-            customContextMenu.MenuItems.Add(0, spacer);
-            customContextMenu.MenuItems.Add(0, deleteFiles);
-
+            //Check if folder or file, and replace file with folder
             string fileName = control.Name.Substring(0, control.Name.Length - 3);
 
-            deleteFiles.Click += (sender, dF) => deleteFile.deleteFiles(panel, directory, serverName, fileName);
+            if (Directory.Exists(fileName))
+            {
+                //Replace open file with open folder
+                openFiles.Text = "Open Folder";
+                deleteFiles.Text = "Delete Folder";
+            }
 
+            customContextMenu.MenuItems.Add(0, spacer);
+            customContextMenu.MenuItems.Add(0, deleteFiles);
+            customContextMenu.MenuItems.Add(0, openFiles);
+
+            openFiles.Click += (sender, dF) => openFile.openFiles(panel, directory, serverName, fileName);
+            deleteFiles.Click += (sender, dF) => deleteFile.deleteFiles(panel, directory, serverName, fileName);
 
             return customContextMenu;
         }

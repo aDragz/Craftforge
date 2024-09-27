@@ -96,6 +96,7 @@
     <Compile Include="Server\Classes\Console\Applications\runSettings.cs" />
     <Compile Include="Server\Classes\Console\Initialize\Files\AddFiles.cs" />
     <Compile Include="Server\Classes\Console\Initialize\Files\ContextMenus\deleteFile.cs" />
+    <Compile Include="Server\Classes\Console\Initialize\Files\ContextMenus\openFile.cs" />
     <Compile Include="Server\Classes\Console\Initialize\Files\ContextMenus\UploadFile.cs" />
     <Compile Include="Server\Classes\Console\Initialize\Files\ContextMenus\UploadFolder.cs" />
     <Compile Include="Server\Classes\Console\Initialize\JarSelection\loadJarSelection.cs" />
