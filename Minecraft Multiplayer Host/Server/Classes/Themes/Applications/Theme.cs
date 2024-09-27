@@ -1,4 +1,5 @@
 ﻿using Minecraft_Multiplayer_Host.Properties;
+using Minecraft_Multiplayer_Host.Server.Classes.Themes.Themes.Custom;
 using Minecraft_Multiplayer_Host.Server.GUI.Console;
 using Minecraft_Multiplayer_Host.Server.Themes.Themes;
 using System;
@@ -21,7 +22,8 @@ namespace Minecraft_Multiplayer_Host.Server.Themes.Classes.Applications
             {
                 //Create the directory
                 Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\Minecraft-Multiplayer-Host\\Themes");
-                defaultTheme.writeSettingsToFile();
+
+                createThemes();
             }
             //Set the theme
 
@@ -41,6 +43,12 @@ namespace Minecraft_Multiplayer_Host.Server.Themes.Classes.Applications
             terminal.statusStrip.BackColor = ColorTranslator.FromHtml(theme.Terminal_StatusBar_Colour);
 
             serverTabsPanel.BackColor = ColorTranslator.FromHtml(theme.Terminal_SideBar_Colour); // Fixed: Added 'terminal.' to access serverTabsPanel
+        }
+
+        private static void createThemes()
+        {
+            defaultTheme.writeSettingsToFile();
+            blue.writeSettingsToFile();
         }
     }
 }

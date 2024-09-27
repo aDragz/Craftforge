@@ -28,8 +28,6 @@ namespace Minecraft_Multiplayer_Host.Server.Themes.Themes
 
         public void writeFile()
         {
-            string currentTheme = Properties.Settings.Default.Theme;
-
             var serializer = new SerializerBuilder()
                 .WithNamingConvention(CamelCaseNamingConvention.Instance)
                 .Build();
@@ -47,21 +45,22 @@ namespace Minecraft_Multiplayer_Host.Server.Themes.Themes
                 Directory.CreateDirectory(location);
             }
 
-            defaultTheme theme = new defaultTheme();
-            theme.Terminal_Button_Colour_Back = "255, 255, 255, 255"; //White
-            theme.Terminal_Button_Colour_Fore = "0, 0, 0, 0"; //Black
+            defaultTheme theme = new defaultTheme() {
+                Terminal_Button_Colour_Fore = "0, 0, 0, 0", //Black
+                Terminal_Button_Colour_Back = "255, 255, 255, 255", //White
 
-            theme.Terminal_Label_Colour_Text = "0, 0, 0, 0"; 
+                Terminal_Label_Colour_Text = "0, 0, 0, 0",
 
-            theme.Terminal_SideBar_Colour_Text = "255, 255, 255, 255";
+                Terminal_SideBar_Colour_Text = "255, 255, 255, 255",
 
-            theme.Terminal_Terminal_Colour_Back = "255, 255, 255, 255";
-            theme.Terminal_Terminal_Colour_Fore = "0, 0, 0, 0";
+                Terminal_Terminal_Colour_Fore = "0, 0, 0, 0",
+                Terminal_Terminal_Colour_Back = "255, 255, 255, 255",
 
-            theme.Terminal_Background_Colour = "255, 255, 255, 255";
-            theme.Terminal_SideBar_Colour = "255, 255, 255, 255";
+                Terminal_Background_Colour = "255, 255, 255, 255",
+                Terminal_SideBar_Colour = "255, 255, 255, 255",
 
-            theme.Terminal_StatusBar_Colour = "255, 255, 255, 255";
+                Terminal_StatusBar_Colour = "255, 255, 255, 255"
+            };
 
             theme.writeFile();
         }
