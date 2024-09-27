@@ -55,6 +55,7 @@ namespace Minecraft_Multiplayer_Host.Server.Themes.Classes.Applications
                                 }
                                 else
                                 {
+                                    MessageBox.Show($"TerminalTerminalColourBack cannot be transparent. It has to be 255, it is currently {backColor.A}");
                                     control.BackColor = Color.FromArgb(255, 255, 255, 255); //Colour is transparent, so set it to white
                                 }
                             }
