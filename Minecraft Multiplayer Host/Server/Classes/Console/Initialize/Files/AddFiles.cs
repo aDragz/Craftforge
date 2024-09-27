@@ -58,8 +58,8 @@ namespace Minecraft_Multiplayer_Host.Server.Classes.Console.Initialize.Files
             panel.Controls.Clear();
 
             // Get all files in the directory
-            String[] files = System.IO.Directory.GetFiles(directory);
-            String[] folders = System.IO.Directory.GetDirectories(directory);
+            String[] files = Directory.GetFiles(directory);
+            String[] folders = Directory.GetDirectories(directory);
 
             // Ensure the directory ends with a backslash
             if (!directory.EndsWith("\\"))
@@ -106,7 +106,7 @@ namespace Minecraft_Multiplayer_Host.Server.Classes.Console.Initialize.Files
 
                 // Create a new label
                 Label newLabel = new Label();
-                newLabel.Text = TruncateText(System.IO.Path.GetFileName(folder));
+                newLabel.Text = TruncateText(Path.GetFileName(folder));
                 newLabel.Size = new Size(200, 50);
                 newLabel.TextAlign = ContentAlignment.MiddleCenter;
                 newLabel.Margin = new Padding(0, 0, 0, 0);
@@ -131,7 +131,7 @@ namespace Minecraft_Multiplayer_Host.Server.Classes.Console.Initialize.Files
                 newPictureBox.Name = $"{folder}ptb"; //Make it 3 letters long, as there is a check to check to see the last 3 letters of the name
 
                 // Debug
-                string iconFilePath = System.IO.Path.Combine(directory, System.IO.Path.GetFileNameWithoutExtension(folder) + ".png");
+                string iconFilePath = Path.Combine(directory, Path.GetFileNameWithoutExtension(folder) + ".png");
 
                 // Add the label and picture box to the panel
                 newPanel.Controls.Add(newLabel);
@@ -162,7 +162,7 @@ namespace Minecraft_Multiplayer_Host.Server.Classes.Console.Initialize.Files
                 if (Path.GetFileName(fileName) == "...")
                 {
                     //Go back
-                    directory = System.IO.Directory.GetParent(directory).FullName;
+                    directory = Directory.GetParent(directory).FullName;
 
                     //Grab last \\ and trim the ending
 

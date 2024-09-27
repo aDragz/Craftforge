@@ -1,10 +1,6 @@
 ﻿using Minecraft_Multiplayer_Host.Server.GUI.Console;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Minecraft_Multiplayer_Host.Server.Classes.Console.Initialize.JarSelection
@@ -20,7 +16,7 @@ namespace Minecraft_Multiplayer_Host.Server.Classes.Console.Initialize.JarSelect
             String location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("/Minecraft-Multiplayer-Host/Servers/" + name[0]);
 
             //Read start.bat file
-            String text = System.IO.File.ReadAllText(location + "\\start.bat");
+            String text = File.ReadAllText(location + "\\start.bat");
 
             //Check if the server contains ".jar", and if it matches the serverJarCombo
             String[] words = text.Split(' ');

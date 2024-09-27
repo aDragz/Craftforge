@@ -21,7 +21,7 @@ namespace Minecraft_Multiplayer_Host.Server.Classes.Console.Initialize.Files.Con
                 {
                     try
                     {
-                        File.Copy(file, directory + System.IO.Path.GetFileName(file));
+                        File.Copy(file, directory + Path.GetFileName(file));
                     }
                     catch (IOException)
                     {

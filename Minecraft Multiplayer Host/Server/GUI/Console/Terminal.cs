@@ -4,7 +4,6 @@ using Minecraft_Multiplayer_Host.Server.Classes.Console.Applications;
 using Minecraft_Multiplayer_Host.Server.Classes.Console.Initialize.Files;
 using Minecraft_Multiplayer_Host.Server.Classes.Console.Initialize.JarSelection;
 using Minecraft_Multiplayer_Host.Server.Events;
-using Minecraft_Multiplayer_Host.Server.GUI.Applications;
 using Minecraft_Multiplayer_Host.Server.GUI.Classes;
 using Minecraft_Multiplayer_Host.Server.GUI.Console.Components;
 using Minecraft_Multiplayer_Host.Server.GUI.Console.Messages.ERROR;
@@ -13,14 +12,11 @@ using Minecraft_Multiplayer_Host.Server.GUI.Console.Messages.WARN;
 using Minecraft_Multiplayer_Host.Server.GUI.Setup;
 using Minecraft_Multiplayer_Host.Server.Setup;
 using Minecraft_Multiplayer_Host.Server.Themes.Classes.Applications;
-using Minecraft_Multiplayer_Host.Server.Themes.Themes;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -67,7 +63,7 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
             String location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\Minecraft-Multiplayer-Host\\Servers\\" + name[0]);
 
             //Read server.properties file
-            String[] serverProperties = System.IO.File.ReadAllLines(location + "\\server.properties");
+            String[] serverProperties = File.ReadAllLines(location + "\\server.properties");
 
             //Set the text boxes
             //Read each line and set the text box
@@ -201,7 +197,7 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
                 String location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("/Minecraft-Multiplayer-Host/Servers/" + name[0]);
 
                 //Read start.bat file
-                String text = System.IO.File.ReadAllText(location + "\\start.bat");
+                String text = File.ReadAllText(location + "\\start.bat");
 
                 //Check if the server contains ".jar", and if it matches the serverJarCombo
                 String[] words = text.Split(' ');
@@ -231,7 +227,7 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
                 if (textJar != serverJarCombo.Text)
                 {
                     //Rewrite the start.bat file
-                    System.IO.File.WriteAllText(location + "\\start.bat", runFile);
+                    File.WriteAllText(location + "\\start.bat", runFile);
                 }
                 jarSelectionChanged = false; //Reset the variable to false incase the user reboots the server
             }
@@ -668,7 +664,7 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
 
             if (!moveServer)
             {
-                System.IO.File.WriteAllText(directory + "\\server.properties", "server-port=" + settingsPortTextBox.Text + "\n" + "server-ip=" + settingsIpTextBox.Text + "\n" + "level-name=world\n" + "gamemode=survival\n" + "difficulty=easy\n" + "allow-cheats=false\n" + "max-players=" + settingsPlayersTextBox.Text + "\n" + "online-mode=true\n" + "white-list=false\n" + "server-name=" + settingsNameTextBox.Text + "\n" + "motd=" + settingsMotdTextBox.Text + "\n");
+                File.WriteAllText(directory + "\\server.properties", "server-port=" + settingsPortTextBox.Text + "\n" + "server-ip=" + settingsIpTextBox.Text + "\n" + "level-name=world\n" + "gamemode=survival\n" + "difficulty=easy\n" + "allow-cheats=false\n" + "max-players=" + settingsPlayersTextBox.Text + "\n" + "online-mode=true\n" + "white-list=false\n" + "server-name=" + settingsNameTextBox.Text + "\n" + "motd=" + settingsMotdTextBox.Text + "\n");
                 SettingsStatusLabel.Text = "Server updated!";
 
             }
@@ -745,7 +741,7 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
                 this.Text = this.Name;
 
 
-                System.IO.File.WriteAllText(destDir + "\\server.properties", "server-port=" + settingsPortTextBox.Text + "\n" + "server-ip=" + settingsIpTextBox.Text + "\n" + "level-name=world\n" + "gamemode=survival\n" + "difficulty=easy\n" + "allow-cheats=false\n" + "max-players=" + settingsPlayersTextBox.Text + "\n" + "online-mode=true\n" + "white-list=false\n" + "server-name=" + settingsNameTextBox.Text + "\n" + "motd=" + settingsMotdTextBox.Text + "\n");
+                File.WriteAllText(destDir + "\\server.properties", "server-port=" + settingsPortTextBox.Text + "\n" + "server-ip=" + settingsIpTextBox.Text + "\n" + "level-name=world\n" + "gamemode=survival\n" + "difficulty=easy\n" + "allow-cheats=false\n" + "max-players=" + settingsPlayersTextBox.Text + "\n" + "online-mode=true\n" + "white-list=false\n" + "server-name=" + settingsNameTextBox.Text + "\n" + "motd=" + settingsMotdTextBox.Text + "\n");
             }
         }
 
