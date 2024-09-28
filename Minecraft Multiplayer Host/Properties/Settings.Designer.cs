@@ -25,55 +25,6 @@ namespace Minecraft_Multiplayer_Host.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string Vanilla {
-            get {
-                return ((string)(this["Vanilla"]));
-            }
-            set {
-                this["Vanilla"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("java -jar BuildTools.jar --rev {version}")]
-        public string Spigot {
-            get {
-                return ((string)(this["Spigot"]));
-            }
-            set {
-                this["Spigot"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/targ" +
-            "et/BuildTools.jar")]
-        public string SpigotBuildTools {
-            get {
-                return ((string)(this["SpigotBuildTools"]));
-            }
-            set {
-                this["SpigotBuildTools"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string Paper {
-            get {
-                return ((string)(this["Paper"]));
-            }
-            set {
-                this["Paper"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("default")]
         public string Theme {
             get {
