@@ -8,6 +8,16 @@ I am creating an app where it is easy to host your Minecraft servers with many "
 
 This is a Beta application, meaning it is not complete. And by a long way. The basics work, but there are many bugs.
 
+### Complete Pages?
+So far, here are the more "polished" features I have coded:
+
+#### Main page
+<img width="950" alt="mainPage" src="https://github.com/user-attachments/assets/6b9d5a41-698e-465f-af72-fa5285fa4a63">
+
+#### Files page
+<img width="950" alt="filesPage" src="https://github.com/user-attachments/assets/76422d83-d083-4872-ba6e-bbd940395269">
+
+
 ### Features
 * Simple main screen
 * Themes
