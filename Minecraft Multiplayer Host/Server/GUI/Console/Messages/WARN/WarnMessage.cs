@@ -16,7 +16,7 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console.Messages.WARN
             errorCount = 0;
         }
 
-        public bool grabWarnMessage(String errorMessage, RichTextBox consoleOutput)
+        public bool grabWarnMessage(String errorMessage, RichTextBox consoleOutput, RichTextBox secondaryOutput)
         {
             errorCount++;
 
@@ -28,6 +28,9 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console.Messages.WARN
                     consoleOutput.Clear();
                     consoleOutput.AppendText(String.Format("[Minecraft-Multiplayer-Host ERROR] Port {0} is already in use. \n", "25565"));
                     consoleOutput.AppendText("\nError Message: \n");
+
+                    secondaryOutput.AppendText(String.Format("[Minecraft-Multiplayer-Host ERROR] Port {0} is already in use. \n", "25565"));
+                    secondaryOutput.AppendText("\nError Message: \n");
                 });
                 return true; //Kills the process
             }

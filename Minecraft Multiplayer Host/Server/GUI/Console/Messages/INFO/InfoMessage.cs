@@ -16,7 +16,7 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console.Messages.INFO
             errorCount = 0;
         }
 
-        public bool grabInfoMessage(String errorMessage, RichTextBox consoleOutput, String location)
+        public bool grabInfoMessage(String errorMessage, RichTextBox consoleOutput, RichTextBox secondaryOutput,String location)
         {
             errorCount++;
 
@@ -27,6 +27,9 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console.Messages.INFO
                     consoleOutput.Clear();
                     consoleOutput.AppendText("[Minecraft-Multiplayer-Host ERROR] You need to agree to the Minecraft EULA in order to run the server. \n");
                     consoleOutput.AppendText("\nError Message: \n");
+
+                    secondaryOutput.AppendText("[Minecraft-Multiplayer-Host ERROR] You need to agree to the Minecraft EULA in order to run the server. \n");
+                    secondaryOutput.AppendText("\nError Message: \n");
 
                     //Open the EULA file
                     System.Diagnostics.Process.Start("notepad.exe", location + "\\eula.txt");

@@ -290,10 +290,9 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
                                     try
                                     {
                                         RichTextBox console = (RichTextBox)serverTabs.TabPages[i].Controls[0];
-                                        AppendTextToCommandOutput(e.Data, console, false);
-
                                         secondaryTerminal.Name = "console " + consoleID;
-                                        AppendTextToCommandOutput(e.Data, secondaryTerminal, true);
+
+                                        AppendTextToCommandOutput(e.Data, console, secondaryTerminal, false);
                                     }
                                     catch (ArgumentOutOfRangeException)
                                     {
@@ -318,13 +317,13 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
                                     //Check if Error contains "openjdk"
                                     if (e.Data.ToLower().Contains("openjdk"))
                                     {
-                                        AppendTextToCommandOutput("[Minecraft-Multiplayer-Host JAVA] " + e.Data, console, false);
+                                        AppendTextToCommandOutput("[Minecraft-Multiplayer-Host JAVA] " + e.Data, console, secondaryTerminal, false);
                                     }
                                     else
                                     {
 
                                         ErrorMessage errorMessage = new ErrorMessage();
-                                        if (errorMessage.grabErrorMessage(e.Data, console))
+                                        if (errorMessage.grabErrorMessage(e.Data, console, secondaryTerminal))
                                         {
                                             //Kill process
 
@@ -396,7 +395,7 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
             }
         }
 
-        public static void AppendTextToCommandOutput(string text, RichTextBox consoleOutput, bool isSecondary)
+        public static void AppendTextToCommandOutput(string text, RichTextBox consoleOutput, RichTextBox secondaryOutput, bool isSecondary)
         {
 
             //Check to see if it contains "! For help, type "help"
@@ -408,6 +407,9 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
                 {
                     consoleOutput.AppendText("\n");
                     consoleOutput.AppendText("[Minecraft-Multiplayer-Host INFO] Server has started!\n");
+
+                    secondaryOutput.AppendText("\n");
+                    secondaryOutput.AppendText("[Minecraft-Multiplayer-Host INFO] Server has started!\n");
                 });
                 isRunning = true;
                 hasStarted = true;
@@ -421,7 +423,7 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
                     //Instance already running
                     //Parse Error Message
                     ErrorMessage errorMessage = new ErrorMessage();
-                    if (errorMessage.grabErrorMessage(text, consoleOutput))
+                    if (errorMessage.grabErrorMessage(text, consoleOutput, secondaryOutput))
                     {
                         //Kill process
 
@@ -455,7 +457,7 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
 
                     InfoMessage infoMessage = new InfoMessage();
 
-                    if (infoMessage.grabInfoMessage(text, consoleOutput, location))
+                    if (infoMessage.grabInfoMessage(text, consoleOutput, secondaryOutput, location))
                     {
                         //Kill process
 
@@ -475,7 +477,7 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
                 if (text.Contains("WARN]"))
                 {
                     WarnMessage warnMessage = new WarnMessage();
-                    if (warnMessage.grabWarnMessage(text, consoleOutput))
+                    if (warnMessage.grabWarnMessage(text, consoleOutput, secondaryOutput))
                     {
                         //Kill process
 
@@ -500,11 +502,15 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
                     consoleOutput.Invoke((MethodInvoker)delegate
                     {
                         consoleOutput.AppendText(Environment.NewLine + text);
+
+                        secondaryOutput.AppendText(Environment.NewLine + text);
                     });
                 }
                 else
                 {
                     consoleOutput.AppendText(Environment.NewLine + text);
+
+                    secondaryOutput.AppendText(Environment.NewLine + text);
                 }
             }
             catch { }

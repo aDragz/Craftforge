@@ -19,7 +19,7 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console.Messages.ERROR
             errorCount = 0;
         }
 
-        public bool grabErrorMessage(string errorMessage, RichTextBox consoleOutput)
+        public bool grabErrorMessage(string errorMessage, RichTextBox consoleOutput, RichTextBox secondaryOutput)
         {
             errorCount++;
 
@@ -32,6 +32,9 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console.Messages.ERROR
                     consoleOutput.Clear();
                     consoleOutput.AppendText(String.Format("[Minecraft-Multiplayer-Host ERROR ({0})] Failed to start server \n", errorCount));
                     consoleOutput.AppendText("\nError Message: \n");
+
+                    secondaryOutput.AppendText(String.Format("[Minecraft-Multiplayer-Host ERROR ({0})] Failed to start server \n", errorCount));
+                    secondaryOutput.AppendText("\nError Message: \n");
                 });
                 return true; //Kills the process
             } else if (errorMessage.Contains("Unable to access jarfile"))
@@ -40,6 +43,9 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console.Messages.ERROR
                 {
                     consoleOutput.Clear();
                     consoleOutput.AppendText(String.Format("[Minecraft-Multiplayer-Host ERROR ({0})] Unable to access jarfile \n", errorCount));
+
+                    secondaryOutput.AppendText(String.Format("[Minecraft-Multiplayer-Host ERROR ({0})] Unable to access jarfile \n", errorCount));
+
                 });
                 return true; //Kills the process
             }
@@ -48,6 +54,9 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console.Messages.ERROR
             {
                 consoleOutput.AppendText(String.Format("\n[Minecraft-Multiplayer-Host ERROR ({0})] An Error has Occurred \n", errorCount));
                 consoleOutput.AppendText(String.Format("\nError Message: {0}\n", errorMessage));
+
+                secondaryOutput.AppendText(String.Format("\n[Minecraft-Multiplayer-Host ERROR ({0})] An Error has Occurred \n", errorCount));
+                secondaryOutput.AppendText(String.Format("\nError Message: {0}\n", errorMessage));
             });
             return false; //Unknown error, does not kill process
         }

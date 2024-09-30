@@ -45,7 +45,11 @@ namespace Minecraft_Multiplayer_Host.Server.Events
                         .OfType<RichTextBox>()
                         .FirstOrDefault(rtb => rtb.Name == "cmd " + consoleID);
 
-                    Terminal.AppendTextToCommandOutput("[Minecraft-Multiplayer-Host ERROR] " + e.Message, console, false);
+                    RichTextBox secondaryTerminal = (RichTextBox)serverTabs.TabPages[0].Controls
+                        .OfType<RichTextBox>()
+                        .FirstOrDefault(rtb => rtb.Name == "secondaryTerminal " + consoleID);
+
+                    Terminal.AppendTextToCommandOutput("[Minecraft-Multiplayer-Host ERROR] " + e.Message, console, secondaryTerminal, false);
                 }
             }
         }
