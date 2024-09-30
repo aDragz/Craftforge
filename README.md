@@ -8,6 +8,10 @@ I am creating an app where it is easy to host your Minecraft servers with many "
 
 This is a Beta application, meaning it is not complete. And by a long way. The basics work, but there are many bugs.
 
+### Requirements
+
+You need Java to run your Minecraft Server. You can download the Microsoft one at https://aka.ms/download-jdk/microsoft-jdk-21.0.4-windows-x64.msi or use your own!
+
 ### Complete Pages?
 So far, here are the more "polished" features I have coded:
 
