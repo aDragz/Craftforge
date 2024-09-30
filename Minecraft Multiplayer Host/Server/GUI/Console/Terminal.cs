@@ -33,6 +33,9 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
         static string theme = Settings.Default.Theme;
         static string style = Settings.Default.Style;
 
+        private static NotifyIcon notifications;
+
+
         static Dictionary<Process, String> serverProcessesToName = new Dictionary<Process, String>();
 
         public Terminal()
@@ -49,6 +52,7 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
             InitializeJar(); //Load jar selection text
             InitializeTheme(); //Load theme
             InitializeFiles(); //Load files
+            InitializeNotifications(); //Load notifications
 
             serverTabs.ItemSize = new Size(0, 1); //Hide the tabs
 
@@ -120,6 +124,16 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
             AddFiles.initializeFiles(folderList, location, name);
         }
 
+        private void InitializeNotifications()
+        {
+            notifications = new NotifyIcon
+            {
+                Icon = SystemIcons.Application,
+                Text = "Minecraft Multiplayer Host",
+                Visible = true
+            };
+        }
+
         private void createButton_Click(object sender, EventArgs e)
         {
             generateNewServer createNewServer = new generateNewServer();
@@ -127,12 +141,15 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
             //generateNewServer.create(nameTextBox.Text, IpTextBox.Text, portTextBox.Text, motdTextBox.Text, statusLabel);
         }
 
+        static bool sentStartNotification = false;
+        static bool sentStopNotification = false;
+
         private async void serverStatusNetwork_Tick(object sender, EventArgs e)
         {
             //Grab this.name and remove anything after :
-            String[] name = this.Name.Split(':');
+            string[] name = this.Name.Split(':');
 
-            String location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("/Minecraft-Multiplayer-Host/Servers/" + name[0]);
+            string location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("/Minecraft-Multiplayer-Host/Servers/" + name[0]);
 
             //Assume the process has only started
 
@@ -142,6 +159,21 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
             {
                 isRunning = false;
                 resetButtons(this);
+
+                if (!sentStopNotification)
+                {
+                    //Create notification
+                    string serverName = this.Name.Split(':')[0];
+
+                    notifications.BalloonTipText = $"{serverName} has been stopped!";
+                    notifications.BalloonTipTitle = "Server Stopped";
+                    notifications.BalloonTipIcon = ToolTipIcon.Info;
+                    notifications.ShowBalloonTip(3);
+
+                    sentStartNotification = false;
+                    sentStopNotification = true;
+                }
+
                 return;
             }
 
@@ -168,6 +200,19 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
 
                         isRunning = true;
                         resetButtons(this);
+
+                        if (!sentStartNotification)
+                        {
+                            string serverName = this.Name.Split(':')[0];
+
+                            notifications.BalloonTipText = $"{serverName} has started!";
+                            notifications.BalloonTipTitle = "Server started";
+                            notifications.BalloonTipIcon = ToolTipIcon.Info;
+                            notifications.ShowBalloonTip(3);
+
+                            sentStartNotification = true;
+                            sentStopNotification = false;
+                        }
                     }
                     catch (Exception exception)
                     {
@@ -177,6 +222,20 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
 
                             isRunning = false;
                             resetButtons(this);
+
+                            if (!sentStopNotification)
+                            {
+                                //Create notification
+                                string serverName = this.Name.Split(':')[0];
+
+                                notifications.BalloonTipText = $"{serverName} has been stopped!";
+                                notifications.BalloonTipTitle = "Server Stopped";
+                                notifications.BalloonTipIcon = ToolTipIcon.Info;
+                                notifications.ShowBalloonTip(3);
+
+                                sentStartNotification = false;
+                                sentStopNotification = true;
+                            }
                         }
                     }
                     finally
@@ -192,18 +251,18 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
             if (jarSelectionChanged)
             {
                 //Grab this.name and remove anything after :
-                String[] name = this.Name.Split(':');
+                string[] name = this.Name.Split(':');
 
-                String location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("/Minecraft-Multiplayer-Host/Servers/" + name[0]);
+                string location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("/Minecraft-Multiplayer-Host/Servers/" + name[0]);
 
                 //Read start.bat file
-                String text = File.ReadAllText(location + "\\start.bat");
+                string text = File.ReadAllText(location + "\\start.bat");
 
                 //Check if the server contains ".jar", and if it matches the serverJarCombo
-                String[] words = text.Split(' ');
-                String textJar = "";
+                string[] words = text.Split(' ');
+                string textJar = "";
 
-                foreach (String word in words)
+                foreach (string word in words)
                 {
                     if (word.Contains(".jar"))
                     {
@@ -212,15 +271,15 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
                     }
                 }
 
-                String runFile = String.Join(" ", words);
+                string runFile = string.Join(" ", words);
                 if (!string.IsNullOrEmpty(textJar))
                 {
-                    runFile = String.Join(" ", words).Replace(textJar, serverJarCombo.Text);
+                    runFile = string.Join(" ", words).Replace(textJar, serverJarCombo.Text);
                 }
                 else
                 {
                     //User has not added the jar file to the start.bat file (Broken File)
-                    runFile = String.Join(" ", words).Replace("-jar", "-jar " + serverJarCombo.Text);
+                    runFile = string.Join(" ", words).Replace("-jar", "-jar " + serverJarCombo.Text);
                 }
 
                 //Check if it matches the serverJarCombo
@@ -244,6 +303,9 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
             hasStarted = false;
             errorOccured = false;
 
+            sentStartNotification = false;
+            sentStopNotification = false;
+
             startBtn.Enabled = false;
             stopBtn.Enabled = false;
 
@@ -254,10 +316,10 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
         public async void createOutput(Process serverProcess, object processLock, int consoleID)
         {
             //Grab this.name and remove anything after :
-            String[] name = this.Name.Split(':');
+            string[] name = this.Name.Split(':');
 
             // Set the working directory to the location of the start.bat file
-            String directory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\Minecraft-Multiplayer-Host\\Servers\\" + name[0]);
+            string directory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\Minecraft-Multiplayer-Host\\Servers\\" + name[0]);
 
             //Run the task in a new thread (uses 1 thread to maximize performance for server instance)
             //This also makes the console load faster, and the form does not freeze
