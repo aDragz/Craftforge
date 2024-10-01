@@ -68,9 +68,10 @@ namespace Minecraft_Multiplayer_Host.Server.Classes.Console.Initialize.Files
             }
 
             string mainDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + $"\\Minecraft-Multiplayer-Host\\Servers\\{serverName}\\";
+            string backupDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + $"\\Minecraft-Multiplayer-Host\\Backups\\{serverName}\\";
 
             //Add ... as a folder, to go back, at the beginning
-            if (directory != mainDirectory)
+            if (directory != mainDirectory && directory != backupDirectory)
             {
                 Array.Resize(ref folders, folders.Length + 1);
                 Array.Copy(folders, 0, folders, 1, folders.Length - 1);

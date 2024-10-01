@@ -55,6 +55,7 @@
             this.logPage = new System.Windows.Forms.TabPage();
             this.logsOutput = new System.Windows.Forms.RichTextBox();
             this.backupPage = new System.Windows.Forms.TabPage();
+            this.backupFolderList = new System.Windows.Forms.FlowLayoutPanel();
             this.backupProgressBar = new System.Windows.Forms.ProgressBar();
             this.backupLabel = new System.Windows.Forms.Label();
             this.createBackupBtn = new System.Windows.Forms.Button();
@@ -354,6 +355,7 @@
             // 
             // backupPage
             // 
+            this.backupPage.Controls.Add(this.backupFolderList);
             this.backupPage.Controls.Add(this.backupProgressBar);
             this.backupPage.Controls.Add(this.backupLabel);
             this.backupPage.Controls.Add(this.createBackupBtn);
@@ -363,6 +365,13 @@
             this.backupPage.TabIndex = 5;
             this.backupPage.Text = "Backups";
             this.backupPage.UseVisualStyleBackColor = true;
+            // 
+            // backupFolderList
+            // 
+            this.backupFolderList.Location = new System.Drawing.Point(3, 3);
+            this.backupFolderList.Name = "backupFolderList";
+            this.backupFolderList.Size = new System.Drawing.Size(1731, 601);
+            this.backupFolderList.TabIndex = 26;
             // 
             // backupProgressBar
             // 
@@ -375,8 +384,7 @@
             // 
             // backupLabel
             // 
-            this.backupLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.backupLabel.BackColor = System.Drawing.SystemColors.Control;
             this.backupLabel.Location = new System.Drawing.Point(-1, 607);
             this.backupLabel.Name = "backupLabel";
             this.backupLabel.Size = new System.Drawing.Size(1740, 204);
@@ -655,17 +663,17 @@
             // statusLabel
             // 
             this.statusLabel.Name = "statusLabel";
-            this.statusLabel.Size = new System.Drawing.Size(0, 21);
+            this.statusLabel.Size = new System.Drawing.Size(0, 15);
             // 
             // statusStrip
             // 
             this.statusStrip.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.statusLabel});
-            this.statusStrip.Location = new System.Drawing.Point(0, 996);
+            this.statusStrip.Location = new System.Drawing.Point(0, 1002);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.statusStrip.Size = new System.Drawing.Size(1898, 28);
+            this.statusStrip.Size = new System.Drawing.Size(1898, 22);
             this.statusStrip.TabIndex = 7;
             this.statusStrip.Text = "statusBar";
             // 
@@ -762,6 +770,7 @@
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem1;
         public System.Windows.Forms.ToolStripStatusLabel statusLabel;
         public System.Windows.Forms.StatusStrip statusStrip;
+        private System.Windows.Forms.FlowLayoutPanel backupFolderList;
     }
 }
 

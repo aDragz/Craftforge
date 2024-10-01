@@ -36,7 +36,7 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
         private static NotifyIcon notifications;
 
 
-        static Dictionary<Process, String> serverProcessesToName = new Dictionary<Process, String>();
+        static Dictionary<Process, string> serverProcessesToName = new Dictionary<Process, string>();
 
         public Terminal()
         {
@@ -52,6 +52,7 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
             InitializeJar(); //Load jar selection text
             InitializeTheme(); //Load theme
             InitializeFiles(); //Load files
+            InitializeBackupFiles(); //Load backup files
             InitializeNotifications(); //Load notifications
 
             serverTabs.ItemSize = new Size(0, 1); //Hide the tabs
@@ -62,16 +63,16 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
         private void InitializeSettings()
         {
             //Read server.properties file
-            String[] name = this.Name.Split(':');
+            string[] name = this.Name.Split(':');
 
-            String location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\Minecraft-Multiplayer-Host\\Servers\\" + name[0]);
+            string location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\Minecraft-Multiplayer-Host\\Servers\\" + name[0]);
 
             //Read server.properties file
-            String[] serverProperties = File.ReadAllLines(location + "\\server.properties");
+            string[] serverProperties = File.ReadAllLines(location + "\\server.properties");
 
             //Set the text boxes
             //Read each line and set the text box
-            foreach (String str in serverProperties)
+            foreach (string str in serverProperties)
             {
                 if (str.Contains("server-port="))
                 {
@@ -122,6 +123,18 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
             string location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ($"\\Minecraft-Multiplayer-Host\\Servers\\{name}\\");
 
             AddFiles.initializeFiles(folderList, location, name);
+        }
+
+        private void InitializeBackupFiles()
+        {
+            string name = this.Name;
+            string location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ($"\\Minecraft-Multiplayer-Host\\Backups\\{name}\\");
+
+            //Check if location exists
+            if (Directory.Exists(location))
+            {
+                AddFiles.initializeFiles(backupFolderList, location, name);
+            }
         }
 
         private void InitializeNotifications()
@@ -659,8 +672,8 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
         private void openFileLocationToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //Open location
-            String[] name = this.Name.Split(':');
-            String location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\Minecraft-Multiplayer-Host\\Servers\\" + name[0]);
+            string[] name = this.Name.Split(':');
+            string location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\Minecraft-Multiplayer-Host\\Servers\\" + name[0]);
 
             Process.Start("explorer.exe", location);
         }
@@ -668,10 +681,10 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
         private void button2_Click(object sender, EventArgs e)
         {
             //Grab old server name
-            String oldName = this.Name;
-            String oldDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + String.Format("\\Minecraft-Multiplayer-Host\\Servers\\{0}", oldName);
+            string oldName = this.Name;
+            string oldDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + string.Format("\\Minecraft-Multiplayer-Host\\Servers\\{0}", oldName);
 
-            String directory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + String.Format("\\Minecraft-Multiplayer-Host\\Servers\\{0}", settingsNameTextBox.Text);
+            string directory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + string.Format("\\Minecraft-Multiplayer-Host\\Servers\\{0}", settingsNameTextBox.Text);
             bool moveServer = false;
 
             //Check if directory and oldDirectory has changed
@@ -787,11 +800,11 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
                     //Check if type is "move"
                     if (type == "move")
                     {
-                        label.Text = String.Format("Please do not touch the application!\nMoving server - {0}\n{1}% ({2}/{3}/{4})", file, progress, copiedFiles, totalFiles, couldNotCopyFiles);
+                        label.Text = string.Format("Please do not touch the application!\nMoving server - {0}\n{1}% ({2}/{3}/{4})", file, progress, copiedFiles, totalFiles, couldNotCopyFiles);
                     }
                     else if (type == "backup")
                     {
-                        label.Text = String.Format("Please do not touch the application!\nCreating backup - {0}\n{1}% ({2}/{3}/{4})", file, progress, copiedFiles, totalFiles, couldNotCopyFiles);
+                        label.Text = string.Format("Please do not touch the application!\nCreating backup - {0}\n{1}% ({2}/{3}/{4})", file, progress, copiedFiles, totalFiles, couldNotCopyFiles);
                     }
                 });
             }
@@ -816,8 +829,8 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
         private void openLogsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //Open Most recent logs
-            String[] name = this.Name.Split(':');
-            String location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\Minecraft-Multiplayer-Host\\Servers\\" + name[0] + "\\logs\\latest.log");
+            string[] name = this.Name.Split(':');
+            string location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\Minecraft-Multiplayer-Host\\Servers\\" + name[0] + "\\logs\\latest.log");
 
             Process.Start("notepad.exe", location);
         }
@@ -825,8 +838,8 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
         private void serverJarCombo_Click(object sender, EventArgs e)
         {
             //Grab location
-            String[] name = this.Name.Split(':');
-            String location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\Minecraft-Multiplayer-Host\\Servers\\" + name[0]);
+            string[] name = this.Name.Split(':');
+            string location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\Minecraft-Multiplayer-Host\\Servers\\" + name[0]);
 
             //Grab all files in the directory, with the extension .jar
             string[] files = Directory.GetFiles(location, "*.jar");
@@ -878,11 +891,11 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
             //Copy files to ../BackUp/ServerName/BakcupDate-dd-mm-yyyy-hh-mm-ss
 
             //Grab this.name and remove anything after :
-            String[] name = this.Name.Split(':');
-            String location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\Minecraft-Multiplayer-Host\\Servers\\" + name[0]);
+            string[] name = this.Name.Split(':');
+            string location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\Minecraft-Multiplayer-Host\\Servers\\" + name[0]);
 
             //Grab day
-            String time = DateTime.Now.ToString("dd-MM-yyyy-HH-mm-ss");
+            string time = DateTime.Now.ToString("dd-MM-yyyy-HH-mm-ss");
 
             //Check if directory exists
             if (!Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\Minecraft-Multiplayer-Host\\Backups\\" + name[0] + "\\" + time)))
