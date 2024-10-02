@@ -809,11 +809,11 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
                     //Check if type is "move"
                     if (type == "move")
                     {
-                        label.Text = string.Format("Please do not touch the application! Moving server - {0} - {1}% ({2}/{3}/{4})", file, progress, copiedFiles, totalFiles, couldNotCopyFiles);
+                        label.Text = string.Format("Please do not touch the application!\nMoving server - {0}\n{1}% ({2}/{3}/{4})", file, progress, copiedFiles, totalFiles, couldNotCopyFiles);
                     }
                     else if (type == "backup")
                     {
-                        label.Text = string.Format("Please do not touch the application! Creating backup - {0} - {1}% ({2}/{3}/{4})", file, progress, copiedFiles, totalFiles, couldNotCopyFiles);
+                        label.Text = string.Format("Please do not touch the application!\nCreating backup - {0}\n{1}% ({2}/{3}/{4})", file, progress, copiedFiles, totalFiles, couldNotCopyFiles);
                     }
                 });
                 }
