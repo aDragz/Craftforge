@@ -823,13 +823,16 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
                 {
                     //Wait 1 second
                     await Task.Delay(1000); // Bugs out on smaller servers without sleeping for 1 second
-                    progressBar.Value = 0;
+                    progressBar.Value = 0; //Reset progress bar
 
+                    //Reload the files to display them in the flowLayoutPanel
                     InitializeBackupFiles();
 
+                    //Send label to back
                     label.SendToBack();
                 }
             }
+
             if (firstTimeSetup)
             {
                 await Task.Delay(1000); // Add a delay before deleting the directory
