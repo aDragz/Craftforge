@@ -55,15 +55,14 @@
             this.logPage = new System.Windows.Forms.TabPage();
             this.logsOutput = new System.Windows.Forms.RichTextBox();
             this.backupPage = new System.Windows.Forms.TabPage();
+            this.backupLabel = new System.Windows.Forms.Label();
             this.backupFolderList = new System.Windows.Forms.FlowLayoutPanel();
             this.backupProgressBar = new System.Windows.Forms.ProgressBar();
-            this.backupLabel = new System.Windows.Forms.Label();
             this.createBackupBtn = new System.Windows.Forms.Button();
             this.settingsPage = new System.Windows.Forms.TabPage();
             this.label8 = new System.Windows.Forms.Label();
             this.settingsPlayersTextBox = new System.Windows.Forms.TextBox();
             this.SettingsProgressBar = new System.Windows.Forms.ProgressBar();
-            this.SettingsStatusLabel = new System.Windows.Forms.Label();
             this.settingsSaveBtn = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -73,6 +72,7 @@
             this.settingsIpTextBox = new System.Windows.Forms.TextBox();
             this.settingsNameTextBox = new System.Windows.Forms.TextBox();
             this.settingsPortTextBox = new System.Windows.Forms.TextBox();
+            this.SettingsStatusLabel = new System.Windows.Forms.Label();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.startupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -355,9 +355,9 @@
             // 
             // backupPage
             // 
+            this.backupPage.Controls.Add(this.backupLabel);
             this.backupPage.Controls.Add(this.backupFolderList);
             this.backupPage.Controls.Add(this.backupProgressBar);
-            this.backupPage.Controls.Add(this.backupLabel);
             this.backupPage.Controls.Add(this.createBackupBtn);
             this.backupPage.Location = new System.Drawing.Point(4, 14);
             this.backupPage.Name = "backupPage";
@@ -366,11 +366,21 @@
             this.backupPage.Text = "Backups";
             this.backupPage.UseVisualStyleBackColor = true;
             // 
+            // backupLabel
+            // 
+            this.backupLabel.BackColor = System.Drawing.Color.Transparent;
+            this.backupLabel.Location = new System.Drawing.Point(-1, 615);
+            this.backupLabel.Name = "backupLabel";
+            this.backupLabel.Size = new System.Drawing.Size(1740, 204);
+            this.backupLabel.TabIndex = 24;
+            this.backupLabel.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            // 
             // backupFolderList
             // 
+            this.backupFolderList.AutoScroll = true;
             this.backupFolderList.Location = new System.Drawing.Point(3, 3);
             this.backupFolderList.Name = "backupFolderList";
-            this.backupFolderList.Size = new System.Drawing.Size(1731, 601);
+            this.backupFolderList.Size = new System.Drawing.Size(1731, 819);
             this.backupFolderList.TabIndex = 26;
             // 
             // backupProgressBar
@@ -381,15 +391,6 @@
             this.backupProgressBar.Name = "backupProgressBar";
             this.backupProgressBar.Size = new System.Drawing.Size(1640, 29);
             this.backupProgressBar.TabIndex = 25;
-            // 
-            // backupLabel
-            // 
-            this.backupLabel.BackColor = System.Drawing.SystemColors.Control;
-            this.backupLabel.Location = new System.Drawing.Point(-1, 607);
-            this.backupLabel.Name = "backupLabel";
-            this.backupLabel.Size = new System.Drawing.Size(1740, 204);
-            this.backupLabel.TabIndex = 24;
-            this.backupLabel.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             // 
             // createBackupBtn
             // 
@@ -408,7 +409,6 @@
             this.settingsPage.Controls.Add(this.label8);
             this.settingsPage.Controls.Add(this.settingsPlayersTextBox);
             this.settingsPage.Controls.Add(this.SettingsProgressBar);
-            this.settingsPage.Controls.Add(this.SettingsStatusLabel);
             this.settingsPage.Controls.Add(this.settingsSaveBtn);
             this.settingsPage.Controls.Add(this.label4);
             this.settingsPage.Controls.Add(this.label5);
@@ -418,6 +418,7 @@
             this.settingsPage.Controls.Add(this.settingsIpTextBox);
             this.settingsPage.Controls.Add(this.settingsNameTextBox);
             this.settingsPage.Controls.Add(this.settingsPortTextBox);
+            this.settingsPage.Controls.Add(this.SettingsStatusLabel);
             this.settingsPage.Font = new System.Drawing.Font("Consolas", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.settingsPage.Location = new System.Drawing.Point(4, 14);
             this.settingsPage.Name = "settingsPage";
@@ -452,16 +453,6 @@
             this.SettingsProgressBar.Name = "SettingsProgressBar";
             this.SettingsProgressBar.Size = new System.Drawing.Size(1640, 29);
             this.SettingsProgressBar.TabIndex = 22;
-            // 
-            // SettingsStatusLabel
-            // 
-            this.SettingsStatusLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.SettingsStatusLabel.Location = new System.Drawing.Point(1, 497);
-            this.SettingsStatusLabel.Name = "SettingsStatusLabel";
-            this.SettingsStatusLabel.Size = new System.Drawing.Size(1740, 204);
-            this.SettingsStatusLabel.TabIndex = 21;
-            this.SettingsStatusLabel.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             // 
             // settingsSaveBtn
             // 
@@ -549,6 +540,16 @@
             this.settingsPortTextBox.Name = "settingsPortTextBox";
             this.settingsPortTextBox.Size = new System.Drawing.Size(100, 39);
             this.settingsPortTextBox.TabIndex = 3;
+            // 
+            // SettingsStatusLabel
+            // 
+            this.SettingsStatusLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.SettingsStatusLabel.Location = new System.Drawing.Point(1, 497);
+            this.SettingsStatusLabel.Name = "SettingsStatusLabel";
+            this.SettingsStatusLabel.Size = new System.Drawing.Size(1740, 204);
+            this.SettingsStatusLabel.TabIndex = 21;
+            this.SettingsStatusLabel.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             // 
             // menuStrip1
             // 
@@ -739,7 +740,6 @@
         private System.Windows.Forms.TabPage backupPage;
         private System.Windows.Forms.TabPage schedulerPage;
         private System.Windows.Forms.Button settingsSaveBtn;
-        private System.Windows.Forms.Label SettingsStatusLabel;
         private System.Windows.Forms.ProgressBar SettingsProgressBar;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox settingsPlayersTextBox;
@@ -760,7 +760,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label mainPortLabel;
         private System.Windows.Forms.ProgressBar backupProgressBar;
-        private System.Windows.Forms.Label backupLabel;
         private System.Windows.Forms.Button createBackupBtn;
         private System.Windows.Forms.TabPage logPage;
         public System.Windows.Forms.RichTextBox logsOutput;
@@ -771,6 +770,8 @@
         public System.Windows.Forms.ToolStripStatusLabel statusLabel;
         public System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.FlowLayoutPanel backupFolderList;
+        private System.Windows.Forms.Label backupLabel;
+        private System.Windows.Forms.Label SettingsStatusLabel;
     }
 }
 

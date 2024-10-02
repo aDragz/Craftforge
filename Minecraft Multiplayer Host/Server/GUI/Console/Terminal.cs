@@ -17,6 +17,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -127,6 +128,9 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
 
         private void InitializeBackupFiles()
         {
+            //Send the backup label to the back
+            backupLabel.SendToBack();
+
             string name = this.Name;
             string location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ($"\\Minecraft-Multiplayer-Host\\Backups\\{name}\\");
 
@@ -754,6 +758,9 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
         //First time setup is for when the server is first created, and needs to create the necessary files
         private async void CopyDirectoryWithProgressBar(string sourceDir, string destDir, Label label, bool firstTimeSetup, ProgressBar progressBar, string type)
         {
+
+            label.BringToFront();
+
             Directory.CreateDirectory(destDir);
 
             string[] files = Directory.GetFiles(sourceDir, "*", SearchOption.AllDirectories);
@@ -795,20 +802,34 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
                 progressBar.Value = progress;
 
                 //Set status label
-                label.Invoke((MethodInvoker)delegate
+                if (label.IsHandleCreated)
+                {
+                    label.Invoke((MethodInvoker)delegate
                 {
                     //Check if type is "move"
                     if (type == "move")
                     {
-                        label.Text = string.Format("Please do not touch the application!\nMoving server - {0}\n{1}% ({2}/{3}/{4})", file, progress, copiedFiles, totalFiles, couldNotCopyFiles);
+                        label.Text = string.Format("Please do not touch the application! Moving server - {0} - {1}% ({2}/{3}/{4})", file, progress, copiedFiles, totalFiles, couldNotCopyFiles);
                     }
                     else if (type == "backup")
                     {
-                        label.Text = string.Format("Please do not touch the application!\nCreating backup - {0}\n{1}% ({2}/{3}/{4})", file, progress, copiedFiles, totalFiles, couldNotCopyFiles);
+                        label.Text = string.Format("Please do not touch the application! Creating backup - {0} - {1}% ({2}/{3}/{4})", file, progress, copiedFiles, totalFiles, couldNotCopyFiles);
                     }
                 });
-            }
+                }
 
+                //Wait for it to finish, and then reset the progress bar
+                if (progressBar.Value == 100)
+                {
+                    //Wait 1 second
+                    await Task.Delay(1000); // Bugs out on smaller servers without sleeping for 1 second
+                    progressBar.Value = 0;
+
+                    InitializeBackupFiles();
+
+                    label.SendToBack();
+                }
+            }
             if (firstTimeSetup)
             {
                 await Task.Delay(1000); // Add a delay before deleting the directory
@@ -888,6 +909,8 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
 
         private void createBackupBtn_Click(object sender, EventArgs e)
         {
+            //Bring backupLabel to top 
+            backupLabel.BringToFront();
             //Copy files to ../BackUp/ServerName/BakcupDate-dd-mm-yyyy-hh-mm-ss
 
             //Grab this.name and remove anything after :
