@@ -24,11 +24,17 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Setup
             instancesRunning.Add(this.Name);
 
             this.MinimizeBox = false;
-            //this.MaximizeBox = false;
 
             // Perform the loading operations asynchronously
             await Task.Run(() => LoadServers());
-            
+
+            //Adding down here maxed a "cool" effect, showing it's getting maximized
+            //Check to see if the form needs to be maximized
+            if (Properties.Settings.Default.startMenu_startMaximized)
+            {
+                this.WindowState = FormWindowState.Maximized;
+            }
+
             // Show the form after loading is complete
             this.Show();
         }

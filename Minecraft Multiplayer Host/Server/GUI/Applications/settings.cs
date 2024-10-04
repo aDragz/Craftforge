@@ -1,21 +1,21 @@
 ﻿using Minecraft_Multiplayer_Host.Server.GUI.Console;
-using Minecraft_Multiplayer_Host.Server.Themes.Themes;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Configuration;
-using System.Data;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Minecraft_Multiplayer_Host.Server.GUI.Applications
 {
     public partial class settings : Form
     {
+
+        /*Naming Scheme for the settings
+        
+        Panel Name: {Type}Panel
+        Label Name: {Type}{Panel}Panel (Example: MaximizeConsolePanel)
+
+        */
 
         private readonly string themeLocation = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\Minecraft-Multiplayer-Host\\Themes\\");
 
@@ -27,23 +27,47 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Applications
 
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
         {
+            TreeNode currentNode = e.Node;
+
+            string topChildNode = GetTopChildNodeText(currentNode);
+
             if (e.Node.Parent == null) //Parent is null, so it is a root node
             {
-                ChangeTab(e.Node.Text, null);
+                ChangeTab(e.Node.Text, null, topChildNode);
             }
             else
             {
-                TreeNode currentNode = e.Node;
-
                 while (currentNode.Parent != null)
                 {
                     currentNode = currentNode.Parent;
                 }
-                ChangeTab(currentNode.Text, e.Node.Text);
+                ChangeTab(currentNode.Text, e.Node.Text, topChildNode);
             }
         }
 
-        private void ChangeTab(String parentName, String childName)
+        private string GetTopChildNodeText(TreeNode currentNode)
+        {
+            string oldNode = null; //Saves previois node, so it can be used to get the old name before the parent node
+
+            //Loop through the parent nodes until the root node is found
+            while (currentNode.Parent != null)
+            {
+                currentNode = currentNode.Parent;
+
+                //Check if the parent is the root node
+                if (currentNode.Parent == null)
+                {
+                    //Return the old node before it is set, if it is the root node
+                    break;
+                }
+
+                //Not the root node, so set the old node as the second to top node
+                oldNode = currentNode.Text;
+            }
+            return oldNode;
+        }
+
+        private void ChangeTab(string parentName, string childName, string topChildName)
         {
             if (childName == null)
             {
@@ -69,16 +93,26 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Applications
             }
 
             //Grab each Label from the tab, and check the name. If it is the name of the child, focus on the label
-
             foreach (Control control in tabControl1.SelectedTab.Controls)
             {
-                if (control is Label)
+                if (control is Panel panel)
                 {
-                    Label label = (Label)control;
-
-                    if (label.Name == childName)
+                    //Check panel name
+                    if (panel.Name.Replace("Panel", "") == topChildName)
                     {
-                        label.Focus();
+                        foreach (Control panelControl in panel.Controls)
+                        {
+                            if (panelControl is Label label)
+                            {
+                                //Grab the selected tab name
+                                string selectedTabName = panel.Name;
+
+                                if (label.Name.Replace(selectedTabName, "") == childName)
+                                {
+                                    label.Focus();
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -97,7 +131,7 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Applications
                             TextBox textBox = (TextBox)control;
 
                             //Try to get the value from the settings file
-                            String settingValue = Properties.Settings.Default[control.Name] as String; //Using as String to try to convert, and will be null if it fails
+                            string settingValue = Properties.Settings.Default[control.Name] as String; //Using as String to try to convert, and will be null if it fails
 
                             if (!string.IsNullOrEmpty(settingValue))
                             {
@@ -129,33 +163,59 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Applications
         private void settings_Load(object sender, EventArgs e)
         {
             //Load themes
-
             loadThemesList();
 
+            //Load Settings
+            loadSettingsText();
+
+            //Tab Control
+            tabControl1.ItemSize = new Size(0, 1); //Hide the tabs
+        }
+
+        private void loadSettingsText()
+        {
+            loadTerminalSettings();
+            loadStartupSettings();
+        }
+
+        private void loadTerminalSettings()
+        {
             //Grab current theme
             string currentTheme = Properties.Settings.Default.Theme;
 
+            bool terminal_startMaximized = Properties.Settings.Default.terminal_startMaximized;
+
             //Set the current theme textbox
-            themeList.Text = currentTheme;
+            themeListConsolePanel.Text = currentTheme;
+
+            maximizedListConsolePanel.Text = terminal_startMaximized.ToString();
+        }
+
+        private void loadStartupSettings()
+        {
+            //Grab the startup settings
+            bool startMenu_startMaximized = Properties.Settings.Default.startMenu_startMaximized;
+
+            MaximizedListStartupPanel.Text = startMenu_startMaximized.ToString();
         }
 
         private void loadThemesList()
         {
             //Grab all files from location and add to list
-            foreach (String file in Directory.GetFiles(themeLocation))
+            foreach (string file in Directory.GetFiles(themeLocation))
             {
                 //Add the file to the list
-                themeList.Items.Add(Path.GetFileNameWithoutExtension(file));
+                themeListConsolePanel.Items.Add(Path.GetFileNameWithoutExtension(file));
             }
         }
 
         private void themeList_SelectedIndexChanged(object sender, EventArgs e)
         {
             //Change the theme
-            if (themeList.SelectedItem != null)
+            if (themeListConsolePanel.SelectedItem != null)
             {
                 //Change the theme
-                Properties.Settings.Default.Theme = themeList.SelectedItem.ToString();
+                Properties.Settings.Default.Theme = themeListConsolePanel.SelectedItem.ToString();
                 Properties.Settings.Default.Save();
 
                 //Update the theme
@@ -168,6 +228,26 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Applications
                     }
                 }
             }
+        }
+
+        private void maximizedOnStartup_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //Grab the value
+            bool startMaximized = bool.Parse(MaximizedListStartupPanel.Text);
+
+            //Save the value
+            Properties.Settings.Default.startMenu_startMaximized = startMaximized;
+            Properties.Settings.Default.Save();
+        }
+
+        private void maximizedListConsolePanel_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //Grab the value
+            bool startMaximized = bool.Parse(maximizedListConsolePanel.Text);
+
+            //Save the value
+            Properties.Settings.Default.terminal_startMaximized = startMaximized;
+            Properties.Settings.Default.Save();
         }
     }
 }

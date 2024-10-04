@@ -17,7 +17,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -111,6 +110,12 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
         private void InitializeTheme()
         {
             Theme.initializeTheme(this, serverTabsPanel);
+
+            //Check if this needs to be maximized
+            if (Settings.Default.terminal_startMaximized)
+            {
+                this.WindowState = FormWindowState.Maximized;
+            }
         }
 
         public static void InitializeThemeStatic(Terminal instance)
@@ -147,7 +152,7 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
             {
                 Icon = SystemIcons.Application,
                 Text = "Minecraft Multiplayer Host",
-                Visible = true
+                Visible = false
             };
         }
 

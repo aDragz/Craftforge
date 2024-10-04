@@ -28,32 +28,43 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Theme");
-            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Test");
-            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Buttons", new System.Windows.Forms.TreeNode[] {
-            treeNode9});
-            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("Colour");
-            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("Appearance", new System.Windows.Forms.TreeNode[] {
-            treeNode8,
-            treeNode10,
-            treeNode11});
-            System.Windows.Forms.TreeNode treeNode13 = new System.Windows.Forms.TreeNode("Default Tab");
-            System.Windows.Forms.TreeNode treeNode14 = new System.Windows.Forms.TreeNode("Startup", new System.Windows.Forms.TreeNode[] {
-            treeNode13});
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Buttons");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Theme", new System.Windows.Forms.TreeNode[] {
+            treeNode1});
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Maximize");
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Console", new System.Windows.Forms.TreeNode[] {
+            treeNode2,
+            treeNode3});
+            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Maximize");
+            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Node2");
+            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("Startup", new System.Windows.Forms.TreeNode[] {
+            treeNode5,
+            treeNode6});
+            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Appearance", new System.Windows.Forms.TreeNode[] {
+            treeNode4,
+            treeNode7});
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.saveBtn = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.Appearance = new System.Windows.Forms.TabPage();
-            this.themeList = new System.Windows.Forms.ComboBox();
-            this.Theme = new System.Windows.Forms.Label();
-            this.Startup = new System.Windows.Forms.TabPage();
+            this.StartupPanel = new System.Windows.Forms.Panel();
+            this.Startup = new System.Windows.Forms.Label();
+            this.MaximizeStartupPanel = new System.Windows.Forms.Label();
+            this.MaximizedListStartupPanel = new System.Windows.Forms.ComboBox();
+            this.ConsolePanel = new System.Windows.Forms.Panel();
+            this.MaximizeConsolePanel = new System.Windows.Forms.Label();
+            this.maximizedListConsolePanel = new System.Windows.Forms.ComboBox();
+            this.Console = new System.Windows.Forms.Label();
+            this.ThemeConsolePanel = new System.Windows.Forms.Label();
+            this.themeListConsolePanel = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.Appearance.SuspendLayout();
+            this.StartupPanel.SuspendLayout();
+            this.ConsolePanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // treeView1
@@ -61,23 +72,24 @@
             this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeView1.Location = new System.Drawing.Point(0, 0);
             this.treeView1.Name = "treeView1";
-            treeNode8.Name = "themeList";
-            treeNode8.Text = "Theme";
-            treeNode9.Name = "Test";
-            treeNode9.Text = "Test";
-            treeNode10.Name = "AppearanceButtons";
-            treeNode10.Text = "Buttons";
-            treeNode11.Name = "AppearanceColour";
-            treeNode11.Text = "Colour";
-            treeNode12.Name = "Appearance";
-            treeNode12.Text = "Appearance";
-            treeNode13.Name = "StartupDefaultTab";
-            treeNode13.Text = "Default Tab";
-            treeNode14.Name = "Startup";
-            treeNode14.Text = "Startup";
+            treeNode1.Name = "AppearanceButtons";
+            treeNode1.Text = "Buttons";
+            treeNode2.Name = "themeList";
+            treeNode2.Text = "Theme";
+            treeNode3.Name = "MaximizeConsole";
+            treeNode3.Text = "Maximize";
+            treeNode4.Name = "Node1";
+            treeNode4.Text = "Console";
+            treeNode5.Name = "Node1";
+            treeNode5.Text = "Maximize";
+            treeNode6.Name = "Node2";
+            treeNode6.Text = "Node2";
+            treeNode7.Name = "StartupNode";
+            treeNode7.Text = "Startup";
+            treeNode8.Name = "Appearance";
+            treeNode8.Text = "Appearance";
             this.treeView1.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode12,
-            treeNode14});
+            treeNode8});
             this.treeView1.Size = new System.Drawing.Size(419, 664);
             this.treeView1.TabIndex = 0;
             this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
@@ -90,7 +102,6 @@
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.saveBtn);
             this.splitContainer1.Panel1.Controls.Add(this.treeView1);
             // 
             // splitContainer1.Panel2
@@ -100,32 +111,22 @@
             this.splitContainer1.SplitterDistance = 419;
             this.splitContainer1.TabIndex = 1;
             // 
-            // saveBtn
-            // 
-            this.saveBtn.Location = new System.Drawing.Point(3, 578);
-            this.saveBtn.Name = "saveBtn";
-            this.saveBtn.Size = new System.Drawing.Size(391, 74);
-            this.saveBtn.TabIndex = 6;
-            this.saveBtn.Text = "save";
-            this.saveBtn.UseVisualStyleBackColor = true;
-            this.saveBtn.Click += new System.EventHandler(this.button1_Click);
-            // 
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.Appearance);
-            this.tabControl1.Controls.Add(this.Startup);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(835, 664);
+            this.tabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.tabControl1.TabIndex = 0;
             // 
             // Appearance
             // 
             this.Appearance.AutoScroll = true;
-            this.Appearance.Controls.Add(this.themeList);
-            this.Appearance.Controls.Add(this.Theme);
+            this.Appearance.Controls.Add(this.StartupPanel);
+            this.Appearance.Controls.Add(this.ConsolePanel);
             this.Appearance.Location = new System.Drawing.Point(4, 29);
             this.Appearance.Name = "Appearance";
             this.Appearance.Padding = new System.Windows.Forms.Padding(3);
@@ -134,33 +135,113 @@
             this.Appearance.Text = "Appearance";
             this.Appearance.UseVisualStyleBackColor = true;
             // 
-            // themeList
+            // StartupPanel
             // 
-            this.themeList.FormattingEnabled = true;
-            this.themeList.Location = new System.Drawing.Point(6, 26);
-            this.themeList.Name = "themeList";
-            this.themeList.Size = new System.Drawing.Size(415, 28);
-            this.themeList.TabIndex = 6;
-            this.themeList.SelectedIndexChanged += new System.EventHandler(this.themeList_SelectedIndexChanged);
-            // 
-            // Theme
-            // 
-            this.Theme.AutoSize = true;
-            this.Theme.Location = new System.Drawing.Point(6, 3);
-            this.Theme.Name = "Theme";
-            this.Theme.Size = new System.Drawing.Size(65, 20);
-            this.Theme.TabIndex = 1;
-            this.Theme.Text = "Buttons";
+            this.StartupPanel.Controls.Add(this.Startup);
+            this.StartupPanel.Controls.Add(this.MaximizeStartupPanel);
+            this.StartupPanel.Controls.Add(this.MaximizedListStartupPanel);
+            this.StartupPanel.Location = new System.Drawing.Point(0, 205);
+            this.StartupPanel.Name = "StartupPanel";
+            this.StartupPanel.Size = new System.Drawing.Size(820, 130);
+            this.StartupPanel.TabIndex = 11;
             // 
             // Startup
             // 
-            this.Startup.Location = new System.Drawing.Point(4, 29);
+            this.Startup.AutoSize = true;
+            this.Startup.Font = new System.Drawing.Font("Consolas", 16F);
+            this.Startup.Location = new System.Drawing.Point(0, 0);
             this.Startup.Name = "Startup";
-            this.Startup.Padding = new System.Windows.Forms.Padding(3);
-            this.Startup.Size = new System.Drawing.Size(827, 631);
-            this.Startup.TabIndex = 1;
+            this.Startup.Size = new System.Drawing.Size(143, 37);
+            this.Startup.TabIndex = 9;
             this.Startup.Text = "Startup";
-            this.Startup.UseVisualStyleBackColor = true;
+            // 
+            // MaximizeStartupPanel
+            // 
+            this.MaximizeStartupPanel.AutoSize = true;
+            this.MaximizeStartupPanel.Font = new System.Drawing.Font("Consolas", 12F);
+            this.MaximizeStartupPanel.Location = new System.Drawing.Point(15, 40);
+            this.MaximizeStartupPanel.Name = "MaximizeStartupPanel";
+            this.MaximizeStartupPanel.Size = new System.Drawing.Size(259, 28);
+            this.MaximizeStartupPanel.TabIndex = 1;
+            this.MaximizeStartupPanel.Text = "Maximize on Startup";
+            // 
+            // MaximizedListStartupPanel
+            // 
+            this.MaximizedListStartupPanel.Font = new System.Drawing.Font("Consolas", 12F);
+            this.MaximizedListStartupPanel.FormattingEnabled = true;
+            this.MaximizedListStartupPanel.Items.AddRange(new object[] {
+            "True",
+            "False"});
+            this.MaximizedListStartupPanel.Location = new System.Drawing.Point(20, 70);
+            this.MaximizedListStartupPanel.Name = "MaximizedListStartupPanel";
+            this.MaximizedListStartupPanel.Size = new System.Drawing.Size(415, 36);
+            this.MaximizedListStartupPanel.TabIndex = 6;
+            this.MaximizedListStartupPanel.SelectedIndexChanged += new System.EventHandler(this.maximizedOnStartup_SelectedIndexChanged);
+            // 
+            // ConsolePanel
+            // 
+            this.ConsolePanel.Controls.Add(this.MaximizeConsolePanel);
+            this.ConsolePanel.Controls.Add(this.maximizedListConsolePanel);
+            this.ConsolePanel.Controls.Add(this.Console);
+            this.ConsolePanel.Controls.Add(this.ThemeConsolePanel);
+            this.ConsolePanel.Controls.Add(this.themeListConsolePanel);
+            this.ConsolePanel.Location = new System.Drawing.Point(0, 0);
+            this.ConsolePanel.Name = "ConsolePanel";
+            this.ConsolePanel.Size = new System.Drawing.Size(820, 200);
+            this.ConsolePanel.TabIndex = 10;
+            // 
+            // MaximizeConsolePanel
+            // 
+            this.MaximizeConsolePanel.AutoSize = true;
+            this.MaximizeConsolePanel.Font = new System.Drawing.Font("Consolas", 12F);
+            this.MaximizeConsolePanel.Location = new System.Drawing.Point(15, 120);
+            this.MaximizeConsolePanel.Name = "MaximizeConsolePanel";
+            this.MaximizeConsolePanel.Size = new System.Drawing.Size(259, 28);
+            this.MaximizeConsolePanel.TabIndex = 10;
+            this.MaximizeConsolePanel.Text = "Maximize on Startup";
+            // 
+            // maximizedListConsolePanel
+            // 
+            this.maximizedListConsolePanel.Font = new System.Drawing.Font("Consolas", 12F);
+            this.maximizedListConsolePanel.FormattingEnabled = true;
+            this.maximizedListConsolePanel.Items.AddRange(new object[] {
+            "True",
+            "False"});
+            this.maximizedListConsolePanel.Location = new System.Drawing.Point(20, 150);
+            this.maximizedListConsolePanel.Name = "maximizedListConsolePanel";
+            this.maximizedListConsolePanel.Size = new System.Drawing.Size(415, 36);
+            this.maximizedListConsolePanel.TabIndex = 11;
+            this.maximizedListConsolePanel.SelectedIndexChanged += new System.EventHandler(this.maximizedListConsolePanel_SelectedIndexChanged);
+            // 
+            // Console
+            // 
+            this.Console.AutoSize = true;
+            this.Console.Font = new System.Drawing.Font("Consolas", 16F);
+            this.Console.Location = new System.Drawing.Point(0, 0);
+            this.Console.Name = "Console";
+            this.Console.Size = new System.Drawing.Size(143, 37);
+            this.Console.TabIndex = 9;
+            this.Console.Text = "Console";
+            // 
+            // ThemeConsolePanel
+            // 
+            this.ThemeConsolePanel.AutoSize = true;
+            this.ThemeConsolePanel.Font = new System.Drawing.Font("Consolas", 12F);
+            this.ThemeConsolePanel.Location = new System.Drawing.Point(15, 40);
+            this.ThemeConsolePanel.Name = "ThemeConsolePanel";
+            this.ThemeConsolePanel.Size = new System.Drawing.Size(77, 28);
+            this.ThemeConsolePanel.TabIndex = 1;
+            this.ThemeConsolePanel.Text = "Theme";
+            // 
+            // themeListConsolePanel
+            // 
+            this.themeListConsolePanel.Font = new System.Drawing.Font("Consolas", 12F);
+            this.themeListConsolePanel.FormattingEnabled = true;
+            this.themeListConsolePanel.Location = new System.Drawing.Point(20, 70);
+            this.themeListConsolePanel.Name = "themeListConsolePanel";
+            this.themeListConsolePanel.Size = new System.Drawing.Size(415, 36);
+            this.themeListConsolePanel.TabIndex = 6;
+            this.themeListConsolePanel.SelectedIndexChanged += new System.EventHandler(this.themeList_SelectedIndexChanged);
             // 
             // settings
             // 
@@ -178,7 +259,10 @@
             this.splitContainer1.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
             this.Appearance.ResumeLayout(false);
-            this.Appearance.PerformLayout();
+            this.StartupPanel.ResumeLayout(false);
+            this.StartupPanel.PerformLayout();
+            this.ConsolePanel.ResumeLayout(false);
+            this.ConsolePanel.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -189,9 +273,15 @@
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage Appearance;
-        private System.Windows.Forms.TabPage Startup;
-        private System.Windows.Forms.Label Theme;
-        private System.Windows.Forms.Button saveBtn;
-        private System.Windows.Forms.ComboBox themeList;
+        private System.Windows.Forms.Label ThemeConsolePanel;
+        private System.Windows.Forms.ComboBox themeListConsolePanel;
+        private System.Windows.Forms.Label Console;
+        private System.Windows.Forms.Panel ConsolePanel;
+        private System.Windows.Forms.Panel StartupPanel;
+        private System.Windows.Forms.Label MaximizeStartupPanel;
+        private System.Windows.Forms.ComboBox MaximizedListStartupPanel;
+        private System.Windows.Forms.Label Startup;
+        private System.Windows.Forms.Label MaximizeConsolePanel;
+        private System.Windows.Forms.ComboBox maximizedListConsolePanel;
     }
 }
