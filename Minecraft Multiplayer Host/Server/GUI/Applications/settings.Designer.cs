@@ -28,37 +28,34 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.TreeNode treeNode17 = new System.Windows.Forms.TreeNode("Buttons");
-            System.Windows.Forms.TreeNode treeNode18 = new System.Windows.Forms.TreeNode("Theme", new System.Windows.Forms.TreeNode[] {
-            treeNode17});
-            System.Windows.Forms.TreeNode treeNode19 = new System.Windows.Forms.TreeNode("Maximize");
-            System.Windows.Forms.TreeNode treeNode20 = new System.Windows.Forms.TreeNode("Console", new System.Windows.Forms.TreeNode[] {
-            treeNode18,
-            treeNode19});
-            System.Windows.Forms.TreeNode treeNode21 = new System.Windows.Forms.TreeNode("Maximize");
-            System.Windows.Forms.TreeNode treeNode22 = new System.Windows.Forms.TreeNode("Node2");
-            System.Windows.Forms.TreeNode treeNode23 = new System.Windows.Forms.TreeNode("Startup", new System.Windows.Forms.TreeNode[] {
-            treeNode21,
-            treeNode22});
-            System.Windows.Forms.TreeNode treeNode24 = new System.Windows.Forms.TreeNode("Appearance", new System.Windows.Forms.TreeNode[] {
-            treeNode20,
-            treeNode23});
+            System.Windows.Forms.TreeNode treeNode33 = new System.Windows.Forms.TreeNode("Buttons");
+            System.Windows.Forms.TreeNode treeNode34 = new System.Windows.Forms.TreeNode("Theme", new System.Windows.Forms.TreeNode[] {
+            treeNode33});
+            System.Windows.Forms.TreeNode treeNode35 = new System.Windows.Forms.TreeNode("Maximize");
+            System.Windows.Forms.TreeNode treeNode36 = new System.Windows.Forms.TreeNode("Console", new System.Windows.Forms.TreeNode[] {
+            treeNode34,
+            treeNode35});
+            System.Windows.Forms.TreeNode treeNode37 = new System.Windows.Forms.TreeNode("Maximize");
+            System.Windows.Forms.TreeNode treeNode38 = new System.Windows.Forms.TreeNode("Node2");
+            System.Windows.Forms.TreeNode treeNode39 = new System.Windows.Forms.TreeNode("Startup", new System.Windows.Forms.TreeNode[] {
+            treeNode37,
+            treeNode38});
+            System.Windows.Forms.TreeNode treeNode40 = new System.Windows.Forms.TreeNode("Appearance", new System.Windows.Forms.TreeNode[] {
+            treeNode36,
+            treeNode39});
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.Appearance = new System.Windows.Forms.TabPage();
             this.StartupPanel = new System.Windows.Forms.Panel();
             this.Startup = new System.Windows.Forms.Label();
-            this.MaximizeStartupPanel = new System.Windows.Forms.Label();
-            this.MaximizedListStartupPanel = new System.Windows.Forms.ComboBox();
             this.ConsolePanel = new System.Windows.Forms.Panel();
-            this.AutoStartListConsolePanel = new System.Windows.Forms.ComboBox();
-            this.AutoStartConsolePanel = new System.Windows.Forms.Label();
-            this.MaximizeConsolePanel = new System.Windows.Forms.Label();
-            this.maximizedListConsolePanel = new System.Windows.Forms.ComboBox();
             this.Console = new System.Windows.Forms.Label();
             this.ThemeConsolePanel = new System.Windows.Forms.Label();
             this.themeListConsolePanel = new System.Windows.Forms.ComboBox();
+            this.MaximizeConsolePanel = new System.Windows.Forms.CheckBox();
+            this.AutoStartConsolePanel = new System.Windows.Forms.CheckBox();
+            this.MaximizeStartupPanel = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -74,24 +71,24 @@
             this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeView1.Location = new System.Drawing.Point(0, 0);
             this.treeView1.Name = "treeView1";
-            treeNode17.Name = "AppearanceButtons";
-            treeNode17.Text = "Buttons";
-            treeNode18.Name = "themeList";
-            treeNode18.Text = "Theme";
-            treeNode19.Name = "MaximizeConsole";
-            treeNode19.Text = "Maximize";
-            treeNode20.Name = "Node1";
-            treeNode20.Text = "Console";
-            treeNode21.Name = "Node1";
-            treeNode21.Text = "Maximize";
-            treeNode22.Name = "Node2";
-            treeNode22.Text = "Node2";
-            treeNode23.Name = "StartupNode";
-            treeNode23.Text = "Startup";
-            treeNode24.Name = "Appearance";
-            treeNode24.Text = "Appearance";
+            treeNode33.Name = "AppearanceButtons";
+            treeNode33.Text = "Buttons";
+            treeNode34.Name = "themeList";
+            treeNode34.Text = "Theme";
+            treeNode35.Name = "MaximizeConsole";
+            treeNode35.Text = "Maximize";
+            treeNode36.Name = "Node1";
+            treeNode36.Text = "Console";
+            treeNode37.Name = "Node1";
+            treeNode37.Text = "Maximize";
+            treeNode38.Name = "Node2";
+            treeNode38.Text = "Node2";
+            treeNode39.Name = "StartupNode";
+            treeNode39.Text = "Startup";
+            treeNode40.Name = "Appearance";
+            treeNode40.Text = "Appearance";
             this.treeView1.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode24});
+            treeNode40});
             this.treeView1.Size = new System.Drawing.Size(419, 664);
             this.treeView1.TabIndex = 0;
             this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
@@ -139,10 +136,9 @@
             // 
             // StartupPanel
             // 
-            this.StartupPanel.Controls.Add(this.Startup);
             this.StartupPanel.Controls.Add(this.MaximizeStartupPanel);
-            this.StartupPanel.Controls.Add(this.MaximizedListStartupPanel);
-            this.StartupPanel.Location = new System.Drawing.Point(0, 285);
+            this.StartupPanel.Controls.Add(this.Startup);
+            this.StartupPanel.Location = new System.Drawing.Point(0, 205);
             this.StartupPanel.Name = "StartupPanel";
             this.StartupPanel.Size = new System.Drawing.Size(820, 130);
             this.StartupPanel.TabIndex = 11;
@@ -157,88 +153,17 @@
             this.Startup.TabIndex = 9;
             this.Startup.Text = "Startup";
             // 
-            // MaximizeStartupPanel
-            // 
-            this.MaximizeStartupPanel.AutoSize = true;
-            this.MaximizeStartupPanel.Font = new System.Drawing.Font("Consolas", 12F);
-            this.MaximizeStartupPanel.Location = new System.Drawing.Point(15, 40);
-            this.MaximizeStartupPanel.Name = "MaximizeStartupPanel";
-            this.MaximizeStartupPanel.Size = new System.Drawing.Size(259, 28);
-            this.MaximizeStartupPanel.TabIndex = 1;
-            this.MaximizeStartupPanel.Text = "Maximize on Startup";
-            // 
-            // MaximizedListStartupPanel
-            // 
-            this.MaximizedListStartupPanel.Font = new System.Drawing.Font("Consolas", 12F);
-            this.MaximizedListStartupPanel.FormattingEnabled = true;
-            this.MaximizedListStartupPanel.Items.AddRange(new object[] {
-            "True",
-            "False"});
-            this.MaximizedListStartupPanel.Location = new System.Drawing.Point(20, 70);
-            this.MaximizedListStartupPanel.Name = "MaximizedListStartupPanel";
-            this.MaximizedListStartupPanel.Size = new System.Drawing.Size(415, 36);
-            this.MaximizedListStartupPanel.TabIndex = 6;
-            this.MaximizedListStartupPanel.SelectedIndexChanged += new System.EventHandler(this.maximizedOnStartup_SelectedIndexChanged);
-            // 
             // ConsolePanel
             // 
-            this.ConsolePanel.Controls.Add(this.AutoStartListConsolePanel);
             this.ConsolePanel.Controls.Add(this.AutoStartConsolePanel);
             this.ConsolePanel.Controls.Add(this.MaximizeConsolePanel);
-            this.ConsolePanel.Controls.Add(this.maximizedListConsolePanel);
             this.ConsolePanel.Controls.Add(this.Console);
             this.ConsolePanel.Controls.Add(this.ThemeConsolePanel);
             this.ConsolePanel.Controls.Add(this.themeListConsolePanel);
             this.ConsolePanel.Location = new System.Drawing.Point(0, 0);
             this.ConsolePanel.Name = "ConsolePanel";
-            this.ConsolePanel.Size = new System.Drawing.Size(820, 280);
+            this.ConsolePanel.Size = new System.Drawing.Size(820, 200);
             this.ConsolePanel.TabIndex = 10;
-            // 
-            // AutoStartListConsolePanel
-            // 
-            this.AutoStartListConsolePanel.Font = new System.Drawing.Font("Consolas", 12F);
-            this.AutoStartListConsolePanel.FormattingEnabled = true;
-            this.AutoStartListConsolePanel.Items.AddRange(new object[] {
-            "True",
-            "False"});
-            this.AutoStartListConsolePanel.Location = new System.Drawing.Point(20, 230);
-            this.AutoStartListConsolePanel.Name = "AutoStartListConsolePanel";
-            this.AutoStartListConsolePanel.Size = new System.Drawing.Size(415, 36);
-            this.AutoStartListConsolePanel.TabIndex = 13;
-            this.AutoStartListConsolePanel.SelectedIndexChanged += new System.EventHandler(this.AutoStartListConsolePanel_SelectedIndexChanged);
-            // 
-            // AutoStartConsolePanel
-            // 
-            this.AutoStartConsolePanel.AutoSize = true;
-            this.AutoStartConsolePanel.Font = new System.Drawing.Font("Consolas", 12F);
-            this.AutoStartConsolePanel.Location = new System.Drawing.Point(15, 200);
-            this.AutoStartConsolePanel.Name = "AutoStartConsolePanel";
-            this.AutoStartConsolePanel.Size = new System.Drawing.Size(220, 28);
-            this.AutoStartConsolePanel.TabIndex = 12;
-            this.AutoStartConsolePanel.Text = "Autostart Server";
-            // 
-            // MaximizeConsolePanel
-            // 
-            this.MaximizeConsolePanel.AutoSize = true;
-            this.MaximizeConsolePanel.Font = new System.Drawing.Font("Consolas", 12F);
-            this.MaximizeConsolePanel.Location = new System.Drawing.Point(15, 120);
-            this.MaximizeConsolePanel.Name = "MaximizeConsolePanel";
-            this.MaximizeConsolePanel.Size = new System.Drawing.Size(259, 28);
-            this.MaximizeConsolePanel.TabIndex = 10;
-            this.MaximizeConsolePanel.Text = "Maximize on Startup";
-            // 
-            // maximizedListConsolePanel
-            // 
-            this.maximizedListConsolePanel.Font = new System.Drawing.Font("Consolas", 12F);
-            this.maximizedListConsolePanel.FormattingEnabled = true;
-            this.maximizedListConsolePanel.Items.AddRange(new object[] {
-            "True",
-            "False"});
-            this.maximizedListConsolePanel.Location = new System.Drawing.Point(20, 150);
-            this.maximizedListConsolePanel.Name = "maximizedListConsolePanel";
-            this.maximizedListConsolePanel.Size = new System.Drawing.Size(415, 36);
-            this.maximizedListConsolePanel.TabIndex = 11;
-            this.maximizedListConsolePanel.SelectedIndexChanged += new System.EventHandler(this.maximizedListConsolePanel_SelectedIndexChanged);
             // 
             // Console
             // 
@@ -269,6 +194,42 @@
             this.themeListConsolePanel.Size = new System.Drawing.Size(415, 36);
             this.themeListConsolePanel.TabIndex = 6;
             this.themeListConsolePanel.SelectedIndexChanged += new System.EventHandler(this.themeList_SelectedIndexChanged);
+            // 
+            // MaximizeConsolePanel
+            // 
+            this.MaximizeConsolePanel.AutoSize = true;
+            this.MaximizeConsolePanel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.MaximizeConsolePanel.Location = new System.Drawing.Point(20, 120);
+            this.MaximizeConsolePanel.Name = "MaximizeConsolePanel";
+            this.MaximizeConsolePanel.Size = new System.Drawing.Size(255, 33);
+            this.MaximizeConsolePanel.TabIndex = 14;
+            this.MaximizeConsolePanel.Text = "Maximize on Startup";
+            this.MaximizeConsolePanel.UseVisualStyleBackColor = true;
+            this.MaximizeConsolePanel.CheckedChanged += new System.EventHandler(this.MaximizeConsolePanel_CheckedChanged);
+            // 
+            // AutoStartConsolePanel
+            // 
+            this.AutoStartConsolePanel.AutoSize = true;
+            this.AutoStartConsolePanel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.AutoStartConsolePanel.Location = new System.Drawing.Point(20, 160);
+            this.AutoStartConsolePanel.Name = "AutoStartConsolePanel";
+            this.AutoStartConsolePanel.Size = new System.Drawing.Size(334, 33);
+            this.AutoStartConsolePanel.TabIndex = 15;
+            this.AutoStartConsolePanel.Text = "Auto Start Server on Startup";
+            this.AutoStartConsolePanel.UseVisualStyleBackColor = true;
+            this.AutoStartConsolePanel.CheckedChanged += new System.EventHandler(this.AutoStartConsolePanel_CheckedChanged);
+            // 
+            // MaximizeStartupPanel
+            // 
+            this.MaximizeStartupPanel.AutoSize = true;
+            this.MaximizeStartupPanel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.MaximizeStartupPanel.Location = new System.Drawing.Point(20, 40);
+            this.MaximizeStartupPanel.Name = "MaximizeStartupPanel";
+            this.MaximizeStartupPanel.Size = new System.Drawing.Size(255, 33);
+            this.MaximizeStartupPanel.TabIndex = 16;
+            this.MaximizeStartupPanel.Text = "Maximize on Startup";
+            this.MaximizeStartupPanel.UseVisualStyleBackColor = true;
+            this.MaximizeStartupPanel.CheckedChanged += new System.EventHandler(this.MaximizeStartupPanel_CheckedChanged);
             // 
             // settings
             // 
@@ -305,12 +266,9 @@
         private System.Windows.Forms.Label Console;
         private System.Windows.Forms.Panel ConsolePanel;
         private System.Windows.Forms.Panel StartupPanel;
-        private System.Windows.Forms.Label MaximizeStartupPanel;
-        private System.Windows.Forms.ComboBox MaximizedListStartupPanel;
         private System.Windows.Forms.Label Startup;
-        private System.Windows.Forms.Label MaximizeConsolePanel;
-        private System.Windows.Forms.ComboBox maximizedListConsolePanel;
-        private System.Windows.Forms.Label AutoStartConsolePanel;
-        private System.Windows.Forms.ComboBox AutoStartListConsolePanel;
+        private System.Windows.Forms.CheckBox MaximizeConsolePanel;
+        private System.Windows.Forms.CheckBox AutoStartConsolePanel;
+        private System.Windows.Forms.CheckBox MaximizeStartupPanel;
     }
 }

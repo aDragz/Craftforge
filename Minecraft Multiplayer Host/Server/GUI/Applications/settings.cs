@@ -17,8 +17,9 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Applications
 
         Spacing:
         Panel = 160px
-        Label = 15px x 80px
-        TextBox = 20px x 80px
+        Label = 15px x 80px [H/W]
+        TextBox = 20px x 80px [H/W]
+        CheckBox = 20px x 20px [H/W]
 
         */
 
@@ -194,8 +195,8 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Applications
             //Set the current theme textbox
             themeListConsolePanel.Text = currentTheme;
 
-            maximizedListConsolePanel.Text = terminal_startMaximized.ToString();
-            AutoStartListConsolePanel.Text = terminal_autoStart.ToString();
+            MaximizeConsolePanel.Checked = terminal_startMaximized;
+            AutoStartConsolePanel.Checked = terminal_autoStart;
         }
 
         private void loadStartupSettings()
@@ -203,7 +204,7 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Applications
             //Grab the startup settings
             bool startMenu_startMaximized = Properties.Settings.Default.startMenu_startMaximized;
 
-            MaximizedListStartupPanel.Text = startMenu_startMaximized.ToString();
+            MaximizeStartupPanel.Checked = startMenu_startMaximized;
         }
 
         private void loadThemesList()
@@ -237,30 +238,30 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Applications
             }
         }
 
-        private void maximizedOnStartup_SelectedIndexChanged(object sender, EventArgs e)
+        private void MaximizeStartupPanel_CheckedChanged(object sender, EventArgs e)
         {
             //Grab the value
-            bool startMaximized = bool.Parse(MaximizedListStartupPanel.Text);
+            bool startMaximized = MaximizeStartupPanel.Checked;
 
             //Save the value
             Properties.Settings.Default.startMenu_startMaximized = startMaximized;
             Properties.Settings.Default.Save();
         }
 
-        private void maximizedListConsolePanel_SelectedIndexChanged(object sender, EventArgs e)
+        private void MaximizeConsolePanel_CheckedChanged(object sender, EventArgs e)
         {
             //Grab the value
-            bool startMaximized = bool.Parse(maximizedListConsolePanel.Text);
+            bool startMaximized = MaximizeConsolePanel.Checked;
 
             //Save the value
             Properties.Settings.Default.terminal_startMaximized = startMaximized;
             Properties.Settings.Default.Save();
         }
 
-        private void AutoStartListConsolePanel_SelectedIndexChanged(object sender, EventArgs e)
+        private void AutoStartConsolePanel_CheckedChanged(object sender, EventArgs e)
         {
             //Grab the value
-            bool autoStart = bool.Parse(AutoStartListConsolePanel.Text);
+            bool autoStart = AutoStartConsolePanel.Checked;
 
             //Save the value
             Properties.Settings.Default.terminal_autoStart = autoStart;
