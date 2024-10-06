@@ -30,6 +30,8 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
         static bool errorOccured = false; //If an error has occured, it will make sure the current form toggles buttons
         static bool jarSelectionChanged = false; //If the user has changed the jar selection
 
+        static bool formClosing = false; //If the form is closing, alongside the stop button
+
         static string theme = Settings.Default.Theme;
         static string style = Settings.Default.Style;
 
@@ -58,6 +60,27 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
             serverTabs.ItemSize = new Size(0, 1); //Hide the tabs
 
             tabButtons.resetSideBarButtons(serverTabsPanel, serverTabs); //Generate the side bar buttons
+
+            if (Settings.Default.terminal_autoStart)
+                startBtn_Click(sender, e);
+        }
+
+        private async void Terminal_Close(object sender, FormClosingEventArgs e)
+        {
+            try
+            {
+                if (stopBtn.Enabled == true && isRunning)
+                {
+                    //If the server is running, stop it (and wait for it to stop
+                    e.Cancel = true;
+                    formClosing = true;
+                    stopBtn_Click(sender, e);
+                }
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message);
+            }
         }
 
         private void InitializeSettings()
@@ -152,7 +175,7 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
             {
                 Icon = SystemIcons.Application,
                 Text = "Minecraft Multiplayer Host",
-                Visible = false
+                Visible = false //Don't show the icon
             };
         }
 
@@ -184,6 +207,7 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
 
                 if (!sentStopNotification)
                 {
+                    notifications.Visible = true;
                     //Create notification
                     string serverName = this.Name.Split(':')[0];
 
@@ -194,6 +218,7 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
 
                     sentStartNotification = false;
                     sentStopNotification = true;
+                    notifications.Visible = false;
                 }
 
                 return;
@@ -225,6 +250,7 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
 
                         if (!sentStartNotification)
                         {
+                            notifications.Visible = true;
                             string serverName = this.Name.Split(':')[0];
 
                             notifications.BalloonTipText = $"{serverName} has started!";
@@ -234,6 +260,7 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
 
                             sentStartNotification = true;
                             sentStopNotification = false;
+                            notifications.Visible = false;
                         }
                     }
                     catch (Exception exception)
@@ -247,6 +274,7 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
 
                             if (!sentStopNotification)
                             {
+                                notifications.Visible = true;
                                 //Create notification
                                 string serverName = this.Name.Split(':')[0];
 
@@ -257,6 +285,7 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
 
                                 sentStartNotification = false;
                                 sentStopNotification = true;
+                                notifications.Visible = false;
                             }
                         }
                     }
@@ -650,7 +679,7 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
             startup.Show();
         }
 
-        private void stopBtn_Click(object sender, EventArgs e)
+        private async void stopBtn_Click(object sender, EventArgs e)
         {
             try
             {
@@ -664,11 +693,26 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
                 commands.runCommand("stop", serverProcess, this.serverTabs, consoleID);
 
                 stopBtn.Name = "";
+
+                //Wait for the server to stop
+                while (!serverProcess.HasExited)
+                {
+                    // Wait 1 second
+                    await Task.Run(async () => await Task.Delay(500));
+                    secondaryTerminal.AppendText("\n[Minecraft-Multiplayer-Host INFO] Server is stopping...\n");
+                }
+
+                //add to terminal the server has stopped
+                secondaryTerminal.AppendText("\n[Minecraft-Multiplayer-Host INFO] Server has stopped\n");
                 isRunning = false;
                 resetButtons(this);
-
                 serverProcess.Close();
                 serverProcesses.Remove(consoleID);
+
+                if (formClosing)
+                {
+                    this.Close();
+                }
             }
             catch (Exception exception)
             {

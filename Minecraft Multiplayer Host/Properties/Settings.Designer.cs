@@ -37,6 +37,18 @@ namespace Minecraft_Multiplayer_Host.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool terminal_startMaximized {
+            get {
+                return ((bool)(this["terminal_startMaximized"]));
+            }
+            set {
+                this["terminal_startMaximized"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("default")]
         public string Theme {
             get {
@@ -62,12 +74,12 @@ namespace Minecraft_Multiplayer_Host.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool terminal_startMaximized {
+        public bool terminal_autoStart {
             get {
-                return ((bool)(this["terminal_startMaximized"]));
+                return ((bool)(this["terminal_autoStart"]));
             }
             set {
-                this["terminal_startMaximized"] = value;
+                this["terminal_autoStart"] = value;
             }
         }
     }

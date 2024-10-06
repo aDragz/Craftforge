@@ -693,6 +693,7 @@
             this.Text = "Terminal";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.terminal_Close);
             this.Load += new System.EventHandler(this.Terminal_Load);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Terminal_Close);
             this.serverTabs.ResumeLayout(false);
             this.generalPage.ResumeLayout(false);
             this.serverStatusPanel.ResumeLayout(false);

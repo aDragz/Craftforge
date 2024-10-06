@@ -15,6 +15,11 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Applications
         Panel Name: {Type}Panel
         Label Name: {Type}{Panel}Panel (Example: MaximizeConsolePanel)
 
+        Spacing:
+        Panel = 160px
+        Label = 15px x 80px
+        TextBox = 20px x 80px
+
         */
 
         private readonly string themeLocation = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\Minecraft-Multiplayer-Host\\Themes\\");
@@ -184,11 +189,13 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Applications
             string currentTheme = Properties.Settings.Default.Theme;
 
             bool terminal_startMaximized = Properties.Settings.Default.terminal_startMaximized;
+            bool terminal_autoStart = Properties.Settings.Default.terminal_autoStart;
 
             //Set the current theme textbox
             themeListConsolePanel.Text = currentTheme;
 
             maximizedListConsolePanel.Text = terminal_startMaximized.ToString();
+            AutoStartListConsolePanel.Text = terminal_autoStart.ToString();
         }
 
         private void loadStartupSettings()
@@ -247,6 +254,16 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Applications
 
             //Save the value
             Properties.Settings.Default.terminal_startMaximized = startMaximized;
+            Properties.Settings.Default.Save();
+        }
+
+        private void AutoStartListConsolePanel_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //Grab the value
+            bool autoStart = bool.Parse(AutoStartListConsolePanel.Text);
+
+            //Save the value
+            Properties.Settings.Default.terminal_autoStart = autoStart;
             Properties.Settings.Default.Save();
         }
     }
