@@ -25,7 +25,7 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Classes
             console.Dock = DockStyle.Fill;
             console.Name = "console " + consoleID;
             //Set font to consolas
-            console.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            console.Font = new Font("Consolas", 10F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
             console.ReadOnly = true;
 
             //Set theme to output
@@ -36,13 +36,13 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Classes
             //Create command prompt
             RichTextBox cmd = new RichTextBox();
             cmd.Dock = DockStyle.Bottom;
-            cmd.Size = new System.Drawing.Size(1244, 39);
-            cmd.Location = new System.Drawing.Point(3, 552);
+            cmd.Size = new Size(1244, 30);
+            cmd.Location = new Point(3, 552);
             cmd.Name = "cmd " + consoleID;
             cmd.Multiline = false;
 
             //Set font to consolas
-            cmd.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            cmd.Font = new Font("Consolas", 14F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
 
             //Make cmd enter key event
             cmd.KeyPress += (sender, e) =>
