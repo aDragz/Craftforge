@@ -298,7 +298,7 @@
             this.filesPage.Controls.Add(this.folderList);
             this.filesPage.Location = new System.Drawing.Point(4, 14);
             this.filesPage.Name = "filesPage";
-            this.filesPage.Size = new System.Drawing.Size(1742, 945);
+            this.filesPage.Size = new System.Drawing.Size(1742, 937);
             this.filesPage.TabIndex = 2;
             this.filesPage.Text = "Files";
             this.filesPage.UseVisualStyleBackColor = true;
@@ -309,14 +309,14 @@
             this.folderList.Dock = System.Windows.Forms.DockStyle.Fill;
             this.folderList.Location = new System.Drawing.Point(0, 0);
             this.folderList.Name = "folderList";
-            this.folderList.Size = new System.Drawing.Size(1742, 945);
+            this.folderList.Size = new System.Drawing.Size(1742, 937);
             this.folderList.TabIndex = 0;
             // 
             // pluginsPage
             // 
             this.pluginsPage.Location = new System.Drawing.Point(4, 14);
             this.pluginsPage.Name = "pluginsPage";
-            this.pluginsPage.Size = new System.Drawing.Size(1742, 945);
+            this.pluginsPage.Size = new System.Drawing.Size(1742, 937);
             this.pluginsPage.TabIndex = 4;
             this.pluginsPage.Text = "Plugins";
             this.pluginsPage.UseVisualStyleBackColor = true;
@@ -325,7 +325,7 @@
             // 
             this.schedulerPage.Location = new System.Drawing.Point(4, 14);
             this.schedulerPage.Name = "schedulerPage";
-            this.schedulerPage.Size = new System.Drawing.Size(1742, 945);
+            this.schedulerPage.Size = new System.Drawing.Size(1742, 937);
             this.schedulerPage.TabIndex = 6;
             this.schedulerPage.Text = "Scheduler";
             this.schedulerPage.UseVisualStyleBackColor = true;
@@ -335,7 +335,7 @@
             this.logPage.Controls.Add(this.logsOutput);
             this.logPage.Location = new System.Drawing.Point(4, 14);
             this.logPage.Name = "logPage";
-            this.logPage.Size = new System.Drawing.Size(1742, 945);
+            this.logPage.Size = new System.Drawing.Size(1742, 937);
             this.logPage.TabIndex = 7;
             this.logPage.Text = "Logs";
             this.logPage.UseVisualStyleBackColor = true;
@@ -361,7 +361,7 @@
             this.backupPage.Controls.Add(this.createBackupBtn);
             this.backupPage.Location = new System.Drawing.Point(4, 14);
             this.backupPage.Name = "backupPage";
-            this.backupPage.Size = new System.Drawing.Size(1742, 945);
+            this.backupPage.Size = new System.Drawing.Size(1742, 937);
             this.backupPage.TabIndex = 5;
             this.backupPage.Text = "Backups";
             this.backupPage.UseVisualStyleBackColor = true;
@@ -425,7 +425,7 @@
             this.settingsPage.Font = new System.Drawing.Font("Consolas", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.settingsPage.Location = new System.Drawing.Point(4, 14);
             this.settingsPage.Name = "settingsPage";
-            this.settingsPage.Size = new System.Drawing.Size(1742, 945);
+            this.settingsPage.Size = new System.Drawing.Size(1742, 937);
             this.settingsPage.TabIndex = 3;
             this.settingsPage.Text = "Settings";
             this.settingsPage.UseVisualStyleBackColor = true;
