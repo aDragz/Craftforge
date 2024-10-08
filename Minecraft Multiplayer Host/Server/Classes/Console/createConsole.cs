@@ -10,12 +10,12 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Classes
 {
     internal class createConsole
     {
-        public Terminal createConsoleInTab(Terminal serverInstance, Process serverProcess, int consoleID)
+        public Terminal createConsoleInTab(Terminal serverInstance, Process serverProcess, int consoleID, Terminal terminal)
         {
 
             if (serverInstance.serverTabs.InvokeRequired)
             {
-                serverInstance.serverTabs.Invoke(new Action(() => createConsoleInTab(serverInstance, serverProcess, consoleID)));
+                serverInstance.serverTabs.Invoke(new Action(() => createConsoleInTab(serverInstance, serverProcess, consoleID, terminal)));
                 return serverInstance;
             }
 
@@ -49,7 +49,7 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Classes
             {
                 if (e.KeyChar == (char) Keys.Enter)
                 {
-                    commands.runCommand(cmd.Text, serverProcess, serverInstance.serverTabs, consoleID);
+                    commands.runCommand(cmd.Text, serverProcess, serverInstance.serverTabs, consoleID, terminal);
                     cmd.Clear();
                 }
             };

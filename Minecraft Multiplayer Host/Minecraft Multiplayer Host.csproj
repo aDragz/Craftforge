@@ -94,6 +94,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Server\Classes\Console\Applications\runSettings.cs" />
+    <Compile Include="Server\Classes\Console\CreateConsole\setAffinity.cs" />
     <Compile Include="Server\Classes\Console\Initialize\Files\AddFiles.cs" />
     <Compile Include="Server\Classes\Console\Initialize\Files\ContextMenus\deleteFile.cs" />
     <Compile Include="Server\Classes\Console\Initialize\Files\ContextMenus\openFile.cs" />

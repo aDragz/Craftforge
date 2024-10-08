@@ -104,7 +104,6 @@
             // 
             // serverStatusNetwork
             // 
-            this.serverStatusNetwork.Interval = 1;
             this.serverStatusNetwork.Tick += new System.EventHandler(this.serverStatusNetwork_Tick);
             // 
             // serverTabs

@@ -1,6 +1,7 @@
 ﻿using Minecraft_Multiplayer_Host.Properties;
 using Minecraft_Multiplayer_Host.Server.Classes;
 using Minecraft_Multiplayer_Host.Server.Classes.Console.Applications;
+using Minecraft_Multiplayer_Host.Server.Classes.Console.CreateConsole;
 using Minecraft_Multiplayer_Host.Server.Classes.Console.Initialize.Files;
 using Minecraft_Multiplayer_Host.Server.Classes.Console.Initialize.JarSelection;
 using Minecraft_Multiplayer_Host.Server.Events;
@@ -26,18 +27,17 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
     public partial class Terminal : Form
     {
         public static Dictionary<int, Process> serverProcesses = new Dictionary<int, Process>();
-        static bool isRunning = false; //If the server is running & user tries to open console, it will offer to open a new tab or replace the current one
-        static bool hasStarted = false; //Checks to see if the server is running & started with (! For help, type \"help")
-        static bool errorOccured = false; //If an error has occured, it will make sure the current form toggles buttons
-        static bool jarSelectionChanged = false; //If the user has changed the jar selection
+        bool isRunning = false; //If the server is running & user tries to open console, it will offer to open a new tab or replace the current one
+        bool hasStarted = false; //Checks to see if the server is running & started with (! For help, type \"help")
+        bool errorOccured = false; //If an error has occured, it will make sure the current form toggles buttons
+        bool jarSelectionChanged = false; //If the user has changed the jar selection
 
-        static bool formClosing = false; //If the form is closing, alongside the stop button
+        bool formClosing = false; //If the form is closing, alongside the stop button
 
         static string theme = Settings.Default.Theme;
         static string style = Settings.Default.Style;
 
         private static NotifyIcon notifications;
-
 
         static Dictionary<Process, string> serverProcessesToName = new Dictionary<Process, string>();
 
@@ -48,7 +48,7 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
 
         private void Terminal_Load(object sender, EventArgs e)
         {
-            stopBtn.Name = "";
+            this.stopBtn.Name = "";
             settingsNameTextBox.Text = this.Name;
 
             InitializeSettings(); //Load settings
@@ -70,7 +70,7 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
         {
             try
             {
-                if (stopBtn.Enabled == true && isRunning)
+                if (this.stopBtn.Enabled == true && isRunning)
                 {
                     //If the server is running, stop it (and wait for it to stop
                     e.Cancel = true;
@@ -186,10 +186,8 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
 
             //generateNewServer.create(nameTextBox.Text, IpTextBox.Text, portTextBox.Text, motdTextBox.Text, statusLabel);
         }
-
-        static bool sentStartNotification = false;
-        static bool sentStopNotification = false;
-
+        /*static bool sentStartNotification = false;
+        static bool sentStopNotification = false; - Does not work with multiple windows*/
         private async void serverStatusNetwork_Tick(object sender, EventArgs e)
         {
             //Grab this.name and remove anything after :
@@ -204,9 +202,9 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
             if (errorOccured)
             {
                 isRunning = false;
-                resetButtons(this);
+                resetButtons();
 
-                if (!sentStopNotification)
+                /*if (!sentStopNotification)
                 {
                     notifications.Visible = true;
                     //Create notification
@@ -220,8 +218,8 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
                     sentStartNotification = false;
                     sentStopNotification = true;
                     notifications.Visible = false;
-                }
-
+                }*/
+                errorOccured = false;
                 return;
             }
 
@@ -247,9 +245,9 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
                         statusLabel.Text = $"Server is running at {location} | {settingsIpTextBox.Text}:{settingsPortTextBox.Text} : {this.Name}";
 
                         isRunning = true;
-                        resetButtons(this);
+                        resetButtons();
 
-                        if (!sentStartNotification)
+                        /*if (!sentStartNotification)
                         {
                             notifications.Visible = true;
                             string serverName = this.Name.Split(':')[0];
@@ -262,7 +260,7 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
                             sentStartNotification = true;
                             sentStopNotification = false;
                             notifications.Visible = false;
-                        }
+                        }*/
                     }
                     catch (Exception exception)
                     {
@@ -271,9 +269,9 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
                             statusLabel.Text = $"Server is not running! - {exception.Message}";
 
                             isRunning = false;
-                            resetButtons(this);
+                            resetButtons();
 
-                            if (!sentStopNotification)
+                            /*if (!sentStopNotification)
                             {
                                 notifications.Visible = true;
                                 //Create notification
@@ -287,7 +285,7 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
                                 sentStartNotification = false;
                                 sentStopNotification = true;
                                 notifications.Visible = false;
-                            }
+                            }*/
                         }
                     }
                     finally
@@ -355,11 +353,8 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
             hasStarted = false;
             errorOccured = false;
 
-            sentStartNotification = false;
-            sentStopNotification = false;
-
-            startBtn.Enabled = false;
-            stopBtn.Enabled = false;
+            this.startBtn.Enabled = false;
+            this.stopBtn.Enabled = false;
 
             serverStatusNetwork.Start();
         }
@@ -406,7 +401,7 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
                                         RichTextBox console = (RichTextBox)serverTabs.TabPages[i].Controls[0];
                                         secondaryTerminal.Name = "console " + consoleID;
 
-                                        AppendTextToCommandOutput(e.Data, console, secondaryTerminal, false);
+                                        AppendTextToCommandOutput(e.Data, console, secondaryTerminal, false, this);
                                     }
                                     catch (ArgumentOutOfRangeException)
                                     {
@@ -431,7 +426,7 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
                                     //Check if Error contains "openjdk"
                                     if (e.Data.ToLower().Contains("openjdk"))
                                     {
-                                        AppendTextToCommandOutput("[Minecraft-Multiplayer-Host JAVA] " + e.Data, console, secondaryTerminal, false);
+                                        AppendTextToCommandOutput("[Minecraft-Multiplayer-Host JAVA] " + e.Data, console, secondaryTerminal, false, this);
                                     }
                                     else
                                     {
@@ -445,7 +440,7 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
                                             errorOccured = true;
 
                                             //Toggle buttons
-                                            resetButtons(this);
+                                            resetButtons();
 
                                             // Stop process, to optimize performance because there is no point keeping it running
                                             if (serverProcesses.TryGetValue(consoleID, out Process process))
@@ -467,16 +462,18 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
                     serverProcess.BeginErrorReadLine(); //Start reading the errors
                     serverProcess.BeginOutputReadLine(); //Start reading the output
 
+                    setAffinity.SetProcessAffinity(serverProcess, 1);
+
                     consoleID = serverProcess.Id; //Get the console ID, so we can close it later
 
                     //Set stop button name as the console ID
-                    stopBtn.Name = consoleID.ToString();
+                    this.stopBtn.Name = consoleID.ToString();
                     serverProcesses.Add(consoleID, serverProcess); //Add the process to the dictionary
                     serverProcessesToName.Add(serverProcess, this.Name); //Add the process name to the dictionary
 
                     //Add to tab
                     createConsole createConsole = new createConsole();
-                    createConsole.createConsoleInTab(this, serverProcess, consoleID);
+                    createConsole.createConsoleInTab(this, serverProcess, consoleID, this);
 
                     tabButtons.resetSideBarButtons(serverTabsPanel, serverTabs);
 
@@ -487,31 +484,24 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
             }).ConfigureAwait(false); //Improves performance (Seems to load console faster)
         }
 
-        public void resetButtons(Terminal terminalInstance)
+        public void resetButtons()
         {
-            if (isRunning)
+            Terminal terminal = this;
+
+            if (this.isRunning)
             {
-                try
-                {
-                    terminalInstance.stopBtn.Invoke((MethodInvoker)(() => terminalInstance.stopBtn.Enabled = true));
-                    terminalInstance.startBtn.Invoke((MethodInvoker)(() => terminalInstance.startBtn.Enabled = false));
-                }
-                catch { }
+                terminal.stopBtn.Enabled = true;
+                terminal.startBtn.Enabled = false;
             }
             else
             {
-                try
-                {
-                    terminalInstance.stopBtn.Invoke((MethodInvoker)(() => terminalInstance.stopBtn.Enabled = false));
-                    terminalInstance.startBtn.Invoke((MethodInvoker)(() => terminalInstance.startBtn.Enabled = true));
-                }
-                catch { }
+                terminal.stopBtn.Enabled = false;
+                terminal.startBtn.Enabled = true;
             }
         }
 
-        public static void AppendTextToCommandOutput(string text, RichTextBox consoleOutput, RichTextBox secondaryOutput, bool isSecondary)
+        public static void AppendTextToCommandOutput(string text, RichTextBox consoleOutput, RichTextBox secondaryOutput, bool isSecondary, Terminal terminal)
         {
-
             //Check to see if it contains "! For help, type "help"
             if (text.Contains("! For help, type \"help\"") || text.Contains("Done ("))
             {
@@ -525,8 +515,8 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
                     secondaryOutput.AppendText("\n");
                     secondaryOutput.AppendText("[Minecraft-Multiplayer-Host INFO] Server has started!\n");
                 });
-                isRunning = true;
-                hasStarted = true;
+                terminal.isRunning = true;
+                terminal.hasStarted = true;
 
                 return;
             }
@@ -541,8 +531,8 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
                     {
                         //Kill process
 
-                        isRunning = false;
-                        errorOccured = true;
+                        terminal.isRunning = false;
+                        terminal.errorOccured = true;
 
                         // Stop process, to optimize performance because there is no point keeping it running
                         int consoleID = Convert.ToInt32(consoleOutput.Name.Replace("console ", ""));
@@ -575,14 +565,15 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
                     {
                         //Kill process
 
-                        isRunning = false;
-                        errorOccured = true;
+                        terminal.isRunning = false;
+                        terminal.errorOccured = true;
 
                         // Stop process, to optimize performance because there is no point keeping it running
 
                         if (serverProcesses.TryGetValue(consoleID, out Process serverProcess))
                         {
-                            serverProcess.Kill();
+                            if (!serverProcess.HasExited)
+                                serverProcess.Kill();
                             serverProcesses.Remove(consoleID);
                         }
                     };
@@ -595,8 +586,8 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
                     {
                         //Kill process
 
-                        isRunning = false;
-                        errorOccured = true;
+                        terminal.isRunning = false;
+                        terminal.errorOccured = true;
 
                         // Stop process, to optimize performance because there is no point keeping it running
                         int consoleID = Convert.ToInt32(consoleOutput.Name.Replace("console ", ""));
@@ -658,8 +649,8 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
 
                     //Run /stop command
                     //Grab serverInstance
-                    commands.runCommand("/stop", serverProcess, this.serverTabs, consoleID);
-                    commands.runCommand("stop", serverProcess, this.serverTabs, consoleID);
+                    commands.runCommand("/stop", serverProcess, this.serverTabs, consoleID, this);
+                    commands.runCommand("stop", serverProcess, this.serverTabs, consoleID, this);
 
                     //For some reason it does not close the terminal.
                     //Spent like 2 hours trying to fix it, and it turns out it still stops it.
@@ -685,15 +676,15 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
             try
             {
                 //Grab name of button
-                int consoleID = Convert.ToInt32(stopBtn.Name); //Name is process ID
+                int consoleID = Convert.ToInt32(this.stopBtn.Name); //Name is process ID
                 Process serverProcess = serverProcesses[consoleID];
 
                 //Run /stop command
                 //Grab serverInstance
-                commands.runCommand("/stop", serverProcess, this.serverTabs, consoleID);
-                commands.runCommand("stop", serverProcess, this.serverTabs, consoleID);
+                commands.runCommand("/stop", serverProcess, this.serverTabs, consoleID, this);
+                commands.runCommand("stop", serverProcess, this.serverTabs, consoleID, this);
 
-                stopBtn.Name = "";
+                this.stopBtn.Name = "";
 
                 //Wait for the server to stop
                 while (!serverProcess.HasExited)
@@ -706,7 +697,7 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
                 //add to terminal the server has stopped
                 secondaryTerminal.AppendText("\n[Minecraft-Multiplayer-Host INFO] Server has stopped\n");
                 isRunning = false;
-                resetButtons(this);
+                resetButtons();
                 serverProcess.Close();
                 serverProcesses.Remove(consoleID);
 
@@ -715,11 +706,11 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
                     this.Close();
                 }
             }
-            catch (Exception exception)
+            catch (Exception)
             {
-                stopBtn.Name = "";
+                this.stopBtn.Name = "";
                 isRunning = false;
-                resetButtons(this);
+                resetButtons();
             }
         }
 
@@ -767,7 +758,7 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
                     //Check if server is open
                     try
                     {
-                        if (serverProcesses.ContainsKey(Convert.ToInt32(stopBtn.Name)))
+                        if (serverProcesses.ContainsKey(Convert.ToInt32(this.stopBtn.Name)))
                         {
 
                             SettingsStatusLabel.Text = "Error moving server! Server is open!";
@@ -944,7 +935,7 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
                     Process serverProcess = serverProcesses[consoleID];
 
                     // Run command
-                    commands.runCommand(secondaryTerminalInput.Text, serverProcess, this.serverTabs, consoleID);
+                    commands.runCommand(secondaryTerminalInput.Text, serverProcess, this.serverTabs, consoleID, this);
 
                     // Clear text
                     secondaryTerminalInput.Clear();
