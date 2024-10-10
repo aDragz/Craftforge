@@ -515,10 +515,6 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
                         //Set the affinity
                         setAffinity.SetProcessAffinity(serverProcess, Process.GetProcessById(childProcessID), threadsCount, this);
                     }
-                    else
-                    {
-                        MessageBox.Show("no");
-                    }
 
                     consoleID = serverProcess.Id; //Get the console ID, so we can close it later
 
