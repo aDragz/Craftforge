@@ -60,6 +60,8 @@
             this.backupProgressBar = new System.Windows.Forms.ProgressBar();
             this.createBackupBtn = new System.Windows.Forms.Button();
             this.settingsPage = new System.Windows.Forms.TabPage();
+            this.threadCount = new System.Windows.Forms.NumericUpDown();
+            this.label10 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.settingsPlayersTextBox = new System.Windows.Forms.TextBox();
             this.SettingsProgressBar = new System.Windows.Forms.ProgressBar();
@@ -89,8 +91,6 @@
             this.removeTabClick = new System.Windows.Forms.ToolStripMenuItem();
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
-            this.threadCount = new System.Windows.Forms.NumericUpDown();
-            this.label10 = new System.Windows.Forms.Label();
             this.serverTabs.SuspendLayout();
             this.generalPage.SuspendLayout();
             this.serverStatusPanel.SuspendLayout();
@@ -99,10 +99,10 @@
             this.logPage.SuspendLayout();
             this.backupPage.SuspendLayout();
             this.settingsPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.threadCount)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.removeTab.SuspendLayout();
             this.statusStrip.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.threadCount)).BeginInit();
             this.SuspendLayout();
             // 
             // serverStatusNetwork
@@ -434,11 +434,28 @@
             this.settingsPage.Text = "Settings";
             this.settingsPage.UseVisualStyleBackColor = true;
             // 
+            // threadCount
+            // 
+            this.threadCount.Location = new System.Drawing.Point(196, 5);
+            this.threadCount.Name = "threadCount";
+            this.threadCount.Size = new System.Drawing.Size(100, 40);
+            this.threadCount.TabIndex = 29;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.label10.Location = new System.Drawing.Point(11, 10);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(118, 32);
+            this.label10.TabIndex = 28;
+            this.label10.Text = "Threads";
+            // 
             // label8
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.label8.Location = new System.Drawing.Point(11, 190);
+            this.label8.Location = new System.Drawing.Point(11, 273);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(109, 32);
             this.label8.TabIndex = 24;
@@ -447,7 +464,7 @@
             // settingsPlayersTextBox
             // 
             this.settingsPlayersTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.settingsPlayersTextBox.Location = new System.Drawing.Point(196, 189);
+            this.settingsPlayersTextBox.Location = new System.Drawing.Point(196, 272);
             this.settingsPlayersTextBox.Name = "settingsPlayersTextBox";
             this.settingsPlayersTextBox.Size = new System.Drawing.Size(514, 39);
             this.settingsPlayersTextBox.TabIndex = 5;
@@ -477,7 +494,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.label4.Location = new System.Drawing.Point(11, 147);
+            this.label4.Location = new System.Drawing.Point(11, 220);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(96, 32);
             this.label4.TabIndex = 18;
@@ -487,7 +504,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.label5.Location = new System.Drawing.Point(11, 102);
+            this.label5.Location = new System.Drawing.Point(11, 165);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(66, 32);
             this.label5.TabIndex = 17;
@@ -497,7 +514,7 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.label6.Location = new System.Drawing.Point(11, 57);
+            this.label6.Location = new System.Drawing.Point(11, 110);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(151, 32);
             this.label6.TabIndex = 16;
@@ -507,7 +524,7 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.label7.Location = new System.Drawing.Point(11, 12);
+            this.label7.Location = new System.Drawing.Point(11, 60);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(179, 32);
             this.label7.TabIndex = 15;
@@ -516,7 +533,7 @@
             // settingsMotdTextBox
             // 
             this.settingsMotdTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.settingsMotdTextBox.Location = new System.Drawing.Point(196, 144);
+            this.settingsMotdTextBox.Location = new System.Drawing.Point(196, 217);
             this.settingsMotdTextBox.Name = "settingsMotdTextBox";
             this.settingsMotdTextBox.Size = new System.Drawing.Size(514, 39);
             this.settingsMotdTextBox.TabIndex = 4;
@@ -524,7 +541,7 @@
             // settingsIpTextBox
             // 
             this.settingsIpTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.settingsIpTextBox.Location = new System.Drawing.Point(196, 54);
+            this.settingsIpTextBox.Location = new System.Drawing.Point(196, 107);
             this.settingsIpTextBox.Name = "settingsIpTextBox";
             this.settingsIpTextBox.Size = new System.Drawing.Size(271, 39);
             this.settingsIpTextBox.TabIndex = 2;
@@ -532,7 +549,7 @@
             // settingsNameTextBox
             // 
             this.settingsNameTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.settingsNameTextBox.Location = new System.Drawing.Point(196, 8);
+            this.settingsNameTextBox.Location = new System.Drawing.Point(196, 56);
             this.settingsNameTextBox.Name = "settingsNameTextBox";
             this.settingsNameTextBox.Size = new System.Drawing.Size(275, 39);
             this.settingsNameTextBox.TabIndex = 1;
@@ -541,7 +558,7 @@
             // settingsPortTextBox
             // 
             this.settingsPortTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.settingsPortTextBox.Location = new System.Drawing.Point(196, 99);
+            this.settingsPortTextBox.Location = new System.Drawing.Point(196, 162);
             this.settingsPortTextBox.MaxLength = 5;
             this.settingsPortTextBox.Name = "settingsPortTextBox";
             this.settingsPortTextBox.Size = new System.Drawing.Size(100, 39);
@@ -684,25 +701,6 @@
             this.statusStrip.TabIndex = 7;
             this.statusStrip.Text = "statusBar";
             // 
-            // threadCount
-            // 
-            this.threadCount.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.threadCount.Location = new System.Drawing.Point(914, 782);
-            this.threadCount.Name = "threadCount";
-            this.threadCount.Size = new System.Drawing.Size(100, 40);
-            this.threadCount.TabIndex = 29;
-            // 
-            // label10
-            // 
-            this.label10.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.label10.AutoSize = true;
-            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.label10.Location = new System.Drawing.Point(729, 787);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(118, 32);
-            this.label10.TabIndex = 28;
-            this.label10.Text = "Threads";
-            // 
             // Terminal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -730,12 +728,12 @@
             this.backupPage.ResumeLayout(false);
             this.settingsPage.ResumeLayout(false);
             this.settingsPage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.threadCount)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.removeTab.ResumeLayout(false);
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.threadCount)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
