@@ -58,8 +58,8 @@ namespace Minecraft_Multiplayer_Host.Server.Classes.Console.Initialize.Files
             panel.Controls.Clear();
 
             // Get all files in the directory
-            String[] files = Directory.GetFiles(directory);
-            String[] folders = Directory.GetDirectories(directory);
+            string[] files = Directory.GetFiles(directory);
+            string[] folders = Directory.GetDirectories(directory);
 
             // Ensure the directory ends with a backslash
             if (!directory.EndsWith("\\"))

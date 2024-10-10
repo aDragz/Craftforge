@@ -4,6 +4,8 @@ using Minecraft_Multiplayer_Host.Server.Classes.Console.Applications;
 using Minecraft_Multiplayer_Host.Server.Classes.Console.CreateConsole;
 using Minecraft_Multiplayer_Host.Server.Classes.Console.Initialize.Files;
 using Minecraft_Multiplayer_Host.Server.Classes.Console.Initialize.JarSelection;
+using Minecraft_Multiplayer_Host.Server.Classes.Console.Yaml;
+using Minecraft_Multiplayer_Host.Server.Classes.Console.Yaml.UpdateSettings;
 using Minecraft_Multiplayer_Host.Server.Events;
 using Minecraft_Multiplayer_Host.Server.GUI.Classes;
 using Minecraft_Multiplayer_Host.Server.GUI.Console.Components;
@@ -64,6 +66,22 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
 
             if (Settings.Default.terminal_autoStart)
                 startBtn_Click(sender, e);
+
+            //Grab maximum amount of cores
+            int maxCores = Environment.ProcessorCount;
+
+            //Check if settings file exists
+            string location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\Minecraft-Multiplayer-Host\\Servers\\");
+            if (!File.Exists(($"{location}\\{this.Name}\\serverSettings.yaml"))) {
+                serverSettings.writeSettingsToFile(this.Name);
+            }
+            var settings = serverSettings.ReadSettings(this.Name);
+            int cores = Int16.Parse(settings.threadAmount);
+
+            threadCount.Minimum = 0;
+            threadCount.Maximum = maxCores;
+
+            threadCount.Value = cores;
         }
 
         private async void Terminal_Close(object sender, FormClosingEventArgs e)
@@ -243,6 +261,10 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
                     {
                         await client.ConnectAsync(settingsIpTextBox.Text, int.Parse(settingsPortTextBox.Text));
                         statusLabel.Text = $"Server is running at {location} | {settingsIpTextBox.Text}:{settingsPortTextBox.Text} : {this.Name}";
+
+                        //Grab current process
+                        int consoleID = Convert.ToInt32(this.stopBtn.Name);
+                        Process serverProcess = serverProcesses[consoleID];
 
                         isRunning = true;
                         resetButtons();
@@ -462,7 +484,19 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
                     serverProcess.BeginErrorReadLine(); //Start reading the errors
                     serverProcess.BeginOutputReadLine(); //Start reading the output
 
-                    setAffinity.SetProcessAffinity(serverProcess, 1);
+                    //Multi-threading:
+
+                    //Read serverSettings and grab the thread count
+                    serverSettings settings = serverSettings.ReadSettings(this.Name);
+
+                    int threadsCount = Int16.Parse(settings.threadAmount);
+
+                    //Check if threadCount is more than 0, or it uses all cores
+                    if (threadsCount > 0)
+                    {
+                        //Set the affinity
+                        setAffinity.SetProcessAffinity(serverProcess, threadsCount, this);
+                    }
 
                     consoleID = serverProcess.Id; //Get the console ID, so we can close it later
 
@@ -790,9 +824,10 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
 
             if (!moveServer)
             {
+                updateThreads.UpdateThreads(this.Name, (int)threadCount.Value);
+
                 File.WriteAllText(directory + "\\server.properties", "server-port=" + settingsPortTextBox.Text + "\n" + "server-ip=" + settingsIpTextBox.Text + "\n" + "level-name=world\n" + "gamemode=survival\n" + "difficulty=easy\n" + "allow-cheats=false\n" + "max-players=" + settingsPlayersTextBox.Text + "\n" + "online-mode=true\n" + "white-list=false\n" + "server-name=" + settingsNameTextBox.Text + "\n" + "motd=" + settingsMotdTextBox.Text + "\n");
                 SettingsStatusLabel.Text = "Server updated!";
-
             }
         }
 
@@ -886,6 +921,7 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
                 this.Name = settingsNameTextBox.Text;
                 this.Text = this.Name;
 
+                updateThreads.UpdateThreads(this.Name, (int)threadCount.Value);
 
                 File.WriteAllText(destDir + "\\server.properties", "server-port=" + settingsPortTextBox.Text + "\n" + "server-ip=" + settingsIpTextBox.Text + "\n" + "level-name=world\n" + "gamemode=survival\n" + "difficulty=easy\n" + "allow-cheats=false\n" + "max-players=" + settingsPlayersTextBox.Text + "\n" + "online-mode=true\n" + "white-list=false\n" + "server-name=" + settingsNameTextBox.Text + "\n" + "motd=" + settingsMotdTextBox.Text + "\n");
             }

@@ -89,6 +89,8 @@
             this.removeTabClick = new System.Windows.Forms.ToolStripMenuItem();
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
+            this.threadCount = new System.Windows.Forms.NumericUpDown();
+            this.label10 = new System.Windows.Forms.Label();
             this.serverTabs.SuspendLayout();
             this.generalPage.SuspendLayout();
             this.serverStatusPanel.SuspendLayout();
@@ -100,6 +102,7 @@
             this.menuStrip1.SuspendLayout();
             this.removeTab.SuspendLayout();
             this.statusStrip.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.threadCount)).BeginInit();
             this.SuspendLayout();
             // 
             // serverStatusNetwork
@@ -408,6 +411,8 @@
             // 
             // settingsPage
             // 
+            this.settingsPage.Controls.Add(this.threadCount);
+            this.settingsPage.Controls.Add(this.label10);
             this.settingsPage.Controls.Add(this.label8);
             this.settingsPage.Controls.Add(this.settingsPlayersTextBox);
             this.settingsPage.Controls.Add(this.SettingsProgressBar);
@@ -679,6 +684,25 @@
             this.statusStrip.TabIndex = 7;
             this.statusStrip.Text = "statusBar";
             // 
+            // threadCount
+            // 
+            this.threadCount.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.threadCount.Location = new System.Drawing.Point(914, 782);
+            this.threadCount.Name = "threadCount";
+            this.threadCount.Size = new System.Drawing.Size(100, 40);
+            this.threadCount.TabIndex = 29;
+            // 
+            // label10
+            // 
+            this.label10.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.label10.Location = new System.Drawing.Point(729, 787);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(118, 32);
+            this.label10.TabIndex = 28;
+            this.label10.Text = "Threads";
+            // 
             // Terminal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -711,6 +735,7 @@
             this.removeTab.ResumeLayout(false);
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.threadCount)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -774,6 +799,8 @@
         private System.Windows.Forms.FlowLayoutPanel backupFolderList;
         private System.Windows.Forms.Label backupLabel;
         private System.Windows.Forms.Label SettingsStatusLabel;
+        private System.Windows.Forms.NumericUpDown threadCount;
+        private System.Windows.Forms.Label label10;
     }
 }
 

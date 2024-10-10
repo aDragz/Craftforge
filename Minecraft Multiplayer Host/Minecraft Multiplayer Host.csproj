@@ -102,6 +102,8 @@
     <Compile Include="Server\Classes\Console\Initialize\Files\ContextMenus\UploadFolder.cs" />
     <Compile Include="Server\Classes\Console\Initialize\JarSelection\loadJarSelection.cs" />
     <Compile Include="Server\Classes\Console\notifyIcon.cs" />
+    <Compile Include="Server\Classes\Console\Yaml\serverSettings.cs" />
+    <Compile Include="Server\Classes\Console\Yaml\UpdateSettings\updateThreads.cs" />
     <Compile Include="Server\Classes\Themes\Themes\Custom\blue.cs" />
     <Compile Include="Server\GUI\Applications\downloadFile.cs">
       <SubType>Form</SubType>

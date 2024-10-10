@@ -11,34 +11,67 @@ namespace Minecraft_Multiplayer_Host.Server.Classes.Console.CreateConsole
 {
     internal class setAffinity
     {
-        public static void SetProcessAffinity(Process process, int maxCores)
-        {
-            //Grab all currently open Processes
-            List<Process> processes = new List<Process>();
-            long usedCoresMask = 0;
-            if (Terminal.serverProcesses != null)
-            {
-                processes = Terminal.serverProcesses.Values.ToList();
+        //int = Process ID, int[] = Threads used
+        static Dictionary<int, int[]> threadsTaken = new Dictionary<int, int[]>();
+        static List<int> threadsTakenList = new List<int>();
 
-                // Go through each process, and grab the core
-                foreach (var proc in processes)
+        public static void SetProcessAffinity(Process process, int maxThreads, Terminal terminal)
+        {
+            // Check if the number of threads is valid (between 1 and the number of threads in the system)
+            if (maxThreads < 1 || maxThreads > Environment.ProcessorCount)
+            {
+                throw new ArgumentOutOfRangeException(nameof(maxThreads), "The number of cores must be between 1 and " + Environment.ProcessorCount);
+            }
+
+            //Reset threadsTakenList so it can update it for the new server
+            threadsTakenList.Clear();
+
+            //Grab all currently open Processes
+            List<int> currentProcesses = new List<int>();
+
+            // Add the current process to the list
+            foreach (int processId in Terminal.serverProcesses.Keys)
+            {
+                currentProcesses.Add(processId);
+            }
+
+            // Collect keys to be removed
+            List<int> keysToRemove = new List<int>();
+            foreach (int processId in threadsTaken.Keys)
+            {
+                if (!currentProcesses.Contains(processId))
                 {
-                    usedCoresMask += proc.ProcessorAffinity.ToInt64();
+                    keysToRemove.Add(processId);
                 }
             }
 
-            MessageBox.Show(usedCoresMask.ToString());
+            // Remove the keys
+            foreach (int processId in keysToRemove) {
+                threadsTaken.Remove(processId);
+            }
 
-            if (maxCores < 1 || maxCores > Environment.ProcessorCount)
+            //Grab each thread taken
+            foreach (int[] core in threadsTaken.Values)
             {
-                throw new ArgumentOutOfRangeException(nameof(maxCores), "The number of cores must be between 1 and the number of available processors.");
+                threadsTakenList.AddRange(core);
             }
 
             int affinityMask = 0;
-            for (int i = 0; i < maxCores; i++)
+            List<int> coresTakenFor = new List<int>();
+            for (int i = 0; i < maxThreads; i++)
             {
-                affinityMask |= (1 << i);
+                //Check if coreTakenList is empty
+                if (!threadsTakenList.Contains(i))
+                {
+                    affinityMask |= (1 << i);
+                    coresTakenFor.Add(i);
+                } else
+                {
+                    maxThreads++; //Add 1 to max cores so if it's 4, it could go up to 6 if there are 2 taken cores. It will still use 4 though.
+                }
             }
+
+            threadsTaken.Add(process.Id, coresTakenFor.ToArray());
 
             // Set the processor affinity for the process
             process.ProcessorAffinity = (IntPtr)affinityMask;
