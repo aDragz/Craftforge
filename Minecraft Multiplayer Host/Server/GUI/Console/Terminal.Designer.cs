@@ -35,6 +35,7 @@
             this.serverStatusNetwork = new System.Windows.Forms.Timer(this.components);
             this.serverTabs = new System.Windows.Forms.TabControl();
             this.generalPage = new System.Windows.Forms.TabPage();
+            this.cpuUsageLabel = new System.Windows.Forms.Label();
             this.serverStatusPanel = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
             this.mainPortLabel = new System.Windows.Forms.Label();
@@ -91,6 +92,7 @@
             this.removeTabClick = new System.Windows.Forms.ToolStripMenuItem();
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
+            this.cpuUsage = new System.Windows.Forms.Timer(this.components);
             this.serverTabs.SuspendLayout();
             this.generalPage.SuspendLayout();
             this.serverStatusPanel.SuspendLayout();
@@ -137,6 +139,7 @@
             // 
             // generalPage
             // 
+            this.generalPage.Controls.Add(this.cpuUsageLabel);
             this.generalPage.Controls.Add(this.serverStatusPanel);
             this.generalPage.Controls.Add(this.secondaryTerminalInput);
             this.generalPage.Controls.Add(this.serverJarPanel);
@@ -150,6 +153,17 @@
             this.generalPage.TabIndex = 0;
             this.generalPage.Text = "General";
             this.generalPage.UseVisualStyleBackColor = true;
+            // 
+            // cpuUsageLabel
+            // 
+            this.cpuUsageLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.cpuUsageLabel.AutoSize = true;
+            this.cpuUsageLabel.Location = new System.Drawing.Point(6, 898);
+            this.cpuUsageLabel.Name = "cpuUsageLabel";
+            this.cpuUsageLabel.Size = new System.Drawing.Size(45, 33);
+            this.cpuUsageLabel.TabIndex = 37;
+            this.cpuUsageLabel.Text = "0%";
+            this.cpuUsageLabel.Click += new System.EventHandler(this.label11_Click);
             // 
             // serverStatusPanel
             // 
@@ -701,6 +715,12 @@
             this.statusStrip.TabIndex = 7;
             this.statusStrip.Text = "statusBar";
             // 
+            // cpuUsage
+            // 
+            this.cpuUsage.Enabled = true;
+            this.cpuUsage.Interval = 2000;
+            this.cpuUsage.Tick += new System.EventHandler(this.cpuUsage_Tick);
+            // 
             // Terminal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -719,6 +739,7 @@
             this.Load += new System.EventHandler(this.Terminal_Load);
             this.serverTabs.ResumeLayout(false);
             this.generalPage.ResumeLayout(false);
+            this.generalPage.PerformLayout();
             this.serverStatusPanel.ResumeLayout(false);
             this.serverStatusPanel.PerformLayout();
             this.serverJarPanel.ResumeLayout(false);
@@ -799,6 +820,8 @@
         private System.Windows.Forms.Label SettingsStatusLabel;
         private System.Windows.Forms.NumericUpDown threadCount;
         private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label cpuUsageLabel;
+        private System.Windows.Forms.Timer cpuUsage;
     }
 }
 

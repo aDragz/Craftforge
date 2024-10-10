@@ -16,11 +16,13 @@ using Minecraft_Multiplayer_Host.Server.GUI.Setup;
 using Minecraft_Multiplayer_Host.Server.Setup;
 using Minecraft_Multiplayer_Host.Server.Themes.Classes.Applications;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Linq;
+using System.Management;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -42,6 +44,8 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
         private static NotifyIcon notifications;
 
         static Dictionary<Process, string> serverProcessesToName = new Dictionary<Process, string>();
+
+        static int childProcessID = 0; //Name of the child process created by the batch file (start.bat) when you start the server. Used for CPU usage
 
         public Terminal()
         {
@@ -481,6 +485,20 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
                     };
 
                     serverProcess.Start(); //Start the process
+
+                    // Get the child process named java.exe started by the batch file
+                    var javaProcess = GetChildProcesses(serverProcess.Id).FirstOrDefault(p => p.ProcessName.Equals("java", StringComparison.OrdinalIgnoreCase));
+
+                    if (javaProcess != null)
+                    {
+                        int javaProcessId = javaProcess.Id;
+                        childProcessID = javaProcess.Id;
+                    }
+                    else
+                    {
+                        MessageBox.Show("No java.exe process found.");
+                    }
+
                     serverProcess.BeginErrorReadLine(); //Start reading the errors
                     serverProcess.BeginOutputReadLine(); //Start reading the output
 
@@ -495,7 +513,11 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
                     if (threadsCount > 0)
                     {
                         //Set the affinity
-                        setAffinity.SetProcessAffinity(serverProcess, threadsCount, this);
+                        setAffinity.SetProcessAffinity(serverProcess, Process.GetProcessById(childProcessID), threadsCount, this);
+                    }
+                    else
+                    {
+                        MessageBox.Show("no");
                     }
 
                     consoleID = serverProcess.Id; //Get the console ID, so we can close it later
@@ -653,6 +675,15 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
                 }
             }
             catch { }
+        }
+
+        private static Process[] GetChildProcesses(int parentId)
+        {
+            var query = $"SELECT * FROM Win32_Process WHERE ParentProcessId={parentId}";
+            var searcher = new ManagementObjectSearcher(query);
+            var results = searcher.Get();
+
+            return results.Cast<ManagementObject>().Select(p => Process.GetProcessById(Convert.ToInt32(p["ProcessId"]))).ToArray();
         }
 
         private async void terminal_Close(object sender, EventArgs e)
@@ -1025,6 +1056,60 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
         private void settingsToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             runSettings.runSettingsApp();
+        }
+
+        private void cpuUsage_Tick(object sender, EventArgs e)
+        {
+            //Grab the process name from stopbtn
+            try
+            {
+                Process process = Process.GetProcessById(childProcessID);
+                cpuUsageLabel.Text = GetCurrentProcessCpuUsage(process).ToString();
+            }
+            catch (ArgumentException)
+            {
+                cpuUsageLabel.Text = "0%";
+            }
+        }
+
+        public static double totalCpuUsage = 0;
+        private static DateTime lastTime;
+        private static TimeSpan lastTotalProcessorTime;
+        private static DateTime curTime;
+        private static TimeSpan curTotalProcessorTime;
+
+        public static double GetCurrentProcessCpuUsage(Process process)
+        {
+            if (lastTime == default(DateTime))
+            {
+                lastTime = DateTime.Now;
+                lastTotalProcessorTime = process.TotalProcessorTime;
+                return 0;
+            }
+
+            curTime = DateTime.Now;
+            curTotalProcessorTime = process.TotalProcessorTime;
+
+            double cpuUsedMs = (curTotalProcessorTime - lastTotalProcessorTime).TotalMilliseconds;
+            double totalMsPassed = (curTime - lastTime).TotalMilliseconds;
+
+            double cpuUsageTotal = cpuUsedMs / (Environment.ProcessorCount * totalMsPassed) * 1000;
+
+            totalCpuUsage = 0;
+            // Add to the total CPU usage
+            totalCpuUsage += cpuUsageTotal;
+
+            // Update the last recorded time and processor time
+            lastTime = curTime;
+            lastTotalProcessorTime = curTotalProcessorTime;
+
+            return Math.Round(cpuUsageTotal, 2);
+        }
+
+        private void label11_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(this.stopBtn.Name);
+            MessageBox.Show(Process.GetCurrentProcess().Id.ToString());
         }
     }
 }
