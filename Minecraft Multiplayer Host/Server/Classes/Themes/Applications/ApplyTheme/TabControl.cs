@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,10 +17,13 @@ namespace Minecraft_Multiplayer_Host.Server.Themes.Classes.Applications
             var theme = defaultTheme.ReadSettings();
 
             //Get all theme settings
-
             foreach (TabPage tabPage in tabControl.TabPages)
             {
-                //Set background colour
+                // Set the locale to English (United Kingdom)
+                CultureInfo.CurrentCulture = new CultureInfo("en-GB");
+                CultureInfo.CurrentUICulture = new CultureInfo("en-GB");
+
+                //Set background color
                 tabPage.BackColor = ColorTranslator.FromHtml(theme.Terminal_Background_Colour);
 
                 foreach (Control control in tabPage.Controls)

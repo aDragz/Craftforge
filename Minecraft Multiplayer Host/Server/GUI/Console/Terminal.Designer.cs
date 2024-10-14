@@ -32,9 +32,19 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.serverStatusNetwork = new System.Windows.Forms.Timer(this.components);
             this.serverTabs = new System.Windows.Forms.TabControl();
             this.generalPage = new System.Windows.Forms.TabPage();
+            this.ramUsageChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.cpuUsageChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.ramUsageLabel = new System.Windows.Forms.Label();
+            this.cpuUsageLabel = new System.Windows.Forms.Label();
             this.serverStatusPanel = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
             this.mainPortLabel = new System.Windows.Forms.Label();
@@ -60,6 +70,8 @@
             this.backupProgressBar = new System.Windows.Forms.ProgressBar();
             this.createBackupBtn = new System.Windows.Forms.Button();
             this.settingsPage = new System.Windows.Forms.TabPage();
+            this.threadCount = new System.Windows.Forms.NumericUpDown();
+            this.label10 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.settingsPlayersTextBox = new System.Windows.Forms.TextBox();
             this.SettingsProgressBar = new System.Windows.Forms.ProgressBar();
@@ -89,14 +101,18 @@
             this.removeTabClick = new System.Windows.Forms.ToolStripMenuItem();
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
+            this.cpuRamUsage = new System.Windows.Forms.Timer(this.components);
             this.serverTabs.SuspendLayout();
             this.generalPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ramUsageChart)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cpuUsageChart)).BeginInit();
             this.serverStatusPanel.SuspendLayout();
             this.serverJarPanel.SuspendLayout();
             this.filesPage.SuspendLayout();
             this.logPage.SuspendLayout();
             this.backupPage.SuspendLayout();
             this.settingsPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.threadCount)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.removeTab.SuspendLayout();
             this.statusStrip.SuspendLayout();
@@ -104,7 +120,6 @@
             // 
             // serverStatusNetwork
             // 
-            this.serverStatusNetwork.Interval = 1;
             this.serverStatusNetwork.Tick += new System.EventHandler(this.serverStatusNetwork_Tick);
             // 
             // serverTabs
@@ -135,6 +150,10 @@
             // 
             // generalPage
             // 
+            this.generalPage.Controls.Add(this.ramUsageChart);
+            this.generalPage.Controls.Add(this.cpuUsageChart);
+            this.generalPage.Controls.Add(this.ramUsageLabel);
+            this.generalPage.Controls.Add(this.cpuUsageLabel);
             this.generalPage.Controls.Add(this.serverStatusPanel);
             this.generalPage.Controls.Add(this.secondaryTerminalInput);
             this.generalPage.Controls.Add(this.serverJarPanel);
@@ -148,6 +167,60 @@
             this.generalPage.TabIndex = 0;
             this.generalPage.Text = "General";
             this.generalPage.UseVisualStyleBackColor = true;
+            // 
+            // ramUsageChart
+            // 
+            this.ramUsageChart.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            chartArea1.Name = "ChartArea1";
+            this.ramUsageChart.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.ramUsageChart.Legends.Add(legend1);
+            this.ramUsageChart.Location = new System.Drawing.Point(1341, 284);
+            this.ramUsageChart.Name = "ramUsageChart";
+            series1.ChartArea = "ChartArea1";
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.ramUsageChart.Series.Add(series1);
+            this.ramUsageChart.Size = new System.Drawing.Size(393, 189);
+            this.ramUsageChart.TabIndex = 41;
+            this.ramUsageChart.Text = "chart2";
+            // 
+            // cpuUsageChart
+            // 
+            this.cpuUsageChart.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            chartArea2.Name = "ChartArea1";
+            this.cpuUsageChart.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.cpuUsageChart.Legends.Add(legend2);
+            this.cpuUsageChart.Location = new System.Drawing.Point(1341, 479);
+            this.cpuUsageChart.Name = "cpuUsageChart";
+            series2.ChartArea = "ChartArea1";
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            this.cpuUsageChart.Series.Add(series2);
+            this.cpuUsageChart.Size = new System.Drawing.Size(393, 189);
+            this.cpuUsageChart.TabIndex = 40;
+            this.cpuUsageChart.Text = "chart1";
+            // 
+            // ramUsageLabel
+            // 
+            this.ramUsageLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.ramUsageLabel.AutoSize = true;
+            this.ramUsageLabel.Location = new System.Drawing.Point(1445, 248);
+            this.ramUsageLabel.Name = "ramUsageLabel";
+            this.ramUsageLabel.Size = new System.Drawing.Size(45, 33);
+            this.ramUsageLabel.TabIndex = 39;
+            this.ramUsageLabel.Text = "0%";
+            // 
+            // cpuUsageLabel
+            // 
+            this.cpuUsageLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cpuUsageLabel.AutoSize = true;
+            this.cpuUsageLabel.Location = new System.Drawing.Point(1344, 248);
+            this.cpuUsageLabel.Name = "cpuUsageLabel";
+            this.cpuUsageLabel.Size = new System.Drawing.Size(45, 33);
+            this.cpuUsageLabel.TabIndex = 37;
+            this.cpuUsageLabel.Text = "0%";
             // 
             // serverStatusPanel
             // 
@@ -298,7 +371,7 @@
             this.filesPage.Controls.Add(this.folderList);
             this.filesPage.Location = new System.Drawing.Point(4, 14);
             this.filesPage.Name = "filesPage";
-            this.filesPage.Size = new System.Drawing.Size(1742, 945);
+            this.filesPage.Size = new System.Drawing.Size(1742, 937);
             this.filesPage.TabIndex = 2;
             this.filesPage.Text = "Files";
             this.filesPage.UseVisualStyleBackColor = true;
@@ -309,14 +382,14 @@
             this.folderList.Dock = System.Windows.Forms.DockStyle.Fill;
             this.folderList.Location = new System.Drawing.Point(0, 0);
             this.folderList.Name = "folderList";
-            this.folderList.Size = new System.Drawing.Size(1742, 945);
+            this.folderList.Size = new System.Drawing.Size(1742, 937);
             this.folderList.TabIndex = 0;
             // 
             // pluginsPage
             // 
             this.pluginsPage.Location = new System.Drawing.Point(4, 14);
             this.pluginsPage.Name = "pluginsPage";
-            this.pluginsPage.Size = new System.Drawing.Size(1742, 945);
+            this.pluginsPage.Size = new System.Drawing.Size(1742, 937);
             this.pluginsPage.TabIndex = 4;
             this.pluginsPage.Text = "Plugins";
             this.pluginsPage.UseVisualStyleBackColor = true;
@@ -325,7 +398,7 @@
             // 
             this.schedulerPage.Location = new System.Drawing.Point(4, 14);
             this.schedulerPage.Name = "schedulerPage";
-            this.schedulerPage.Size = new System.Drawing.Size(1742, 945);
+            this.schedulerPage.Size = new System.Drawing.Size(1742, 937);
             this.schedulerPage.TabIndex = 6;
             this.schedulerPage.Text = "Scheduler";
             this.schedulerPage.UseVisualStyleBackColor = true;
@@ -335,7 +408,7 @@
             this.logPage.Controls.Add(this.logsOutput);
             this.logPage.Location = new System.Drawing.Point(4, 14);
             this.logPage.Name = "logPage";
-            this.logPage.Size = new System.Drawing.Size(1742, 945);
+            this.logPage.Size = new System.Drawing.Size(1742, 937);
             this.logPage.TabIndex = 7;
             this.logPage.Text = "Logs";
             this.logPage.UseVisualStyleBackColor = true;
@@ -361,7 +434,7 @@
             this.backupPage.Controls.Add(this.createBackupBtn);
             this.backupPage.Location = new System.Drawing.Point(4, 14);
             this.backupPage.Name = "backupPage";
-            this.backupPage.Size = new System.Drawing.Size(1742, 945);
+            this.backupPage.Size = new System.Drawing.Size(1742, 937);
             this.backupPage.TabIndex = 5;
             this.backupPage.Text = "Backups";
             this.backupPage.UseVisualStyleBackColor = true;
@@ -409,6 +482,8 @@
             // 
             // settingsPage
             // 
+            this.settingsPage.Controls.Add(this.threadCount);
+            this.settingsPage.Controls.Add(this.label10);
             this.settingsPage.Controls.Add(this.label8);
             this.settingsPage.Controls.Add(this.settingsPlayersTextBox);
             this.settingsPage.Controls.Add(this.SettingsProgressBar);
@@ -425,16 +500,33 @@
             this.settingsPage.Font = new System.Drawing.Font("Consolas", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.settingsPage.Location = new System.Drawing.Point(4, 14);
             this.settingsPage.Name = "settingsPage";
-            this.settingsPage.Size = new System.Drawing.Size(1742, 945);
+            this.settingsPage.Size = new System.Drawing.Size(1742, 937);
             this.settingsPage.TabIndex = 3;
             this.settingsPage.Text = "Settings";
             this.settingsPage.UseVisualStyleBackColor = true;
+            // 
+            // threadCount
+            // 
+            this.threadCount.Location = new System.Drawing.Point(196, 5);
+            this.threadCount.Name = "threadCount";
+            this.threadCount.Size = new System.Drawing.Size(100, 40);
+            this.threadCount.TabIndex = 29;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.label10.Location = new System.Drawing.Point(11, 10);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(118, 32);
+            this.label10.TabIndex = 28;
+            this.label10.Text = "Threads";
             // 
             // label8
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.label8.Location = new System.Drawing.Point(11, 190);
+            this.label8.Location = new System.Drawing.Point(11, 273);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(109, 32);
             this.label8.TabIndex = 24;
@@ -443,7 +535,7 @@
             // settingsPlayersTextBox
             // 
             this.settingsPlayersTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.settingsPlayersTextBox.Location = new System.Drawing.Point(196, 189);
+            this.settingsPlayersTextBox.Location = new System.Drawing.Point(196, 272);
             this.settingsPlayersTextBox.Name = "settingsPlayersTextBox";
             this.settingsPlayersTextBox.Size = new System.Drawing.Size(514, 39);
             this.settingsPlayersTextBox.TabIndex = 5;
@@ -473,7 +565,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.label4.Location = new System.Drawing.Point(11, 147);
+            this.label4.Location = new System.Drawing.Point(11, 220);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(96, 32);
             this.label4.TabIndex = 18;
@@ -483,7 +575,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.label5.Location = new System.Drawing.Point(11, 102);
+            this.label5.Location = new System.Drawing.Point(11, 165);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(66, 32);
             this.label5.TabIndex = 17;
@@ -493,7 +585,7 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.label6.Location = new System.Drawing.Point(11, 57);
+            this.label6.Location = new System.Drawing.Point(11, 110);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(151, 32);
             this.label6.TabIndex = 16;
@@ -503,7 +595,7 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.label7.Location = new System.Drawing.Point(11, 12);
+            this.label7.Location = new System.Drawing.Point(11, 60);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(179, 32);
             this.label7.TabIndex = 15;
@@ -512,7 +604,7 @@
             // settingsMotdTextBox
             // 
             this.settingsMotdTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.settingsMotdTextBox.Location = new System.Drawing.Point(196, 144);
+            this.settingsMotdTextBox.Location = new System.Drawing.Point(196, 217);
             this.settingsMotdTextBox.Name = "settingsMotdTextBox";
             this.settingsMotdTextBox.Size = new System.Drawing.Size(514, 39);
             this.settingsMotdTextBox.TabIndex = 4;
@@ -520,7 +612,7 @@
             // settingsIpTextBox
             // 
             this.settingsIpTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.settingsIpTextBox.Location = new System.Drawing.Point(196, 54);
+            this.settingsIpTextBox.Location = new System.Drawing.Point(196, 107);
             this.settingsIpTextBox.Name = "settingsIpTextBox";
             this.settingsIpTextBox.Size = new System.Drawing.Size(271, 39);
             this.settingsIpTextBox.TabIndex = 2;
@@ -528,7 +620,7 @@
             // settingsNameTextBox
             // 
             this.settingsNameTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.settingsNameTextBox.Location = new System.Drawing.Point(196, 8);
+            this.settingsNameTextBox.Location = new System.Drawing.Point(196, 56);
             this.settingsNameTextBox.Name = "settingsNameTextBox";
             this.settingsNameTextBox.Size = new System.Drawing.Size(275, 39);
             this.settingsNameTextBox.TabIndex = 1;
@@ -537,7 +629,7 @@
             // settingsPortTextBox
             // 
             this.settingsPortTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.settingsPortTextBox.Location = new System.Drawing.Point(196, 99);
+            this.settingsPortTextBox.Location = new System.Drawing.Point(196, 162);
             this.settingsPortTextBox.MaxLength = 5;
             this.settingsPortTextBox.Name = "settingsPortTextBox";
             this.settingsPortTextBox.Size = new System.Drawing.Size(100, 39);
@@ -680,6 +772,12 @@
             this.statusStrip.TabIndex = 7;
             this.statusStrip.Text = "statusBar";
             // 
+            // cpuRamUsage
+            // 
+            this.cpuRamUsage.Enabled = true;
+            this.cpuRamUsage.Interval = 2000;
+            this.cpuRamUsage.Tick += new System.EventHandler(this.cpuUsage_Tick);
+            // 
             // Terminal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -698,6 +796,9 @@
             this.Load += new System.EventHandler(this.Terminal_Load);
             this.serverTabs.ResumeLayout(false);
             this.generalPage.ResumeLayout(false);
+            this.generalPage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ramUsageChart)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cpuUsageChart)).EndInit();
             this.serverStatusPanel.ResumeLayout(false);
             this.serverStatusPanel.PerformLayout();
             this.serverJarPanel.ResumeLayout(false);
@@ -707,6 +808,7 @@
             this.backupPage.ResumeLayout(false);
             this.settingsPage.ResumeLayout(false);
             this.settingsPage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.threadCount)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.removeTab.ResumeLayout(false);
@@ -775,6 +877,13 @@
         private System.Windows.Forms.FlowLayoutPanel backupFolderList;
         private System.Windows.Forms.Label backupLabel;
         private System.Windows.Forms.Label SettingsStatusLabel;
+        private System.Windows.Forms.NumericUpDown threadCount;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label cpuUsageLabel;
+        private System.Windows.Forms.Timer cpuRamUsage;
+        private System.Windows.Forms.Label ramUsageLabel;
+        private System.Windows.Forms.DataVisualization.Charting.Chart cpuUsageChart;
+        private System.Windows.Forms.DataVisualization.Charting.Chart ramUsageChart;
     }
 }
 

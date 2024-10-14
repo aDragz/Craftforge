@@ -12,7 +12,7 @@ namespace Minecraft_Multiplayer_Host.Server.Events
 {
     internal class commands
     {
-        public static void runCommand(string command, Process serverProcess, TabControl serverTabs, int consoleID)
+        public static void runCommand(string command, Process serverProcess, TabControl serverTabs, int consoleID, Terminal terminal)
         {
             //Grab current window
             
@@ -49,7 +49,7 @@ namespace Minecraft_Multiplayer_Host.Server.Events
                         .OfType<RichTextBox>()
                         .FirstOrDefault(rtb => rtb.Name == "secondaryTerminal " + consoleID);
 
-                    Terminal.AppendTextToCommandOutput("[Minecraft-Multiplayer-Host ERROR] " + e.Message, console, secondaryTerminal, false);
+                    Terminal.AppendTextToCommandOutput("[Minecraft-Multiplayer-Host ERROR] " + e.Message, console, secondaryTerminal, false, terminal);
                 }
             }
         }

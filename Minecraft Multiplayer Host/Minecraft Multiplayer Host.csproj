@@ -23,7 +23,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>true</Prefer32Bit>
+    <Prefer32Bit>false</Prefer32Bit>
     <PreferNativeArm64>false</PreferNativeArm64>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -74,6 +74,8 @@
     <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web.DataVisualization" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -94,6 +96,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Server\Classes\Console\Applications\runSettings.cs" />
+    <Compile Include="Server\Classes\Console\CreateConsole\setAffinity.cs" />
     <Compile Include="Server\Classes\Console\Initialize\Files\AddFiles.cs" />
     <Compile Include="Server\Classes\Console\Initialize\Files\ContextMenus\deleteFile.cs" />
     <Compile Include="Server\Classes\Console\Initialize\Files\ContextMenus\openFile.cs" />
@@ -101,6 +104,8 @@
     <Compile Include="Server\Classes\Console\Initialize\Files\ContextMenus\UploadFolder.cs" />
     <Compile Include="Server\Classes\Console\Initialize\JarSelection\loadJarSelection.cs" />
     <Compile Include="Server\Classes\Console\notifyIcon.cs" />
+    <Compile Include="Server\Classes\Console\Yaml\serverSettings.cs" />
+    <Compile Include="Server\Classes\Console\Yaml\UpdateSettings\updateThreads.cs" />
     <Compile Include="Server\Classes\Themes\Themes\Custom\blue.cs" />
     <Compile Include="Server\GUI\Applications\downloadFile.cs">
       <SubType>Form</SubType>

@@ -16,7 +16,7 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console.Messages.INFO
             errorCount = 0;
         }
 
-        public bool grabInfoMessage(String errorMessage, RichTextBox consoleOutput, RichTextBox secondaryOutput,String location)
+        public bool grabInfoMessage(string errorMessage, RichTextBox consoleOutput, RichTextBox secondaryOutput, string location)
         {
             errorCount++;
 
