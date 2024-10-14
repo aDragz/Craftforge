@@ -32,9 +32,18 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.serverStatusNetwork = new System.Windows.Forms.Timer(this.components);
             this.serverTabs = new System.Windows.Forms.TabControl();
             this.generalPage = new System.Windows.Forms.TabPage();
+            this.ramUsageChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.cpuUsageChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.ramUsageLabel = new System.Windows.Forms.Label();
             this.cpuUsageLabel = new System.Windows.Forms.Label();
             this.serverStatusPanel = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
@@ -95,6 +104,8 @@
             this.cpuUsage = new System.Windows.Forms.Timer(this.components);
             this.serverTabs.SuspendLayout();
             this.generalPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ramUsageChart)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cpuUsageChart)).BeginInit();
             this.serverStatusPanel.SuspendLayout();
             this.serverJarPanel.SuspendLayout();
             this.filesPage.SuspendLayout();
@@ -139,6 +150,9 @@
             // 
             // generalPage
             // 
+            this.generalPage.Controls.Add(this.ramUsageChart);
+            this.generalPage.Controls.Add(this.cpuUsageChart);
+            this.generalPage.Controls.Add(this.ramUsageLabel);
             this.generalPage.Controls.Add(this.cpuUsageLabel);
             this.generalPage.Controls.Add(this.serverStatusPanel);
             this.generalPage.Controls.Add(this.secondaryTerminalInput);
@@ -154,16 +168,59 @@
             this.generalPage.Text = "General";
             this.generalPage.UseVisualStyleBackColor = true;
             // 
+            // ramUsageChart
+            // 
+            this.ramUsageChart.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            chartArea1.Name = "ChartArea1";
+            this.ramUsageChart.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.ramUsageChart.Legends.Add(legend1);
+            this.ramUsageChart.Location = new System.Drawing.Point(1341, 284);
+            this.ramUsageChart.Name = "ramUsageChart";
+            series1.ChartArea = "ChartArea1";
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.ramUsageChart.Series.Add(series1);
+            this.ramUsageChart.Size = new System.Drawing.Size(393, 189);
+            this.ramUsageChart.TabIndex = 41;
+            this.ramUsageChart.Text = "chart2";
+            // 
+            // cpuUsageChart
+            // 
+            this.cpuUsageChart.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            chartArea2.Name = "ChartArea1";
+            this.cpuUsageChart.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.cpuUsageChart.Legends.Add(legend2);
+            this.cpuUsageChart.Location = new System.Drawing.Point(1341, 479);
+            this.cpuUsageChart.Name = "cpuUsageChart";
+            series2.ChartArea = "ChartArea1";
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            this.cpuUsageChart.Series.Add(series2);
+            this.cpuUsageChart.Size = new System.Drawing.Size(393, 189);
+            this.cpuUsageChart.TabIndex = 40;
+            this.cpuUsageChart.Text = "chart1";
+            // 
+            // ramUsageLabel
+            // 
+            this.ramUsageLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.ramUsageLabel.AutoSize = true;
+            this.ramUsageLabel.Location = new System.Drawing.Point(1445, 248);
+            this.ramUsageLabel.Name = "ramUsageLabel";
+            this.ramUsageLabel.Size = new System.Drawing.Size(45, 33);
+            this.ramUsageLabel.TabIndex = 39;
+            this.ramUsageLabel.Text = "0%";
+            // 
             // cpuUsageLabel
             // 
-            this.cpuUsageLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.cpuUsageLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.cpuUsageLabel.AutoSize = true;
-            this.cpuUsageLabel.Location = new System.Drawing.Point(6, 898);
+            this.cpuUsageLabel.Location = new System.Drawing.Point(1344, 248);
             this.cpuUsageLabel.Name = "cpuUsageLabel";
             this.cpuUsageLabel.Size = new System.Drawing.Size(45, 33);
             this.cpuUsageLabel.TabIndex = 37;
             this.cpuUsageLabel.Text = "0%";
-            this.cpuUsageLabel.Click += new System.EventHandler(this.label11_Click);
             // 
             // serverStatusPanel
             // 
@@ -740,6 +797,8 @@
             this.serverTabs.ResumeLayout(false);
             this.generalPage.ResumeLayout(false);
             this.generalPage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ramUsageChart)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cpuUsageChart)).EndInit();
             this.serverStatusPanel.ResumeLayout(false);
             this.serverStatusPanel.PerformLayout();
             this.serverJarPanel.ResumeLayout(false);
@@ -822,6 +881,9 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label cpuUsageLabel;
         private System.Windows.Forms.Timer cpuUsage;
+        private System.Windows.Forms.Label ramUsageLabel;
+        private System.Windows.Forms.DataVisualization.Charting.Chart cpuUsageChart;
+        private System.Windows.Forms.DataVisualization.Charting.Chart ramUsageChart;
     }
 }
 

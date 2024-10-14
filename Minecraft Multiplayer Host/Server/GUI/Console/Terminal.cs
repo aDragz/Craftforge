@@ -22,9 +22,9 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Management;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace Minecraft_Multiplayer_Host.Server.GUI.Console
 {
@@ -63,6 +63,7 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
             InitializeFiles(); //Load files
             InitializeBackupFiles(); //Load backup files
             InitializeNotifications(); //Load notifications
+            InitializeChart(); //Load chart
 
             serverTabs.ItemSize = new Size(0, 1); //Hide the tabs
 
@@ -200,6 +201,53 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
                 Text = "Minecraft Multiplayer Host",
                 Visible = false //Don't show the icon
             };
+        }
+
+        private void InitializeChart() //TODO: delete
+        {
+            cpuUsageChart.Series.Clear();
+            var cpuSeries = new Series
+            {
+                Name = "CPU Usage",
+                ChartType = SeriesChartType.Line,
+                XValueType = ChartValueType.Int32
+            };
+
+            cpuUsageChart.ChartAreas[0].AxisY.Minimum = 0; //Disable negative values (Y axis)
+            cpuUsageChart.ChartAreas[0].AxisX.Minimum = 0; //Disable negative values (X axis)
+            cpuUsageChart.ChartAreas[0].AxisX.Maximum = 6;
+
+            cpuUsageChart.Series.Add(cpuSeries);
+            cpuUsageChart.ChartAreas[0].AxisX.Title = "Time";
+            cpuUsageChart.ChartAreas[0].AxisY.Title = "CPU Usage";
+
+            //Hide the legend
+            cpuUsageChart.Legends[0].Enabled = false;
+
+            //Hide the grid
+            cpuUsageChart.ChartAreas[0].AxisX.MajorGrid.Enabled = false;
+
+            ramUsageChart.Series.Clear();
+            var ramSeries = new Series
+            {
+                Name = "Ram Usage",
+                ChartType = SeriesChartType.Line,
+                XValueType = ChartValueType.Int32
+            };
+
+            ramUsageChart.ChartAreas[0].AxisY.Minimum = 0; //Disable negative values (Y axis)
+            ramUsageChart.ChartAreas[0].AxisX.Minimum = 0; //Disable negative values (X axis)
+            ramUsageChart.ChartAreas[0].AxisX.Maximum = 6;
+
+            ramUsageChart.Series.Add(ramSeries);
+            ramUsageChart.ChartAreas[0].AxisX.Title = "Time";
+            ramUsageChart.ChartAreas[0].AxisY.Title = "Ram Usage";
+
+            //Hide the legend
+            ramUsageChart.Legends[0].Enabled = false;
+
+            //Hide the grid
+            ramUsageChart.ChartAreas[0].AxisX.MajorGrid.Enabled = false;
         }
 
         private void createButton_Click(object sender, EventArgs e)
@@ -1054,6 +1102,7 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
             runSettings.runSettingsApp();
         }
 
+        int cpuUsageCounter = 0;
         private void cpuUsage_Tick(object sender, EventArgs e)
         {
             //Grab the process name from stopbtn
@@ -1061,11 +1110,44 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
             {
                 Process process = Process.GetProcessById(childProcessID);
                 cpuUsageLabel.Text = GetCurrentProcessCpuUsage(process).ToString();
+
+                //Grab ram amount from process
+                ramUsageLabel.Text = (process.WorkingSet64 / 1024 / 1024).ToString() + " MB"; //Convert to MB
             }
             catch (ArgumentException)
             {
-                cpuUsageLabel.Text = "0%";
+                cpuUsageLabel.Text = "0%"; //Set to 0% if it runs into an exception
+                ramUsageLabel.Text = "0 MB"; //Set to 0 MB if it runs into an exception
             }
+
+            //CPU Usage Chart
+
+            Series cpuSeries = cpuUsageChart.Series["CPU Usage"];
+
+            if (cpuSeries.Points.Count >= 6) //Keep 6 points, which shows all of the points without scrolling / changing the size of the chart
+            {
+                //Set minimum value
+                cpuUsageChart.ChartAreas[0].AxisX.Minimum = cpuUsageCounter - 6; //Grab the counter and subtract 6, so it shows the last 6 points
+                //Set maximum value
+                cpuUsageChart.ChartAreas[0].AxisX.Maximum = cpuUsageCounter; //Grab the counter, so it shows the current point, without an empty space at the end
+            }
+
+            cpuSeries.Points.AddXY(cpuUsageCounter, cpuUsageLabel.Text); //Add the point to the chart
+
+            cpuUsageCounter += 1;
+
+            //Ram Usage Chart
+            Series ramSeries = ramUsageChart.Series["Ram Usage"];
+
+            if (ramSeries.Points.Count >= 6) //Keep 6 points, which shows all of the points without scrolling / changing the size of the chart
+            {
+                //Set minimum value
+                ramUsageChart.ChartAreas[0].AxisX.Minimum = cpuUsageCounter - 6; //Use the same counter as the CPU usage because it runs at the same time
+                //Set maximum value
+                ramUsageChart.ChartAreas[0].AxisX.Maximum = cpuUsageCounter;
+            }
+
+            ramSeries.Points.AddXY(cpuUsageCounter, ramUsageLabel.Text.Replace(" MB", "")); //Add the point to the chart
         }
 
         public static double totalCpuUsage = 0;
@@ -1091,7 +1173,6 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
 
             double cpuUsageTotal = cpuUsedMs / (Environment.ProcessorCount * totalMsPassed) * 1000;
 
-            totalCpuUsage = 0;
             // Add to the total CPU usage
             totalCpuUsage += cpuUsageTotal;
 
@@ -1100,12 +1181,6 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
             lastTotalProcessorTime = curTotalProcessorTime;
 
             return Math.Round(cpuUsageTotal, 2);
-        }
-
-        private void label11_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show(this.stopBtn.Name);
-            MessageBox.Show(Process.GetCurrentProcess().Id.ToString());
         }
     }
 }
