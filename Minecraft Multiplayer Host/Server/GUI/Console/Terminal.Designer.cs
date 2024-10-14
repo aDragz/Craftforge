@@ -101,7 +101,7 @@
             this.removeTabClick = new System.Windows.Forms.ToolStripMenuItem();
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
-            this.cpuUsage = new System.Windows.Forms.Timer(this.components);
+            this.cpuRamUsage = new System.Windows.Forms.Timer(this.components);
             this.serverTabs.SuspendLayout();
             this.generalPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ramUsageChart)).BeginInit();
@@ -772,11 +772,11 @@
             this.statusStrip.TabIndex = 7;
             this.statusStrip.Text = "statusBar";
             // 
-            // cpuUsage
+            // cpuRamUsage
             // 
-            this.cpuUsage.Enabled = true;
-            this.cpuUsage.Interval = 2000;
-            this.cpuUsage.Tick += new System.EventHandler(this.cpuUsage_Tick);
+            this.cpuRamUsage.Enabled = true;
+            this.cpuRamUsage.Interval = 2000;
+            this.cpuRamUsage.Tick += new System.EventHandler(this.cpuUsage_Tick);
             // 
             // Terminal
             // 
@@ -880,7 +880,7 @@
         private System.Windows.Forms.NumericUpDown threadCount;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label cpuUsageLabel;
-        private System.Windows.Forms.Timer cpuUsage;
+        private System.Windows.Forms.Timer cpuRamUsage;
         private System.Windows.Forms.Label ramUsageLabel;
         private System.Windows.Forms.DataVisualization.Charting.Chart cpuUsageChart;
         private System.Windows.Forms.DataVisualization.Charting.Chart ramUsageChart;
