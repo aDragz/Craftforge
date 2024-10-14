@@ -45,7 +45,7 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
 
         static Dictionary<Process, string> serverProcessesToName = new Dictionary<Process, string>();
 
-        static int childProcessID = 0; //Name of the child process created by the batch file (start.bat) when you start the server. Used for CPU usage
+        int childProcessID = 0; //Name of the child process created by the batch file (start.bat) when you start the server. Used for CPU usage
 
         public Terminal()
         {
@@ -1102,22 +1102,22 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
             runSettings.runSettingsApp();
         }
 
-        int cpuUsageCounter = 0;
+        private int cpuUsageCounter = 0;
         private void cpuUsage_Tick(object sender, EventArgs e)
         {
             //Grab the process name from stopbtn
             try
             {
                 Process process = Process.GetProcessById(childProcessID);
-                cpuUsageLabel.Text = GetCurrentProcessCpuUsage(process).ToString();
+                this.cpuUsageLabel.Text = GetCurrentProcessCpuUsage(process).ToString();
 
                 //Grab ram amount from process
-                ramUsageLabel.Text = (process.WorkingSet64 / 1024 / 1024).ToString() + " MB"; //Convert to MB
+                this.ramUsageLabel.Text = (process.WorkingSet64 / 1024 / 1024).ToString() + " MB"; //Convert to MB
             }
             catch (ArgumentException)
             {
-                cpuUsageLabel.Text = "0%"; //Set to 0% if it runs into an exception
-                ramUsageLabel.Text = "0 MB"; //Set to 0 MB if it runs into an exception
+                this.cpuUsageLabel.Text = "0%"; //Set to 0% if it runs into an exception
+                this.ramUsageLabel.Text = "0 MB"; //Set to 0 MB if it runs into an exception
             }
 
             //CPU Usage Chart
@@ -1127,14 +1127,14 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
             if (cpuSeries.Points.Count >= 6) //Keep 6 points, which shows all of the points without scrolling / changing the size of the chart
             {
                 //Set minimum value
-                cpuUsageChart.ChartAreas[0].AxisX.Minimum = cpuUsageCounter - 6; //Grab the counter and subtract 6, so it shows the last 6 points
+                this.cpuUsageChart.ChartAreas[0].AxisX.Minimum = cpuUsageCounter - 6; //Grab the counter and subtract 6, so it shows the last 6 points
                 //Set maximum value
-                cpuUsageChart.ChartAreas[0].AxisX.Maximum = cpuUsageCounter; //Grab the counter, so it shows the current point, without an empty space at the end
+                this.cpuUsageChart.ChartAreas[0].AxisX.Maximum = cpuUsageCounter; //Grab the counter, so it shows the current point, without an empty space at the end
             }
 
             cpuSeries.Points.AddXY(cpuUsageCounter, cpuUsageLabel.Text); //Add the point to the chart
 
-            cpuUsageCounter += 1;
+            this.cpuUsageCounter += 1;
 
             //Ram Usage Chart
             Series ramSeries = ramUsageChart.Series["Ram Usage"];
@@ -1142,43 +1142,43 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
             if (ramSeries.Points.Count >= 6) //Keep 6 points, which shows all of the points without scrolling / changing the size of the chart
             {
                 //Set minimum value
-                ramUsageChart.ChartAreas[0].AxisX.Minimum = cpuUsageCounter - 6; //Use the same counter as the CPU usage because it runs at the same time
+                this.ramUsageChart.ChartAreas[0].AxisX.Minimum = cpuUsageCounter - 6; //Use the same counter as the CPU usage because it runs at the same time
                 //Set maximum value
-                ramUsageChart.ChartAreas[0].AxisX.Maximum = cpuUsageCounter;
+                this.ramUsageChart.ChartAreas[0].AxisX.Maximum = cpuUsageCounter;
             }
 
             ramSeries.Points.AddXY(cpuUsageCounter, ramUsageLabel.Text.Replace(" MB", "")); //Add the point to the chart
         }
 
-        public static double totalCpuUsage = 0;
-        private static DateTime lastTime;
-        private static TimeSpan lastTotalProcessorTime;
-        private static DateTime curTime;
-        private static TimeSpan curTotalProcessorTime;
+        public double totalCpuUsage = 0;
+        private DateTime lastTime;
+        private TimeSpan lastTotalProcessorTime;
+        private DateTime curTime;
+        private TimeSpan curTotalProcessorTime;
 
-        public static double GetCurrentProcessCpuUsage(Process process)
+        public double GetCurrentProcessCpuUsage(Process process)
         {
-            if (lastTime == default(DateTime))
+            if (this.lastTime == default(DateTime))
             {
-                lastTime = DateTime.Now;
-                lastTotalProcessorTime = process.TotalProcessorTime;
+                this.lastTime = DateTime.Now;
+                this.lastTotalProcessorTime = process.TotalProcessorTime;
                 return 0;
             }
 
-            curTime = DateTime.Now;
-            curTotalProcessorTime = process.TotalProcessorTime;
+            this.curTime = DateTime.Now;
+            this.curTotalProcessorTime = process.TotalProcessorTime;
 
-            double cpuUsedMs = (curTotalProcessorTime - lastTotalProcessorTime).TotalMilliseconds;
+            double cpuUsedMs = (this.curTotalProcessorTime - this.lastTotalProcessorTime).TotalMilliseconds;
             double totalMsPassed = (curTime - lastTime).TotalMilliseconds;
 
             double cpuUsageTotal = cpuUsedMs / (Environment.ProcessorCount * totalMsPassed) * 1000;
 
             // Add to the total CPU usage
-            totalCpuUsage += cpuUsageTotal;
+            this.totalCpuUsage += cpuUsageTotal;
 
             // Update the last recorded time and processor time
-            lastTime = curTime;
-            lastTotalProcessorTime = curTotalProcessorTime;
+            this.lastTime = this.curTime;
+            this.lastTotalProcessorTime = this.curTotalProcessorTime;
 
             return Math.Round(cpuUsageTotal, 2);
         }
