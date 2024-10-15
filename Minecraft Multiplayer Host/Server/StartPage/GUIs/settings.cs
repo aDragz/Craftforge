@@ -3,6 +3,7 @@ using System;
 using System.Configuration;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace Minecraft_Multiplayer_Host.Server.GUI.Applications
@@ -209,18 +210,37 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Applications
 
         private void loadThemesList()
         {
+            //Check if default theme exists
+            if (!File.Exists(themeLocation + "Default"))
+            {
+                //Create the default theme
+                themeListConsolePanel.Items.Add("Default");
+                //Add a spacer
+                themeListConsolePanel.Items.Add("");
+            }
+
             //Grab all files from location and add to list
             foreach (string file in Directory.GetFiles(themeLocation))
             {
+                string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(file);
+
+                //Skip the default theme, as it already exists in the list
+                if (fileNameWithoutExtension.Equals("default", StringComparison.OrdinalIgnoreCase))
+                    continue;
+
                 //Add the file to the list
-                themeListConsolePanel.Items.Add(Path.GetFileNameWithoutExtension(file));
+
+                //Make the first character Upper Case
+                fileNameWithoutExtension = char.ToUpper(fileNameWithoutExtension[0]) + fileNameWithoutExtension.Substring(1);
+
+                themeListConsolePanel.Items.Add(fileNameWithoutExtension);
             }
         }
 
         private void themeList_SelectedIndexChanged(object sender, EventArgs e)
         {
             //Change the theme
-            if (themeListConsolePanel.SelectedItem != null)
+            if (!string.IsNullOrEmpty(themeListConsolePanel.SelectedItem.ToString()))
             {
                 //Change the theme
                 Properties.Settings.Default.Theme = themeListConsolePanel.SelectedItem.ToString();
@@ -235,6 +255,10 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Applications
                         Terminal.InitializeThemeStatic(terminal); // Changed to access the static method directly from the class
                     }
                 }
+            } else
+            {
+                //Set the text back to the current theme
+                themeListConsolePanel.Text = Properties.Settings.Default.Theme;
             }
         }
 

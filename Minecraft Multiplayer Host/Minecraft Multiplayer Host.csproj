@@ -108,28 +108,29 @@
     <Compile Include="Server\Terminal\Classes\notifyIcon.cs" />
     <Compile Include="Server\Terminal\Classes\FileManagement\Yaml\serverSettings.cs" />
     <Compile Include="Server\Terminal\Classes\FileManagement\Yaml\UpdateSettings\updateThreads.cs" />
+    <Compile Include="Server\Terminal\Classes\Themes\Themes\Custom\red.cs" />
     <Compile Include="Server\Terminal\Classes\Themes\Themes\Custom\blue.cs" />
-    <Compile Include="Server\GUI\Applications\downloadFile.cs">
+    <Compile Include="Server\StartPage\GUIs\downloadFile.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Server\GUI\Applications\downloadFile.Designer.cs">
+    <Compile Include="Server\StartPage\GUIs\downloadFile.Designer.cs">
       <DependentUpon>downloadFile.cs</DependentUpon>
     </Compile>
     <Compile Include="Server\Terminal\Classes\createConsole.cs" />
-    <Compile Include="Server\GUI\Applications\settings.cs">
+    <Compile Include="Server\StartPage\GUIs\settings.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Server\GUI\Applications\settings.Designer.cs">
+    <Compile Include="Server\StartPage\GUIs\settings.Designer.cs">
       <DependentUpon>settings.cs</DependentUpon>
     </Compile>
     <Compile Include="Server\Terminal\Classes\ProcessManagement\javaInfo.cs" />
     <Compile Include="Server\Terminal\Components\tabButtons.cs" />
     <Compile Include="Server\Terminal\Classes\Messages\INFO\InfoMessage.cs" />
     <Compile Include="Server\Terminal\Classes\Messages\WARN\WarnMessage.cs" />
-    <Compile Include="Server\GUI\Setup\Startup.cs">
+    <Compile Include="Server\StartPage\GUIs\Startup.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Server\GUI\Setup\Startup.Designer.cs">
+    <Compile Include="Server\StartPage\GUIs\Startup.Designer.cs">
       <DependentUpon>Startup.cs</DependentUpon>
     </Compile>
     <Compile Include="Server\Terminal\Classes\Messages\ERROR\ErrorMessage.cs" />
@@ -141,10 +142,10 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Server\GUI\Setup\CreateNewServer.cs">
+    <Compile Include="Server\StartPage\GUIs\CreateNewServer.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Server\GUI\Setup\CreateNewServer.Designer.cs">
+    <Compile Include="Server\StartPage\GUIs\CreateNewServer.Designer.cs">
       <DependentUpon>CreateNewServer.cs</DependentUpon>
     </Compile>
     <Compile Include="Server\Terminal\Classes\generateNewServer.cs" />
@@ -153,13 +154,13 @@
     <Compile Include="Server\Terminal\Classes\Themes\Applications\Theme.cs" />
     <Compile Include="Server\Terminal\Classes\Themes\Themes\loadTheme.cs" />
     <Compile Include="Settings.cs" />
-    <EmbeddedResource Include="Server\GUI\Applications\downloadFile.resx">
+    <EmbeddedResource Include="Server\StartPage\GUIs\downloadFile.resx">
       <DependentUpon>downloadFile.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Server\GUI\Applications\settings.resx">
+    <EmbeddedResource Include="Server\StartPage\GUIs\settings.resx">
       <DependentUpon>settings.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Server\GUI\Setup\Startup.resx">
+    <EmbeddedResource Include="Server\StartPage\GUIs\Startup.resx">
       <DependentUpon>Startup.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Server\Terminal\Terminal.resx">
@@ -170,7 +171,7 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Server\GUI\Setup\CreateNewServer.resx">
+    <EmbeddedResource Include="Server\StartPage\GUIs\CreateNewServer.resx">
       <DependentUpon>CreateNewServer.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
@@ -187,8 +188,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Server\Events\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

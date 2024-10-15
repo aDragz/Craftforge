@@ -741,7 +741,11 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
             var searcher = new ManagementObjectSearcher(query);
             var results = searcher.Get();
 
-            return results.Cast<ManagementObject>().Select(p => Process.GetProcessById(Convert.ToInt32(p["ProcessId"]))).ToArray();
+            var returnProcess = results.Cast<ManagementObject>().Select(p => Process.GetProcessById(Convert.ToInt32(p["ProcessId"]))).ToArray();
+
+            //Check if returnProcess is running
+
+            return returnProcess;
         }
 
         private async void terminal_Close(object sender, EventArgs e)

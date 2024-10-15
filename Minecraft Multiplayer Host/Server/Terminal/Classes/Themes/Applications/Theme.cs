@@ -44,6 +44,7 @@ namespace Minecraft_Multiplayer_Host.Server.Themes.Classes.Applications
         {
             defaultTheme.writeSettingsToFile();
             blue.writeSettingsToFile();
+            red.writeSettingsToFile();
         }
     }
 }
