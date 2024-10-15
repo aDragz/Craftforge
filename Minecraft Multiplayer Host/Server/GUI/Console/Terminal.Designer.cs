@@ -774,7 +774,6 @@
             // 
             // cpuRamUsage
             // 
-            this.cpuRamUsage.Enabled = true;
             this.cpuRamUsage.Interval = 2000;
             this.cpuRamUsage.Tick += new System.EventHandler(this.cpuUsage_Tick);
             // 

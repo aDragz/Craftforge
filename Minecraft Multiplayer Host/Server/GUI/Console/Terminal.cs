@@ -442,6 +442,8 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
             // Set the working directory to the location of the start.bat file
             string directory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\Minecraft-Multiplayer-Host\\Servers\\" + name[0]);
 
+            cpuRamUsage.Enabled = true;
+
             //Run the task in a new thread (uses 1 thread to maximize performance for server instance)
             //This also makes the console load faster, and the form does not freeze
             await Task.Run(() =>
@@ -535,7 +537,19 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
                     serverProcess.Start(); //Start the process
 
                     // Get the child process named java.exe started by the batch file
-                    var javaProcess = GetChildProcesses(serverProcess.Id).FirstOrDefault(p => p.ProcessName.Equals("java", StringComparison.OrdinalIgnoreCase));
+                    //var javaProcess = GetChildProcesses(serverProcess.Id).FirstOrDefault(p => string.Equals(p.ProcessName, "java", StringComparison.OrdinalIgnoreCase));
+
+                    Process javaProcess = null;
+                    int attempts = 0;
+
+                    while (javaProcess == null && attempts < 5) {
+                        javaProcess = GetChildProcesses(serverProcess.Id).FirstOrDefault(p => string.Equals(p.ProcessName, "java", StringComparison.OrdinalIgnoreCase));
+                        if (javaProcess == null)
+                        {
+                            Task.Delay(1000); // Wait for 1 second before the next attempt
+                            attempts++;
+                        }
+                    }
 
                     if (javaProcess != null)
                     {
