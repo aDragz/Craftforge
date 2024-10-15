@@ -49,7 +49,7 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Classes
             {
                 if (e.KeyChar == (char) Keys.Enter)
                 {
-                    commands.runCommand(cmd.Text, serverProcess, serverInstance.serverTabs, consoleID, terminal);
+                    enterCommand.runCommand(cmd.Text, serverProcess, serverInstance.serverTabs, consoleID, terminal);
                     cmd.Clear();
                 }
             };

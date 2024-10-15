@@ -23,7 +23,7 @@ namespace Minecraft_Multiplayer_Host.Server.Classes
             //settings
             var settingsMenuItem = new ToolStripMenuItem("Settings", null, (sender, e) =>
             {
-                runSettings.runSettingsApp();
+                Console.Applications.openSettings.runSettingsApp();
             });
 
             //exit
@@ -63,7 +63,7 @@ namespace Minecraft_Multiplayer_Host.Server.Classes
             //settings
             var settingsMenuItem = new ToolStripMenuItem("Settings", null, (sender, e) =>
             {
-                new settings().Show();
+                new GUI.Applications.settings().Show();
             });
 
             //exit

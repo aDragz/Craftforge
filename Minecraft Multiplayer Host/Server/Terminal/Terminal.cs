@@ -772,8 +772,8 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
 
                     //Run /stop command
                     //Grab serverInstance
-                    commands.runCommand("/stop", serverProcess, this.serverTabs, consoleID, this);
-                    commands.runCommand("stop", serverProcess, this.serverTabs, consoleID, this);
+                    enterCommand.runCommand("/stop", serverProcess, this.serverTabs, consoleID, this);
+                    enterCommand.runCommand("stop", serverProcess, this.serverTabs, consoleID, this);
 
                     //For some reason it does not close the terminal.
                     //Spent like 2 hours trying to fix it, and it turns out it still stops it.
@@ -804,8 +804,8 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
 
                 //Run /stop command
                 //Grab serverInstance
-                commands.runCommand("/stop", serverProcess, this.serverTabs, consoleID, this);
-                commands.runCommand("stop", serverProcess, this.serverTabs, consoleID, this);
+                enterCommand.runCommand("/stop", serverProcess, this.serverTabs, consoleID, this);
+                enterCommand.runCommand("stop", serverProcess, this.serverTabs, consoleID, this);
 
                 this.stopBtn.Name = "";
 
@@ -1060,7 +1060,7 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
                     Process serverProcess = serverProcesses[consoleID];
 
                     // Run command
-                    commands.runCommand(secondaryTerminalInput.Text, serverProcess, this.serverTabs, consoleID, this);
+                    enterCommand.runCommand(secondaryTerminalInput.Text, serverProcess, this.serverTabs, consoleID, this);
 
                     // Clear text
                     secondaryTerminalInput.Clear();
@@ -1113,7 +1113,7 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Console
 
         private void settingsToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            runSettings.runSettingsApp();
+            openSettings.runSettingsApp();
         }
 
         private int cpuUsageCounter = 0;

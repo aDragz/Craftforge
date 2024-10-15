@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace Minecraft_Multiplayer_Host.Server.Classes.Console.Applications
 {
-    internal class runSettings
+    internal class openSettings
     {
         public static void runSettingsApp()
         {

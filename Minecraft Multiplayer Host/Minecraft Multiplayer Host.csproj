@@ -97,46 +97,46 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Server\Classes\Console\Applications\runSettings.cs" />
-    <Compile Include="Server\Classes\Console\CreateConsole\setAffinity.cs" />
-    <Compile Include="Server\Classes\Console\Initialize\Files\AddFiles.cs" />
-    <Compile Include="Server\Classes\Console\Initialize\Files\ContextMenus\deleteFile.cs" />
-    <Compile Include="Server\Classes\Console\Initialize\Files\ContextMenus\openFile.cs" />
-    <Compile Include="Server\Classes\Console\Initialize\Files\ContextMenus\UploadFile.cs" />
-    <Compile Include="Server\Classes\Console\Initialize\Files\ContextMenus\UploadFolder.cs" />
-    <Compile Include="Server\Classes\Console\Initialize\JarSelection\loadJarSelection.cs" />
-    <Compile Include="Server\Classes\Console\notifyIcon.cs" />
-    <Compile Include="Server\Classes\Console\Yaml\serverSettings.cs" />
-    <Compile Include="Server\Classes\Console\Yaml\UpdateSettings\updateThreads.cs" />
-    <Compile Include="Server\Classes\Themes\Themes\Custom\blue.cs" />
+    <Compile Include="Server\Terminal\Classes\OpenApplications\openSettings.cs" />
+    <Compile Include="Server\Terminal\Classes\ProcessManagement\setAffinity.cs" />
+    <Compile Include="Server\Terminal\Classes\Initialize\Files\AddFiles.cs" />
+    <Compile Include="Server\Terminal\Classes\Initialize\Files\ContextMenus\deleteFile.cs" />
+    <Compile Include="Server\Terminal\Classes\Initialize\Files\ContextMenus\openFile.cs" />
+    <Compile Include="Server\Terminal\Classes\Initialize\Files\ContextMenus\UploadFile.cs" />
+    <Compile Include="Server\Terminal\Classes\Initialize\Files\ContextMenus\UploadFolder.cs" />
+    <Compile Include="Server\Terminal\Classes\Initialize\JarSelection\loadJarSelection.cs" />
+    <Compile Include="Server\Terminal\Classes\notifyIcon.cs" />
+    <Compile Include="Server\Terminal\Classes\FileManagement\Yaml\serverSettings.cs" />
+    <Compile Include="Server\Terminal\Classes\FileManagement\Yaml\UpdateSettings\updateThreads.cs" />
+    <Compile Include="Server\Terminal\Classes\Themes\Themes\Custom\blue.cs" />
     <Compile Include="Server\GUI\Applications\downloadFile.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Server\GUI\Applications\downloadFile.Designer.cs">
       <DependentUpon>downloadFile.cs</DependentUpon>
     </Compile>
-    <Compile Include="Server\Classes\Console\createConsole.cs" />
+    <Compile Include="Server\Terminal\Classes\createConsole.cs" />
     <Compile Include="Server\GUI\Applications\settings.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Server\GUI\Applications\settings.Designer.cs">
       <DependentUpon>settings.cs</DependentUpon>
     </Compile>
-    <Compile Include="Server\GUI\Console\Classes\javaInfo.cs" />
-    <Compile Include="Server\GUI\Console\Components\tabButtons.cs" />
-    <Compile Include="Server\GUI\Console\Messages\INFO\InfoMessage.cs" />
-    <Compile Include="Server\GUI\Console\Messages\WARN\WarnMessage.cs" />
+    <Compile Include="Server\Terminal\Classes\ProcessManagement\javaInfo.cs" />
+    <Compile Include="Server\Terminal\Components\tabButtons.cs" />
+    <Compile Include="Server\Terminal\Classes\Messages\INFO\InfoMessage.cs" />
+    <Compile Include="Server\Terminal\Classes\Messages\WARN\WarnMessage.cs" />
     <Compile Include="Server\GUI\Setup\Startup.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Server\GUI\Setup\Startup.Designer.cs">
       <DependentUpon>Startup.cs</DependentUpon>
     </Compile>
-    <Compile Include="Server\GUI\Console\Messages\ERROR\ErrorMessage.cs" />
-    <Compile Include="Server\GUI\Console\Terminal.cs">
+    <Compile Include="Server\Terminal\Classes\Messages\ERROR\ErrorMessage.cs" />
+    <Compile Include="Server\Terminal\Terminal.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Server\GUI\Console\Terminal.Designer.cs">
+    <Compile Include="Server\Terminal\Terminal.Designer.cs">
       <DependentUpon>Terminal.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
@@ -147,11 +147,11 @@
     <Compile Include="Server\GUI\Setup\CreateNewServer.Designer.cs">
       <DependentUpon>CreateNewServer.cs</DependentUpon>
     </Compile>
-    <Compile Include="Server\Classes\generateNewServer.cs" />
-    <Compile Include="Server\Events\commands.cs" />
-    <Compile Include="Server\Classes\Themes\Applications\ApplyTheme\TabControl.cs" />
-    <Compile Include="Server\Classes\Themes\Applications\Theme.cs" />
-    <Compile Include="Server\Classes\Themes\Themes\loadTheme.cs" />
+    <Compile Include="Server\Terminal\Classes\generateNewServer.cs" />
+    <Compile Include="Server\Terminal\Classes\enterCommand.cs" />
+    <Compile Include="Server\Terminal\Classes\Themes\Applications\ApplyTheme\TabControl.cs" />
+    <Compile Include="Server\Terminal\Classes\Themes\Applications\Theme.cs" />
+    <Compile Include="Server\Terminal\Classes\Themes\Themes\loadTheme.cs" />
     <Compile Include="Settings.cs" />
     <EmbeddedResource Include="Server\GUI\Applications\downloadFile.resx">
       <DependentUpon>downloadFile.cs</DependentUpon>
@@ -162,7 +162,7 @@
     <EmbeddedResource Include="Server\GUI\Setup\Startup.resx">
       <DependentUpon>Startup.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Server\GUI\Console\Terminal.resx">
+    <EmbeddedResource Include="Server\Terminal\Terminal.resx">
       <DependentUpon>Terminal.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -187,6 +187,8 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Server\Events\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

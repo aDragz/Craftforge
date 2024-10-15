@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace Minecraft_Multiplayer_Host.Server.Events
 {
-    internal class commands
+    internal class enterCommand
     {
         public static void runCommand(string command, Process serverProcess, TabControl serverTabs, int consoleID, Terminal terminal)
         {
