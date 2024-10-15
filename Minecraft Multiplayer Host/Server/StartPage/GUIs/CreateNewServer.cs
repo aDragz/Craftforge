@@ -23,20 +23,20 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Setup
         private async void createButton_Click(object sender, EventArgs e)
         {
             // Main Strings
-            String serverName = nameTextBox.Text;
-            String serverIP = IpTextBox.Text;
-            String serverPort = portTextBox.Text;
-            String serverMOTD = motdTextBox.Text;
+            string serverName = nameTextBox.Text;
+            string serverIP = IpTextBox.Text;
+            string serverPort = portTextBox.Text;
+            string serverMOTD = motdTextBox.Text;
 
             // Url Strings
-            String type = typeSelector.SelectedItem.ToString().ToLower();
-            String url = null;
+            string type = typeSelector.SelectedItem.ToString().ToLower();
+            string url = null;
 
             if (!type.Equals("custom"))
             {
                 // Url Strings
-                String version = versionSelector.SelectedItem.ToString();
-                String build = buildSelector.SelectedItem.ToString();
+                string version = versionSelector.SelectedItem.ToString();
+                string build = buildSelector.SelectedItem.ToString();
 
                 if (type.Equals("paper") || type.Equals("waterfall") || type.Equals("velocity"))
                 {
@@ -62,7 +62,7 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Setup
 
         private async void typeSelector_SelectedIndexChanged(object sender, EventArgs e)
         {
-            String serverType = typeSelector.SelectedItem.ToString().ToLower();
+            string serverType = typeSelector.SelectedItem.ToString().ToLower();
             versionSelector.Enabled = true;
 
             if (serverType.Equals("paper") || serverType.Equals("waterfall") || serverType.Equals("velocity"))
@@ -90,8 +90,8 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Setup
 
         private async void versionSelector_SelectedIndexChanged(object sender, EventArgs e)
         {
-            String serverVersion = versionSelector.SelectedItem.ToString();
-            String serverType = typeSelector.SelectedItem.ToString().ToLower();
+            string serverVersion = versionSelector.SelectedItem.ToString();
+            string serverType = typeSelector.SelectedItem.ToString().ToLower();
 
             if (serverType.Equals("paper") || serverType.Equals("waterfall") || serverType.Equals("velocity"))
             {
@@ -110,9 +110,9 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Setup
 
         private async Task getPaperMcVersions()
         {
-            String serverType = typeSelector.SelectedItem.ToString().ToLower();
+            string serverType = typeSelector.SelectedItem.ToString().ToLower();
 
-            string versionUrl = String.Format("https://api.papermc.io/v2/projects/{0}", serverType);
+            string versionUrl = string.Format("https://api.papermc.io/v2/projects/{0}", serverType);
 
             using (HttpClient client = new HttpClient())
             {
@@ -142,10 +142,10 @@ namespace Minecraft_Multiplayer_Host.Server.GUI.Setup
 
         private async Task getPaperMcBuilds()
         {
-            String serverVersion = versionSelector.SelectedItem.ToString();
-            String serverType = typeSelector.SelectedItem.ToString().ToLower();
+            string serverVersion = versionSelector.SelectedItem.ToString();
+            string serverType = typeSelector.SelectedItem.ToString().ToLower();
 
-            string url = String.Format("https://api.papermc.io/v2/projects/{0}/versions/{1}/", serverType, serverVersion);
+            string url = string.Format("https://api.papermc.io/v2/projects/{0}/versions/{1}/", serverType, serverVersion);
 
             using (HttpClient client = new HttpClient())
             {

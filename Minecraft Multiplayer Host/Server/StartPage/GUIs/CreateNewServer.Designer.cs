@@ -110,24 +110,6 @@
             // 
             this.versionSelector.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.versionSelector.FormattingEnabled = true;
-            this.versionSelector.Items.AddRange(new object[] {
-            "1.10",
-            "1.11",
-            "1.12.2",
-            "1.13",
-            "1.14",
-            "1.15",
-            "1.16.5",
-            "1.17",
-            "1.18",
-            "1.19.2",
-            "1.19.4",
-            "1.20",
-            "1.20.6",
-            "1.21",
-            "1.21.1",
-            "1.8.9",
-            "1.9"});
             this.versionSelector.Location = new System.Drawing.Point(972, 463);
             this.versionSelector.Name = "versionSelector";
             this.versionSelector.Size = new System.Drawing.Size(273, 37);
