@@ -6,7 +6,7 @@ I am creating an app where it is easy to host your Minecraft servers with many "
 
 ### Beta?
 
-This is a Beta application, meaning it is not complete. And by a long way. The basics work, but there are many bugs.
+This is a Stable but also a beta application, meaning it is not complete. And by a long way. The basics work, but there are many bugs. But, it is stable to run your Minecraft server today! I am constantly adding features every day. So if you have any ideas, contact me on the discord or through email (go through my website for an updated link / email on the footer)
 
 ### Requirements
 
