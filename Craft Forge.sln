@@ -1,0 +1,35 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35027.167
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Craft Forge", "CraftForge\Craft Forge.csproj", "{9444C312-6030-4200-B88E-C08D174E403A}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Craft Forge Setup", "CraftForge-Setup\CraftForge-Setup.vdproj", "{07935E73-81B0-438D-9A25-D7CFA977EAD6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Craft Forge Updater", "CraftForge-Updater\Craft Forge Updater.csproj", "{4E848F91-E50D-4BEB-9FBE-C5017A8AE5B8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9444C312-6030-4200-B88E-C08D174E403A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9444C312-6030-4200-B88E-C08D174E403A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9444C312-6030-4200-B88E-C08D174E403A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9444C312-6030-4200-B88E-C08D174E403A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07935E73-81B0-438D-9A25-D7CFA977EAD6}.Debug|Any CPU.ActiveCfg = Debug
+		{07935E73-81B0-438D-9A25-D7CFA977EAD6}.Release|Any CPU.ActiveCfg = Release
+		{4E848F91-E50D-4BEB-9FBE-C5017A8AE5B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E848F91-E50D-4BEB-9FBE-C5017A8AE5B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E848F91-E50D-4BEB-9FBE-C5017A8AE5B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E848F91-E50D-4BEB-9FBE-C5017A8AE5B8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E004AF25-D1F6-41A6-BEF3-72389D1734EC}
+	EndGlobalSection
+EndGlobal

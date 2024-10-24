@@ -4,8 +4,8 @@
 ## Get latest from https://github.com/github/gitignore/blob/main/VisualStudio.gitignore
 
 #setup files for application
-Minecraft-Multiplayer-Host-Setup/
-Minecraft Multiplayer Host Updater/
+CraftForge-Setup/
+CraftForge-Updater/
 
 # User-specific files
 *.rsuser
