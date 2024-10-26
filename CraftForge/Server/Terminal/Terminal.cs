@@ -1153,8 +1153,6 @@ namespace CraftForge.Server.GUI.Console
 
             cpuSeries.Points.AddXY(cpuUsageCounter, cpuUsageLabel.Text); //Add the point to the chart
 
-            this.cpuUsageCounter += 1;
-
             //Ram Usage Chart
             Series ramSeries = ramUsageChart.Series["Ram Usage"];
 
@@ -1167,6 +1165,8 @@ namespace CraftForge.Server.GUI.Console
             }
 
             ramSeries.Points.AddXY(cpuUsageCounter, ramUsageLabel.Text.Replace(" MB", "")); //Add the point to the chart
+
+            this.cpuUsageCounter += 1;
         }
 
         public double totalCpuUsage = 0;
