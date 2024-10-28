@@ -1,12 +1,8 @@
-﻿using CraftForge.Properties;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web.UI.DataVisualization.Charting;
 using System.Windows.Forms;
 using System.Xml;
 
@@ -71,27 +67,31 @@ namespace CraftForge.Server.StartPage.Classes
 
         public static string grabType()
         {
-            string mainLocation = Assembly.GetExecutingAssembly().Location;
-            string configLocation = mainLocation.Substring(0, mainLocation.Length - 4).Replace("Craft Forge", "") + "CraftForge Updater.exe.config";
-
-            //Load the configuration file
-            XmlDocument configDoc = new XmlDocument();
-            configDoc.Load(configLocation);
-
-            //Find the userSettings section
-            XmlNode userSettingsNode = configDoc.SelectSingleNode("//userSettings/CraftForge_Updater.Properties.Settings");
-            if (userSettingsNode != null)
+            try
             {
-                XmlNode settingNode = userSettingsNode.SelectSingleNode($"setting[@name='TypeSelected']");
-                if (settingNode != null)
+                string mainLocation = Assembly.GetExecutingAssembly().Location;
+                string configLocation = mainLocation.Substring(0, mainLocation.Length - 4).Replace("Craft Forge", "") + "CraftForge Updater.exe.config";
+
+                //Load the configuration file
+                XmlDocument configDoc = new XmlDocument();
+                configDoc.Load(configLocation);
+
+                //Find the userSettings section
+                XmlNode userSettingsNode = configDoc.SelectSingleNode("//userSettings/CraftForge_Updater.Properties.Settings");
+                if (userSettingsNode != null)
                 {
-                    XmlNode valueNode = settingNode.SelectSingleNode("value");
-                    if (valueNode != null)
+                    XmlNode settingNode = userSettingsNode.SelectSingleNode($"setting[@name='TypeSelected']");
+                    if (settingNode != null)
                     {
-                        return valueNode.InnerText;
+                        XmlNode valueNode = settingNode.SelectSingleNode("value");
+                        if (valueNode != null)
+                        {
+                            return valueNode.InnerText;
+                        }
                     }
                 }
             }
+            catch{}
 
             return null;
         }

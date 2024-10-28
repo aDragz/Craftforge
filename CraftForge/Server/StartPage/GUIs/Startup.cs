@@ -93,6 +93,8 @@ namespace CraftForge.Server.GUI.Setup
             // Grab the name of the servers
             string[] serverNames = Directory.GetDirectories(directory);
 
+            List<string> serverPorts = new List<string>(); // List of used server ports
+
             // Add items to the FlowLayoutPanel
             for (int i = 0; i < serverCount; i++)
             {
@@ -139,15 +141,18 @@ namespace CraftForge.Server.GUI.Setup
                 };
 
                 //Location Text
-                Label label = new Label
+                RichTextBox label = new RichTextBox
                 {
                     Text = serverName,
-                    Name = "Label " + serverName,
+                    Name = "RichTextBox " + serverName,
                     Width = 500,
                     Height = 60,
                     Margin = new Padding(10),
                     Location = new Point(10, 20),
                     Font = new Font("Consolas", 10),
+                    ReadOnly = true,
+                    BorderStyle = BorderStyle.None,
+                    BackColor = this.BackColor,
                 };
 
                 Label fixServerLabel = new Label
@@ -177,6 +182,43 @@ namespace CraftForge.Server.GUI.Setup
                 {
                     panel.Controls.Add(label);
 
+                }
+
+                //Grab server.properties file and read server-port
+                string serverPropertiesPath = Path.Combine(serverNames[i], "server.properties");
+
+                if (File.Exists(serverPropertiesPath))
+                {
+                    // Read all lines from the server.properties file
+                    string[] lines = File.ReadAllLines(serverPropertiesPath);
+
+                    // Search for the line that contains the server-port value
+                    foreach (string line in lines)
+                    {
+                        if (line.StartsWith("server-port="))
+                        {
+                            // Extract the server-port value
+                            string serverPort = line.Substring("server-port=".Length);
+                            label.Text = label.Text + $"\n{serverPort}";
+
+                            foreach (string port in serverPorts)
+                            {
+                                if (port == serverPort)
+                                {
+                                    this.Invoke((MethodInvoker)delegate
+                                    {
+                                        label.Select(label.Text.IndexOf(serverPort), serverPort.Length);
+                                        label.SelectionColor = Color.Red;
+                                    });
+                                }
+                            }
+
+                            serverPorts.Add(serverPort);
+                            MessageBox.Show(serverPorts.Count.ToString() + " / " + serverPort + " - " + serverPorts[0] );
+
+                            break;
+                        }
+                    }
                 }
 
                 // Add event handler to the button

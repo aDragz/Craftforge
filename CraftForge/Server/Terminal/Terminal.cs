@@ -1,5 +1,4 @@
-﻿using Craft_Forge.Properties;
-using CraftForge.Properties;
+﻿using CraftForge.Properties;
 using CraftForge.Server.Classes;
 using CraftForge.Server.Classes.Console.Applications;
 using CraftForge.Server.Classes.Console.CreateConsole;
@@ -1200,6 +1199,12 @@ namespace CraftForge.Server.GUI.Console
             this.lastTotalProcessorTime = this.curTotalProcessorTime;
 
             return Math.Round(cpuUsageTotal, 2);
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            about aboutPage = new about();
+            aboutPage.Show();
         }
     }
 }

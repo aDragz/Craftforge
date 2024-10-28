@@ -1,4 +1,5 @@
 ﻿using CraftForge.Server.GUI.Console;
+using CraftForge.Server.StartPage.Classes;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json.Linq;
 using System;
@@ -370,6 +371,7 @@ namespace CraftForge.Server.GUI.Applications
                 }
 
                 CraftForgeUpdaterConfig("TypeSelected", TypeListConsolePanel.Text); //If stable is selected, it will be updated as stable as an example.
+                autoUpdate.checkForUpdates(); //Check for updates after the settings have been updated
             }
         }
 

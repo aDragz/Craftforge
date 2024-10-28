@@ -28,24 +28,24 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("Buttons");
-            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("Theme", new System.Windows.Forms.TreeNode[] {
-            treeNode11});
-            System.Windows.Forms.TreeNode treeNode13 = new System.Windows.Forms.TreeNode("Maximize");
-            System.Windows.Forms.TreeNode treeNode14 = new System.Windows.Forms.TreeNode("Console", new System.Windows.Forms.TreeNode[] {
-            treeNode12,
-            treeNode13});
-            System.Windows.Forms.TreeNode treeNode15 = new System.Windows.Forms.TreeNode("Maximize");
-            System.Windows.Forms.TreeNode treeNode16 = new System.Windows.Forms.TreeNode("Node2");
-            System.Windows.Forms.TreeNode treeNode17 = new System.Windows.Forms.TreeNode("Startup", new System.Windows.Forms.TreeNode[] {
-            treeNode15,
-            treeNode16});
-            System.Windows.Forms.TreeNode treeNode18 = new System.Windows.Forms.TreeNode("Appearance", new System.Windows.Forms.TreeNode[] {
-            treeNode14,
-            treeNode17});
-            System.Windows.Forms.TreeNode treeNode19 = new System.Windows.Forms.TreeNode("Type");
-            System.Windows.Forms.TreeNode treeNode20 = new System.Windows.Forms.TreeNode("App", new System.Windows.Forms.TreeNode[] {
-            treeNode19});
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Buttons");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Theme", new System.Windows.Forms.TreeNode[] {
+            treeNode1});
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Maximize");
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Console", new System.Windows.Forms.TreeNode[] {
+            treeNode2,
+            treeNode3});
+            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Maximize");
+            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Node2");
+            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("Startup", new System.Windows.Forms.TreeNode[] {
+            treeNode5,
+            treeNode6});
+            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Appearance", new System.Windows.Forms.TreeNode[] {
+            treeNode4,
+            treeNode7});
+            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Type");
+            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("App", new System.Windows.Forms.TreeNode[] {
+            treeNode9});
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.tabPage = new System.Windows.Forms.TabControl();
@@ -81,29 +81,29 @@
             this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeView1.Location = new System.Drawing.Point(0, 0);
             this.treeView1.Name = "treeView1";
-            treeNode11.Name = "AppearanceButtons";
-            treeNode11.Text = "Buttons";
-            treeNode12.Name = "themeList";
-            treeNode12.Text = "Theme";
-            treeNode13.Name = "MaximizeConsole";
-            treeNode13.Text = "Maximize";
-            treeNode14.Name = "Node1";
-            treeNode14.Text = "Console";
-            treeNode15.Name = "Node1";
-            treeNode15.Text = "Maximize";
-            treeNode16.Name = "Node2";
-            treeNode16.Text = "Node2";
-            treeNode17.Name = "StartupNode";
-            treeNode17.Text = "Startup";
-            treeNode18.Name = "Appearance";
-            treeNode18.Text = "Appearance";
-            treeNode19.Name = "Type";
-            treeNode19.Text = "Type";
-            treeNode20.Name = "App";
-            treeNode20.Text = "App";
+            treeNode1.Name = "AppearanceButtons";
+            treeNode1.Text = "Buttons";
+            treeNode2.Name = "themeList";
+            treeNode2.Text = "Theme";
+            treeNode3.Name = "MaximizeConsole";
+            treeNode3.Text = "Maximize";
+            treeNode4.Name = "Node1";
+            treeNode4.Text = "Console";
+            treeNode5.Name = "Node1";
+            treeNode5.Text = "Maximize";
+            treeNode6.Name = "Node2";
+            treeNode6.Text = "Node2";
+            treeNode7.Name = "StartupNode";
+            treeNode7.Text = "Startup";
+            treeNode8.Name = "Appearance";
+            treeNode8.Text = "Appearance";
+            treeNode9.Name = "Type";
+            treeNode9.Text = "Type";
+            treeNode10.Name = "App";
+            treeNode10.Text = "App";
             this.treeView1.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode18,
-            treeNode20});
+            treeNode8,
+            treeNode10});
             this.treeView1.Size = new System.Drawing.Size(419, 664);
             this.treeView1.TabIndex = 0;
             this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
@@ -284,9 +284,9 @@
             this.TypeApplicationPanel.Font = new System.Drawing.Font("Consolas", 12F);
             this.TypeApplicationPanel.Location = new System.Drawing.Point(15, 40);
             this.TypeApplicationPanel.Name = "TypeApplicationPanel";
-            this.TypeApplicationPanel.Size = new System.Drawing.Size(77, 28);
+            this.TypeApplicationPanel.Size = new System.Drawing.Size(103, 28);
             this.TypeApplicationPanel.TabIndex = 1;
-            this.TypeApplicationPanel.Text = "Theme";
+            this.TypeApplicationPanel.Text = "Release";
             // 
             // TypeListConsolePanel
             // 
