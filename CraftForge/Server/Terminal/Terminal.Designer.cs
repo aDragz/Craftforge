@@ -61,8 +61,6 @@
             this.startBtn = new System.Windows.Forms.Button();
             this.filesPage = new System.Windows.Forms.TabPage();
             this.folderList = new System.Windows.Forms.FlowLayoutPanel();
-            this.pluginsPage = new System.Windows.Forms.TabPage();
-            this.schedulerPage = new System.Windows.Forms.TabPage();
             this.logPage = new System.Windows.Forms.TabPage();
             this.logsOutput = new System.Windows.Forms.RichTextBox();
             this.backupPage = new System.Windows.Forms.TabPage();
@@ -133,8 +131,6 @@
             this.serverTabs.Appearance = System.Windows.Forms.TabAppearance.FlatButtons;
             this.serverTabs.Controls.Add(this.generalPage);
             this.serverTabs.Controls.Add(this.filesPage);
-            this.serverTabs.Controls.Add(this.pluginsPage);
-            this.serverTabs.Controls.Add(this.schedulerPage);
             this.serverTabs.Controls.Add(this.logPage);
             this.serverTabs.Controls.Add(this.backupPage);
             this.serverTabs.Controls.Add(this.settingsPage);
@@ -387,24 +383,6 @@
             this.folderList.Name = "folderList";
             this.folderList.Size = new System.Drawing.Size(1742, 937);
             this.folderList.TabIndex = 0;
-            // 
-            // pluginsPage
-            // 
-            this.pluginsPage.Location = new System.Drawing.Point(4, 14);
-            this.pluginsPage.Name = "pluginsPage";
-            this.pluginsPage.Size = new System.Drawing.Size(1742, 937);
-            this.pluginsPage.TabIndex = 4;
-            this.pluginsPage.Text = "Plugins";
-            this.pluginsPage.UseVisualStyleBackColor = true;
-            // 
-            // schedulerPage
-            // 
-            this.schedulerPage.Location = new System.Drawing.Point(4, 14);
-            this.schedulerPage.Name = "schedulerPage";
-            this.schedulerPage.Size = new System.Drawing.Size(1742, 937);
-            this.schedulerPage.TabIndex = 6;
-            this.schedulerPage.Text = "Scheduler";
-            this.schedulerPage.UseVisualStyleBackColor = true;
             // 
             // logPage
             // 
@@ -860,9 +838,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openFileLocationToolStripMenuItem;
-        private System.Windows.Forms.TabPage pluginsPage;
         private System.Windows.Forms.TabPage backupPage;
-        private System.Windows.Forms.TabPage schedulerPage;
         private System.Windows.Forms.Button settingsSaveBtn;
         private System.Windows.Forms.ProgressBar SettingsProgressBar;
         private System.Windows.Forms.Label label8;

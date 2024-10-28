@@ -43,7 +43,7 @@
             System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Appearance", new System.Windows.Forms.TreeNode[] {
             treeNode4,
             treeNode7});
-            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Type");
+            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Release");
             System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("App", new System.Windows.Forms.TreeNode[] {
             treeNode9});
             this.treeView1 = new System.Windows.Forms.TreeView();
@@ -97,8 +97,8 @@
             treeNode7.Text = "Startup";
             treeNode8.Name = "Appearance";
             treeNode8.Text = "Appearance";
-            treeNode9.Name = "Type";
-            treeNode9.Text = "Type";
+            treeNode9.Name = "Release";
+            treeNode9.Text = "Release";
             treeNode10.Name = "App";
             treeNode10.Text = "App";
             this.treeView1.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {

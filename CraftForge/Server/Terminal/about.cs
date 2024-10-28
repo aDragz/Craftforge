@@ -29,9 +29,11 @@ namespace CraftForge
         {
             //Grab the version of the application automatically
             string version = Application.ProductVersion.Substring(0, Application.ProductVersion.Length - 2);
+            string website = "https://craftforge.dev"; //Website URL
 
             aboutLabel.Text = "CraftForge\n\n" + //Title
-                $"Version: {version}\n"; //Displays Version
+                $"Version: {version}\n" +
+                $"Website: {website}"; //Displays Version
         }
 
         private void MainWindow_KeyDown(object sender, KeyEventArgs e)
