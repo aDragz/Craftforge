@@ -422,6 +422,7 @@
             // 
             // backupLabel
             // 
+            this.backupLabel.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.backupLabel.BackColor = System.Drawing.Color.Transparent;
             this.backupLabel.Location = new System.Drawing.Point(-1, 615);
             this.backupLabel.Name = "backupLabel";
@@ -724,7 +725,7 @@
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(164, 34);
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 

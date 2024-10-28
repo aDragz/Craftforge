@@ -13,7 +13,7 @@ namespace CraftForge.Server.Classes.Console.Initialize.JarSelection
             //Grab this.name and remove anything after :
             String[] name = terminal.Name.Split(':');
 
-            String location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("/Minecraft-Multiplayer-Host/Servers/" + name[0]);
+            String location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("/CraftForge/Servers/" + name[0]);
 
             //Read start.bat file
             String text = File.ReadAllText(location + "\\start.bat");

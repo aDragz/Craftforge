@@ -67,8 +67,8 @@ namespace CraftForge.Server.Classes.Console.Initialize.Files
                 directory += "\\";
             }
 
-            string mainDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + $"\\Minecraft-Multiplayer-Host\\Servers\\{serverName}\\";
-            string backupDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + $"\\Minecraft-Multiplayer-Host\\Backups\\{serverName}\\";
+            string mainDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + $"\\CraftForge\\Servers\\{serverName}\\";
+            string backupDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + $"\\CraftForge\\Backups\\{serverName}\\";
 
             //Add ... as a folder, to go back, at the beginning
             if (directory != mainDirectory && directory != backupDirectory)

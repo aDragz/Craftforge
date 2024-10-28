@@ -30,10 +30,10 @@ namespace CraftForge.Server.GUI.Console.Messages.ERROR
                 consoleOutput.Invoke((MethodInvoker)delegate
                 {
                     consoleOutput.Clear();
-                    consoleOutput.AppendText(String.Format("[Minecraft-Multiplayer-Host ERROR ({0})] Failed to start server \n", errorCount));
+                    consoleOutput.AppendText(string.Format("[CraftForge ERROR ({0})] Failed to start server \n", errorCount));
                     consoleOutput.AppendText("\nError Message: \n");
 
-                    secondaryOutput.AppendText(String.Format("[Minecraft-Multiplayer-Host ERROR ({0})] Failed to start server \n", errorCount));
+                    secondaryOutput.AppendText(string.Format("[CraftForge ERROR ({0})] Failed to start server \n", errorCount));
                     secondaryOutput.AppendText("\nError Message: \n");
                 });
                 return true; //Kills the process
@@ -42,9 +42,9 @@ namespace CraftForge.Server.GUI.Console.Messages.ERROR
                 consoleOutput.Invoke((MethodInvoker)delegate
                 {
                     consoleOutput.Clear();
-                    consoleOutput.AppendText(String.Format("[Minecraft-Multiplayer-Host ERROR ({0})] Unable to access jarfile \n", errorCount));
+                    consoleOutput.AppendText(string.Format("[CraftForge ERROR ({0})] Unable to access jarfile \n", errorCount));
 
-                    secondaryOutput.AppendText(String.Format("[Minecraft-Multiplayer-Host ERROR ({0})] Unable to access jarfile \n", errorCount));
+                    secondaryOutput.AppendText(string.Format("[CraftForge ERROR ({0})] Unable to access jarfile \n", errorCount));
 
                 });
                 return true; //Kills the process
@@ -52,10 +52,10 @@ namespace CraftForge.Server.GUI.Console.Messages.ERROR
 
             consoleOutput.Invoke((MethodInvoker)delegate
             {
-                consoleOutput.AppendText(String.Format("\n[Minecraft-Multiplayer-Host ERROR ({0})] An Error has Occurred \n", errorCount));
+                consoleOutput.AppendText(String.Format("\n[CraftForge ERROR ({0})] An Error has Occurred \n", errorCount));
                 consoleOutput.AppendText(String.Format("\nError Message: {0}\n", errorMessage));
 
-                secondaryOutput.AppendText(String.Format("\n[Minecraft-Multiplayer-Host ERROR ({0})] An Error has Occurred \n", errorCount));
+                secondaryOutput.AppendText(String.Format("\n[CraftForge ERROR ({0})] An Error has Occurred \n", errorCount));
                 secondaryOutput.AppendText(String.Format("\nError Message: {0}\n", errorMessage));
             });
             return false; //Unknown error, does not kill process

@@ -9,7 +9,7 @@ namespace CraftForge.Server.Classes.Console.Yaml
     {
         public string threadAmount { get; set; }
 
-        private static readonly string location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\Minecraft-Multiplayer-Host\\Servers\\");
+        private static readonly string location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\CraftForge\\Servers\\");
 
         public void writeFile(string serverName)
         {

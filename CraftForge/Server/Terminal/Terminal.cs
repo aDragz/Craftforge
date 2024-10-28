@@ -76,7 +76,7 @@ namespace CraftForge.Server.GUI.Console
             int maxCores = Environment.ProcessorCount;
 
             //Check if settings file exists
-            string location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\Minecraft-Multiplayer-Host\\Servers\\");
+            string location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\CraftForge\\Servers\\");
             if (!File.Exists(($"{location}\\{this.Name}\\serverSettings.yaml"))) {
                 serverSettings.writeSettingsToFile(this.Name);
             }
@@ -112,7 +112,7 @@ namespace CraftForge.Server.GUI.Console
             //Read server.properties file
             string[] name = this.Name.Split(':');
 
-            string location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\Minecraft-Multiplayer-Host\\Servers\\" + name[0]);
+            string location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\CraftForge\\Servers\\" + name[0]);
 
             //Read server.properties file
             string[] serverProperties = File.ReadAllLines(location + "\\server.properties");
@@ -173,7 +173,7 @@ namespace CraftForge.Server.GUI.Console
         private void InitializeFiles()
         {
             string name = this.Name;
-            string location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ($"\\Minecraft-Multiplayer-Host\\Servers\\{name}\\");
+            string location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ($"\\CraftForge\\Servers\\{name}\\");
 
             AddFiles.initializeFiles(folderList, location, name);
         }
@@ -184,7 +184,7 @@ namespace CraftForge.Server.GUI.Console
             backupLabel.SendToBack();
 
             string name = this.Name;
-            string location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ($"\\Minecraft-Multiplayer-Host\\Backups\\{name}\\");
+            string location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ($"\\CraftForge\\Backups\\{name}\\");
 
             //Check if location exists
             if (Directory.Exists(location))
@@ -263,7 +263,7 @@ namespace CraftForge.Server.GUI.Console
             //Grab this.name and remove anything after :
             string[] name = this.Name.Split(':');
 
-            string location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("/Minecraft-Multiplayer-Host/Servers/" + name[0]);
+            string location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("/CraftForge/Servers/" + name[0]);
 
             //Assume the process has only started
 
@@ -377,7 +377,7 @@ namespace CraftForge.Server.GUI.Console
                 //Grab this.name and remove anything after :
                 string[] name = this.Name.Split(':');
 
-                string location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("/Minecraft-Multiplayer-Host/Servers/" + name[0]);
+                string location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("/CraftForge/Servers/" + name[0]);
 
                 //Read start.bat file
                 string text = File.ReadAllText(location + "\\start.bat");
@@ -440,7 +440,7 @@ namespace CraftForge.Server.GUI.Console
             string[] name = this.Name.Split(':');
 
             // Set the working directory to the location of the start.bat file
-            string directory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\Minecraft-Multiplayer-Host\\Servers\\" + name[0]);
+            string directory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\CraftForge\\Servers\\" + name[0]);
 
             cpuRamUsage.Enabled = true;
 
@@ -502,7 +502,7 @@ namespace CraftForge.Server.GUI.Console
                                     //Check if Error contains "openjdk"
                                     if (e.Data.ToLower().Contains("openjdk"))
                                     {
-                                        AppendTextToCommandOutput("[Minecraft-Multiplayer-Host JAVA] " + e.Data, console, secondaryTerminal, false, this);
+                                        AppendTextToCommandOutput("[CraftForge JAVA] " + e.Data, console, secondaryTerminal, false, this);
                                     }
                                     else
                                     {
@@ -624,10 +624,10 @@ namespace CraftForge.Server.GUI.Console
                 consoleOutput.Invoke((MethodInvoker)delegate
                 {
                     consoleOutput.AppendText("\n");
-                    consoleOutput.AppendText("[Minecraft-Multiplayer-Host INFO] Server has started!\n");
+                    consoleOutput.AppendText("[CraftForge INFO] Server has started!\n");
 
                     secondaryOutput.AppendText("\n");
-                    secondaryOutput.AppendText("[Minecraft-Multiplayer-Host INFO] Server has started!\n");
+                    secondaryOutput.AppendText("[CraftForge INFO] Server has started!\n");
                 });
                 terminal.isRunning = true;
                 terminal.hasStarted = true;
@@ -669,7 +669,7 @@ namespace CraftForge.Server.GUI.Console
                     try
                     {
                         serverName = serverProcessesToName[serverProcesses[consoleID]];
-                        location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\Minecraft-Multiplayer-Host\\Servers\\" + serverName);
+                        location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\CraftForge\\Servers\\" + serverName);
                     }
                     catch { }
 
@@ -818,11 +818,11 @@ namespace CraftForge.Server.GUI.Console
                 {
                     // Wait 1 second
                     await Task.Run(async () => await Task.Delay(500));
-                    secondaryTerminal.AppendText("\n[Minecraft-Multiplayer-Host INFO] Server is stopping...\n");
+                    secondaryTerminal.AppendText("\n[CraftForge INFO] Server is stopping...\n");
                 }
 
                 //add to terminal the server has stopped
-                secondaryTerminal.AppendText("\n[Minecraft-Multiplayer-Host INFO] Server has stopped\n");
+                secondaryTerminal.AppendText("\n[CraftForge INFO] Server has stopped\n");
                 isRunning = false;
                 resetButtons();
                 serverProcess.Close();
@@ -845,7 +845,7 @@ namespace CraftForge.Server.GUI.Console
         {
             //Open location
             string[] name = this.Name.Split(':');
-            string location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\Minecraft-Multiplayer-Host\\Servers\\" + name[0]);
+            string location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\CraftForge\\Servers\\" + name[0]);
 
             Process.Start("explorer.exe", location);
         }
@@ -854,9 +854,9 @@ namespace CraftForge.Server.GUI.Console
         {
             //Grab old server name
             string oldName = this.Name;
-            string oldDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + string.Format("\\Minecraft-Multiplayer-Host\\Servers\\{0}", oldName);
+            string oldDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + string.Format("\\CraftForge\\Servers\\{0}", oldName);
 
-            string directory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + string.Format("\\Minecraft-Multiplayer-Host\\Servers\\{0}", settingsNameTextBox.Text);
+            string directory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + string.Format("\\CraftForge\\Servers\\{0}", settingsNameTextBox.Text);
             bool moveServer = false;
 
             //Check if directory and oldDirectory has changed
@@ -1024,7 +1024,7 @@ namespace CraftForge.Server.GUI.Console
         {
             //Open Most recent logs
             string[] name = this.Name.Split(':');
-            string location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\Minecraft-Multiplayer-Host\\Servers\\" + name[0] + "\\logs\\latest.log");
+            string location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\CraftForge\\Servers\\" + name[0] + "\\logs\\latest.log");
 
             Process.Start("notepad.exe", location);
         }
@@ -1033,7 +1033,7 @@ namespace CraftForge.Server.GUI.Console
         {
             //Grab location
             string[] name = this.Name.Split(':');
-            string location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\Minecraft-Multiplayer-Host\\Servers\\" + name[0]);
+            string location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\CraftForge\\Servers\\" + name[0]);
 
             //Grab all files in the directory, with the extension .jar
             string[] files = Directory.GetFiles(location, "*.jar");
@@ -1088,16 +1088,16 @@ namespace CraftForge.Server.GUI.Console
 
             //Grab this.name and remove anything after :
             string[] name = this.Name.Split(':');
-            string location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\Minecraft-Multiplayer-Host\\Servers\\" + name[0]);
+            string location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\CraftForge\\Servers\\" + name[0]);
 
             //Grab day
             string time = DateTime.Now.ToString("dd-MM-yyyy-HH-mm-ss");
 
             //Check if directory exists
-            if (!Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\Minecraft-Multiplayer-Host\\Backups\\" + name[0] + "\\" + time)))
+            if (!Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\CraftForge\\Backups\\" + name[0] + "\\" + time)))
             {
                 //Create directory
-                Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\Minecraft-Multiplayer-Host\\Backups\\" + name[0] + "\\" + time));
+                Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\CraftForge\\Backups\\" + name[0] + "\\" + time));
             }
             else
             {
@@ -1105,7 +1105,7 @@ namespace CraftForge.Server.GUI.Console
             }
 
             //Copy files
-            CopyDirectoryWithProgressBar(location, Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\Minecraft-Multiplayer-Host\\Backups\\" + name[0] + "\\" + time), backupLabel, false, backupProgressBar, "backup");
+            CopyDirectoryWithProgressBar(location, Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\CraftForge\\Backups\\" + name[0] + "\\" + time), backupLabel, false, backupProgressBar, "backup");
         }
 
         private void dToolStripMenuItem_Click(object sender, EventArgs e)

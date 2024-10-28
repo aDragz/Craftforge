@@ -35,7 +35,7 @@ namespace CraftForge.Server.GUI.Applications
 
         */
 
-        private readonly string themeLocation = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\Minecraft-Multiplayer-Host\\Themes\\");
+        private readonly string themeLocation = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\CraftForge\\Themes\\");
 
         public settings()
         {

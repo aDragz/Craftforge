@@ -10,7 +10,7 @@ namespace CraftForge.Server.Setup
     {
         public static async Task<bool> createAsync(string serverName, string serverIP, string serverPort, string serverMOTD, string fileUrl)
         {
-            string directory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + String.Format("/Minecraft-Multiplayer-Host/Servers/{0}", serverName);
+            string directory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + String.Format("/CraftForge/Servers/{0}", serverName);
             if (Directory.Exists(directory))
             {
                 MessageBox.Show("Server already exists!");

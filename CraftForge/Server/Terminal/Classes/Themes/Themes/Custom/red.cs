@@ -27,7 +27,7 @@ namespace CraftForge.Server.Classes.Themes.Themes.Custom
         
         public string Terminal_StatusBar_Colour { get; set; }
         
-        public static readonly string location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\Minecraft-Multiplayer-Host\\Themes");
+        public static readonly string location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\CraftForge\\Themes");
 
         public void writeFile()
         {
