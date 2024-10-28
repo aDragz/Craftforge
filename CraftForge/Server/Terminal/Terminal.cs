@@ -537,16 +537,17 @@ namespace CraftForge.Server.GUI.Console
                     serverProcess.Start(); //Start the process
 
                     // Get the child process named java.exe started by the batch file
-                    //var javaProcess = GetChildProcesses(serverProcess.Id).FirstOrDefault(p => string.Equals(p.ProcessName, "java", StringComparison.OrdinalIgnoreCase));
 
                     Process javaProcess = null;
                     int attempts = 0;
+
+                    Task.Delay(1000).Wait(); // Wait for 1 second before I start due to slower computers not opening instantly
 
                     while (javaProcess == null && attempts < 5) {
                         javaProcess = GetChildProcesses(serverProcess.Id).FirstOrDefault(p => string.Equals(p.ProcessName, "java", StringComparison.OrdinalIgnoreCase));
                         if (javaProcess == null)
                         {
-                            Task.Delay(1000); // Wait for 1 second before the next attempt
+                            Task.Delay(1000).Wait(); // Wait for 1 second before the next attempt
                             attempts++;
                         }
                     }
@@ -1176,42 +1177,48 @@ namespace CraftForge.Server.GUI.Console
 
         public double GetCurrentProcessCpuUsage(Process process)
         {
-            if (this.lastTime == default(DateTime))
+            try
             {
-                this.lastTime = DateTime.Now;
-                this.lastTotalProcessorTime = process.TotalProcessorTime;
+                if (this.lastTime == default(DateTime))
+                {
+                    this.lastTime = DateTime.Now;
+                    this.lastTotalProcessorTime = process.TotalProcessorTime;
+                    return 0;
+                }
+
+                this.curTime = DateTime.Now;
+                this.curTotalProcessorTime = process.TotalProcessorTime;
+
+                double cpuUsedMs = (this.curTotalProcessorTime - this.lastTotalProcessorTime).TotalMilliseconds;
+                double totalMsPassed = (curTime - lastTime).TotalMilliseconds;
+
+                ProcessThreadCollection threads = process.Threads;
+
+
+                double cpuUsageTotal = cpuUsedMs / (threads.Count * totalMsPassed) * 1000;
+
+                // Add to the total CPU usage
+                this.totalCpuUsage += cpuUsageTotal;
+
+                // Update the last recorded time and processor time
+                this.lastTime = this.curTime;
+                this.lastTotalProcessorTime = this.curTotalProcessorTime;
+
+                if (cpuUsageTotal > 100)
+                {
+                    return 100;
+                }
+
+                if (cpuUsageTotal < 0)
+                {
+                    return 0;
+                }
+
+                return Math.Round(cpuUsageTotal, 2);
+            } catch
+            {
                 return 0;
             }
-
-            this.curTime = DateTime.Now;
-            this.curTotalProcessorTime = process.TotalProcessorTime;
-
-            double cpuUsedMs = (this.curTotalProcessorTime - this.lastTotalProcessorTime).TotalMilliseconds;
-            double totalMsPassed = (curTime - lastTime).TotalMilliseconds;
-
-            ProcessThreadCollection threads = process.Threads;
-
-
-            double cpuUsageTotal = cpuUsedMs / (threads.Count * totalMsPassed) * 1000;
-
-            // Add to the total CPU usage
-            this.totalCpuUsage += cpuUsageTotal;
-
-            // Update the last recorded time and processor time
-            this.lastTime = this.curTime;
-            this.lastTotalProcessorTime = this.curTotalProcessorTime;
-
-            if (cpuUsageTotal > 100)
-            {
-                return 100;
-            }
-
-            if (cpuUsageTotal < 0)
-            {
-                return 0;
-            }
-
-            return Math.Round(cpuUsageTotal, 2);
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
