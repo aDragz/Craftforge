@@ -2,8 +2,10 @@
 using CraftForge.Server.StartPage.Classes;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -48,7 +50,7 @@ namespace CraftForge.Server.GUI.Setup
             instancesRunning.Remove(this.Name);
         }
 
-        private void LoadServers()
+        private async void LoadServers()
         {
             // Create FlowLayoutPanel where 4 items are displayed per line
             FlowLayoutPanel flowLayoutPanel = new FlowLayoutPanel
@@ -68,7 +70,7 @@ namespace CraftForge.Server.GUI.Setup
                 Dock = DockStyle.Fill,
                 AutoScroll = true,
             };
-            
+
             //Add flowLayoutPanel to tableLayoutPanel
             tableLayoutPanel.Controls.Add(flowLayoutPanel);
 
@@ -94,11 +96,22 @@ namespace CraftForge.Server.GUI.Setup
             string[] serverNames = Directory.GetDirectories(directory);
 
             List<string> serverPorts = new List<string>(); // List of used server ports
+            List<string> serversRunning = new List<string>();
+
+            //Grab each open Terminal windows, and add the server name to the list
+            foreach (Form form in Application.OpenForms)
+            {
+                if (form is Terminal)
+                {
+                    string name = (form.Name);
+                    serversRunning.Add(name);
+                }
+            }
 
             // Add items to the FlowLayoutPanel
             for (int i = 0; i < serverCount; i++)
             {
-                String serverName = Path.GetFileName(serverNames[i]);
+                string serverName = Path.GetFileName(serverNames[i]);
                 bool norunbat = false;
 
                 //Check if start.bat exists in the server directory
@@ -178,7 +191,8 @@ namespace CraftForge.Server.GUI.Setup
                     panel.Controls.Add(fixServerLabel);
                     panel.Controls.Add(noRunButton);
                     button.Enabled = false;
-                } else
+                }
+                else
                 {
                     panel.Controls.Add(label);
 
@@ -197,26 +211,43 @@ namespace CraftForge.Server.GUI.Setup
                     {
                         if (line.StartsWith("server-port="))
                         {
-                            // Extract the server-port value
-                            string serverPort = line.Substring("server-port=".Length);
-                            label.Text = label.Text + $"\n{serverPort}";
-
-                            foreach (string port in serverPorts)
+                            this.Invoke((MethodInvoker)delegate
                             {
-                                if (port == serverPort)
+                                // Extract the server-port value
+                                string serverPort = line.Substring("server-port=".Length);
+                                // Set the label colour to the previous color
+                                this.Invoke((MethodInvoker)delegate
                                 {
-                                    this.Invoke((MethodInvoker)delegate
+                                    label.Select(0, serverName.Length);
+                                    label.SelectionColor = label.ForeColor;
+                                });
+
+                                label.Text = label.Text + $"\n{serverPort}";
+
+                                foreach (string port in serverPorts)
+                                {
+                                    if (port == serverPort)
                                     {
                                         label.Select(label.Text.IndexOf(serverPort), serverPort.Length);
                                         label.SelectionColor = Color.Red;
-                                    });
+                                    }
                                 }
-                            }
 
-                            serverPorts.Add(serverPort);
+                                serverPorts.Add(serverPort);
 
-                            break;
+                            });
                         }
+                    }
+
+                    //Check if the server is running
+                    if (serversRunning.Contains(serverName))
+                    {
+                        //Set the label colour to green
+                        this.Invoke((MethodInvoker)delegate
+                        {
+                            label.Select(0, serverName.Length);
+                            label.SelectionColor = Color.Green;
+                        });
                     }
                 }
 
@@ -224,7 +255,8 @@ namespace CraftForge.Server.GUI.Setup
                 button.Click += new EventHandler((s, ev) => button_Click(s, ev, serverName));
 
                 //Check if it contains "Server is missing start.bat"
-                if (fixServerLabel.Text.Contains("Server is missing start.bat")) {
+                if (fixServerLabel.Text.Contains("Server is missing start.bat"))
+                {
                     noRunButton.Click += new EventHandler((s, ev) => fixServer_Click(s, ev, serverName));
                 }
 
