@@ -214,7 +214,6 @@ namespace CraftForge.Server.GUI.Setup
                             }
 
                             serverPorts.Add(serverPort);
-                            MessageBox.Show(serverPorts.Count.ToString() + " / " + serverPort + " - " + serverPorts[0] );
 
                             break;
                         }
@@ -256,7 +255,7 @@ namespace CraftForge.Server.GUI.Setup
                 Font = new Font("Consolas", 12),
             };
 
-            Label createLabel = new Label
+            RichTextBox createLabel = new RichTextBox
             {
                 Text = "Create Server",
                 Name = "Create Button",
@@ -265,6 +264,9 @@ namespace CraftForge.Server.GUI.Setup
                 Margin = new Padding(10),
                 Location = new Point(10, 20),
                 Font = new Font("Consolas", 10),
+                ReadOnly = true,
+                BorderStyle = BorderStyle.None,
+                BackColor = this.BackColor,
             };
 
             createButton.Click += new EventHandler(createServer_Click);
