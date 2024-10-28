@@ -98,8 +98,6 @@
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.serverTabsPanel = new System.Windows.Forms.Panel();
-            this.removeTab = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.removeTabClick = new System.Windows.Forms.ToolStripMenuItem();
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.cpuRamUsage = new System.Windows.Forms.Timer(this.components);
@@ -115,7 +113,6 @@
             this.settingsPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.threadCount)).BeginInit();
             this.menuStrip1.SuspendLayout();
-            this.removeTab.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -739,20 +736,6 @@
             this.serverTabsPanel.Size = new System.Drawing.Size(150, 960);
             this.serverTabsPanel.TabIndex = 15;
             // 
-            // removeTab
-            // 
-            this.removeTab.ImageScalingSize = new System.Drawing.Size(24, 24);
-            this.removeTab.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.removeTabClick});
-            this.removeTab.Name = "removeTab";
-            this.removeTab.Size = new System.Drawing.Size(181, 36);
-            // 
-            // removeTabClick
-            // 
-            this.removeTabClick.Name = "removeTabClick";
-            this.removeTabClick.Size = new System.Drawing.Size(180, 32);
-            this.removeTabClick.Text = "Remove Tab";
-            // 
             // statusLabel
             // 
             this.statusLabel.Name = "statusLabel";
@@ -772,7 +755,7 @@
             // 
             // cpuRamUsage
             // 
-            this.cpuRamUsage.Interval = 2000;
+            this.cpuRamUsage.Interval = 1000;
             this.cpuRamUsage.Tick += new System.EventHandler(this.cpuUsage_Tick);
             // 
             // Terminal
@@ -809,7 +792,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.threadCount)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            this.removeTab.ResumeLayout(false);
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
             this.ResumeLayout(false);
@@ -856,8 +838,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label mainIpLabel;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ContextMenuStrip removeTab;
-        private System.Windows.Forms.ToolStripMenuItem removeTabClick;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label mainPortLabel;
         private System.Windows.Forms.ProgressBar backupProgressBar;

@@ -1189,7 +1189,10 @@ namespace CraftForge.Server.GUI.Console
             double cpuUsedMs = (this.curTotalProcessorTime - this.lastTotalProcessorTime).TotalMilliseconds;
             double totalMsPassed = (curTime - lastTime).TotalMilliseconds;
 
-            double cpuUsageTotal = cpuUsedMs / (Environment.ProcessorCount * totalMsPassed) * 1000;
+            ProcessThreadCollection threads = process.Threads;
+
+
+            double cpuUsageTotal = cpuUsedMs / (threads.Count * totalMsPassed) * 1000;
 
             // Add to the total CPU usage
             this.totalCpuUsage += cpuUsageTotal;
@@ -1197,6 +1200,16 @@ namespace CraftForge.Server.GUI.Console
             // Update the last recorded time and processor time
             this.lastTime = this.curTime;
             this.lastTotalProcessorTime = this.curTotalProcessorTime;
+
+            if (cpuUsageTotal > 100)
+            {
+                return 100;
+            }
+
+            if (cpuUsageTotal < 0)
+            {
+                return 0;
+            }
 
             return Math.Round(cpuUsageTotal, 2);
         }
