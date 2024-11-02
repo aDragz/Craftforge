@@ -1,12 +1,9 @@
 ﻿using CraftForge.Server.Themes.Themes;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace CraftForge.Server.Themes.Classes.Applications
 {
@@ -62,6 +59,20 @@ namespace CraftForge.Server.Themes.Classes.Applications
                                     MessageBox.Show($"TerminalTerminalColourBack cannot be transparent. It has to be 255, it is currently {backColor.A}");
                                     control.BackColor = Color.FromArgb(255, 255, 255, 255); //Colour is transparent, so set it to white
                                 }
+                            }
+                        } 
+                        else if (control is Chart)
+                        {
+                            Chart chart = (Chart)control;
+
+                            chart.BackColor = ColorTranslator.FromHtml(theme.Terminal_Chart_Colour_Back);
+                            chart.BackSecondaryColor = ColorTranslator.FromHtml(theme.Terminal_Chart_Colour_BackSecondary);
+
+                            //Set the chart area colours
+                            foreach (ChartArea chartArea in chart.ChartAreas)
+                            {
+                                chartArea.BackColor = ColorTranslator.FromHtml(theme.Terminal_Chart_Colour_BackPoints);
+                                chartArea.BackSecondaryColor = ColorTranslator.FromHtml(theme.Terminal_Chart_Colour_BackPoints);
                             }
                         }
                     }

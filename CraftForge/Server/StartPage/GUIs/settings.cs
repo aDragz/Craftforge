@@ -1,21 +1,16 @@
 ﻿using CraftForge.Server.GUI.Console;
 using CraftForge.Server.StartPage.Classes;
-using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Configuration;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Net.Http;
 using System.Reflection;
 using System.Security.Principal;
 using System.Windows.Forms;
 using System.Xml;
-using YamlDotNet.Core;
-using YamlDotNet.Core.Tokens;
-using ConfigurationManager = System.Configuration.ConfigurationManager;
 
 namespace CraftForge.Server.GUI.Applications
 {

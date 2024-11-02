@@ -1,11 +1,6 @@
-﻿using CraftForge.Properties;
-using CraftForge.Server.Themes.Themes;
+﻿using CraftForge.Server.Themes.Themes;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace CraftForge.Server.GUI.Console.Components
@@ -44,9 +39,9 @@ namespace CraftForge.Server.GUI.Console.Components
                         removeTabContextMenuStrip.Items.Add("Remove Tab", null, (s, ev) =>
                         {
                             //Check if the server is running from the tab process id
-                            String tabName = tabButton.Name;
+                            string tabName = tabButton.Name;
 
-                            String[] tabNameSplit = tabName.Split(' ');
+                            string[] tabNameSplit = tabName.Split(' ');
 
                             int consoleID = int.Parse(tabNameSplit[1]);
 
