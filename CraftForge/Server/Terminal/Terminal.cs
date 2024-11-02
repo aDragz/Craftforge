@@ -163,6 +163,10 @@ namespace CraftForge.Server.GUI.Console
             {
                 this.WindowState = FormWindowState.Maximized;
             }
+
+            //Make CPU/Ram labels invisible
+            cpuUsageLabel.Visible = false;
+            ramUsageLabel.Visible = false;
         }
 
         public static void InitializeThemeStatic(Terminal instance)
@@ -221,11 +225,9 @@ namespace CraftForge.Server.GUI.Console
             cpuUsageChart.ChartAreas[0].AxisX.Title = "Time";
             cpuUsageChart.ChartAreas[0].AxisY.Title = "CPU Usage";
 
-            //Hide the legend
-            cpuUsageChart.Legends[0].Enabled = false;
-
-            //Hide the grid
-            cpuUsageChart.ChartAreas[0].AxisX.MajorGrid.Enabled = false;
+            cpuUsageChart.Legends[0].Enabled = false; //Hide the legend
+            cpuUsageChart.ChartAreas[0].AxisX.MajorGrid.Enabled = false; //Hide the grid
+            cpuUsageChart.ChartAreas[0].AxisX.LabelStyle.Enabled = false; //Hide the label (x)
 
             ramUsageChart.Series.Clear();
             var ramSeries = new Series
@@ -243,11 +245,9 @@ namespace CraftForge.Server.GUI.Console
             ramUsageChart.ChartAreas[0].AxisX.Title = "Time";
             ramUsageChart.ChartAreas[0].AxisY.Title = "Ram Usage";
 
-            //Hide the legend
-            ramUsageChart.Legends[0].Enabled = false;
-
-            //Hide the grid
-            ramUsageChart.ChartAreas[0].AxisX.MajorGrid.Enabled = false;
+            ramUsageChart.Legends[0].Enabled = false; //Hide the legend
+            ramUsageChart.ChartAreas[0].AxisX.MajorGrid.Enabled = false; //Hide the grid
+            ramUsageChart.ChartAreas[0].AxisX.LabelStyle.Enabled = false; //Hide the label (x)
         }
 
         private void createButton_Click(object sender, EventArgs e)
@@ -430,6 +430,9 @@ namespace CraftForge.Server.GUI.Console
             this.startBtn.Enabled = false;
             this.stopBtn.Enabled = false;
 
+            //Make CPU/Ram labels visible
+            cpuUsageLabel.Visible = true;
+            ramUsageLabel.Visible = true;
             serverStatusNetwork.Start();
         }
 
@@ -829,6 +832,9 @@ namespace CraftForge.Server.GUI.Console
                 serverProcess.Close();
                 serverProcesses.Remove(consoleID);
 
+                cpuRamUsage.Stop();
+                cpuRamUsage.Dispose();
+
                 if (formClosing)
                 {
                     this.Close();
@@ -923,6 +929,10 @@ namespace CraftForge.Server.GUI.Console
                 File.WriteAllText(directory + "\\server.properties", "server-port=" + settingsPortTextBox.Text + "\n" + "server-ip=" + settingsIpTextBox.Text + "\n" + "level-name=world\n" + "gamemode=survival\n" + "difficulty=easy\n" + "allow-cheats=false\n" + "max-players=" + settingsPlayersTextBox.Text + "\n" + "online-mode=true\n" + "white-list=false\n" + "server-name=" + settingsNameTextBox.Text + "\n" + "motd=" + settingsMotdTextBox.Text + "\n");
                 SettingsStatusLabel.Text = "Server updated!";
             }
+
+            //Reset the main text
+            mainIpLabel.Text = settingsIpTextBox.Text;
+            mainPortLabel.Text = settingsPortTextBox.Text;
         }
 
         //First time setup is for when the server is first created, and needs to create the necessary files
@@ -1128,7 +1138,7 @@ namespace CraftForge.Server.GUI.Console
             try
             {
                 Process process = Process.GetProcessById(childProcessID);
-                this.cpuUsageLabel.Text = GetCurrentProcessCpuUsage(process).ToString();
+                this.cpuUsageLabel.Text = GetCurrentProcessCpuUsage(process).ToString() + "%";
 
                 //Grab ram amount from process
                 this.ramUsageLabel.Text = (process.WorkingSet64 / 1024 / 1024).ToString() + " MB"; //Convert to MB
@@ -1151,7 +1161,8 @@ namespace CraftForge.Server.GUI.Console
                 this.cpuUsageChart.ChartAreas[0].AxisX.Maximum = cpuUsageCounter; //Grab the counter, so it shows the current point, without an empty space at the end
             }
 
-            cpuSeries.Points.AddXY(cpuUsageCounter, cpuUsageLabel.Text); //Add the point to the chart
+            //Remove % from the Label or it will not count as a nubmer properly
+            cpuSeries.Points.AddXY(cpuUsageCounter, cpuUsageLabel.Text.Replace("%", "")); //Add the point to the chart
 
             //Ram Usage Chart
             Series ramSeries = ramUsageChart.Series["Ram Usage"];

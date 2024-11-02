@@ -26,7 +26,11 @@ namespace CraftForge.Server.Classes.Themes.Themes.Custom
         public string Terminal_SideBar_Colour { get; set; }
         
         public string Terminal_StatusBar_Colour { get; set; }
-        
+
+        public string Terminal_Chart_Colour_Back { get; set; }
+        public string Terminal_Chart_Colour_BackSecondary { get; set; }
+        public string Terminal_Chart_Colour_BackPoints { get; set; }
+
         public static readonly string location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\CraftForge\\Themes");
 
         public void writeFile()
@@ -58,7 +62,11 @@ namespace CraftForge.Server.Classes.Themes.Themes.Custom
                 Terminal_Background_Colour = "42, 42, 50",
                 Terminal_SideBar_Colour = "42, 42, 55",
 
-                Terminal_StatusBar_Colour = "42, 42, 55"
+                Terminal_StatusBar_Colour = "42, 42, 55",
+
+                Terminal_Chart_Colour_Back = "42, 42, 50",
+                Terminal_Chart_Colour_BackSecondary = "42, 42, 50",
+                Terminal_Chart_Colour_BackPoints = "42, 42, 50"
             };
 
             red.writeFile();

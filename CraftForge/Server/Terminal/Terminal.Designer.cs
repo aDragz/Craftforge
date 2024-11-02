@@ -204,9 +204,9 @@
             this.ramUsageLabel.AutoSize = true;
             this.ramUsageLabel.Location = new System.Drawing.Point(1445, 248);
             this.ramUsageLabel.Name = "ramUsageLabel";
-            this.ramUsageLabel.Size = new System.Drawing.Size(45, 33);
+            this.ramUsageLabel.Size = new System.Drawing.Size(75, 33);
             this.ramUsageLabel.TabIndex = 39;
-            this.ramUsageLabel.Text = "0%";
+            this.ramUsageLabel.Text = "0 MB";
             // 
             // cpuUsageLabel
             // 
