@@ -26,10 +26,10 @@ namespace CraftForge.Server.GUI.Console.Messages.WARN
                 consoleOutput.Invoke((MethodInvoker)delegate
                 {
                     consoleOutput.Clear();
-                    consoleOutput.AppendText(String.Format("[Minecraft-Multiplayer-Host ERROR] Port {0} is already in use. \n", "25565"));
+                    consoleOutput.AppendText(string.Format("[CraftForge ERROR] Port {0} is already in use. \n", "25565"));
                     consoleOutput.AppendText("\nError Message: \n");
 
-                    secondaryOutput.AppendText(String.Format("[Minecraft-Multiplayer-Host ERROR] Port {0} is already in use. \n", "25565"));
+                    secondaryOutput.AppendText(string.Format("[CraftForge ERROR] Port {0} is already in use. \n", "25565"));
                     secondaryOutput.AppendText("\nError Message: \n");
                 });
                 return true; //Kills the process

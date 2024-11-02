@@ -61,8 +61,6 @@
             this.startBtn = new System.Windows.Forms.Button();
             this.filesPage = new System.Windows.Forms.TabPage();
             this.folderList = new System.Windows.Forms.FlowLayoutPanel();
-            this.pluginsPage = new System.Windows.Forms.TabPage();
-            this.schedulerPage = new System.Windows.Forms.TabPage();
             this.logPage = new System.Windows.Forms.TabPage();
             this.logsOutput = new System.Windows.Forms.RichTextBox();
             this.backupPage = new System.Windows.Forms.TabPage();
@@ -71,6 +69,11 @@
             this.backupProgressBar = new System.Windows.Forms.ProgressBar();
             this.createBackupBtn = new System.Windows.Forms.Button();
             this.settingsPage = new System.Windows.Forms.TabPage();
+            this.ramSlider = new System.Windows.Forms.TrackBar();
+            this.ramNumber = new System.Windows.Forms.NumericUpDown();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
             this.threadCount = new System.Windows.Forms.NumericUpDown();
             this.label10 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
@@ -97,9 +100,9 @@
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileLocationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openLogsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.serverTabsPanel = new System.Windows.Forms.Panel();
-            this.removeTab = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.removeTabClick = new System.Windows.Forms.ToolStripMenuItem();
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.cpuRamUsage = new System.Windows.Forms.Timer(this.components);
@@ -113,9 +116,10 @@
             this.logPage.SuspendLayout();
             this.backupPage.SuspendLayout();
             this.settingsPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ramSlider)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ramNumber)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.threadCount)).BeginInit();
             this.menuStrip1.SuspendLayout();
-            this.removeTab.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -131,8 +135,6 @@
             this.serverTabs.Appearance = System.Windows.Forms.TabAppearance.FlatButtons;
             this.serverTabs.Controls.Add(this.generalPage);
             this.serverTabs.Controls.Add(this.filesPage);
-            this.serverTabs.Controls.Add(this.pluginsPage);
-            this.serverTabs.Controls.Add(this.schedulerPage);
             this.serverTabs.Controls.Add(this.logPage);
             this.serverTabs.Controls.Add(this.backupPage);
             this.serverTabs.Controls.Add(this.settingsPage);
@@ -209,9 +211,9 @@
             this.ramUsageLabel.AutoSize = true;
             this.ramUsageLabel.Location = new System.Drawing.Point(1445, 248);
             this.ramUsageLabel.Name = "ramUsageLabel";
-            this.ramUsageLabel.Size = new System.Drawing.Size(45, 33);
+            this.ramUsageLabel.Size = new System.Drawing.Size(75, 33);
             this.ramUsageLabel.TabIndex = 39;
-            this.ramUsageLabel.Text = "0%";
+            this.ramUsageLabel.Text = "0 MB";
             // 
             // cpuUsageLabel
             // 
@@ -386,24 +388,6 @@
             this.folderList.Size = new System.Drawing.Size(1742, 937);
             this.folderList.TabIndex = 0;
             // 
-            // pluginsPage
-            // 
-            this.pluginsPage.Location = new System.Drawing.Point(4, 14);
-            this.pluginsPage.Name = "pluginsPage";
-            this.pluginsPage.Size = new System.Drawing.Size(1742, 937);
-            this.pluginsPage.TabIndex = 4;
-            this.pluginsPage.Text = "Plugins";
-            this.pluginsPage.UseVisualStyleBackColor = true;
-            // 
-            // schedulerPage
-            // 
-            this.schedulerPage.Location = new System.Drawing.Point(4, 14);
-            this.schedulerPage.Name = "schedulerPage";
-            this.schedulerPage.Size = new System.Drawing.Size(1742, 937);
-            this.schedulerPage.TabIndex = 6;
-            this.schedulerPage.Text = "Scheduler";
-            this.schedulerPage.UseVisualStyleBackColor = true;
-            // 
             // logPage
             // 
             this.logPage.Controls.Add(this.logsOutput);
@@ -442,6 +426,7 @@
             // 
             // backupLabel
             // 
+            this.backupLabel.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.backupLabel.BackColor = System.Drawing.Color.Transparent;
             this.backupLabel.Location = new System.Drawing.Point(-1, 615);
             this.backupLabel.Name = "backupLabel";
@@ -483,6 +468,11 @@
             // 
             // settingsPage
             // 
+            this.settingsPage.Controls.Add(this.ramSlider);
+            this.settingsPage.Controls.Add(this.ramNumber);
+            this.settingsPage.Controls.Add(this.label13);
+            this.settingsPage.Controls.Add(this.label12);
+            this.settingsPage.Controls.Add(this.label11);
             this.settingsPage.Controls.Add(this.threadCount);
             this.settingsPage.Controls.Add(this.label10);
             this.settingsPage.Controls.Add(this.label8);
@@ -506,9 +496,81 @@
             this.settingsPage.Text = "Settings";
             this.settingsPage.UseVisualStyleBackColor = true;
             // 
+            // ramSlider
+            // 
+            this.ramSlider.LargeChange = 1024;
+            this.ramSlider.Location = new System.Drawing.Point(196, 521);
+            this.ramSlider.Maximum = 512;
+            this.ramSlider.Minimum = 512;
+            this.ramSlider.Name = "ramSlider";
+            this.ramSlider.Size = new System.Drawing.Size(194, 69);
+            this.ramSlider.SmallChange = 256;
+            this.ramSlider.TabIndex = 34;
+            this.ramSlider.TickFrequency = 256;
+            this.ramSlider.Value = 512;
+            this.ramSlider.Scroll += new System.EventHandler(this.ramSlider_Scroll);
+            // 
+            // ramNumber
+            // 
+            this.ramNumber.Increment = new decimal(new int[] {
+            256,
+            0,
+            0,
+            0});
+            this.ramNumber.Location = new System.Drawing.Point(396, 521);
+            this.ramNumber.Maximum = new decimal(new int[] {
+            1024,
+            0,
+            0,
+            0});
+            this.ramNumber.Minimum = new decimal(new int[] {
+            512,
+            0,
+            0,
+            0});
+            this.ramNumber.Name = "ramNumber";
+            this.ramNumber.Size = new System.Drawing.Size(105, 40);
+            this.ramNumber.TabIndex = 33;
+            this.ramNumber.Value = new decimal(new int[] {
+            512,
+            0,
+            0,
+            0});
+            this.ramNumber.ValueChanged += new System.EventHandler(this.ramNumber_ValueChanged);
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.label13.Location = new System.Drawing.Point(11, 522);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(73, 32);
+            this.label13.TabIndex = 32;
+            this.label13.Text = "Ram";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("Consolas", 26F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label12.Location = new System.Drawing.Point(11, 376);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(259, 61);
+            this.label12.TabIndex = 31;
+            this.label12.Text = "Advanced";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Consolas", 26F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.Location = new System.Drawing.Point(11, 10);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(259, 61);
+            this.label11.TabIndex = 30;
+            this.label11.Text = "Standard";
+            // 
             // threadCount
             // 
-            this.threadCount.Location = new System.Drawing.Point(196, 5);
+            this.threadCount.Location = new System.Drawing.Point(196, 468);
             this.threadCount.Name = "threadCount";
             this.threadCount.Size = new System.Drawing.Size(100, 40);
             this.threadCount.TabIndex = 29;
@@ -517,7 +579,7 @@
             // 
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.label10.Location = new System.Drawing.Point(11, 10);
+            this.label10.Location = new System.Drawing.Point(11, 469);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(118, 32);
             this.label10.TabIndex = 28;
@@ -527,7 +589,7 @@
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.label8.Location = new System.Drawing.Point(11, 273);
+            this.label8.Location = new System.Drawing.Point(11, 316);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(109, 32);
             this.label8.TabIndex = 24;
@@ -536,7 +598,7 @@
             // settingsPlayersTextBox
             // 
             this.settingsPlayersTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.settingsPlayersTextBox.Location = new System.Drawing.Point(196, 272);
+            this.settingsPlayersTextBox.Location = new System.Drawing.Point(196, 315);
             this.settingsPlayersTextBox.Name = "settingsPlayersTextBox";
             this.settingsPlayersTextBox.Size = new System.Drawing.Size(514, 39);
             this.settingsPlayersTextBox.TabIndex = 5;
@@ -560,13 +622,13 @@
             this.settingsSaveBtn.TabIndex = 20;
             this.settingsSaveBtn.Text = "Save Settings";
             this.settingsSaveBtn.UseVisualStyleBackColor = true;
-            this.settingsSaveBtn.Click += new System.EventHandler(this.button2_Click);
+            this.settingsSaveBtn.Click += new System.EventHandler(this.button2_ClickAsync);
             // 
             // label4
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.label4.Location = new System.Drawing.Point(11, 220);
+            this.label4.Location = new System.Drawing.Point(11, 263);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(96, 32);
             this.label4.TabIndex = 18;
@@ -576,7 +638,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.label5.Location = new System.Drawing.Point(11, 165);
+            this.label5.Location = new System.Drawing.Point(11, 208);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(66, 32);
             this.label5.TabIndex = 17;
@@ -586,7 +648,7 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.label6.Location = new System.Drawing.Point(11, 110);
+            this.label6.Location = new System.Drawing.Point(11, 153);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(151, 32);
             this.label6.TabIndex = 16;
@@ -596,7 +658,7 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.label7.Location = new System.Drawing.Point(11, 60);
+            this.label7.Location = new System.Drawing.Point(11, 103);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(179, 32);
             this.label7.TabIndex = 15;
@@ -605,7 +667,7 @@
             // settingsMotdTextBox
             // 
             this.settingsMotdTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.settingsMotdTextBox.Location = new System.Drawing.Point(196, 217);
+            this.settingsMotdTextBox.Location = new System.Drawing.Point(196, 260);
             this.settingsMotdTextBox.Name = "settingsMotdTextBox";
             this.settingsMotdTextBox.Size = new System.Drawing.Size(514, 39);
             this.settingsMotdTextBox.TabIndex = 4;
@@ -613,7 +675,7 @@
             // settingsIpTextBox
             // 
             this.settingsIpTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.settingsIpTextBox.Location = new System.Drawing.Point(196, 107);
+            this.settingsIpTextBox.Location = new System.Drawing.Point(196, 150);
             this.settingsIpTextBox.Name = "settingsIpTextBox";
             this.settingsIpTextBox.Size = new System.Drawing.Size(271, 39);
             this.settingsIpTextBox.TabIndex = 2;
@@ -621,7 +683,7 @@
             // settingsNameTextBox
             // 
             this.settingsNameTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.settingsNameTextBox.Location = new System.Drawing.Point(196, 56);
+            this.settingsNameTextBox.Location = new System.Drawing.Point(196, 99);
             this.settingsNameTextBox.Name = "settingsNameTextBox";
             this.settingsNameTextBox.Size = new System.Drawing.Size(275, 39);
             this.settingsNameTextBox.TabIndex = 1;
@@ -630,7 +692,7 @@
             // settingsPortTextBox
             // 
             this.settingsPortTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.settingsPortTextBox.Location = new System.Drawing.Point(196, 162);
+            this.settingsPortTextBox.Location = new System.Drawing.Point(196, 205);
             this.settingsPortTextBox.MaxLength = 5;
             this.settingsPortTextBox.Name = "settingsPortTextBox";
             this.settingsPortTextBox.Size = new System.Drawing.Size(100, 39);
@@ -640,7 +702,7 @@
             // 
             this.SettingsStatusLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.SettingsStatusLabel.Location = new System.Drawing.Point(1, 497);
+            this.SettingsStatusLabel.Location = new System.Drawing.Point(0, 621);
             this.SettingsStatusLabel.Name = "SettingsStatusLabel";
             this.SettingsStatusLabel.Size = new System.Drawing.Size(1740, 204);
             this.SettingsStatusLabel.TabIndex = 21;
@@ -651,7 +713,8 @@
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
-            this.viewToolStripMenuItem});
+            this.viewToolStripMenuItem,
+            this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1898, 33);
@@ -721,16 +784,31 @@
             // openFileLocationToolStripMenuItem
             // 
             this.openFileLocationToolStripMenuItem.Name = "openFileLocationToolStripMenuItem";
-            this.openFileLocationToolStripMenuItem.Size = new System.Drawing.Size(261, 34);
+            this.openFileLocationToolStripMenuItem.Size = new System.Drawing.Size(296, 34);
             this.openFileLocationToolStripMenuItem.Text = "Open File Location";
             this.openFileLocationToolStripMenuItem.Click += new System.EventHandler(this.openFileLocationToolStripMenuItem_Click);
             // 
             // openLogsToolStripMenuItem
             // 
             this.openLogsToolStripMenuItem.Name = "openLogsToolStripMenuItem";
-            this.openLogsToolStripMenuItem.Size = new System.Drawing.Size(261, 34);
-            this.openLogsToolStripMenuItem.Text = "Open logs";
+            this.openLogsToolStripMenuItem.Size = new System.Drawing.Size(296, 34);
+            this.openLogsToolStripMenuItem.Text = "Open Most Recent Log";
             this.openLogsToolStripMenuItem.Click += new System.EventHandler(this.openLogsToolStripMenuItem_Click);
+            // 
+            // helpToolStripMenuItem
+            // 
+            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.aboutToolStripMenuItem});
+            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(65, 29);
+            this.helpToolStripMenuItem.Text = "Help";
+            // 
+            // aboutToolStripMenuItem
+            // 
+            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(164, 34);
+            this.aboutToolStripMenuItem.Text = "About";
+            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
             // serverTabsPanel
             // 
@@ -741,20 +819,6 @@
             this.serverTabsPanel.Name = "serverTabsPanel";
             this.serverTabsPanel.Size = new System.Drawing.Size(150, 960);
             this.serverTabsPanel.TabIndex = 15;
-            // 
-            // removeTab
-            // 
-            this.removeTab.ImageScalingSize = new System.Drawing.Size(24, 24);
-            this.removeTab.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.removeTabClick});
-            this.removeTab.Name = "removeTab";
-            this.removeTab.Size = new System.Drawing.Size(181, 36);
-            // 
-            // removeTabClick
-            // 
-            this.removeTabClick.Name = "removeTabClick";
-            this.removeTabClick.Size = new System.Drawing.Size(180, 32);
-            this.removeTabClick.Text = "Remove Tab";
             // 
             // statusLabel
             // 
@@ -775,7 +839,7 @@
             // 
             // cpuRamUsage
             // 
-            this.cpuRamUsage.Interval = 2000;
+            this.cpuRamUsage.Interval = 1000;
             this.cpuRamUsage.Tick += new System.EventHandler(this.cpuUsage_Tick);
             // 
             // Terminal
@@ -809,10 +873,11 @@
             this.backupPage.ResumeLayout(false);
             this.settingsPage.ResumeLayout(false);
             this.settingsPage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ramSlider)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ramNumber)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.threadCount)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            this.removeTab.ResumeLayout(false);
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
             this.ResumeLayout(false);
@@ -842,9 +907,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openFileLocationToolStripMenuItem;
-        private System.Windows.Forms.TabPage pluginsPage;
         private System.Windows.Forms.TabPage backupPage;
-        private System.Windows.Forms.TabPage schedulerPage;
         private System.Windows.Forms.Button settingsSaveBtn;
         private System.Windows.Forms.ProgressBar SettingsProgressBar;
         private System.Windows.Forms.Label label8;
@@ -861,8 +924,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label mainIpLabel;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ContextMenuStrip removeTab;
-        private System.Windows.Forms.ToolStripMenuItem removeTabClick;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label mainPortLabel;
         private System.Windows.Forms.ProgressBar backupProgressBar;
@@ -885,6 +946,13 @@
         private System.Windows.Forms.Label ramUsageLabel;
         private System.Windows.Forms.DataVisualization.Charting.Chart cpuUsageChart;
         private System.Windows.Forms.DataVisualization.Charting.Chart ramUsageChart;
+        private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.TrackBar ramSlider;
+        private System.Windows.Forms.NumericUpDown ramNumber;
     }
 }
 

@@ -1,5 +1,4 @@
-﻿using Craft_Forge.Properties;
-using CraftForge.Properties;
+﻿using CraftForge.Properties;
 using CraftForge.Server.Classes;
 using CraftForge.Server.Classes.Console.Applications;
 using CraftForge.Server.Classes.Console.CreateConsole;
@@ -15,6 +14,7 @@ using CraftForge.Server.GUI.Console.Messages.INFO;
 using CraftForge.Server.GUI.Console.Messages.WARN;
 using CraftForge.Server.GUI.Setup;
 using CraftForge.Server.Setup;
+using CraftForge.Server.StartPage.Classes;
 using CraftForge.Server.Themes.Classes.Applications;
 using System;
 using System.Collections.Generic;
@@ -38,6 +38,8 @@ namespace CraftForge.Server.GUI.Console
         bool jarSelectionChanged = false; //If the user has changed the jar selection
 
         bool formClosing = false; //If the form is closing, alongside the stop button
+
+        int ramAmount = 0; //Default amount of RAM checked when you save the settings, and it is not changed it won't update the start.bat file
 
         static string theme = Settings.Default.Theme;
         static string style = Settings.Default.Style;
@@ -77,7 +79,7 @@ namespace CraftForge.Server.GUI.Console
             int maxCores = Environment.ProcessorCount;
 
             //Check if settings file exists
-            string location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\Minecraft-Multiplayer-Host\\Servers\\");
+            string location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\CraftForge\\Servers\\");
             if (!File.Exists(($"{location}\\{this.Name}\\serverSettings.yaml"))) {
                 serverSettings.writeSettingsToFile(this.Name);
             }
@@ -113,7 +115,7 @@ namespace CraftForge.Server.GUI.Console
             //Read server.properties file
             string[] name = this.Name.Split(':');
 
-            string location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\Minecraft-Multiplayer-Host\\Servers\\" + name[0]);
+            string location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\CraftForge\\Servers\\" + name[0]);
 
             //Read server.properties file
             string[] serverProperties = File.ReadAllLines(location + "\\server.properties");
@@ -145,6 +147,48 @@ namespace CraftForge.Server.GUI.Console
                     settingsMotdTextBox.Text = str.Replace("motd=", "");
                 }
             }
+
+            //Get maximum amount of RAM in the system
+            double maxRamInMB = new ManagementObjectSearcher("SELECT TotalPhysicalMemory FROM Win32_ComputerSystem").Get().Cast<ManagementObject>().Sum(mo => Convert.ToDouble(mo["TotalPhysicalMemory"])) / (1024 * 1024);
+            maxRamInMB -= 1500; //Remove 1.5GB of RAM for the system
+            maxRamInMB = Math.Round(maxRamInMB, 0); //Round to 2 decimal places
+
+            maxRamInMB = Math.Floor(maxRamInMB / 512) * 512; //Round to the nearest 512MB
+
+            ramSlider.Maximum = (int)maxRamInMB;
+            ramNumber.Maximum = (int)maxRamInMB;
+
+            string startBat = File.ReadAllText(location + "\\start.bat"); //Read start.bat file
+
+            if (startBat.Contains("-Xmx") || startBat.Contains("-Xms")) //Check if the server has "-Xmx" or "-Xms"
+            {
+                string[] words = startBat.Split(' '); //Grab each word
+                string xmx = ""; //The xmx/xms value
+
+                foreach (string word in words)
+                {
+                    if (word.Contains("-Xmx"))
+                    {
+                        xmx = word;
+                        break;
+                    }
+                    else if (word.Contains("-Xms"))
+                    {
+                        xmx = word;
+                    }
+                }
+
+                int ram = int.Parse(xmx.Replace("-Xmx", "").Replace("-Xms", "").Replace("M", ""));
+                ramSlider.Value = ram;
+                ramNumber.Value = ram;
+
+                this.ramAmount = ram;
+            }
+            else
+            {
+                ramSlider.Value = 512;
+                ramNumber.Value = 512;
+            }
         }
 
         private void InitializeJar()
@@ -164,6 +208,10 @@ namespace CraftForge.Server.GUI.Console
             {
                 this.WindowState = FormWindowState.Maximized;
             }
+
+            //Make CPU/Ram labels invisible
+            cpuUsageLabel.Visible = false;
+            ramUsageLabel.Visible = false;
         }
 
         public static void InitializeThemeStatic(Terminal instance)
@@ -174,7 +222,7 @@ namespace CraftForge.Server.GUI.Console
         private void InitializeFiles()
         {
             string name = this.Name;
-            string location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ($"\\Minecraft-Multiplayer-Host\\Servers\\{name}\\");
+            string location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ($"\\CraftForge\\Servers\\{name}\\");
 
             AddFiles.initializeFiles(folderList, location, name);
         }
@@ -185,7 +233,7 @@ namespace CraftForge.Server.GUI.Console
             backupLabel.SendToBack();
 
             string name = this.Name;
-            string location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ($"\\Minecraft-Multiplayer-Host\\Backups\\{name}\\");
+            string location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ($"\\CraftForge\\Backups\\{name}\\");
 
             //Check if location exists
             if (Directory.Exists(location))
@@ -222,11 +270,9 @@ namespace CraftForge.Server.GUI.Console
             cpuUsageChart.ChartAreas[0].AxisX.Title = "Time";
             cpuUsageChart.ChartAreas[0].AxisY.Title = "CPU Usage";
 
-            //Hide the legend
-            cpuUsageChart.Legends[0].Enabled = false;
-
-            //Hide the grid
-            cpuUsageChart.ChartAreas[0].AxisX.MajorGrid.Enabled = false;
+            cpuUsageChart.Legends[0].Enabled = false; //Hide the legend
+            cpuUsageChart.ChartAreas[0].AxisX.MajorGrid.Enabled = false; //Hide the grid
+            cpuUsageChart.ChartAreas[0].AxisX.LabelStyle.Enabled = false; //Hide the label (x)
 
             ramUsageChart.Series.Clear();
             var ramSeries = new Series
@@ -244,11 +290,9 @@ namespace CraftForge.Server.GUI.Console
             ramUsageChart.ChartAreas[0].AxisX.Title = "Time";
             ramUsageChart.ChartAreas[0].AxisY.Title = "Ram Usage";
 
-            //Hide the legend
-            ramUsageChart.Legends[0].Enabled = false;
-
-            //Hide the grid
-            ramUsageChart.ChartAreas[0].AxisX.MajorGrid.Enabled = false;
+            ramUsageChart.Legends[0].Enabled = false; //Hide the legend
+            ramUsageChart.ChartAreas[0].AxisX.MajorGrid.Enabled = false; //Hide the grid
+            ramUsageChart.ChartAreas[0].AxisX.LabelStyle.Enabled = false; //Hide the label (x)
         }
 
         private void createButton_Click(object sender, EventArgs e)
@@ -264,7 +308,7 @@ namespace CraftForge.Server.GUI.Console
             //Grab this.name and remove anything after :
             string[] name = this.Name.Split(':');
 
-            string location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("/Minecraft-Multiplayer-Host/Servers/" + name[0]);
+            string location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("/CraftForge/Servers/" + name[0]);
 
             //Assume the process has only started
 
@@ -378,7 +422,7 @@ namespace CraftForge.Server.GUI.Console
                 //Grab this.name and remove anything after :
                 string[] name = this.Name.Split(':');
 
-                string location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("/Minecraft-Multiplayer-Host/Servers/" + name[0]);
+                string location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("/CraftForge/Servers/" + name[0]);
 
                 //Read start.bat file
                 string text = File.ReadAllText(location + "\\start.bat");
@@ -431,6 +475,9 @@ namespace CraftForge.Server.GUI.Console
             this.startBtn.Enabled = false;
             this.stopBtn.Enabled = false;
 
+            //Make CPU/Ram labels visible
+            cpuUsageLabel.Visible = true;
+            ramUsageLabel.Visible = true;
             serverStatusNetwork.Start();
         }
 
@@ -441,7 +488,7 @@ namespace CraftForge.Server.GUI.Console
             string[] name = this.Name.Split(':');
 
             // Set the working directory to the location of the start.bat file
-            string directory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\Minecraft-Multiplayer-Host\\Servers\\" + name[0]);
+            string directory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\CraftForge\\Servers\\" + name[0]);
 
             cpuRamUsage.Enabled = true;
 
@@ -503,7 +550,7 @@ namespace CraftForge.Server.GUI.Console
                                     //Check if Error contains "openjdk"
                                     if (e.Data.ToLower().Contains("openjdk"))
                                     {
-                                        AppendTextToCommandOutput("[Minecraft-Multiplayer-Host JAVA] " + e.Data, console, secondaryTerminal, false, this);
+                                        AppendTextToCommandOutput("[CraftForge JAVA] " + e.Data, console, secondaryTerminal, false, this);
                                     }
                                     else
                                     {
@@ -538,16 +585,17 @@ namespace CraftForge.Server.GUI.Console
                     serverProcess.Start(); //Start the process
 
                     // Get the child process named java.exe started by the batch file
-                    //var javaProcess = GetChildProcesses(serverProcess.Id).FirstOrDefault(p => string.Equals(p.ProcessName, "java", StringComparison.OrdinalIgnoreCase));
 
                     Process javaProcess = null;
                     int attempts = 0;
+
+                    Task.Delay(1000).Wait(); // Wait for 1 second before I start due to slower computers not opening instantly
 
                     while (javaProcess == null && attempts < 5) {
                         javaProcess = GetChildProcesses(serverProcess.Id).FirstOrDefault(p => string.Equals(p.ProcessName, "java", StringComparison.OrdinalIgnoreCase));
                         if (javaProcess == null)
                         {
-                            Task.Delay(1000); // Wait for 1 second before the next attempt
+                            Task.Delay(1000).Wait(); // Wait for 1 second before the next attempt
                             attempts++;
                         }
                     }
@@ -625,10 +673,10 @@ namespace CraftForge.Server.GUI.Console
                 consoleOutput.Invoke((MethodInvoker)delegate
                 {
                     consoleOutput.AppendText("\n");
-                    consoleOutput.AppendText("[Minecraft-Multiplayer-Host INFO] Server has started!\n");
+                    consoleOutput.AppendText("[CraftForge INFO] Server has started!\n");
 
                     secondaryOutput.AppendText("\n");
-                    secondaryOutput.AppendText("[Minecraft-Multiplayer-Host INFO] Server has started!\n");
+                    secondaryOutput.AppendText("[CraftForge INFO] Server has started!\n");
                 });
                 terminal.isRunning = true;
                 terminal.hasStarted = true;
@@ -670,7 +718,7 @@ namespace CraftForge.Server.GUI.Console
                     try
                     {
                         serverName = serverProcessesToName[serverProcesses[consoleID]];
-                        location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\Minecraft-Multiplayer-Host\\Servers\\" + serverName);
+                        location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\CraftForge\\Servers\\" + serverName);
                     }
                     catch { }
 
@@ -819,15 +867,18 @@ namespace CraftForge.Server.GUI.Console
                 {
                     // Wait 1 second
                     await Task.Run(async () => await Task.Delay(500));
-                    secondaryTerminal.AppendText("\n[Minecraft-Multiplayer-Host INFO] Server is stopping...\n");
+                    secondaryTerminal.AppendText("\n[CraftForge INFO] Server is stopping...\n");
                 }
 
                 //add to terminal the server has stopped
-                secondaryTerminal.AppendText("\n[Minecraft-Multiplayer-Host INFO] Server has stopped\n");
+                secondaryTerminal.AppendText("\n[CraftForge INFO] Server has stopped\n");
                 isRunning = false;
                 resetButtons();
                 serverProcess.Close();
                 serverProcesses.Remove(consoleID);
+
+                cpuRamUsage.Stop();
+                cpuRamUsage.Dispose();
 
                 if (formClosing)
                 {
@@ -846,18 +897,18 @@ namespace CraftForge.Server.GUI.Console
         {
             //Open location
             string[] name = this.Name.Split(':');
-            string location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\Minecraft-Multiplayer-Host\\Servers\\" + name[0]);
+            string location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\CraftForge\\Servers\\" + name[0]);
 
             Process.Start("explorer.exe", location);
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private async void button2_ClickAsync(object sender, EventArgs e)
         {
             //Grab old server name
             string oldName = this.Name;
-            string oldDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + string.Format("\\Minecraft-Multiplayer-Host\\Servers\\{0}", oldName);
+            string oldDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + string.Format("\\CraftForge\\Servers\\{0}", oldName);
 
-            string directory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + string.Format("\\Minecraft-Multiplayer-Host\\Servers\\{0}", settingsNameTextBox.Text);
+            string directory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + string.Format("\\CraftForge\\Servers\\{0}", settingsNameTextBox.Text);
             bool moveServer = false;
 
             //Check if directory and oldDirectory has changed
@@ -913,7 +964,7 @@ namespace CraftForge.Server.GUI.Console
                 }
 
                 //Move the directory
-                CopyDirectoryWithProgressBar(oldDirectory, directory, SettingsStatusLabel, true, SettingsProgressBar, "move");
+                await CopyDirectoryWithProgressBar(oldDirectory, directory, SettingsStatusLabel, true, SettingsProgressBar, "move");
             }
 
             if (!moveServer)
@@ -923,10 +974,61 @@ namespace CraftForge.Server.GUI.Console
                 File.WriteAllText(directory + "\\server.properties", "server-port=" + settingsPortTextBox.Text + "\n" + "server-ip=" + settingsIpTextBox.Text + "\n" + "level-name=world\n" + "gamemode=survival\n" + "difficulty=easy\n" + "allow-cheats=false\n" + "max-players=" + settingsPlayersTextBox.Text + "\n" + "online-mode=true\n" + "white-list=false\n" + "server-name=" + settingsNameTextBox.Text + "\n" + "motd=" + settingsMotdTextBox.Text + "\n");
                 SettingsStatusLabel.Text = "Server updated!";
             }
+
+            //Reset the main text
+            mainIpLabel.Text = settingsIpTextBox.Text;
+            mainPortLabel.Text = settingsPortTextBox.Text;
+
+            updateRam();
+        }
+
+        private void updateRam()
+        {
+            if (ramSlider.Value == ramAmount) return; //The ram value has not changed
+
+            ramAmount = ramSlider.Value;
+
+            //Read server.properties file
+            string[] name = this.Name.Split(':');
+
+            string location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\CraftForge\\Servers\\" + name[0]);
+
+            //Grab start.bat file
+            string startBat = File.ReadAllText(location + "\\start.bat"); //Read start.bat file
+
+            if (startBat.Contains("-Xmx")) //Check if the server has "-Xmx" or "-Xms"
+            {
+                string[] words = startBat.Split(' '); //Grab each word
+                string xmx = ""; //The xmx/xms value
+
+                foreach (string word in words)
+                {
+                    if (word.Contains("-Xmx"))
+                    {
+                        xmx = word;
+                        break;
+                    }
+                    else if (word.Contains("-Xms"))
+                    {
+                        xmx = word;
+                    }
+                }
+
+                string newRam = $"-Xmx{ramAmount}M";
+                string newStartBat = startBat.Replace(xmx, newRam);
+
+                //Rewrite the start.bat file
+                File.WriteAllText(location + "\\start.bat", newStartBat);
+            }
+            else
+            {
+                //Reset the start.bat file
+                startBatFile.resetFile(location, ramAmount, serverJarCombo.Text.Replace(".jar", ""));
+            }
         }
 
         //First time setup is for when the server is first created, and needs to create the necessary files
-        private async void CopyDirectoryWithProgressBar(string sourceDir, string destDir, Label label, bool firstTimeSetup, ProgressBar progressBar, string type)
+        private async Task<bool> CopyDirectoryWithProgressBar(string sourceDir, string destDir, Label label, bool firstTimeSetup, ProgressBar progressBar, string type)
         {
 
             label.BringToFront();
@@ -1019,13 +1121,15 @@ namespace CraftForge.Server.GUI.Console
 
                 File.WriteAllText(destDir + "\\server.properties", "server-port=" + settingsPortTextBox.Text + "\n" + "server-ip=" + settingsIpTextBox.Text + "\n" + "level-name=world\n" + "gamemode=survival\n" + "difficulty=easy\n" + "allow-cheats=false\n" + "max-players=" + settingsPlayersTextBox.Text + "\n" + "online-mode=true\n" + "white-list=false\n" + "server-name=" + settingsNameTextBox.Text + "\n" + "motd=" + settingsMotdTextBox.Text + "\n");
             }
+
+            return true;
         }
 
         private void openLogsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //Open Most recent logs
             string[] name = this.Name.Split(':');
-            string location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\Minecraft-Multiplayer-Host\\Servers\\" + name[0] + "\\logs\\latest.log");
+            string location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\CraftForge\\Servers\\" + name[0] + "\\logs\\latest.log");
 
             Process.Start("notepad.exe", location);
         }
@@ -1034,7 +1138,7 @@ namespace CraftForge.Server.GUI.Console
         {
             //Grab location
             string[] name = this.Name.Split(':');
-            string location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\Minecraft-Multiplayer-Host\\Servers\\" + name[0]);
+            string location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\CraftForge\\Servers\\" + name[0]);
 
             //Grab all files in the directory, with the extension .jar
             string[] files = Directory.GetFiles(location, "*.jar");
@@ -1089,16 +1193,16 @@ namespace CraftForge.Server.GUI.Console
 
             //Grab this.name and remove anything after :
             string[] name = this.Name.Split(':');
-            string location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\Minecraft-Multiplayer-Host\\Servers\\" + name[0]);
+            string location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\CraftForge\\Servers\\" + name[0]);
 
             //Grab day
             string time = DateTime.Now.ToString("dd-MM-yyyy-HH-mm-ss");
 
             //Check if directory exists
-            if (!Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\Minecraft-Multiplayer-Host\\Backups\\" + name[0] + "\\" + time)))
+            if (!Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\CraftForge\\Backups\\" + name[0] + "\\" + time)))
             {
                 //Create directory
-                Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\Minecraft-Multiplayer-Host\\Backups\\" + name[0] + "\\" + time));
+                Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\CraftForge\\Backups\\" + name[0] + "\\" + time));
             }
             else
             {
@@ -1106,7 +1210,7 @@ namespace CraftForge.Server.GUI.Console
             }
 
             //Copy files
-            CopyDirectoryWithProgressBar(location, Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\Minecraft-Multiplayer-Host\\Backups\\" + name[0] + "\\" + time), backupLabel, false, backupProgressBar, "backup");
+            CopyDirectoryWithProgressBar(location, Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\CraftForge\\Backups\\" + name[0] + "\\" + time), backupLabel, false, backupProgressBar, "backup");
         }
 
         private void dToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1128,7 +1232,7 @@ namespace CraftForge.Server.GUI.Console
             try
             {
                 Process process = Process.GetProcessById(childProcessID);
-                this.cpuUsageLabel.Text = GetCurrentProcessCpuUsage(process).ToString();
+                this.cpuUsageLabel.Text = GetCurrentProcessCpuUsage(process).ToString() + "%";
 
                 //Grab ram amount from process
                 this.ramUsageLabel.Text = (process.WorkingSet64 / 1024 / 1024).ToString() + " MB"; //Convert to MB
@@ -1151,9 +1255,8 @@ namespace CraftForge.Server.GUI.Console
                 this.cpuUsageChart.ChartAreas[0].AxisX.Maximum = cpuUsageCounter; //Grab the counter, so it shows the current point, without an empty space at the end
             }
 
-            cpuSeries.Points.AddXY(cpuUsageCounter, cpuUsageLabel.Text); //Add the point to the chart
-
-            this.cpuUsageCounter += 1;
+            //Remove % from the Label or it will not count as a nubmer properly
+            cpuSeries.Points.AddXY(cpuUsageCounter, cpuUsageLabel.Text.Replace("%", "")); //Add the point to the chart
 
             //Ram Usage Chart
             Series ramSeries = ramUsageChart.Series["Ram Usage"];
@@ -1167,6 +1270,8 @@ namespace CraftForge.Server.GUI.Console
             }
 
             ramSeries.Points.AddXY(cpuUsageCounter, ramUsageLabel.Text.Replace(" MB", "")); //Add the point to the chart
+
+            this.cpuUsageCounter += 1;
         }
 
         public double totalCpuUsage = 0;
@@ -1177,29 +1282,64 @@ namespace CraftForge.Server.GUI.Console
 
         public double GetCurrentProcessCpuUsage(Process process)
         {
-            if (this.lastTime == default(DateTime))
+            try
             {
-                this.lastTime = DateTime.Now;
-                this.lastTotalProcessorTime = process.TotalProcessorTime;
+                if (this.lastTime == default(DateTime))
+                {
+                    this.lastTime = DateTime.Now;
+                    this.lastTotalProcessorTime = process.TotalProcessorTime;
+                    return 0;
+                }
+
+                this.curTime = DateTime.Now;
+                this.curTotalProcessorTime = process.TotalProcessorTime;
+
+                double cpuUsedMs = (this.curTotalProcessorTime - this.lastTotalProcessorTime).TotalMilliseconds;
+                double totalMsPassed = (curTime - lastTime).TotalMilliseconds;
+
+                ProcessThreadCollection threads = process.Threads;
+
+
+                double cpuUsageTotal = cpuUsedMs / (threads.Count * totalMsPassed) * 1000;
+
+                // Add to the total CPU usage
+                this.totalCpuUsage += cpuUsageTotal;
+
+                // Update the last recorded time and processor time
+                this.lastTime = this.curTime;
+                this.lastTotalProcessorTime = this.curTotalProcessorTime;
+
+                if (cpuUsageTotal > 100)
+                {
+                    return 100;
+                }
+
+                if (cpuUsageTotal < 0)
+                {
+                    return 0;
+                }
+
+                return Math.Round(cpuUsageTotal, 2);
+            } catch
+            {
                 return 0;
             }
+        }
 
-            this.curTime = DateTime.Now;
-            this.curTotalProcessorTime = process.TotalProcessorTime;
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            about aboutPage = new about();
+            aboutPage.Show();
+        }
 
-            double cpuUsedMs = (this.curTotalProcessorTime - this.lastTotalProcessorTime).TotalMilliseconds;
-            double totalMsPassed = (curTime - lastTime).TotalMilliseconds;
+        private void ramSlider_Scroll(object sender, EventArgs e)
+        {
+            ramNumber.Value = ramSlider.Value;
+        }
 
-            double cpuUsageTotal = cpuUsedMs / (Environment.ProcessorCount * totalMsPassed) * 1000;
-
-            // Add to the total CPU usage
-            this.totalCpuUsage += cpuUsageTotal;
-
-            // Update the last recorded time and processor time
-            this.lastTime = this.curTime;
-            this.lastTotalProcessorTime = this.curTotalProcessorTime;
-
-            return Math.Round(cpuUsageTotal, 2);
+        private void ramNumber_ValueChanged(object sender, EventArgs e)
+        {
+            ramSlider.Value = (int)ramNumber.Value;
         }
     }
 }

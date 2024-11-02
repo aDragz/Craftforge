@@ -49,7 +49,7 @@ namespace CraftForge.Server.Events
                         .OfType<RichTextBox>()
                         .FirstOrDefault(rtb => rtb.Name == "secondaryTerminal " + consoleID);
 
-                    Terminal.AppendTextToCommandOutput("[Minecraft-Multiplayer-Host ERROR] " + e.Message, console, secondaryTerminal, false, terminal);
+                    Terminal.AppendTextToCommandOutput("[CraftForge ERROR] " + e.Message, console, secondaryTerminal, false, terminal);
                 }
             }
         }

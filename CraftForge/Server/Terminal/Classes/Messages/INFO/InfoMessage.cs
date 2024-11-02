@@ -25,10 +25,10 @@ namespace CraftForge.Server.GUI.Console.Messages.INFO
                 consoleOutput.Invoke((MethodInvoker)delegate
                 {
                     consoleOutput.Clear();
-                    consoleOutput.AppendText("[Minecraft-Multiplayer-Host ERROR] You need to agree to the Minecraft EULA in order to run the server. \n");
+                    consoleOutput.AppendText("[CraftForge ERROR] You need to agree to the Minecraft EULA in order to run the server. \n");
                     consoleOutput.AppendText("\nError Message: \n");
 
-                    secondaryOutput.AppendText("[Minecraft-Multiplayer-Host ERROR] You need to agree to the Minecraft EULA in order to run the server. \n");
+                    secondaryOutput.AppendText("[CraftForge ERROR] You need to agree to the Minecraft EULA in order to run the server. \n");
                     secondaryOutput.AppendText("\nError Message: \n");
 
                     //Open the EULA file

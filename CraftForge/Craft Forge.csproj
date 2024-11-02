@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{9444C312-6030-4200-B88E-C08D174E403A}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>Craft_Forge</RootNamespace>
+    <RootNamespace>CraftForge</RootNamespace>
     <AssemblyName>Craft Forge</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -107,10 +107,17 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="YamlDotNet, Version=16.0.0.0, Culture=neutral, PublicKeyToken=ec19458f3c15af5e, processorArchitecture=MSIL">
-      <HintPath>..\packages\YamlDotNet.16.1.2\lib\net47\YamlDotNet.dll</HintPath>
+      <HintPath>..\packages\YamlDotNet.16.1.3\lib\net47\YamlDotNet.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Server\StartPage\Classes\startBatFile.cs" />
+    <Compile Include="Server\Terminal\about.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Server\Terminal\about.Designer.cs">
+      <DependentUpon>about.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -183,6 +190,9 @@
     <EmbeddedResource Include="Server\StartPage\GUIs\Startup.resx">
       <DependentUpon>Startup.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Server\Terminal\about.resx">
+      <DependentUpon>about.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Server\Terminal\Terminal.resx">
       <DependentUpon>Terminal.cs</DependentUpon>
     </EmbeddedResource>
@@ -222,6 +232,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="logo.ico" />
+    <None Include="Resources\logo.jpeg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -53,7 +53,7 @@ namespace CraftForge.Server.GUI.Classes
                     cmd.Clear();
                 }
             };
-
+            
             TabPage consoleTab = new TabPage();
             consoleTab.Controls.Add(console);
             consoleTab.Controls.Add(cmd);

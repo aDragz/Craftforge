@@ -2,8 +2,10 @@
 using CraftForge.Server.StartPage.Classes;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -48,7 +50,7 @@ namespace CraftForge.Server.GUI.Setup
             instancesRunning.Remove(this.Name);
         }
 
-        private void LoadServers()
+        private async void LoadServers()
         {
             // Create FlowLayoutPanel where 4 items are displayed per line
             FlowLayoutPanel flowLayoutPanel = new FlowLayoutPanel
@@ -68,7 +70,7 @@ namespace CraftForge.Server.GUI.Setup
                 Dock = DockStyle.Fill,
                 AutoScroll = true,
             };
-            
+
             //Add flowLayoutPanel to tableLayoutPanel
             tableLayoutPanel.Controls.Add(flowLayoutPanel);
 
@@ -80,7 +82,7 @@ namespace CraftForge.Server.GUI.Setup
             });
 
             // Grab amount of files in Documents/Minecraft Multiplayer Host/Servers
-            string directory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("/Minecraft-Multiplayer-Host/Servers/");
+            string directory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("/CraftForge/Servers/");
 
             if (!Directory.Exists(directory))
             {
@@ -93,10 +95,23 @@ namespace CraftForge.Server.GUI.Setup
             // Grab the name of the servers
             string[] serverNames = Directory.GetDirectories(directory);
 
+            List<string> serverPorts = new List<string>(); // List of used server ports
+            List<string> serversRunning = new List<string>();
+
+            //Grab each open Terminal windows, and add the server name to the list
+            foreach (Form form in Application.OpenForms)
+            {
+                if (form is Terminal)
+                {
+                    string name = (form.Name);
+                    serversRunning.Add(name);
+                }
+            }
+
             // Add items to the FlowLayoutPanel
             for (int i = 0; i < serverCount; i++)
             {
-                String serverName = Path.GetFileName(serverNames[i]);
+                string serverName = Path.GetFileName(serverNames[i]);
                 bool norunbat = false;
 
                 //Check if start.bat exists in the server directory
@@ -139,15 +154,18 @@ namespace CraftForge.Server.GUI.Setup
                 };
 
                 //Location Text
-                Label label = new Label
+                RichTextBox label = new RichTextBox
                 {
                     Text = serverName,
-                    Name = "Label " + serverName,
+                    Name = "RichTextBox " + serverName,
                     Width = 500,
                     Height = 60,
                     Margin = new Padding(10),
                     Location = new Point(10, 20),
                     Font = new Font("Consolas", 10),
+                    ReadOnly = true,
+                    BorderStyle = BorderStyle.None,
+                    BackColor = this.BackColor,
                 };
 
                 Label fixServerLabel = new Label
@@ -173,17 +191,72 @@ namespace CraftForge.Server.GUI.Setup
                     panel.Controls.Add(fixServerLabel);
                     panel.Controls.Add(noRunButton);
                     button.Enabled = false;
-                } else
+                }
+                else
                 {
                     panel.Controls.Add(label);
 
+                }
+
+                //Grab server.properties file and read server-port
+                string serverPropertiesPath = Path.Combine(serverNames[i], "server.properties");
+
+                if (File.Exists(serverPropertiesPath))
+                {
+                    // Read all lines from the server.properties file
+                    string[] lines = File.ReadAllLines(serverPropertiesPath);
+
+                    // Search for the line that contains the server-port value
+                    foreach (string line in lines)
+                    {
+                        if (line.StartsWith("server-port="))
+                        {
+                            this.Invoke((MethodInvoker)delegate
+                            {
+                                // Extract the server-port value
+                                string serverPort = line.Substring("server-port=".Length);
+                                // Set the label colour to the previous color
+                                this.Invoke((MethodInvoker)delegate
+                                {
+                                    label.Select(0, serverName.Length);
+                                    label.SelectionColor = label.ForeColor;
+                                });
+
+                                label.Text = label.Text + $"\n{serverPort}";
+
+                                foreach (string port in serverPorts)
+                                {
+                                    if (port == serverPort)
+                                    {
+                                        label.Select(label.Text.IndexOf(serverPort), serverPort.Length);
+                                        label.SelectionColor = Color.Red;
+                                    }
+                                }
+
+                                serverPorts.Add(serverPort);
+
+                            });
+                        }
+                    }
+
+                    //Check if the server is running
+                    if (serversRunning.Contains(serverName))
+                    {
+                        //Set the label colour to green
+                        this.Invoke((MethodInvoker)delegate
+                        {
+                            label.Select(0, serverName.Length);
+                            label.SelectionColor = Color.Green;
+                        });
+                    }
                 }
 
                 // Add event handler to the button
                 button.Click += new EventHandler((s, ev) => button_Click(s, ev, serverName));
 
                 //Check if it contains "Server is missing start.bat"
-                if (fixServerLabel.Text.Contains("Server is missing start.bat")) {
+                if (fixServerLabel.Text.Contains("Server is missing start.bat"))
+                {
                     noRunButton.Click += new EventHandler((s, ev) => fixServer_Click(s, ev, serverName));
                 }
 
@@ -214,7 +287,7 @@ namespace CraftForge.Server.GUI.Setup
                 Font = new Font("Consolas", 12),
             };
 
-            Label createLabel = new Label
+            RichTextBox createLabel = new RichTextBox
             {
                 Text = "Create Server",
                 Name = "Create Button",
@@ -223,6 +296,9 @@ namespace CraftForge.Server.GUI.Setup
                 Margin = new Padding(10),
                 Location = new Point(10, 20),
                 Font = new Font("Consolas", 10),
+                ReadOnly = true,
+                BorderStyle = BorderStyle.None,
+                BackColor = this.BackColor,
             };
 
             createButton.Click += new EventHandler(createServer_Click);
@@ -276,14 +352,8 @@ namespace CraftForge.Server.GUI.Setup
 
         private void fixServer_Click(object sender, EventArgs e, string serverName)
         {
-            //Create new start.bat file
-            string location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("/Minecraft-Multiplayer-Host/Servers/" + serverName + "/start.bat");
-            //Create the start.bat file
-            File.WriteAllText(location, "::Please do not edit this file! Use the app or it may break the server. You have been warned!"
-                + "\n" + "::Dispalys Java Version for debugging inside console"
-                + "\n" + "java -version"
-                + "\n" + "::Starts server"
-                + "\n" + "java -Xmx1024M -Xms1024M -jar nogui");
+            string location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("/CraftForge/Servers/" + serverName);
+            startBatFile.createNewFile(location, 1024, "server"); //Create the start.bat file
 
             //Hide button
             Button button = (Button)sender;

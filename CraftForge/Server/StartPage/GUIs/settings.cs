@@ -1,20 +1,16 @@
 ﻿using CraftForge.Server.GUI.Console;
-using Microsoft.Extensions.Configuration;
+using CraftForge.Server.StartPage.Classes;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Configuration;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Net.Http;
 using System.Reflection;
 using System.Security.Principal;
 using System.Windows.Forms;
 using System.Xml;
-using YamlDotNet.Core;
-using YamlDotNet.Core.Tokens;
-using ConfigurationManager = System.Configuration.ConfigurationManager;
 
 namespace CraftForge.Server.GUI.Applications
 {
@@ -34,7 +30,7 @@ namespace CraftForge.Server.GUI.Applications
 
         */
 
-        private readonly string themeLocation = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\Minecraft-Multiplayer-Host\\Themes\\");
+        private readonly string themeLocation = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\CraftForge\\Themes\\");
 
         public settings()
         {
@@ -370,6 +366,7 @@ namespace CraftForge.Server.GUI.Applications
                 }
 
                 CraftForgeUpdaterConfig("TypeSelected", TypeListConsolePanel.Text); //If stable is selected, it will be updated as stable as an example.
+                autoUpdate.checkForUpdates(); //Check for updates after the settings have been updated
             }
         }
 

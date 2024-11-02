@@ -120,6 +120,7 @@
             // 
             this.nameTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
             this.nameTextBox.Location = new System.Drawing.Point(492, 44);
+            this.nameTextBox.MaxLength = 150;
             this.nameTextBox.Name = "nameTextBox";
             this.nameTextBox.Size = new System.Drawing.Size(275, 39);
             this.nameTextBox.TabIndex = 17;

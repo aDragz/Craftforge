@@ -1,4 +1,4 @@
-# CraftForge Stable
+# CraftForge
 
 A Windows GUI-based application. Host your server on your PC easily.
 

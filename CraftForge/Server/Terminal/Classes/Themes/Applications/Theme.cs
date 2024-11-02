@@ -13,10 +13,10 @@ namespace CraftForge.Server.Themes.Classes.Applications
         public static void initializeTheme(Terminal terminal, Panel serverTabsPanel)
         {
             //Check if themes location exists
-            if (!Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\Minecraft-Multiplayer-Host\\Themes"))
+            if (!Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CraftForge\\Themes"))
             {
                 //Create the directory
-                Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\Minecraft-Multiplayer-Host\\Themes");
+                Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CraftForge\\Themes");
 
                 createThemes();
             }
