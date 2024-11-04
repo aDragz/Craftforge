@@ -361,7 +361,7 @@ namespace CraftForge.Server.GUI.Applications
                 if (!IsUserAdministrator())
                 {
                     // Restart the application with administrative privileges
-                    RestartWithAdminPrivileges();
+                    RestartWithAdminPrivileges(TypeListConsolePanel.Text);
                     return;
                 }
 
@@ -412,7 +412,7 @@ namespace CraftForge.Server.GUI.Applications
             return principal.IsInRole(WindowsBuiltInRole.Administrator);
         }
 
-        private void RestartWithAdminPrivileges()
+        private void RestartWithAdminPrivileges(string releaseName)
         {
             MessageBox.Show("This operation requires administrative privileges. Please restart the application as an administrator.", "Permission Denied", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             ProcessStartInfo proc = new ProcessStartInfo
@@ -421,7 +421,7 @@ namespace CraftForge.Server.GUI.Applications
                 WorkingDirectory = Environment.CurrentDirectory,
                 FileName = Application.ExecutablePath,
                 Verb = "runas",
-                Arguments = "--admin-restart" // Add a command-line argument
+                Arguments = $"--admin-restart --settings {releaseName}" // Add a command-line argument
             };
 
             try

@@ -165,7 +165,6 @@ namespace CraftForge.Server.GUI.Setup
                     Font = new Font("Consolas", 10),
                     ReadOnly = true,
                     BorderStyle = BorderStyle.None,
-                    BackColor = this.BackColor,
                 };
 
                 Label fixServerLabel = new Label
@@ -175,7 +174,7 @@ namespace CraftForge.Server.GUI.Setup
                     Width = 500,
                     Height = 60,
                     Margin = new Padding(10),
-                    Location = new Point(10, 20),
+                    Location = new Point(0, 20),
                     Font = new Font("Consolas", 10),
                 };
 

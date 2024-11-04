@@ -505,7 +505,7 @@
             this.ramSlider.Name = "ramSlider";
             this.ramSlider.Size = new System.Drawing.Size(194, 69);
             this.ramSlider.SmallChange = 256;
-            this.ramSlider.TabIndex = 34;
+            this.ramSlider.TabIndex = 30;
             this.ramSlider.TickFrequency = 256;
             this.ramSlider.Value = 512;
             this.ramSlider.Scroll += new System.EventHandler(this.ramSlider_Scroll);
@@ -530,7 +530,7 @@
             0});
             this.ramNumber.Name = "ramNumber";
             this.ramNumber.Size = new System.Drawing.Size(105, 40);
-            this.ramNumber.TabIndex = 33;
+            this.ramNumber.TabIndex = 31;
             this.ramNumber.Value = new decimal(new int[] {
             512,
             0,
@@ -619,7 +619,7 @@
             this.settingsSaveBtn.Location = new System.Drawing.Point(495, 828);
             this.settingsSaveBtn.Name = "settingsSaveBtn";
             this.settingsSaveBtn.Size = new System.Drawing.Size(749, 72);
-            this.settingsSaveBtn.TabIndex = 20;
+            this.settingsSaveBtn.TabIndex = 2000;
             this.settingsSaveBtn.Text = "Save Settings";
             this.settingsSaveBtn.UseVisualStyleBackColor = true;
             this.settingsSaveBtn.Click += new System.EventHandler(this.button2_ClickAsync);
