@@ -71,6 +71,9 @@ namespace CraftForge.Server.Classes.Player
                 playerPanel.Controls.Add(playerControlComboBox);
                 panel.Controls.Add(playerPanel);
             }
+
+            await Task.Delay(1);
+            return;
         }
 
 

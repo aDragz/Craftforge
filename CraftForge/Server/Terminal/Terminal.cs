@@ -108,7 +108,7 @@ namespace CraftForge.Server.GUI.Console
             threadAmount = cores;
         }
 
-        private async void Terminal_Close(object sender, FormClosingEventArgs e)
+        private void Terminal_Closing(object sender, FormClosingEventArgs e)
         {
             try
             {
@@ -122,8 +122,31 @@ namespace CraftForge.Server.GUI.Console
             }
             catch (Exception exception)
             {
-                MessageBox.Show(exception.Message);
+                MessageBox.Show(exception.Message + "\n\nYou need to manually close the server!"); //Cannot close for some reason
             }
+        }
+
+        private async void Terminal_Closed(object sender, EventArgs e)
+        {
+            // Unsubscribe from the FormClosed event
+            this.FormClosed -= Terminal_Closed;
+
+            //Remove from startup.instancesRunning
+            Startup.instancesRunning.Remove(this.Name);
+
+            //If instancesRunning is empty, close the form
+            if (Startup.instancesRunning.Count == 0)
+            {
+                Application.Exit(); //Don't want people to think this is running in the background
+            }
+
+            await Task.Delay(1);
+            this.Visible = false; //Hides the form
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Terminal_Closed(sender, e);
         }
 
         private void InitializeSettings()
@@ -874,50 +897,6 @@ namespace CraftForge.Server.GUI.Console
             return returnProcess;
         }
 
-        private async void terminal_Close(object sender, EventArgs e)
-        {
-            // Unsubscribe from the FormClosed event
-            this.FormClosed -= terminal_Close;
-
-            //Remove from startup.instancesRunning
-            Startup.instancesRunning.Remove(this.Name);
-
-            //If instancesRunning is empty, close the form
-            if (Startup.instancesRunning.Count == 0)
-            {
-                Application.Exit(); //Don't want people to think this is running in the background 😂
-            }
-
-            this.Visible = false;
-
-            //Grab each tab page, and close the process(es)
-
-            foreach (TabPage tabPage in serverTabs.TabPages)
-            {
-                try
-                {
-                    //Grab consoleID from current tab name
-                    int consoleID = Convert.ToInt32(tabPage.Name.Replace("consoleTab ", ""));
-                    Process serverProcess = serverProcesses[consoleID];
-
-                    //Run /stop command
-                    //Grab serverInstance
-                    enterCommand.runCommand("/stop", serverProcess, this.serverTabs, consoleID, this);
-                    enterCommand.runCommand("stop", serverProcess, this.serverTabs, consoleID, this);
-
-                    //For some reason it does not close the terminal.
-                    //Spent like 2 hours trying to fix it, and it turns out it still stops it.
-                    //And probably more "safely" than my methods.
-                }
-                catch { continue; } //Probably not a console tab
-            }
-        }
-
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            terminal_Close(sender, e);
-        }
-
         private void startupToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Startup startup = new Startup();
@@ -961,9 +940,7 @@ namespace CraftForge.Server.GUI.Console
                 cpuRamUsage.Dispose();
 
                 if (formClosing)
-                {
                     this.Close();
-                }
             }
             catch (Exception ex)
             {
@@ -1289,7 +1266,7 @@ namespace CraftForge.Server.GUI.Console
             }
         }
 
-        private void createBackupBtn_Click(object sender, EventArgs e)
+        private async void createBackupBtn_Click(object sender, EventArgs e)
         {
             createNewLog.sendMessage(this, "[Backup] Creating backup");
             //Bring backupLabel to top 
@@ -1315,7 +1292,7 @@ namespace CraftForge.Server.GUI.Console
             }
 
             //Copy files
-            CopyDirectoryWithProgressBar(location, Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\CraftForge\\Backups\\" + name[0] + "\\" + time), backupLabel, false, backupProgressBar, "backup");
+            await CopyDirectoryWithProgressBar(location, Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\CraftForge\\Backups\\" + name[0] + "\\" + time), backupLabel, false, backupProgressBar, "backup");
         }
 
         private void dToolStripMenuItem_Click(object sender, EventArgs e)

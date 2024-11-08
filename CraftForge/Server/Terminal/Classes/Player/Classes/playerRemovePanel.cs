@@ -58,6 +58,8 @@ namespace CraftForge.Server.Classes.Player.Classes
                         {
                             playerList.Controls.Remove(panel);
                         }
+                        await Task.Delay(1);
+                        return;
                     }
                 }
             }
@@ -110,6 +112,8 @@ namespace CraftForge.Server.Classes.Player.Classes
                         {
                             playerList.Controls.Remove(panel);
                         }
+                        await Task.Delay(1);
+                        return;
                     }
                 }
             }

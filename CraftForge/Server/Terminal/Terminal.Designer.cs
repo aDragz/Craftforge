@@ -879,8 +879,8 @@
             this.Name = "Terminal";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Terminal";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Terminal_Close);
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.terminal_Close);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Terminal_Closing);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Terminal_Closed);
             this.Load += new System.EventHandler(this.Terminal_Load);
             this.serverTabs.ResumeLayout(false);
             this.generalPage.ResumeLayout(false);
