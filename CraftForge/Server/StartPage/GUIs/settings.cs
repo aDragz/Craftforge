@@ -200,11 +200,15 @@ namespace CraftForge.Server.GUI.Applications
             bool terminal_startMaximized = Properties.Settings.Default.terminal_startMaximized;
             bool terminal_autoStart = Properties.Settings.Default.terminal_autoStart;
 
+            bool terminal_autoScroll = Properties.Settings.Default.terminal_autoScroll;
+
             //Set the current theme textbox
             themeListConsolePanel.Text = currentTheme;
 
             MaximizeConsolePanel.Checked = terminal_startMaximized;
             AutoStartConsolePanel.Checked = terminal_autoStart;
+
+            autoScrollConsolePanel.Checked = terminal_autoScroll;
         }
 
         private void loadStartupSettings()
@@ -350,6 +354,16 @@ namespace CraftForge.Server.GUI.Applications
 
             //Save the value
             Properties.Settings.Default.terminal_autoStart = autoStart;
+            Properties.Settings.Default.Save();
+        }
+
+        private void autoScrollConsolePanel_CheckedChanged(object sender, EventArgs e)
+        {
+            //Grab the value
+            bool autoScroll = autoScrollConsolePanel.Checked;
+
+            //Save the value
+            Properties.Settings.Default.terminal_autoScroll = autoScroll;
             Properties.Settings.Default.Save();
         }
 

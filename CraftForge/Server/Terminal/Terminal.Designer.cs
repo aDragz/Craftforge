@@ -59,6 +59,8 @@
             this.secondaryTerminal = new System.Windows.Forms.RichTextBox();
             this.stopBtn = new System.Windows.Forms.Button();
             this.startBtn = new System.Windows.Forms.Button();
+            this.playersPage = new System.Windows.Forms.TabPage();
+            this.playerList = new System.Windows.Forms.FlowLayoutPanel();
             this.filesPage = new System.Windows.Forms.TabPage();
             this.folderList = new System.Windows.Forms.FlowLayoutPanel();
             this.logPage = new System.Windows.Forms.TabPage();
@@ -112,6 +114,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.cpuUsageChart)).BeginInit();
             this.serverStatusPanel.SuspendLayout();
             this.serverJarPanel.SuspendLayout();
+            this.playersPage.SuspendLayout();
             this.filesPage.SuspendLayout();
             this.logPage.SuspendLayout();
             this.backupPage.SuspendLayout();
@@ -134,6 +137,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.serverTabs.Appearance = System.Windows.Forms.TabAppearance.FlatButtons;
             this.serverTabs.Controls.Add(this.generalPage);
+            this.serverTabs.Controls.Add(this.playersPage);
             this.serverTabs.Controls.Add(this.filesPage);
             this.serverTabs.Controls.Add(this.logPage);
             this.serverTabs.Controls.Add(this.backupPage);
@@ -368,6 +372,25 @@
             this.startBtn.Text = "Start Server";
             this.startBtn.UseVisualStyleBackColor = true;
             this.startBtn.Click += new System.EventHandler(this.startBtn_Click);
+            // 
+            // playersPage
+            // 
+            this.playersPage.Controls.Add(this.playerList);
+            this.playersPage.Location = new System.Drawing.Point(4, 14);
+            this.playersPage.Name = "playersPage";
+            this.playersPage.Size = new System.Drawing.Size(1742, 937);
+            this.playersPage.TabIndex = 8;
+            this.playersPage.Text = "Players";
+            this.playersPage.UseVisualStyleBackColor = true;
+            // 
+            // playerList
+            // 
+            this.playerList.AutoScroll = true;
+            this.playerList.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.playerList.Location = new System.Drawing.Point(0, 0);
+            this.playerList.Name = "playerList";
+            this.playerList.Size = new System.Drawing.Size(1742, 937);
+            this.playerList.TabIndex = 0;
             // 
             // filesPage
             // 
@@ -868,6 +891,7 @@
             this.serverStatusPanel.PerformLayout();
             this.serverJarPanel.ResumeLayout(false);
             this.serverJarPanel.PerformLayout();
+            this.playersPage.ResumeLayout(false);
             this.filesPage.ResumeLayout(false);
             this.logPage.ResumeLayout(false);
             this.backupPage.ResumeLayout(false);
@@ -953,6 +977,8 @@
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.TrackBar ramSlider;
         private System.Windows.Forms.NumericUpDown ramNumber;
+        private System.Windows.Forms.TabPage playersPage;
+        private System.Windows.Forms.FlowLayoutPanel playerList;
     }
 }
 

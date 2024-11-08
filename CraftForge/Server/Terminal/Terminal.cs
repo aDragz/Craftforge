@@ -7,6 +7,8 @@ using CraftForge.Server.Classes.Console.Initialize.JarSelection;
 using CraftForge.Server.Classes.Console.Yaml;
 using CraftForge.Server.Classes.Console.Yaml.UpdateSettings;
 using CraftForge.Server.Classes.Logs;
+using CraftForge.Server.Classes.Player;
+using CraftForge.Server.Classes.Player.Classes;
 using CraftForge.Server.Events;
 using CraftForge.Server.GUI.Classes;
 using CraftForge.Server.GUI.Console.Components;
@@ -24,6 +26,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Management;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
@@ -32,6 +35,15 @@ namespace CraftForge.Server.GUI.Console
 {
     public partial class Terminal : Form
     {
+        /* 
+        Dimensions:
+
+        Settings:
+
+        Between Normal Items: 53px
+        Normal to textbox: -1px
+        Between Labels/Header: 93px
+        */
         public static Dictionary<int, Process> serverProcesses = new Dictionary<int, Process>();
         bool isRunning = false; //If the server is running & user tries to open console, it will offer to open a new tab or replace the current one
         bool hasStarted = false; //Checks to see if the server is running & started with (! For help, type \"help")
@@ -419,7 +431,7 @@ namespace CraftForge.Server.GUI.Console
             }
         }
 
-        private void startBtn_Click(object sender, EventArgs e)
+        private async void startBtn_Click(object sender, EventArgs e)
         {
             if (jarSelectionChanged)
             {
@@ -520,7 +532,7 @@ namespace CraftForge.Server.GUI.Console
                         RedirectStandardError = true,
                     };
 
-                    serverProcess.OutputDataReceived += (sender, e) => //When the server outputs something
+                    serverProcess.OutputDataReceived += async (sender, e) => //When the server outputs something
                     {
                         if (!string.IsNullOrEmpty(e.Data)) //Check if the output is not empty
                         {
@@ -536,28 +548,55 @@ namespace CraftForge.Server.GUI.Console
 
                                         AppendTextToCommandOutput(e.Data, console, secondaryTerminal, false, this);
 
-                                        //Check if /stop command has been run
-                                        if (e.Data.Contains("Stopping the server"))
+                                        if (Properties.Settings.Default.terminal_autoScroll)
                                         {
-                                            isRunning = false;
-                                            resetButtons();
-                                            //Grab player name
-                                            string[] words = e.Data.Split(' ');
-                                            //grab the first word
-                                            string playerName = words[2].Replace("[", "").Replace(":", "");
 
-                                            if (playerName.Equals("Stopping"))
+                                            if (console.InvokeRequired)
                                             {
-                                                playerName = "Console";
-                                            }
-                                            //Check if player name is empty
-                                            if (string.IsNullOrEmpty(playerName))
-                                            {
-                                                playerName = "Unknown";
-                                            }
+                                                console.Invoke(new Action(() => console.ScrollToCaret()));
+                                                secondaryTerminal.Invoke(new Action(() => secondaryTerminal.ScrollToCaret()));
 
-                                            //Send message to console
-                                            createNewLog.sendMessage(this, $"[Server] Server has been stopped by {playerName}");
+                                            }
+                                            else
+                                            {
+                                                console.ScrollToCaret();
+                                                secondaryTerminal.ScrollToCaret();
+                                            }
+                                        }
+
+                                        switch (e.Data)
+                                        {
+                                            //Check if /stop command has been run
+                                            case string data when data.Contains("Stopping the server"):
+                                                isRunning = false;
+                                                resetButtons();
+                                                //Grab player name
+                                                string[] words = e.Data.Split(' ');
+                                                //grab the first word
+                                                string playerName = words[2].Replace("[", "").Replace(":", "");
+
+                                                if (playerName.Equals("Stopping"))
+                                                {
+                                                    playerName = "Console";
+                                                }
+                                                //Check if player name is empty
+                                                if (string.IsNullOrEmpty(playerName))
+                                                {
+                                                    playerName = "Unknown";
+                                                }
+
+                                                //Send message to console
+                                                createNewLog.sendMessage(this, $"[Server] Server has been stopped by {playerName}");
+                                                break;
+                                            case string data when data.Contains("INFO]: UUID of player "):
+                                                playerAddPanel.playerJoined(e.Data, this, playerList, serverProcess, serverTabs, consoleID);
+                                                break;
+                                            case string data when data.Contains(" lost connection: "):
+                                                playerRemovePanel.playerLeft(e.Data, this, playerList, serverProcess, serverTabs, consoleID);
+                                                break;
+                                            case string data when data.Contains("Disconnecting "):
+                                                playerRemovePanel.playerBanned(e.Data, this, playerList, serverProcess, serverTabs, consoleID);
+                                                break;
                                         }
                                     }
                                     catch (ArgumentOutOfRangeException)
@@ -901,12 +940,12 @@ namespace CraftForge.Server.GUI.Console
 
                 this.stopBtn.Name = "";
 
+                createNewLog.sendMessage(this, "[Server] Server is stopping");
                 //Wait for the server to stop
                 while (!serverProcess.HasExited)
                 {
                     // Wait 1 second
                     await Task.Run(async () => await Task.Delay(500));
-                    secondaryTerminal.AppendText("\n[CraftForge INFO] Server is stopping...\n");
                 }
 
                 //add to terminal the server has stopped
@@ -1158,6 +1197,12 @@ namespace CraftForge.Server.GUI.Console
 
                     //Send label to back
                     label.SendToBack();
+
+                    if (type == "backup")
+                    {
+                        createNewLog.sendMessage(this, $"[Backup] {copiedFiles} has been copied");
+                        createNewLog.sendMessage(this, $"[Backup] {couldNotCopyFiles} could not be copied");
+                    }
                 }
             }
 
@@ -1168,6 +1213,9 @@ namespace CraftForge.Server.GUI.Console
                 {
                     await Task.Run(() => Directory.Delete(sourceDir, true));
                 }
+
+                createNewLog.sendMessage(this, $"[Settings] {copiedFiles} has been copied");
+                createNewLog.sendMessage(this, $"[Settings] {couldNotCopyFiles} could not be copied");
 
                 label.Text = "Server moved!";
                 this.Name = settingsNameTextBox.Text;
@@ -1243,6 +1291,7 @@ namespace CraftForge.Server.GUI.Console
 
         private void createBackupBtn_Click(object sender, EventArgs e)
         {
+            createNewLog.sendMessage(this, "[Backup] Creating backup");
             //Bring backupLabel to top 
             backupLabel.BringToFront();
             //Copy files to ../BackUp/ServerName/BakcupDate-dd-mm-yyyy-hh-mm-ss

@@ -82,5 +82,17 @@ namespace CraftForge.Properties {
                 this["Style"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool terminal_autoScroll {
+            get {
+                return ((bool)(this["terminal_autoScroll"]));
+            }
+            set {
+                this["terminal_autoScroll"] = value;
+            }
+        }
     }
 }
