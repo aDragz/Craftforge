@@ -59,6 +59,8 @@
             this.secondaryTerminal = new System.Windows.Forms.RichTextBox();
             this.stopBtn = new System.Windows.Forms.Button();
             this.startBtn = new System.Windows.Forms.Button();
+            this.playersPage = new System.Windows.Forms.TabPage();
+            this.playerList = new System.Windows.Forms.FlowLayoutPanel();
             this.filesPage = new System.Windows.Forms.TabPage();
             this.folderList = new System.Windows.Forms.FlowLayoutPanel();
             this.logPage = new System.Windows.Forms.TabPage();
@@ -112,6 +114,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.cpuUsageChart)).BeginInit();
             this.serverStatusPanel.SuspendLayout();
             this.serverJarPanel.SuspendLayout();
+            this.playersPage.SuspendLayout();
             this.filesPage.SuspendLayout();
             this.logPage.SuspendLayout();
             this.backupPage.SuspendLayout();
@@ -134,6 +137,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.serverTabs.Appearance = System.Windows.Forms.TabAppearance.FlatButtons;
             this.serverTabs.Controls.Add(this.generalPage);
+            this.serverTabs.Controls.Add(this.playersPage);
             this.serverTabs.Controls.Add(this.filesPage);
             this.serverTabs.Controls.Add(this.logPage);
             this.serverTabs.Controls.Add(this.backupPage);
@@ -369,6 +373,25 @@
             this.startBtn.UseVisualStyleBackColor = true;
             this.startBtn.Click += new System.EventHandler(this.startBtn_Click);
             // 
+            // playersPage
+            // 
+            this.playersPage.Controls.Add(this.playerList);
+            this.playersPage.Location = new System.Drawing.Point(4, 14);
+            this.playersPage.Name = "playersPage";
+            this.playersPage.Size = new System.Drawing.Size(1742, 937);
+            this.playersPage.TabIndex = 8;
+            this.playersPage.Text = "Players";
+            this.playersPage.UseVisualStyleBackColor = true;
+            // 
+            // playerList
+            // 
+            this.playerList.AutoScroll = true;
+            this.playerList.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.playerList.Location = new System.Drawing.Point(0, 0);
+            this.playerList.Name = "playerList";
+            this.playerList.Size = new System.Drawing.Size(1742, 937);
+            this.playerList.TabIndex = 0;
+            // 
             // filesPage
             // 
             this.filesPage.Controls.Add(this.folderList);
@@ -505,7 +528,7 @@
             this.ramSlider.Name = "ramSlider";
             this.ramSlider.Size = new System.Drawing.Size(194, 69);
             this.ramSlider.SmallChange = 256;
-            this.ramSlider.TabIndex = 34;
+            this.ramSlider.TabIndex = 30;
             this.ramSlider.TickFrequency = 256;
             this.ramSlider.Value = 512;
             this.ramSlider.Scroll += new System.EventHandler(this.ramSlider_Scroll);
@@ -530,7 +553,7 @@
             0});
             this.ramNumber.Name = "ramNumber";
             this.ramNumber.Size = new System.Drawing.Size(105, 40);
-            this.ramNumber.TabIndex = 33;
+            this.ramNumber.TabIndex = 31;
             this.ramNumber.Value = new decimal(new int[] {
             512,
             0,
@@ -619,7 +642,7 @@
             this.settingsSaveBtn.Location = new System.Drawing.Point(495, 828);
             this.settingsSaveBtn.Name = "settingsSaveBtn";
             this.settingsSaveBtn.Size = new System.Drawing.Size(749, 72);
-            this.settingsSaveBtn.TabIndex = 20;
+            this.settingsSaveBtn.TabIndex = 2000;
             this.settingsSaveBtn.Text = "Save Settings";
             this.settingsSaveBtn.UseVisualStyleBackColor = true;
             this.settingsSaveBtn.Click += new System.EventHandler(this.button2_ClickAsync);
@@ -856,8 +879,8 @@
             this.Name = "Terminal";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Terminal";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Terminal_Close);
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.terminal_Close);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Terminal_Closing);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Terminal_Closed);
             this.Load += new System.EventHandler(this.Terminal_Load);
             this.serverTabs.ResumeLayout(false);
             this.generalPage.ResumeLayout(false);
@@ -868,6 +891,7 @@
             this.serverStatusPanel.PerformLayout();
             this.serverJarPanel.ResumeLayout(false);
             this.serverJarPanel.PerformLayout();
+            this.playersPage.ResumeLayout(false);
             this.filesPage.ResumeLayout(false);
             this.logPage.ResumeLayout(false);
             this.backupPage.ResumeLayout(false);
@@ -953,6 +977,8 @@
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.TrackBar ramSlider;
         private System.Windows.Forms.NumericUpDown ramNumber;
+        private System.Windows.Forms.TabPage playersPage;
+        private System.Windows.Forms.FlowLayoutPanel playerList;
     }
 }
 

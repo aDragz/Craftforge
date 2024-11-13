@@ -66,6 +66,8 @@ namespace CraftForge.Server.GUI.Applications
             webClient.DownloadProgressChanged += new DownloadProgressChangedEventHandler(displayProgress);
             webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(downloadComplete);
             await webClient.DownloadFileTaskAsync(new Uri(url), path);
+            //File downloaded
+            currentInstance.Close();
         }
 
         private static void displayProgress(object sender, DownloadProgressChangedEventArgs e)
@@ -92,8 +94,8 @@ namespace CraftForge.Server.GUI.Applications
                 progressBar1Static.Value = e.ProgressPercentage;
 
                 //Set label text
-                downloadLabelStatic.Text = String.Format("Downloading {0}\n\n", currentInstance.Name) +
-                    String.Format("Downloaded {0:F2} MB of {1:F2} MB", mbIn, totalMb); //F2 formats number  to 2dp
+                downloadLabelStatic.Text = string.Format("Downloading {0}\n\n", currentInstance.Name) +
+                    string.Format("Downloaded {0:F2} MB of {1:F2} MB", mbIn, totalMb); //F2 formats number  to 2dp
             }
         }
 

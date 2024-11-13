@@ -200,11 +200,15 @@ namespace CraftForge.Server.GUI.Applications
             bool terminal_startMaximized = Properties.Settings.Default.terminal_startMaximized;
             bool terminal_autoStart = Properties.Settings.Default.terminal_autoStart;
 
+            bool terminal_autoScroll = Properties.Settings.Default.terminal_autoScroll;
+
             //Set the current theme textbox
             themeListConsolePanel.Text = currentTheme;
 
             MaximizeConsolePanel.Checked = terminal_startMaximized;
             AutoStartConsolePanel.Checked = terminal_autoStart;
+
+            autoScrollConsolePanel.Checked = terminal_autoScroll;
         }
 
         private void loadStartupSettings()
@@ -353,6 +357,16 @@ namespace CraftForge.Server.GUI.Applications
             Properties.Settings.Default.Save();
         }
 
+        private void autoScrollConsolePanel_CheckedChanged(object sender, EventArgs e)
+        {
+            //Grab the value
+            bool autoScroll = autoScrollConsolePanel.Checked;
+
+            //Save the value
+            Properties.Settings.Default.terminal_autoScroll = autoScroll;
+            Properties.Settings.Default.Save();
+        }
+
         private void TypeListConsolePanel_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (!isLoadingSettings)
@@ -361,7 +375,7 @@ namespace CraftForge.Server.GUI.Applications
                 if (!IsUserAdministrator())
                 {
                     // Restart the application with administrative privileges
-                    RestartWithAdminPrivileges();
+                    RestartWithAdminPrivileges(TypeListConsolePanel.Text);
                     return;
                 }
 
@@ -412,7 +426,7 @@ namespace CraftForge.Server.GUI.Applications
             return principal.IsInRole(WindowsBuiltInRole.Administrator);
         }
 
-        private void RestartWithAdminPrivileges()
+        private void RestartWithAdminPrivileges(string releaseName)
         {
             MessageBox.Show("This operation requires administrative privileges. Please restart the application as an administrator.", "Permission Denied", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             ProcessStartInfo proc = new ProcessStartInfo
@@ -421,7 +435,7 @@ namespace CraftForge.Server.GUI.Applications
                 WorkingDirectory = Environment.CurrentDirectory,
                 FileName = Application.ExecutablePath,
                 Verb = "runas",
-                Arguments = "--admin-restart" // Add a command-line argument
+                Arguments = $"--admin-restart --settings {releaseName}" // Add a command-line argument
             };
 
             try

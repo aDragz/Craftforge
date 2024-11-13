@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using CraftForge.Server.Classes.Logs;
+using CraftForge.Server.GUI.Console;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using YamlDotNet.Serialization.BufferedDeserialization;
 
 namespace CraftForge.Server.StartPage.Classes
 {
@@ -23,7 +19,7 @@ namespace CraftForge.Server.StartPage.Classes
                 + "\n" + $"java -Xmx{ram}M -Xms1024M -jar {jarName}.jar nogui");
         }
 
-        public static void resetFile(string fileLocation, int ram, string jarName)
+        public static void resetFile(Terminal terminal, string fileLocation, int ram, string jarName)
         {
             if (File.Exists(fileLocation))
             {
@@ -35,6 +31,8 @@ namespace CraftForge.Server.StartPage.Classes
                 + "\n" + "java -version"
                 + "\n" + "::Starts server"
                 + "\n" + $"java -Xmx{ram}M -Xms1024M -jar {jarName}.jar nogui");
+
+            createNewLog.sendMessage(terminal, $"[Settings] Reset Start.bat");
         }
     }
 }
