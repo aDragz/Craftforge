@@ -7,7 +7,6 @@ using CraftForge.Server.Classes.Console.Initialize.JarSelection;
 using CraftForge.Server.Classes.Console.Yaml;
 using CraftForge.Server.Classes.Console.Yaml.UpdateSettings;
 using CraftForge.Server.Classes.Logs;
-using CraftForge.Server.Classes.Player;
 using CraftForge.Server.Classes.Player.Classes;
 using CraftForge.Server.Events;
 using CraftForge.Server.GUI.Classes;
@@ -26,7 +25,6 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Management;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
@@ -172,6 +170,14 @@ namespace CraftForge.Server.GUI.Console
                 {
                     settingsIpTextBox.Text = str.Replace("server-ip=", "");
                     mainIpLabel.Text = str.Replace("server-ip=", "");
+                }
+                else if (str.Contains("level-name="))
+                {
+                    settingsWorldTextBox.Text = str.Replace("level-name=", "");
+                }
+                else if (str.Contains("gamemode="))
+                {
+                    settingsGamemodeComboBox.Text = str.Replace("gamemode=", "");
                 }
                 else if (str.Contains("max-players="))
                 {
@@ -1032,7 +1038,7 @@ namespace CraftForge.Server.GUI.Console
 
             if (!moveServer)
             {
-                File.WriteAllText(directory + "\\server.properties", "server-port=" + settingsPortTextBox.Text + "\n" + "server-ip=" + settingsIpTextBox.Text + "\n" + "level-name=world\n" + "gamemode=survival\n" + "difficulty=easy\n" + "allow-cheats=false\n" + "max-players=" + settingsPlayersTextBox.Text + "\n" + "online-mode=true\n" + "white-list=false\n" + "server-name=" + settingsNameTextBox.Text + "\n" + "motd=" + settingsMotdTextBox.Text + "\n");
+                File.WriteAllText(directory + "\\server.properties", "server-port=" + settingsPortTextBox.Text + "\n" + "server-ip=" + settingsIpTextBox.Text + "\n" + "level-name=" + settingsWorldTextBox.Text + "\n" + "gamemode=" + settingsGamemodeComboBox.Text + "\n" + "difficulty=easy\n" + "allow-cheats=false\n" + "max-players=" + settingsPlayersTextBox.Text + "\n" + "online-mode=true\n" + "white-list=false\n" + "server-name=" + settingsNameTextBox.Text + "\n" + "motd=" + settingsMotdTextBox.Text + "\n");
             }
 
             if (threadCount.Value != threadAmount)
@@ -1422,6 +1428,13 @@ namespace CraftForge.Server.GUI.Console
         private void ramNumber_ValueChanged(object sender, EventArgs e)
         {
             ramSlider.Value = (int)ramNumber.Value;
+        }
+
+        private void label16_Click(object sender, EventArgs e)
+        {
+            string fileLocation = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\CraftForge\\Servers\\" + this.Name.Split(':')[0] + "\\server.properties");
+
+            Process.Start("notepad.exe", fileLocation);
         }
     }
 }

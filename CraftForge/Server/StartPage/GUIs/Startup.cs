@@ -24,9 +24,6 @@ namespace CraftForge.Server.GUI.Setup
         {
             this.Hide();
 
-            //Check for udates
-            autoUpdate.checkForUpdates();
-
             instancesRunning.Add(this.Name);
 
             this.MinimizeBox = false;

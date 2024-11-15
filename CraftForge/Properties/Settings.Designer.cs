@@ -61,6 +61,18 @@ namespace CraftForge.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool terminal_autoScroll {
+            get {
+                return ((bool)(this["terminal_autoScroll"]));
+            }
+            set {
+                this["terminal_autoScroll"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("default")]
         public string Theme {
             get {
@@ -86,12 +98,12 @@ namespace CraftForge.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool terminal_autoScroll {
+        public bool autoUpdate {
             get {
-                return ((bool)(this["terminal_autoScroll"]));
+                return ((bool)(this["autoUpdate"]));
             }
             set {
-                this["terminal_autoScroll"] = value;
+                this["autoUpdate"] = value;
             }
         }
     }

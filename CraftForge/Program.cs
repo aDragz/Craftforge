@@ -33,6 +33,13 @@ namespace CraftForge
                 settings.CraftForgeUpdaterConfig("TypeSelected", release); //If stable is selected, it will be updated as stable as an example.
             }
 
+            //Check if auto update is enabled
+            if (Settings.Default.autoUpdate)
+            {
+                //Check for updates
+                autoUpdate.checkForUpdates();
+            }
+
             Application.Run(new Startup());
         }
     }

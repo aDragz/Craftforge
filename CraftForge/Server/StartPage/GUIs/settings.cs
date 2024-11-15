@@ -236,11 +236,11 @@ namespace CraftForge.Server.GUI.Applications
                     JArray versions = (JArray)json["types"];
                     string latestVersion = versions.Last.ToString();
 
-                    TypeListConsolePanel.Items.Clear();
+                    TypeListAppPanel.Items.Clear();
                     // Add all builds to the "build" selector
                     foreach (var version in versions)
                     {
-                        TypeListConsolePanel.Items.Add(version);
+                        TypeListAppPanel.Items.Add(version);
                     }
 
                     //Set the textBox to the current selected setting:
@@ -262,7 +262,7 @@ namespace CraftForge.Server.GUI.Applications
                             XmlNode valueNode = settingNode.SelectSingleNode("value");
                             if (valueNode != null)
                             {
-                                TypeListConsolePanel.Text = valueNode.InnerText;
+                                TypeListAppPanel.Text = valueNode.InnerText;
                             }
                         }
                     }
@@ -270,6 +270,9 @@ namespace CraftForge.Server.GUI.Applications
                 catch { }
             }
             isLoadingSettings = false;
+
+            bool autoUpdate = Properties.Settings.Default.autoUpdate;
+            AutoUpdateAppPanel.Checked = autoUpdate;
         }
 
         private void loadThemesList()
@@ -375,13 +378,23 @@ namespace CraftForge.Server.GUI.Applications
                 if (!IsUserAdministrator())
                 {
                     // Restart the application with administrative privileges
-                    RestartWithAdminPrivileges(TypeListConsolePanel.Text);
+                    RestartWithAdminPrivileges(TypeListAppPanel.Text);
                     return;
                 }
 
-                CraftForgeUpdaterConfig("TypeSelected", TypeListConsolePanel.Text); //If stable is selected, it will be updated as stable as an example.
+                CraftForgeUpdaterConfig("TypeSelected", TypeListAppPanel.Text); //If stable is selected, it will be updated as stable as an example.
                 autoUpdate.checkForUpdates(); //Check for updates after the settings have been updated
             }
+        }
+
+        private void AutoUpdateAppPanel_CheckedChanged(object sender, EventArgs e)
+        {
+            //Grab the value
+            bool autoUpdate = AutoUpdateAppPanel.Checked;
+
+            //Save the value
+            Properties.Settings.Default.autoUpdate = autoUpdate;
+            Properties.Settings.Default.Save();
         }
 
         public static void CraftForgeUpdaterConfig(string key, string value)
