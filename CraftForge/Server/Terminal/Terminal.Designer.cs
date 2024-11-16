@@ -110,8 +110,6 @@
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.serverTabsPanel = new System.Windows.Forms.Panel();
-            this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.cpuRamUsage = new System.Windows.Forms.Timer(this.components);
             this.serverTabs.SuspendLayout();
             this.generalPage.SuspendLayout();
@@ -128,7 +126,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.ramNumber)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.threadCount)).BeginInit();
             this.menuStrip1.SuspendLayout();
-            this.statusStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // serverStatusNetwork
@@ -151,12 +148,12 @@
             this.serverTabs.HotTrack = true;
             this.serverTabs.ImeMode = System.Windows.Forms.ImeMode.Off;
             this.serverTabs.ItemSize = new System.Drawing.Size(100, 10);
-            this.serverTabs.Location = new System.Drawing.Point(198, 36);
+            this.serverTabs.Location = new System.Drawing.Point(198, 27);
             this.serverTabs.Multiline = true;
             this.serverTabs.Name = "serverTabs";
             this.serverTabs.Padding = new System.Drawing.Point(0, 0);
             this.serverTabs.SelectedIndex = 0;
-            this.serverTabs.Size = new System.Drawing.Size(1700, 955);
+            this.serverTabs.Size = new System.Drawing.Size(1708, 1004);
             this.serverTabs.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.serverTabs.TabIndex = 10;
             // 
@@ -175,7 +172,7 @@
             this.generalPage.Location = new System.Drawing.Point(4, 14);
             this.generalPage.Name = "generalPage";
             this.generalPage.Padding = new System.Windows.Forms.Padding(3);
-            this.generalPage.Size = new System.Drawing.Size(1692, 937);
+            this.generalPage.Size = new System.Drawing.Size(1700, 986);
             this.generalPage.TabIndex = 0;
             this.generalPage.Text = "General";
             this.generalPage.UseVisualStyleBackColor = true;
@@ -187,7 +184,7 @@
             this.ramUsageChart.ChartAreas.Add(chartArea1);
             legend1.Name = "Legend1";
             this.ramUsageChart.Legends.Add(legend1);
-            this.ramUsageChart.Location = new System.Drawing.Point(1291, 284);
+            this.ramUsageChart.Location = new System.Drawing.Point(1299, 284);
             this.ramUsageChart.Name = "ramUsageChart";
             series1.ChartArea = "ChartArea1";
             series1.Legend = "Legend1";
@@ -204,7 +201,7 @@
             this.cpuUsageChart.ChartAreas.Add(chartArea2);
             legend2.Name = "Legend1";
             this.cpuUsageChart.Legends.Add(legend2);
-            this.cpuUsageChart.Location = new System.Drawing.Point(1291, 479);
+            this.cpuUsageChart.Location = new System.Drawing.Point(1299, 479);
             this.cpuUsageChart.Name = "cpuUsageChart";
             series2.ChartArea = "ChartArea1";
             series2.Legend = "Legend1";
@@ -218,7 +215,7 @@
             // 
             this.ramUsageLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.ramUsageLabel.AutoSize = true;
-            this.ramUsageLabel.Location = new System.Drawing.Point(1395, 248);
+            this.ramUsageLabel.Location = new System.Drawing.Point(1403, 248);
             this.ramUsageLabel.Name = "ramUsageLabel";
             this.ramUsageLabel.Size = new System.Drawing.Size(75, 33);
             this.ramUsageLabel.TabIndex = 39;
@@ -228,7 +225,7 @@
             // 
             this.cpuUsageLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.cpuUsageLabel.AutoSize = true;
-            this.cpuUsageLabel.Location = new System.Drawing.Point(1294, 248);
+            this.cpuUsageLabel.Location = new System.Drawing.Point(1302, 248);
             this.cpuUsageLabel.Name = "cpuUsageLabel";
             this.cpuUsageLabel.Size = new System.Drawing.Size(45, 33);
             this.cpuUsageLabel.TabIndex = 37;
@@ -242,7 +239,7 @@
             this.serverStatusPanel.Controls.Add(this.label3);
             this.serverStatusPanel.Controls.Add(this.mainIpLabel);
             this.serverStatusPanel.Controls.Add(this.label1);
-            this.serverStatusPanel.Location = new System.Drawing.Point(1291, 6);
+            this.serverStatusPanel.Location = new System.Drawing.Point(1299, 6);
             this.serverStatusPanel.Name = "serverStatusPanel";
             this.serverStatusPanel.Size = new System.Drawing.Size(393, 220);
             this.serverStatusPanel.TabIndex = 36;
@@ -298,10 +295,10 @@
             // 
             this.secondaryTerminalInput.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.secondaryTerminalInput.Location = new System.Drawing.Point(3, 750);
+            this.secondaryTerminalInput.Location = new System.Drawing.Point(3, 799);
             this.secondaryTerminalInput.Multiline = false;
             this.secondaryTerminalInput.Name = "secondaryTerminalInput";
-            this.secondaryTerminalInput.Size = new System.Drawing.Size(1282, 36);
+            this.secondaryTerminalInput.Size = new System.Drawing.Size(1290, 36);
             this.secondaryTerminalInput.TabIndex = 36;
             this.secondaryTerminalInput.Text = "";
             this.secondaryTerminalInput.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.secondaryTerminalInput_KeyPress);
@@ -311,7 +308,7 @@
             this.serverJarPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.serverJarPanel.Controls.Add(this.label9);
             this.serverJarPanel.Controls.Add(this.serverJarCombo);
-            this.serverJarPanel.Location = new System.Drawing.Point(1291, 674);
+            this.serverJarPanel.Location = new System.Drawing.Point(1299, 723);
             this.serverJarPanel.Name = "serverJarPanel";
             this.serverJarPanel.Size = new System.Drawing.Size(393, 266);
             this.serverJarPanel.TabIndex = 35;
@@ -332,7 +329,7 @@
             this.serverJarCombo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.serverJarCombo.FormattingEnabled = true;
             this.serverJarCombo.IntegralHeight = false;
-            this.serverJarCombo.Location = new System.Drawing.Point(3, 38);
+            this.serverJarCombo.Location = new System.Drawing.Point(3, 46);
             this.serverJarCombo.Name = "serverJarCombo";
             this.serverJarCombo.Size = new System.Drawing.Size(387, 41);
             this.serverJarCombo.TabIndex = 33;
@@ -349,7 +346,7 @@
             this.secondaryTerminal.Location = new System.Drawing.Point(3, 6);
             this.secondaryTerminal.Name = "secondaryTerminal";
             this.secondaryTerminal.ReadOnly = true;
-            this.secondaryTerminal.Size = new System.Drawing.Size(1282, 742);
+            this.secondaryTerminal.Size = new System.Drawing.Size(1290, 791);
             this.secondaryTerminal.TabIndex = 34;
             this.secondaryTerminal.Text = "";
             // 
@@ -358,7 +355,7 @@
             this.stopBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.stopBtn.Enabled = false;
             this.stopBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.stopBtn.Location = new System.Drawing.Point(897, 841);
+            this.stopBtn.Location = new System.Drawing.Point(905, 890);
             this.stopBtn.Name = "stopBtn";
             this.stopBtn.Size = new System.Drawing.Size(191, 90);
             this.stopBtn.TabIndex = 12;
@@ -370,7 +367,7 @@
             // 
             this.startBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.startBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.startBtn.Location = new System.Drawing.Point(1094, 841);
+            this.startBtn.Location = new System.Drawing.Point(1102, 890);
             this.startBtn.Name = "startBtn";
             this.startBtn.Size = new System.Drawing.Size(191, 90);
             this.startBtn.TabIndex = 11;
@@ -383,7 +380,7 @@
             this.playersPage.Controls.Add(this.playerList);
             this.playersPage.Location = new System.Drawing.Point(4, 14);
             this.playersPage.Name = "playersPage";
-            this.playersPage.Size = new System.Drawing.Size(1692, 937);
+            this.playersPage.Size = new System.Drawing.Size(1700, 986);
             this.playersPage.TabIndex = 8;
             this.playersPage.Text = "Players";
             this.playersPage.UseVisualStyleBackColor = true;
@@ -394,7 +391,7 @@
             this.playerList.Dock = System.Windows.Forms.DockStyle.Fill;
             this.playerList.Location = new System.Drawing.Point(0, 0);
             this.playerList.Name = "playerList";
-            this.playerList.Size = new System.Drawing.Size(1692, 937);
+            this.playerList.Size = new System.Drawing.Size(1700, 986);
             this.playerList.TabIndex = 0;
             // 
             // filesPage
@@ -402,7 +399,7 @@
             this.filesPage.Controls.Add(this.folderList);
             this.filesPage.Location = new System.Drawing.Point(4, 14);
             this.filesPage.Name = "filesPage";
-            this.filesPage.Size = new System.Drawing.Size(1692, 937);
+            this.filesPage.Size = new System.Drawing.Size(1700, 986);
             this.filesPage.TabIndex = 2;
             this.filesPage.Text = "Files";
             this.filesPage.UseVisualStyleBackColor = true;
@@ -413,7 +410,7 @@
             this.folderList.Dock = System.Windows.Forms.DockStyle.Fill;
             this.folderList.Location = new System.Drawing.Point(0, 0);
             this.folderList.Name = "folderList";
-            this.folderList.Size = new System.Drawing.Size(1692, 937);
+            this.folderList.Size = new System.Drawing.Size(1700, 986);
             this.folderList.TabIndex = 0;
             // 
             // logPage
@@ -421,7 +418,7 @@
             this.logPage.Controls.Add(this.logsOutput);
             this.logPage.Location = new System.Drawing.Point(4, 14);
             this.logPage.Name = "logPage";
-            this.logPage.Size = new System.Drawing.Size(1692, 937);
+            this.logPage.Size = new System.Drawing.Size(1700, 986);
             this.logPage.TabIndex = 7;
             this.logPage.Text = "Logs";
             this.logPage.UseVisualStyleBackColor = true;
@@ -435,7 +432,7 @@
             this.logsOutput.Location = new System.Drawing.Point(4, 3);
             this.logsOutput.Name = "logsOutput";
             this.logsOutput.ReadOnly = true;
-            this.logsOutput.Size = new System.Drawing.Size(1730, 939);
+            this.logsOutput.Size = new System.Drawing.Size(1738, 980);
             this.logsOutput.TabIndex = 38;
             this.logsOutput.Text = "";
             // 
@@ -447,7 +444,7 @@
             this.backupPage.Controls.Add(this.createBackupBtn);
             this.backupPage.Location = new System.Drawing.Point(4, 14);
             this.backupPage.Name = "backupPage";
-            this.backupPage.Size = new System.Drawing.Size(1692, 937);
+            this.backupPage.Size = new System.Drawing.Size(1700, 986);
             this.backupPage.TabIndex = 5;
             this.backupPage.Text = "Backups";
             this.backupPage.UseVisualStyleBackColor = true;
@@ -456,7 +453,7 @@
             // 
             this.backupLabel.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.backupLabel.BackColor = System.Drawing.Color.Transparent;
-            this.backupLabel.Location = new System.Drawing.Point(-1, 615);
+            this.backupLabel.Location = new System.Drawing.Point(3, 656);
             this.backupLabel.Name = "backupLabel";
             this.backupLabel.Size = new System.Drawing.Size(1740, 204);
             this.backupLabel.TabIndex = 24;
@@ -470,23 +467,23 @@
             this.backupFolderList.AutoScroll = true;
             this.backupFolderList.Location = new System.Drawing.Point(3, 3);
             this.backupFolderList.Name = "backupFolderList";
-            this.backupFolderList.Size = new System.Drawing.Size(1731, 819);
+            this.backupFolderList.Size = new System.Drawing.Size(1739, 860);
             this.backupFolderList.TabIndex = 26;
             // 
             // backupProgressBar
             // 
             this.backupProgressBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.backupProgressBar.Location = new System.Drawing.Point(50, 906);
+            this.backupProgressBar.Location = new System.Drawing.Point(50, 947);
             this.backupProgressBar.Name = "backupProgressBar";
-            this.backupProgressBar.Size = new System.Drawing.Size(1640, 29);
+            this.backupProgressBar.Size = new System.Drawing.Size(1648, 29);
             this.backupProgressBar.TabIndex = 25;
             // 
             // createBackupBtn
             // 
             this.createBackupBtn.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.createBackupBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.createBackupBtn.Location = new System.Drawing.Point(495, 828);
+            this.createBackupBtn.Location = new System.Drawing.Point(499, 869);
             this.createBackupBtn.Name = "createBackupBtn";
             this.createBackupBtn.Size = new System.Drawing.Size(749, 72);
             this.createBackupBtn.TabIndex = 23;
@@ -524,7 +521,7 @@
             this.settingsPage.Font = new System.Drawing.Font("Consolas", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.settingsPage.Location = new System.Drawing.Point(4, 14);
             this.settingsPage.Name = "settingsPage";
-            this.settingsPage.Size = new System.Drawing.Size(1692, 937);
+            this.settingsPage.Size = new System.Drawing.Size(1700, 986);
             this.settingsPage.TabIndex = 3;
             this.settingsPage.Text = "Settings";
             this.settingsPage.UseVisualStyleBackColor = true;
@@ -694,16 +691,16 @@
             // 
             this.SettingsProgressBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.SettingsProgressBar.Location = new System.Drawing.Point(50, 906);
+            this.SettingsProgressBar.Location = new System.Drawing.Point(50, 947);
             this.SettingsProgressBar.Name = "SettingsProgressBar";
-            this.SettingsProgressBar.Size = new System.Drawing.Size(1590, 29);
+            this.SettingsProgressBar.Size = new System.Drawing.Size(1598, 29);
             this.SettingsProgressBar.TabIndex = 22;
             // 
             // settingsSaveBtn
             // 
             this.settingsSaveBtn.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.settingsSaveBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.settingsSaveBtn.Location = new System.Drawing.Point(470, 828);
+            this.settingsSaveBtn.Location = new System.Drawing.Point(474, 869);
             this.settingsSaveBtn.Name = "settingsSaveBtn";
             this.settingsSaveBtn.Size = new System.Drawing.Size(749, 72);
             this.settingsSaveBtn.TabIndex = 2000;
@@ -789,9 +786,9 @@
             // 
             this.SettingsStatusLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.SettingsStatusLabel.Location = new System.Drawing.Point(0, 621);
+            this.SettingsStatusLabel.Location = new System.Drawing.Point(0, 662);
             this.SettingsStatusLabel.Name = "SettingsStatusLabel";
-            this.SettingsStatusLabel.Size = new System.Drawing.Size(1690, 204);
+            this.SettingsStatusLabel.Size = new System.Drawing.Size(1698, 204);
             this.SettingsStatusLabel.TabIndex = 21;
             this.SettingsStatusLabel.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             // 
@@ -902,27 +899,10 @@
             this.serverTabsPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.serverTabsPanel.AutoScroll = true;
-            this.serverTabsPanel.Location = new System.Drawing.Point(0, 33);
+            this.serverTabsPanel.Location = new System.Drawing.Point(0, 37);
             this.serverTabsPanel.Name = "serverTabsPanel";
-            this.serverTabsPanel.Size = new System.Drawing.Size(200, 960);
+            this.serverTabsPanel.Size = new System.Drawing.Size(200, 993);
             this.serverTabsPanel.TabIndex = 15;
-            // 
-            // statusLabel
-            // 
-            this.statusLabel.Name = "statusLabel";
-            this.statusLabel.Size = new System.Drawing.Size(0, 15);
-            // 
-            // statusStrip
-            // 
-            this.statusStrip.ImageScalingSize = new System.Drawing.Size(24, 24);
-            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.statusLabel});
-            this.statusStrip.Location = new System.Drawing.Point(0, 1002);
-            this.statusStrip.Name = "statusStrip";
-            this.statusStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.statusStrip.Size = new System.Drawing.Size(1898, 22);
-            this.statusStrip.TabIndex = 7;
-            this.statusStrip.Text = "statusBar";
             // 
             // cpuRamUsage
             // 
@@ -937,7 +917,6 @@
             this.Controls.Add(this.serverTabsPanel);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.serverTabs);
-            this.Controls.Add(this.statusStrip);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(1280, 720);
             this.Name = "Terminal";
@@ -966,8 +945,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.threadCount)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            this.statusStrip.ResumeLayout(false);
-            this.statusStrip.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1022,8 +999,6 @@
         private System.Windows.Forms.FlowLayoutPanel folderList;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem1;
-        public System.Windows.Forms.ToolStripStatusLabel statusLabel;
-        public System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.FlowLayoutPanel backupFolderList;
         private System.Windows.Forms.Label backupLabel;
         private System.Windows.Forms.Label SettingsStatusLabel;

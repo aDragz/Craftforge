@@ -389,12 +389,6 @@ namespace CraftForge.Server.GUI.Console
                 //Grab all values and display them
                 using (var client = new System.Net.Sockets.TcpClient())
                 {
-                    //Check if the server was running before
-                    if (statusLabel.Text.Contains("Server is not running") || statusLabel.Text == null)
-                    {
-                        statusLabel.Text = "Connecting to the Server...";
-                    }
-
                     //Wait until the output displays "! For help, type "help"
 
                     //Grab output
@@ -402,7 +396,6 @@ namespace CraftForge.Server.GUI.Console
                     try
                     {
                         await client.ConnectAsync(settingsIpTextBox.Text, int.Parse(settingsPortTextBox.Text));
-                        statusLabel.Text = $"Server is running at {location} | {settingsIpTextBox.Text}:{settingsPortTextBox.Text} : {this.Name}";
 
                         //Grab current process
                         int consoleID = Convert.ToInt32(this.stopBtn.Name);
@@ -430,8 +423,6 @@ namespace CraftForge.Server.GUI.Console
                     {
                         if (serverStatusNetwork.Interval != 10000) //Just started process!
                         {
-                            statusLabel.Text = $"Server is not running! - {exception.Message}";
-
                             isRunning = false;
                             resetButtons();
 
