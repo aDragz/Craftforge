@@ -7,7 +7,6 @@ using CraftForge.Server.Classes.Console.Initialize.JarSelection;
 using CraftForge.Server.Classes.Console.Yaml;
 using CraftForge.Server.Classes.Console.Yaml.UpdateSettings;
 using CraftForge.Server.Classes.Logs;
-using CraftForge.Server.Classes.Player;
 using CraftForge.Server.Classes.Player.Classes;
 using CraftForge.Server.Events;
 using CraftForge.Server.GUI.Classes;
@@ -26,7 +25,6 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Management;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
@@ -172,6 +170,14 @@ namespace CraftForge.Server.GUI.Console
                 {
                     settingsIpTextBox.Text = str.Replace("server-ip=", "");
                     mainIpLabel.Text = str.Replace("server-ip=", "");
+                }
+                else if (str.Contains("level-name="))
+                {
+                    settingsWorldTextBox.Text = str.Replace("level-name=", "");
+                }
+                else if (str.Contains("gamemode="))
+                {
+                    settingsGamemodeComboBox.Text = str.Replace("gamemode=", "");
                 }
                 else if (str.Contains("max-players="))
                 {
@@ -383,12 +389,6 @@ namespace CraftForge.Server.GUI.Console
                 //Grab all values and display them
                 using (var client = new System.Net.Sockets.TcpClient())
                 {
-                    //Check if the server was running before
-                    if (statusLabel.Text.Contains("Server is not running") || statusLabel.Text == null)
-                    {
-                        statusLabel.Text = "Connecting to the Server...";
-                    }
-
                     //Wait until the output displays "! For help, type "help"
 
                     //Grab output
@@ -396,7 +396,6 @@ namespace CraftForge.Server.GUI.Console
                     try
                     {
                         await client.ConnectAsync(settingsIpTextBox.Text, int.Parse(settingsPortTextBox.Text));
-                        statusLabel.Text = $"Server is running at {location} | {settingsIpTextBox.Text}:{settingsPortTextBox.Text} : {this.Name}";
 
                         //Grab current process
                         int consoleID = Convert.ToInt32(this.stopBtn.Name);
@@ -424,8 +423,6 @@ namespace CraftForge.Server.GUI.Console
                     {
                         if (serverStatusNetwork.Interval != 10000) //Just started process!
                         {
-                            statusLabel.Text = $"Server is not running! - {exception.Message}";
-
                             isRunning = false;
                             resetButtons();
 
@@ -1032,7 +1029,7 @@ namespace CraftForge.Server.GUI.Console
 
             if (!moveServer)
             {
-                File.WriteAllText(directory + "\\server.properties", "server-port=" + settingsPortTextBox.Text + "\n" + "server-ip=" + settingsIpTextBox.Text + "\n" + "level-name=world\n" + "gamemode=survival\n" + "difficulty=easy\n" + "allow-cheats=false\n" + "max-players=" + settingsPlayersTextBox.Text + "\n" + "online-mode=true\n" + "white-list=false\n" + "server-name=" + settingsNameTextBox.Text + "\n" + "motd=" + settingsMotdTextBox.Text + "\n");
+                File.WriteAllText(directory + "\\server.properties", "server-port=" + settingsPortTextBox.Text + "\n" + "server-ip=" + settingsIpTextBox.Text + "\n" + "level-name=" + settingsWorldTextBox.Text + "\n" + "gamemode=" + settingsGamemodeComboBox.Text + "\n" + "difficulty=easy\n" + "allow-cheats=false\n" + "max-players=" + settingsPlayersTextBox.Text + "\n" + "online-mode=true\n" + "white-list=false\n" + "server-name=" + settingsNameTextBox.Text + "\n" + "motd=" + settingsMotdTextBox.Text + "\n");
             }
 
             if (threadCount.Value != threadAmount)
@@ -1247,22 +1244,22 @@ namespace CraftForge.Server.GUI.Console
                 if (int.TryParse(consoleIDString, out int consoleID))
                 {
                     // Grab serverProcess
-                    Process serverProcess = serverProcesses[consoleID];
+                    if (serverProcesses.TryGetValue(consoleID, out Process serverProcess))
+                    {
+                        // Run command
+                        enterCommand.runCommand(secondaryTerminalInput.Text, serverProcess, this.serverTabs, consoleID, this);
 
-                    // Run command
-                    enterCommand.runCommand(secondaryTerminalInput.Text, serverProcess, this.serverTabs, consoleID, this);
-
-                    // Clear text
-                    secondaryTerminalInput.Clear();
+                        // Clear text
+                        secondaryTerminalInput.Text = string.Empty;
+                        return;
+                    }
                 }
-                else
-                {
-                    // Clear Text
-                    secondaryTerminalInput.Clear();
 
-                    //Display console is not running in main console
-                    secondaryTerminal.AppendText("Server is not running!\n");
-                }
+                // Clear Text
+                secondaryTerminalInput.Text = string.Empty;
+
+                //Display console is not running in main console
+                secondaryTerminal.AppendText("Server is not running!\n");
             }
         }
 
@@ -1422,6 +1419,39 @@ namespace CraftForge.Server.GUI.Console
         private void ramNumber_ValueChanged(object sender, EventArgs e)
         {
             ramSlider.Value = (int)ramNumber.Value;
+        }
+
+        private void label16_Click(object sender, EventArgs e)
+        {
+            string fileLocation = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\CraftForge\\Servers\\" + this.Name.Split(':')[0] + "\\server.properties");
+
+            Process.Start("notepad.exe", fileLocation);
+        }
+
+        private void secondaryTerminalInput_Enter(object sender, EventArgs e)
+        {
+            if (secondaryTerminalInput.Text == "Enter Command")
+            {
+                secondaryTerminalInput.Text = string.Empty;
+                secondaryTerminalInput.ForeColor = System.Drawing.Color.Black;
+            }
+        }
+
+        private void secondaryTerminalInput_Leave(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(secondaryTerminalInput.Text))
+            {
+                secondaryTerminalInput.ForeColor = System.Drawing.Color.DimGray;
+                secondaryTerminalInput.Text = "Enter Command";
+            }
+        }
+
+        private void openThemesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //Open themes
+            string location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CraftForge\\Themes";
+
+            Process.Start("explorer.exe", location);
         }
     }
 }

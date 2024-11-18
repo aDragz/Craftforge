@@ -53,6 +53,8 @@
             this.MaximizeStartupPanel = new System.Windows.Forms.CheckBox();
             this.Startup = new System.Windows.Forms.Label();
             this.ConsolePanel = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.autoScrollConsolePanel = new System.Windows.Forms.CheckBox();
             this.AutoStartConsolePanel = new System.Windows.Forms.CheckBox();
             this.MaximizeConsolePanel = new System.Windows.Forms.CheckBox();
             this.Console = new System.Windows.Forms.Label();
@@ -61,10 +63,9 @@
             this.App = new System.Windows.Forms.TabPage();
             this.VersionPanel = new System.Windows.Forms.Panel();
             this.Version = new System.Windows.Forms.Label();
-            this.TypeApplicationPanel = new System.Windows.Forms.Label();
-            this.TypeListConsolePanel = new System.Windows.Forms.ComboBox();
-            this.autoScrollConsolePanel = new System.Windows.Forms.CheckBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.TypeVersionPanel = new System.Windows.Forms.Label();
+            this.TypeListAppPanel = new System.Windows.Forms.ComboBox();
+            this.AutoUpdateAppPanel = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -194,6 +195,28 @@
             this.ConsolePanel.Size = new System.Drawing.Size(820, 291);
             this.ConsolePanel.TabIndex = 10;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Consolas", 12F);
+            this.label1.Location = new System.Drawing.Point(20, 200);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(103, 28);
+            this.label1.TabIndex = 17;
+            this.label1.Text = "Console";
+            // 
+            // autoScrollConsolePanel
+            // 
+            this.autoScrollConsolePanel.AutoSize = true;
+            this.autoScrollConsolePanel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.autoScrollConsolePanel.Location = new System.Drawing.Point(20, 240);
+            this.autoScrollConsolePanel.Name = "autoScrollConsolePanel";
+            this.autoScrollConsolePanel.Size = new System.Drawing.Size(155, 33);
+            this.autoScrollConsolePanel.TabIndex = 16;
+            this.autoScrollConsolePanel.Text = "Auto Scroll";
+            this.autoScrollConsolePanel.UseVisualStyleBackColor = true;
+            this.autoScrollConsolePanel.CheckedChanged += new System.EventHandler(this.autoScrollConsolePanel_CheckedChanged);
+            // 
             // AutoStartConsolePanel
             // 
             this.AutoStartConsolePanel.AutoSize = true;
@@ -261,9 +284,10 @@
             // 
             // VersionPanel
             // 
+            this.VersionPanel.Controls.Add(this.AutoUpdateAppPanel);
             this.VersionPanel.Controls.Add(this.Version);
-            this.VersionPanel.Controls.Add(this.TypeApplicationPanel);
-            this.VersionPanel.Controls.Add(this.TypeListConsolePanel);
+            this.VersionPanel.Controls.Add(this.TypeVersionPanel);
+            this.VersionPanel.Controls.Add(this.TypeListAppPanel);
             this.VersionPanel.Location = new System.Drawing.Point(0, 0);
             this.VersionPanel.Name = "VersionPanel";
             this.VersionPanel.Size = new System.Drawing.Size(820, 200);
@@ -279,47 +303,37 @@
             this.Version.TabIndex = 9;
             this.Version.Text = "Version";
             // 
-            // TypeApplicationPanel
+            // TypeVersionPanel
             // 
-            this.TypeApplicationPanel.AutoSize = true;
-            this.TypeApplicationPanel.Font = new System.Drawing.Font("Consolas", 12F);
-            this.TypeApplicationPanel.Location = new System.Drawing.Point(15, 40);
-            this.TypeApplicationPanel.Name = "TypeApplicationPanel";
-            this.TypeApplicationPanel.Size = new System.Drawing.Size(103, 28);
-            this.TypeApplicationPanel.TabIndex = 1;
-            this.TypeApplicationPanel.Text = "Release";
+            this.TypeVersionPanel.AutoSize = true;
+            this.TypeVersionPanel.Font = new System.Drawing.Font("Consolas", 12F);
+            this.TypeVersionPanel.Location = new System.Drawing.Point(15, 40);
+            this.TypeVersionPanel.Name = "TypeVersionPanel";
+            this.TypeVersionPanel.Size = new System.Drawing.Size(103, 28);
+            this.TypeVersionPanel.TabIndex = 1;
+            this.TypeVersionPanel.Text = "Release";
             // 
-            // TypeListConsolePanel
+            // TypeListAppPanel
             // 
-            this.TypeListConsolePanel.Font = new System.Drawing.Font("Consolas", 12F);
-            this.TypeListConsolePanel.FormattingEnabled = true;
-            this.TypeListConsolePanel.Location = new System.Drawing.Point(20, 70);
-            this.TypeListConsolePanel.Name = "TypeListConsolePanel";
-            this.TypeListConsolePanel.Size = new System.Drawing.Size(415, 36);
-            this.TypeListConsolePanel.TabIndex = 6;
-            this.TypeListConsolePanel.SelectedIndexChanged += new System.EventHandler(this.TypeListConsolePanel_SelectedIndexChanged);
+            this.TypeListAppPanel.Font = new System.Drawing.Font("Consolas", 12F);
+            this.TypeListAppPanel.FormattingEnabled = true;
+            this.TypeListAppPanel.Location = new System.Drawing.Point(20, 70);
+            this.TypeListAppPanel.Name = "TypeListAppPanel";
+            this.TypeListAppPanel.Size = new System.Drawing.Size(415, 36);
+            this.TypeListAppPanel.TabIndex = 6;
+            this.TypeListAppPanel.SelectedIndexChanged += new System.EventHandler(this.TypeListConsolePanel_SelectedIndexChanged);
             // 
-            // autoScrollConsolePanel
+            // AutoUpdateAppPanel
             // 
-            this.autoScrollConsolePanel.AutoSize = true;
-            this.autoScrollConsolePanel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.autoScrollConsolePanel.Location = new System.Drawing.Point(20, 240);
-            this.autoScrollConsolePanel.Name = "autoScrollConsolePanel";
-            this.autoScrollConsolePanel.Size = new System.Drawing.Size(155, 33);
-            this.autoScrollConsolePanel.TabIndex = 16;
-            this.autoScrollConsolePanel.Text = "Auto Scroll";
-            this.autoScrollConsolePanel.UseVisualStyleBackColor = true;
-            this.autoScrollConsolePanel.CheckedChanged += new System.EventHandler(this.autoScrollConsolePanel_CheckedChanged);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Consolas", 12F);
-            this.label1.Location = new System.Drawing.Point(20, 200);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(103, 28);
-            this.label1.TabIndex = 17;
-            this.label1.Text = "Console";
+            this.AutoUpdateAppPanel.AutoSize = true;
+            this.AutoUpdateAppPanel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.AutoUpdateAppPanel.Location = new System.Drawing.Point(20, 120);
+            this.AutoUpdateAppPanel.Name = "AutoUpdateAppPanel";
+            this.AutoUpdateAppPanel.Size = new System.Drawing.Size(171, 33);
+            this.AutoUpdateAppPanel.TabIndex = 17;
+            this.AutoUpdateAppPanel.Text = "Auto Update";
+            this.AutoUpdateAppPanel.UseVisualStyleBackColor = true;
+            this.AutoUpdateAppPanel.CheckedChanged += new System.EventHandler(this.AutoUpdateAppPanel_CheckedChanged);
             // 
             // settings
             // 
@@ -367,9 +381,10 @@
         private System.Windows.Forms.TabPage App;
         private System.Windows.Forms.Panel VersionPanel;
         private System.Windows.Forms.Label Version;
-        private System.Windows.Forms.Label TypeApplicationPanel;
-        private System.Windows.Forms.ComboBox TypeListConsolePanel;
+        private System.Windows.Forms.Label TypeVersionPanel;
+        private System.Windows.Forms.ComboBox TypeListAppPanel;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.CheckBox autoScrollConsolePanel;
+        private System.Windows.Forms.CheckBox AutoUpdateAppPanel;
     }
 }

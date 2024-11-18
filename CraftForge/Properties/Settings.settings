@@ -11,13 +11,16 @@
     <Setting Name="terminal_autoStart" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="terminal_autoScroll" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
     <Setting Name="Theme" Type="System.String" Scope="User">
       <Value Profile="(Default)">default</Value>
     </Setting>
     <Setting Name="Style" Type="System.String" Scope="User">
       <Value Profile="(Default)">Classic</Value>
     </Setting>
-    <Setting Name="terminal_autoScroll" Type="System.Boolean" Scope="User">
+    <Setting Name="autoUpdate" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
   </Settings>

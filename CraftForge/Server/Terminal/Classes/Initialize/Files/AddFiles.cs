@@ -190,6 +190,8 @@ namespace CraftForge.Server.Classes.Console.Initialize.Files
         private static ContextMenu CreateContextMenu(FlowLayoutPanel panel, string directory, string serverName)
         {
             ContextMenu contextMenu = new ContextMenu();
+            MenuItem refreshFolder = new MenuItem("Refresh Folder");
+            MenuItem refreshSpace = new MenuItem("-");
             MenuItem uploadFiles = new MenuItem("Upload File");
             MenuItem uploadFolder = new MenuItem("Upload Folder");
             MenuItem space = new MenuItem("-");
@@ -197,11 +199,14 @@ namespace CraftForge.Server.Classes.Console.Initialize.Files
             contextMenu.MenuItems.Add(uploadFiles);
             contextMenu.MenuItems.Add(uploadFolder);
             contextMenu.MenuItems.Add(space);
+            contextMenu.MenuItems.Add(refreshFolder);
+            contextMenu.MenuItems.Add(refreshSpace);
             contextMenu.MenuItems.Add(openLocation);
 
             //Open file dialog to upload files
             try
             {
+                refreshFolder.Click += (sender, e) => initializeFiles(panel, directory, serverName);
                 uploadFiles.Click += (sender, e) => UploadFile.UploadFiles(panel, directory, serverName);
                 uploadFolder.Click += (sender, e) => UploadFolder.UploadFolders(panel, directory, serverName);
                 openLocation.Click += (sender, e) => Process.Start(directory);
