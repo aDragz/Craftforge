@@ -1244,22 +1244,22 @@ namespace CraftForge.Server.GUI.Console
                 if (int.TryParse(consoleIDString, out int consoleID))
                 {
                     // Grab serverProcess
-                    Process serverProcess = serverProcesses[consoleID];
+                    if (serverProcesses.TryGetValue(consoleID, out Process serverProcess))
+                    {
+                        // Run command
+                        enterCommand.runCommand(secondaryTerminalInput.Text, serverProcess, this.serverTabs, consoleID, this);
 
-                    // Run command
-                    enterCommand.runCommand(secondaryTerminalInput.Text, serverProcess, this.serverTabs, consoleID, this);
-
-                    // Clear text
-                    secondaryTerminalInput.Clear();
+                        // Clear text
+                        secondaryTerminalInput.Text = string.Empty;
+                        return;
+                    }
                 }
-                else
-                {
-                    // Clear Text
-                    secondaryTerminalInput.Clear();
 
-                    //Display console is not running in main console
-                    secondaryTerminal.AppendText("Server is not running!\n");
-                }
+                // Clear Text
+                secondaryTerminalInput.Text = string.Empty;
+
+                //Display console is not running in main console
+                secondaryTerminal.AppendText("Server is not running!\n");
             }
         }
 
@@ -1426,6 +1426,32 @@ namespace CraftForge.Server.GUI.Console
             string fileLocation = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\CraftForge\\Servers\\" + this.Name.Split(':')[0] + "\\server.properties");
 
             Process.Start("notepad.exe", fileLocation);
+        }
+
+        private void secondaryTerminalInput_Enter(object sender, EventArgs e)
+        {
+            if (secondaryTerminalInput.Text == "Enter Command")
+            {
+                secondaryTerminalInput.Text = string.Empty;
+                secondaryTerminalInput.ForeColor = System.Drawing.Color.Black;
+            }
+        }
+
+        private void secondaryTerminalInput_Leave(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(secondaryTerminalInput.Text))
+            {
+                secondaryTerminalInput.ForeColor = System.Drawing.Color.DimGray;
+                secondaryTerminalInput.Text = "Enter Command";
+            }
+        }
+
+        private void openThemesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //Open themes
+            string location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CraftForge\\Themes";
+
+            Process.Start("explorer.exe", location);
         }
     }
 }

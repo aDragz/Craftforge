@@ -109,6 +109,8 @@
             this.openLogsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.themesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openThemesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.serverTabsPanel = new System.Windows.Forms.Panel();
             this.cpuRamUsage = new System.Windows.Forms.Timer(this.components);
             this.serverTabs.SuspendLayout();
@@ -295,13 +297,17 @@
             // 
             this.secondaryTerminalInput.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.secondaryTerminalInput.BackColor = System.Drawing.Color.White;
+            this.secondaryTerminalInput.ForeColor = System.Drawing.Color.DimGray;
             this.secondaryTerminalInput.Location = new System.Drawing.Point(3, 799);
             this.secondaryTerminalInput.Multiline = false;
             this.secondaryTerminalInput.Name = "secondaryTerminalInput";
             this.secondaryTerminalInput.Size = new System.Drawing.Size(1290, 36);
             this.secondaryTerminalInput.TabIndex = 36;
-            this.secondaryTerminalInput.Text = "";
+            this.secondaryTerminalInput.Text = "Enter Command";
+            this.secondaryTerminalInput.Enter += new System.EventHandler(this.secondaryTerminalInput_Enter);
             this.secondaryTerminalInput.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.secondaryTerminalInput_KeyPress);
+            this.secondaryTerminalInput.Leave += new System.EventHandler(this.secondaryTerminalInput_Leave);
             // 
             // serverJarPanel
             // 
@@ -798,6 +804,7 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.viewToolStripMenuItem,
+            this.themesToolStripMenuItem,
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
@@ -821,38 +828,38 @@
             // startupToolStripMenuItem
             // 
             this.startupToolStripMenuItem.Name = "startupToolStripMenuItem";
-            this.startupToolStripMenuItem.Size = new System.Drawing.Size(222, 34);
+            this.startupToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
             this.startupToolStripMenuItem.Text = "Startup";
             this.startupToolStripMenuItem.Click += new System.EventHandler(this.startupToolStripMenuItem_Click);
             // 
             // dToolStripMenuItem
             // 
             this.dToolStripMenuItem.Name = "dToolStripMenuItem";
-            this.dToolStripMenuItem.Size = new System.Drawing.Size(222, 34);
+            this.dToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
             this.dToolStripMenuItem.Text = "Hide Window";
             this.dToolStripMenuItem.Click += new System.EventHandler(this.dToolStripMenuItem_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(219, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(267, 6);
             // 
             // settingsToolStripMenuItem1
             // 
             this.settingsToolStripMenuItem1.Name = "settingsToolStripMenuItem1";
-            this.settingsToolStripMenuItem1.Size = new System.Drawing.Size(222, 34);
+            this.settingsToolStripMenuItem1.Size = new System.Drawing.Size(270, 34);
             this.settingsToolStripMenuItem1.Text = "Settings";
             this.settingsToolStripMenuItem1.Click += new System.EventHandler(this.settingsToolStripMenuItem1_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(219, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(267, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(222, 34);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -893,6 +900,21 @@
             this.aboutToolStripMenuItem.Size = new System.Drawing.Size(164, 34);
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+            // 
+            // themesToolStripMenuItem
+            // 
+            this.themesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openThemesToolStripMenuItem});
+            this.themesToolStripMenuItem.Name = "themesToolStripMenuItem";
+            this.themesToolStripMenuItem.Size = new System.Drawing.Size(81, 29);
+            this.themesToolStripMenuItem.Text = "Theme";
+            // 
+            // openThemesToolStripMenuItem
+            // 
+            this.openThemesToolStripMenuItem.Name = "openThemesToolStripMenuItem";
+            this.openThemesToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.openThemesToolStripMenuItem.Text = "Open Themes";
+            this.openThemesToolStripMenuItem.Click += new System.EventHandler(this.openThemesToolStripMenuItem_Click);
             // 
             // serverTabsPanel
             // 
@@ -1023,6 +1045,8 @@
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.ComboBox settingsGamemodeComboBox;
         private System.Windows.Forms.Label openServerPropertiesLabel;
+        private System.Windows.Forms.ToolStripMenuItem themesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openThemesToolStripMenuItem;
     }
 }
 
