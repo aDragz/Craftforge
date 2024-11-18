@@ -16,6 +16,15 @@ namespace CraftForge.Server.GUI.Console.Components
             else
             {
                 serverTabsPanel.Controls.Clear();
+                //Add a label at the top of the bar
+                Label label = new Label();
+                label.Text = "CraftForge";
+                label.TextAlign = ContentAlignment.MiddleCenter;
+                label.Location = new Point(0, 0);
+                label.Size = new Size(133, 50);
+                label.Font = new Font("Arial", 14);
+                serverTabsPanel.Controls.Add(label);
+
                 foreach (TabPage tabPage in serverTabs.TabPages)
                 {
                     Label tabButton = new Label();
@@ -23,10 +32,11 @@ namespace CraftForge.Server.GUI.Console.Components
                     tabButton.TextAlign = ContentAlignment.MiddleCenter; //Center the text of the button
                     tabButton.ContextMenuStrip = new ContextMenuStrip(); //Create a context menu strip for the button
 
-                    tabButton.Location = new Point(0, 50 * serverTabs.TabPages.IndexOf(tabPage)); //50 is the height of the button
-                    tabButton.Size = new Size(100, 50); //Set the size of the button
+                    tabButton.Location = new Point(0, 50 * serverTabs.TabPages.IndexOf(tabPage) + 50); //50 is the height of the button
+                    tabButton.Size = new Size(133, 50); //Set the size of the button
                     tabButton.Text = tabPage.Text; //Set the text of the button to the text of the tab
                     tabButton.Name = tabPage.Name; //Set the name of the button to the name of the tab
+                    tabButton.Font = new Font("Arial", 12); //Set the font of the button
                     tabButton.Click += (s, ev) => serverTabs.SelectTab(tabPage); //When the button is clicked, select the tab
 
                     serverTabsPanel.Controls.Add(tabButton); //Add the button to the panel

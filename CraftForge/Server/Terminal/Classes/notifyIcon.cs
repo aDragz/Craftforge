@@ -13,8 +13,6 @@ namespace CraftForge.Server.Classes
         private static NotifyIcon icon;
         private static ContextMenuStrip contextMenu;
 
-        public static Terminal closedWindows;
-
         public static void InitializeTrayIcon()
         {
             // Create context menu

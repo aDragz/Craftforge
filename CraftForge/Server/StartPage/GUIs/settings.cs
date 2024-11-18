@@ -200,11 +200,15 @@ namespace CraftForge.Server.GUI.Applications
             bool terminal_startMaximized = Properties.Settings.Default.terminal_startMaximized;
             bool terminal_autoStart = Properties.Settings.Default.terminal_autoStart;
 
+            bool terminal_autoScroll = Properties.Settings.Default.terminal_autoScroll;
+
             //Set the current theme textbox
             themeListConsolePanel.Text = currentTheme;
 
             MaximizeConsolePanel.Checked = terminal_startMaximized;
             AutoStartConsolePanel.Checked = terminal_autoStart;
+
+            autoScrollConsolePanel.Checked = terminal_autoScroll;
         }
 
         private void loadStartupSettings()
@@ -232,11 +236,11 @@ namespace CraftForge.Server.GUI.Applications
                     JArray versions = (JArray)json["types"];
                     string latestVersion = versions.Last.ToString();
 
-                    TypeListConsolePanel.Items.Clear();
+                    TypeListAppPanel.Items.Clear();
                     // Add all builds to the "build" selector
                     foreach (var version in versions)
                     {
-                        TypeListConsolePanel.Items.Add(version);
+                        TypeListAppPanel.Items.Add(version);
                     }
 
                     //Set the textBox to the current selected setting:
@@ -258,7 +262,7 @@ namespace CraftForge.Server.GUI.Applications
                             XmlNode valueNode = settingNode.SelectSingleNode("value");
                             if (valueNode != null)
                             {
-                                TypeListConsolePanel.Text = valueNode.InnerText;
+                                TypeListAppPanel.Text = valueNode.InnerText;
                             }
                         }
                     }
@@ -266,6 +270,9 @@ namespace CraftForge.Server.GUI.Applications
                 catch { }
             }
             isLoadingSettings = false;
+
+            bool autoUpdate = Properties.Settings.Default.autoUpdate;
+            AutoUpdateAppPanel.Checked = autoUpdate;
         }
 
         private void loadThemesList()
@@ -353,6 +360,16 @@ namespace CraftForge.Server.GUI.Applications
             Properties.Settings.Default.Save();
         }
 
+        private void autoScrollConsolePanel_CheckedChanged(object sender, EventArgs e)
+        {
+            //Grab the value
+            bool autoScroll = autoScrollConsolePanel.Checked;
+
+            //Save the value
+            Properties.Settings.Default.terminal_autoScroll = autoScroll;
+            Properties.Settings.Default.Save();
+        }
+
         private void TypeListConsolePanel_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (!isLoadingSettings)
@@ -361,13 +378,23 @@ namespace CraftForge.Server.GUI.Applications
                 if (!IsUserAdministrator())
                 {
                     // Restart the application with administrative privileges
-                    RestartWithAdminPrivileges();
+                    RestartWithAdminPrivileges(TypeListAppPanel.Text);
                     return;
                 }
 
-                CraftForgeUpdaterConfig("TypeSelected", TypeListConsolePanel.Text); //If stable is selected, it will be updated as stable as an example.
+                CraftForgeUpdaterConfig("TypeSelected", TypeListAppPanel.Text); //If stable is selected, it will be updated as stable as an example.
                 autoUpdate.checkForUpdates(); //Check for updates after the settings have been updated
             }
+        }
+
+        private void AutoUpdateAppPanel_CheckedChanged(object sender, EventArgs e)
+        {
+            //Grab the value
+            bool autoUpdate = AutoUpdateAppPanel.Checked;
+
+            //Save the value
+            Properties.Settings.Default.autoUpdate = autoUpdate;
+            Properties.Settings.Default.Save();
         }
 
         public static void CraftForgeUpdaterConfig(string key, string value)
@@ -412,7 +439,7 @@ namespace CraftForge.Server.GUI.Applications
             return principal.IsInRole(WindowsBuiltInRole.Administrator);
         }
 
-        private void RestartWithAdminPrivileges()
+        private void RestartWithAdminPrivileges(string releaseName)
         {
             MessageBox.Show("This operation requires administrative privileges. Please restart the application as an administrator.", "Permission Denied", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             ProcessStartInfo proc = new ProcessStartInfo
@@ -421,7 +448,7 @@ namespace CraftForge.Server.GUI.Applications
                 WorkingDirectory = Environment.CurrentDirectory,
                 FileName = Application.ExecutablePath,
                 Verb = "runas",
-                Arguments = "--admin-restart" // Add a command-line argument
+                Arguments = $"--admin-restart --settings {releaseName}" // Add a command-line argument
             };
 
             try

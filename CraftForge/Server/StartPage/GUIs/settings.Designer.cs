@@ -36,16 +36,14 @@
             treeNode2,
             treeNode3});
             System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Maximize");
-            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Node2");
-            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("Startup", new System.Windows.Forms.TreeNode[] {
-            treeNode5,
-            treeNode6});
-            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Appearance", new System.Windows.Forms.TreeNode[] {
+            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Startup", new System.Windows.Forms.TreeNode[] {
+            treeNode5});
+            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("Appearance", new System.Windows.Forms.TreeNode[] {
             treeNode4,
-            treeNode7});
-            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Release");
-            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("App", new System.Windows.Forms.TreeNode[] {
-            treeNode9});
+            treeNode6});
+            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Release");
+            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("App", new System.Windows.Forms.TreeNode[] {
+            treeNode8});
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(settings));
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
@@ -55,6 +53,8 @@
             this.MaximizeStartupPanel = new System.Windows.Forms.CheckBox();
             this.Startup = new System.Windows.Forms.Label();
             this.ConsolePanel = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.autoScrollConsolePanel = new System.Windows.Forms.CheckBox();
             this.AutoStartConsolePanel = new System.Windows.Forms.CheckBox();
             this.MaximizeConsolePanel = new System.Windows.Forms.CheckBox();
             this.Console = new System.Windows.Forms.Label();
@@ -63,8 +63,9 @@
             this.App = new System.Windows.Forms.TabPage();
             this.VersionPanel = new System.Windows.Forms.Panel();
             this.Version = new System.Windows.Forms.Label();
-            this.TypeApplicationPanel = new System.Windows.Forms.Label();
-            this.TypeListConsolePanel = new System.Windows.Forms.ComboBox();
+            this.TypeVersionPanel = new System.Windows.Forms.Label();
+            this.TypeListAppPanel = new System.Windows.Forms.ComboBox();
+            this.AutoUpdateAppPanel = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -92,19 +93,17 @@
             treeNode4.Text = "Console";
             treeNode5.Name = "Node1";
             treeNode5.Text = "Maximize";
-            treeNode6.Name = "Node2";
-            treeNode6.Text = "Node2";
-            treeNode7.Name = "StartupNode";
-            treeNode7.Text = "Startup";
-            treeNode8.Name = "Appearance";
-            treeNode8.Text = "Appearance";
-            treeNode9.Name = "Release";
-            treeNode9.Text = "Release";
-            treeNode10.Name = "App";
-            treeNode10.Text = "App";
+            treeNode6.Name = "StartupNode";
+            treeNode6.Text = "Startup";
+            treeNode7.Name = "Appearance";
+            treeNode7.Text = "Appearance";
+            treeNode8.Name = "Release";
+            treeNode8.Text = "Release";
+            treeNode9.Name = "App";
+            treeNode9.Text = "App";
             this.treeView1.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode8,
-            treeNode10});
+            treeNode7,
+            treeNode9});
             this.treeView1.Size = new System.Drawing.Size(419, 664);
             this.treeView1.TabIndex = 0;
             this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
@@ -155,7 +154,7 @@
             // 
             this.StartupPanel.Controls.Add(this.MaximizeStartupPanel);
             this.StartupPanel.Controls.Add(this.Startup);
-            this.StartupPanel.Location = new System.Drawing.Point(0, 205);
+            this.StartupPanel.Location = new System.Drawing.Point(0, 295);
             this.StartupPanel.Name = "StartupPanel";
             this.StartupPanel.Size = new System.Drawing.Size(820, 130);
             this.StartupPanel.TabIndex = 11;
@@ -184,6 +183,8 @@
             // 
             // ConsolePanel
             // 
+            this.ConsolePanel.Controls.Add(this.label1);
+            this.ConsolePanel.Controls.Add(this.autoScrollConsolePanel);
             this.ConsolePanel.Controls.Add(this.AutoStartConsolePanel);
             this.ConsolePanel.Controls.Add(this.MaximizeConsolePanel);
             this.ConsolePanel.Controls.Add(this.Console);
@@ -191,8 +192,30 @@
             this.ConsolePanel.Controls.Add(this.themeListConsolePanel);
             this.ConsolePanel.Location = new System.Drawing.Point(0, 0);
             this.ConsolePanel.Name = "ConsolePanel";
-            this.ConsolePanel.Size = new System.Drawing.Size(820, 200);
+            this.ConsolePanel.Size = new System.Drawing.Size(820, 291);
             this.ConsolePanel.TabIndex = 10;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Consolas", 12F);
+            this.label1.Location = new System.Drawing.Point(20, 200);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(103, 28);
+            this.label1.TabIndex = 17;
+            this.label1.Text = "Console";
+            // 
+            // autoScrollConsolePanel
+            // 
+            this.autoScrollConsolePanel.AutoSize = true;
+            this.autoScrollConsolePanel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.autoScrollConsolePanel.Location = new System.Drawing.Point(20, 240);
+            this.autoScrollConsolePanel.Name = "autoScrollConsolePanel";
+            this.autoScrollConsolePanel.Size = new System.Drawing.Size(155, 33);
+            this.autoScrollConsolePanel.TabIndex = 16;
+            this.autoScrollConsolePanel.Text = "Auto Scroll";
+            this.autoScrollConsolePanel.UseVisualStyleBackColor = true;
+            this.autoScrollConsolePanel.CheckedChanged += new System.EventHandler(this.autoScrollConsolePanel_CheckedChanged);
             // 
             // AutoStartConsolePanel
             // 
@@ -261,9 +284,10 @@
             // 
             // VersionPanel
             // 
+            this.VersionPanel.Controls.Add(this.AutoUpdateAppPanel);
             this.VersionPanel.Controls.Add(this.Version);
-            this.VersionPanel.Controls.Add(this.TypeApplicationPanel);
-            this.VersionPanel.Controls.Add(this.TypeListConsolePanel);
+            this.VersionPanel.Controls.Add(this.TypeVersionPanel);
+            this.VersionPanel.Controls.Add(this.TypeListAppPanel);
             this.VersionPanel.Location = new System.Drawing.Point(0, 0);
             this.VersionPanel.Name = "VersionPanel";
             this.VersionPanel.Size = new System.Drawing.Size(820, 200);
@@ -279,25 +303,37 @@
             this.Version.TabIndex = 9;
             this.Version.Text = "Version";
             // 
-            // TypeApplicationPanel
+            // TypeVersionPanel
             // 
-            this.TypeApplicationPanel.AutoSize = true;
-            this.TypeApplicationPanel.Font = new System.Drawing.Font("Consolas", 12F);
-            this.TypeApplicationPanel.Location = new System.Drawing.Point(15, 40);
-            this.TypeApplicationPanel.Name = "TypeApplicationPanel";
-            this.TypeApplicationPanel.Size = new System.Drawing.Size(103, 28);
-            this.TypeApplicationPanel.TabIndex = 1;
-            this.TypeApplicationPanel.Text = "Release";
+            this.TypeVersionPanel.AutoSize = true;
+            this.TypeVersionPanel.Font = new System.Drawing.Font("Consolas", 12F);
+            this.TypeVersionPanel.Location = new System.Drawing.Point(15, 40);
+            this.TypeVersionPanel.Name = "TypeVersionPanel";
+            this.TypeVersionPanel.Size = new System.Drawing.Size(103, 28);
+            this.TypeVersionPanel.TabIndex = 1;
+            this.TypeVersionPanel.Text = "Release";
             // 
-            // TypeListConsolePanel
+            // TypeListAppPanel
             // 
-            this.TypeListConsolePanel.Font = new System.Drawing.Font("Consolas", 12F);
-            this.TypeListConsolePanel.FormattingEnabled = true;
-            this.TypeListConsolePanel.Location = new System.Drawing.Point(20, 70);
-            this.TypeListConsolePanel.Name = "TypeListConsolePanel";
-            this.TypeListConsolePanel.Size = new System.Drawing.Size(415, 36);
-            this.TypeListConsolePanel.TabIndex = 6;
-            this.TypeListConsolePanel.SelectedIndexChanged += new System.EventHandler(this.TypeListConsolePanel_SelectedIndexChanged);
+            this.TypeListAppPanel.Font = new System.Drawing.Font("Consolas", 12F);
+            this.TypeListAppPanel.FormattingEnabled = true;
+            this.TypeListAppPanel.Location = new System.Drawing.Point(20, 70);
+            this.TypeListAppPanel.Name = "TypeListAppPanel";
+            this.TypeListAppPanel.Size = new System.Drawing.Size(415, 36);
+            this.TypeListAppPanel.TabIndex = 6;
+            this.TypeListAppPanel.SelectedIndexChanged += new System.EventHandler(this.TypeListConsolePanel_SelectedIndexChanged);
+            // 
+            // AutoUpdateAppPanel
+            // 
+            this.AutoUpdateAppPanel.AutoSize = true;
+            this.AutoUpdateAppPanel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.AutoUpdateAppPanel.Location = new System.Drawing.Point(20, 120);
+            this.AutoUpdateAppPanel.Name = "AutoUpdateAppPanel";
+            this.AutoUpdateAppPanel.Size = new System.Drawing.Size(171, 33);
+            this.AutoUpdateAppPanel.TabIndex = 17;
+            this.AutoUpdateAppPanel.Text = "Auto Update";
+            this.AutoUpdateAppPanel.UseVisualStyleBackColor = true;
+            this.AutoUpdateAppPanel.CheckedChanged += new System.EventHandler(this.AutoUpdateAppPanel_CheckedChanged);
             // 
             // settings
             // 
@@ -345,7 +381,10 @@
         private System.Windows.Forms.TabPage App;
         private System.Windows.Forms.Panel VersionPanel;
         private System.Windows.Forms.Label Version;
-        private System.Windows.Forms.Label TypeApplicationPanel;
-        private System.Windows.Forms.ComboBox TypeListConsolePanel;
+        private System.Windows.Forms.Label TypeVersionPanel;
+        private System.Windows.Forms.ComboBox TypeListAppPanel;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.CheckBox autoScrollConsolePanel;
+        private System.Windows.Forms.CheckBox AutoUpdateAppPanel;
     }
 }

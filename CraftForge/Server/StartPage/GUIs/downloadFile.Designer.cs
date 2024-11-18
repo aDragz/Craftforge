@@ -42,11 +42,7 @@
             this.Text = "downloadFile";
             this.Load += new System.EventHandler(this.downloadFile_Load);
             this.ResumeLayout(false);
-
         }
-
         #endregion
-        private System.Windows.Forms.Label downloadLabel;
-        private System.Windows.Forms.ProgressBar progressBar1;
     }
 }
