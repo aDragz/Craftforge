@@ -11,18 +11,18 @@ namespace CraftForge.Server.Classes.Console.Initialize.JarSelection
         {
             //Load jar selection text
             //Grab this.name and remove anything after :
-            String[] name = terminal.Name.Split(':');
+            string[] name = terminal.Name.Split(':');
 
-            String location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("/CraftForge/Servers/" + name[0]);
+            string location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("/CraftForge/Servers/" + name[0]);
 
             //Read start.bat file
-            String text = File.ReadAllText(location + "\\start.bat");
+            string text = File.ReadAllText(location + "\\start.bat");
 
             //Check if the server contains ".jar", and if it matches the serverJarCombo
-            String[] words = text.Split(' ');
-            String textJar = "";
+            string[] words = text.Split(' ');
+            string textJar = "";
 
-            foreach (String word in words)
+            foreach (string word in words)
             {
                 if (word.Contains(".jar"))
                 {

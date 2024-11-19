@@ -25,6 +25,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Management;
+using System.Security.Policy;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
@@ -42,6 +43,8 @@ namespace CraftForge.Server.GUI.Console
         Normal to textbox: -1px
         Between Labels/Header: 93px
         */
+        public static string applicationVersion = Application.ProductVersion.Substring(0, Application.ProductVersion.Length - 2);
+
         public static Dictionary<int, Process> serverProcesses = new Dictionary<int, Process>();
         bool isRunning = false; //If the server is running & user tries to open console, it will offer to open a new tab or replace the current one
         bool hasStarted = false; //Checks to see if the server is running & started with (! For help, type \"help")
@@ -68,7 +71,8 @@ namespace CraftForge.Server.GUI.Console
         }
 
         private void Terminal_Load(object sender, EventArgs e)
-        {
+        {            
+            this.Text = this.Name + $" | CraftForge - v{applicationVersion}";
             this.stopBtn.Name = "";
             settingsNameTextBox.Text = this.Name;
 
@@ -247,12 +251,6 @@ namespace CraftForge.Server.GUI.Console
         private void InitializeTheme()
         {
             Theme.initializeTheme(this, serverTabsPanel);
-
-            //Check if this needs to be maximized
-            if (Settings.Default.terminal_startMaximized)
-            {
-                this.WindowState = FormWindowState.Maximized;
-            }
 
             //Make CPU/Ram labels invisible
             cpuUsageLabel.Visible = false;
@@ -1024,6 +1022,8 @@ namespace CraftForge.Server.GUI.Console
 
                 //Move the directory
                 await CopyDirectoryWithProgressBar(oldDirectory, directory, SettingsStatusLabel, true, SettingsProgressBar, "move");
+                InitializeFiles();
+                InitializeBackupFiles();
                 createNewLog.sendMessage(this, "[Settings] Updated Directory");
             }
 
@@ -1174,6 +1174,7 @@ namespace CraftForge.Server.GUI.Console
 
                     if (type == "backup")
                     {
+                        copiedFiles -= couldNotCopyFiles;
                         createNewLog.sendMessage(this, $"[Backup] {copiedFiles} has been copied");
                         createNewLog.sendMessage(this, $"[Backup] {couldNotCopyFiles} could not be copied");
                     }
@@ -1185,24 +1186,139 @@ namespace CraftForge.Server.GUI.Console
                 await Task.Delay(1000); // Add a delay before deleting the directory
                 if (Directory.Exists(sourceDir))
                 {
-                    await Task.Run(() => Directory.Delete(sourceDir, true));
+                    await deleteDirectory(sourceDir);
                 }
 
+                copiedFiles -= couldNotCopyFiles;
                 createNewLog.sendMessage(this, $"[Settings] {copiedFiles} has been copied");
                 createNewLog.sendMessage(this, $"[Settings] {couldNotCopyFiles} could not be copied");
 
                 label.Text = "Server moved!";
                 this.Name = settingsNameTextBox.Text;
-                this.Text = this.Name;
+                this.Text = this.Name + $" | CraftForge - v{applicationVersion}";
 
                 updateThreads.UpdateThreads(this.Name, (int)threadCount.Value);
 
-                File.WriteAllText(destDir + "\\server.properties", "server-port=" + settingsPortTextBox.Text + "\n" + "server-ip=" + settingsIpTextBox.Text + "\n" + "level-name=world\n" + "gamemode=survival\n" + "difficulty=easy\n" + "allow-cheats=false\n" + "max-players=" + settingsPlayersTextBox.Text + "\n" + "online-mode=true\n" + "white-list=false\n" + "server-name=" + settingsNameTextBox.Text + "\n" + "motd=" + settingsMotdTextBox.Text + "\n");
-            }
+                //Check if server.properties exists
+                if (!File.Exists(destDir + "\\server.properties"))
+                {
+                    File.WriteAllText(destDir + "\\server.properties", "server-port=" + settingsPortTextBox.Text + "\n" + "server-ip=" + settingsIpTextBox.Text + "\n" + "level-name=world\n" + "gamemode=survival\n" + "difficulty=easy\n" + "allow-cheats=false\n" + "max-players=" + settingsPlayersTextBox.Text + "\n" + "online-mode=true\n" + "white-list=false\n" + "server-name=" + settingsNameTextBox.Text + "\n" + "motd=" + settingsMotdTextBox.Text + "\n");
+                }
+                else
+                {
+                    //Update server.properties
+                    string[] serverProperties = File.ReadAllLines(destDir + "\\server.properties");
+                    List<string> doesNotContain = new List<string> { "server-port=", "server-ip=" , "level-name=", "gamemode=", "max-players=", "server-name=", "motd=" };
 
+                    foreach (string str in serverProperties)
+                    {
+
+                        if (str.Contains("server-port="))
+                        {
+                            serverProperties[Array.IndexOf(serverProperties, str)] = "server-port=" + settingsPortTextBox.Text;
+                            doesNotContain.Remove("server-port=");
+                        }
+                        else if (str.Contains("server-ip="))
+                        {
+                            serverProperties[Array.IndexOf(serverProperties, str)] = "server-ip=" + settingsIpTextBox.Text;
+                            doesNotContain.Remove("server-ip=");
+                        }
+                        else if (str.Contains("level-name="))
+                        {
+                            serverProperties[Array.IndexOf(serverProperties, str)] = "level-name=" + settingsWorldTextBox.Text;
+                            doesNotContain.Remove("level-name=");
+                        }
+                        else if (str.Contains("gamemode="))
+                        {
+                            serverProperties[Array.IndexOf(serverProperties, str)] = "gamemode=" + settingsGamemodeComboBox.Text;
+                            doesNotContain.Remove("gamemode=");
+                        }
+                        else if (str.Contains("max-players="))
+                        {
+                            serverProperties[Array.IndexOf(serverProperties, str)] = "max-players=" + settingsPlayersTextBox.Text;
+                            doesNotContain.Remove("max-players=");
+                        }
+                        else if (str.Contains("server-name="))
+                        {
+                            serverProperties[Array.IndexOf(serverProperties, str)] = "server-name=" + settingsNameTextBox.Text;
+                            doesNotContain.Remove("server-name=");
+                        }
+                        else if (str.Contains("motd="))
+                        {
+                            serverProperties[Array.IndexOf(serverProperties, str)] = "motd=" + settingsMotdTextBox.Text;
+                            doesNotContain.Remove("motd=");
+                        }
+                    }
+
+                    foreach (string str in doesNotContain)
+                    {
+                        if (str.Equals("server-port="))
+                        {
+                            Array.Resize(ref serverProperties, serverProperties.Length + 1);
+                            serverProperties[serverProperties.Length - 1] = "server-port=" + settingsPortTextBox.Text;
+                            createNewLog.sendMessage(this, "[Properties] Created new Server Port");
+                        }
+                        else if (str.Equals("server-ip="))
+                        {
+                            Array.Resize(ref serverProperties, serverProperties.Length + 1);
+                            serverProperties[serverProperties.Length - 1] = "server-ip=" + settingsIpTextBox.Text;
+                            createNewLog.sendMessage(this, "[Properties] Created new IP Address");
+                        }
+                        else if (str.Equals("level-name="))
+                        {
+                            Array.Resize(ref serverProperties, serverProperties.Length + 1);
+                            serverProperties[serverProperties.Length - 1] = "level-name=" + settingsWorldTextBox.Text;
+                            createNewLog.sendMessage(this, "[Properties] Created new World Name");
+                        }
+                        else if (str.Equals("gamemode="))
+                        {
+                            Array.Resize(ref serverProperties, serverProperties.Length + 1);
+                            serverProperties[serverProperties.Length - 1] = "gamemode=" + settingsGamemodeComboBox.Text;
+                            createNewLog.sendMessage(this, "[Properties] Created new GameMode");
+                        }
+                        else if (str.Equals("max-players="))
+                        {
+                            Array.Resize(ref serverProperties, serverProperties.Length + 1);
+                            serverProperties[serverProperties.Length - 1] = "max-players=" + settingsPlayersTextBox.Text;
+                            createNewLog.sendMessage(this, "[Properties] Created new Max Players");
+                        }
+                        else if (str.Equals("server-name="))
+                        {
+                            Array.Resize(ref serverProperties, serverProperties.Length + 1);
+                            serverProperties[serverProperties.Length - 1] = "server-name=" + settingsNameTextBox.Text;
+                            createNewLog.sendMessage(this, "[Properties] Created new Server Name");
+                        }
+                        else if (str.Equals("motd="))
+                        {
+                            Array.Resize(ref serverProperties, serverProperties.Length + 1);
+                            serverProperties[serverProperties.Length - 1] = "motd=" + settingsMotdTextBox.Text;
+                            createNewLog.sendMessage(this, "[Properties] Created new MOTD");
+                        }
+                    }
+
+                    //save file
+                    File.WriteAllLines(destDir + "\\server.properties", serverProperties);
+                }
+            }
             return true;
         }
 
+        private async Task<bool> deleteDirectory(string path)
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                try
+                {
+                    Directory.Delete(path, true);
+                    return true;
+                }
+                catch (IOException)
+                {
+                    await Task.Delay(1000);
+                }
+            }
+            return false;
+        }
         private void openLogsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //Open Most recent logs

@@ -28,6 +28,18 @@ namespace CraftForge.Server.GUI.Setup
             string serverPort = portTextBox.Text;
             string serverMOTD = motdTextBox.Text;
 
+            if (serverName.Equals("") || serverIP.Equals("") || serverPort.Equals("") || serverMOTD.Equals(""))
+            {
+                MessageBox.Show("Please fill in all fields");
+                return;
+            }
+
+            if (serverName.Contains("!"))
+            {
+                MessageBox.Show("Server name cannot contain '!' character");
+                return;
+            }
+
             // Url Strings
             string type = typeSelector.SelectedItem.ToString().ToLower();
             string url = null;

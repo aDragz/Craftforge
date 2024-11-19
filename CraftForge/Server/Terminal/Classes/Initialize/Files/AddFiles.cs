@@ -47,7 +47,7 @@ namespace CraftForge.Server.Classes.Console.Initialize.Files
             return text;
         }
 
-        public static void initializeFiles(FlowLayoutPanel panel, String directory, String serverName)
+        public static void initializeFiles(FlowLayoutPanel panel, string directory, string serverName)
         {
             //Check contextMenu Items
             if (contextMenu == null)
@@ -94,7 +94,7 @@ namespace CraftForge.Server.Classes.Console.Initialize.Files
             panel.ContextMenu = CreateContextMenu(panel, directory, serverName);
 
             // Add folders
-            foreach (String folder in folders)
+            foreach (string folder in folders)
             {
                 // Create a new panel
                 Panel newPanel = new Panel();

@@ -38,18 +38,6 @@ namespace CraftForge.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool terminal_startMaximized {
-            get {
-                return ((bool)(this["terminal_startMaximized"]));
-            }
-            set {
-                this["terminal_startMaximized"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool terminal_autoStart {
             get {
                 return ((bool)(this["terminal_autoStart"]));
@@ -104,6 +92,18 @@ namespace CraftForge.Properties {
             }
             set {
                 this["autoUpdate"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool displaySystemSpecifications {
+            get {
+                return ((bool)(this["displaySystemSpecifications"]));
+            }
+            set {
+                this["displaySystemSpecifications"] = value;
             }
         }
     }

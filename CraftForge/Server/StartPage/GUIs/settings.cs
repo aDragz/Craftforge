@@ -120,6 +120,8 @@ namespace CraftForge.Server.GUI.Applications
                                 //Grab the selected tab name
                                 string selectedTabName = panel.Name;
 
+                                MessageBox.Show(label.Name.Replace(selectedTabName, ""));
+
                                 if (label.Name.Replace(selectedTabName, "") == childName)
                                 {
                                     label.Focus();
@@ -144,7 +146,7 @@ namespace CraftForge.Server.GUI.Applications
                             TextBox textBox = (TextBox)control;
 
                             //Try to get the value from the settings file
-                            string settingValue = Properties.Settings.Default[control.Name] as String; //Using as String to try to convert, and will be null if it fails
+                            string settingValue = Properties.Settings.Default[control.Name] as string; //Using as String to try to convert, and will be null if it fails
 
                             if (!string.IsNullOrEmpty(settingValue))
                             {
@@ -197,7 +199,6 @@ namespace CraftForge.Server.GUI.Applications
             //Grab current theme
             string currentTheme = Properties.Settings.Default.Theme;
 
-            bool terminal_startMaximized = Properties.Settings.Default.terminal_startMaximized;
             bool terminal_autoStart = Properties.Settings.Default.terminal_autoStart;
 
             bool terminal_autoScroll = Properties.Settings.Default.terminal_autoScroll;
@@ -205,7 +206,6 @@ namespace CraftForge.Server.GUI.Applications
             //Set the current theme textbox
             themeListConsolePanel.Text = currentTheme;
 
-            MaximizeConsolePanel.Checked = terminal_startMaximized;
             AutoStartConsolePanel.Checked = terminal_autoStart;
 
             autoScrollConsolePanel.Checked = terminal_autoScroll;
@@ -215,8 +215,10 @@ namespace CraftForge.Server.GUI.Applications
         {
             //Grab the startup settings
             bool startMenu_startMaximized = Properties.Settings.Default.startMenu_startMaximized;
+            bool displaySystemSpecifications = Properties.Settings.Default.displaySystemSpecifications;
 
             MaximizeStartupPanel.Checked = startMenu_startMaximized;
+            SpecificationsStartupPanel.Checked = displaySystemSpecifications;
         }
 
         private async void loadTypeSettings()
@@ -340,13 +342,13 @@ namespace CraftForge.Server.GUI.Applications
             Properties.Settings.Default.Save();
         }
 
-        private void MaximizeConsolePanel_CheckedChanged(object sender, EventArgs e)
+        private void SpecificationsStartupPanel_CheckedChanged(object sender, EventArgs e)
         {
             //Grab the value
-            bool startMaximized = MaximizeConsolePanel.Checked;
+            bool specifications = SpecificationsStartupPanel.Checked;
 
             //Save the value
-            Properties.Settings.Default.terminal_startMaximized = startMaximized;
+            Properties.Settings.Default.displaySystemSpecifications = specifications;
             Properties.Settings.Default.Save();
         }
 
