@@ -54,7 +54,7 @@
             this.welcomeLbl.Font = new System.Drawing.Font("Consolas", 24F);
             this.welcomeLbl.Location = new System.Drawing.Point(872, 7);
             this.welcomeLbl.Name = "welcomeLbl";
-            this.welcomeLbl.Size = new System.Drawing.Size(804, 86);
+            this.welcomeLbl.Size = new System.Drawing.Size(804, 133);
             this.welcomeLbl.TabIndex = 1;
             this.welcomeLbl.Text = "CraftForge";
             this.welcomeLbl.TextAlign = System.Drawing.ContentAlignment.TopCenter;

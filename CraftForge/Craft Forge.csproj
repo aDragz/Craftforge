@@ -124,6 +124,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Server\Terminal\Classes\Initialize\Files\ContextMenus\openInNotepad.cs" />
     <Compile Include="Server\Terminal\Classes\Logging\createNewLog.cs" />
     <Compile Include="Server\StartPage\Classes\autoUpdate.cs" />
     <Compile Include="Server\Terminal\Classes\OpenApplications\openSettings.cs" />

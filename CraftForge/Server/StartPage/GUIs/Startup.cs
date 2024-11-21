@@ -9,18 +9,50 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Management;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml;
 
 namespace CraftForge.Server.GUI.Setup
 {
     public partial class Startup : Form
     {
         public static List<string> instancesRunning = new List<string>();
+        public static string applicationVersion = Application.ProductVersion.Substring(0, Application.ProductVersion.Length - 2);
+        public static string release = "Unknown"; //Default release
 
         public Startup()
         {
             InitializeComponent();
+
+            try
+            {
+
+                //Load the configuration file
+                XmlDocument configDoc = new XmlDocument();
+                string mainLocation = Assembly.GetExecutingAssembly().Location;
+                string configLocation = mainLocation.Substring(0, mainLocation.Length - 4).Replace("Craft Forge", "") + "CraftForge Updater.exe.config";
+
+                configDoc.Load(configLocation);
+
+                //Find the userSettings section
+                XmlNode userSettingsNode = configDoc.SelectSingleNode("//userSettings/CraftForge_Updater.Properties.Settings");
+                if (userSettingsNode != null)
+                {
+                    XmlNode settingNode = userSettingsNode.SelectSingleNode($"setting[@name='TypeSelected']");
+                    if (settingNode != null)
+                    {
+                        XmlNode valueNode = settingNode.SelectSingleNode("value");
+                        if (valueNode != null)
+                        {
+                            release = valueNode.InnerText;
+                            release = char.ToUpper(release[0]) + release.Substring(1);
+                        }
+                    }
+                }
+            }
+            catch { }
         }
 
         private async void Startup_Load(object sender, EventArgs e)
@@ -41,11 +73,10 @@ namespace CraftForge.Server.GUI.Setup
             {
                 this.WindowState = FormWindowState.Maximized;
             }
-            string version = Application.ProductVersion.Substring(0, Application.ProductVersion.Length - 2);
 
             // Set the title of the form
-            this.Text = $"CraftForge - v{version}";
-            welcomeLbl.Text = $"CraftForge\nv{version}";
+            this.Text = $"StartUp | CraftForge {release} - v{applicationVersion}";
+            welcomeLbl.Text = $"CraftForge\nv{applicationVersion} | {release}";
             if (Properties.Settings.Default.displaySystemSpecifications)
             {
                 loadSystemSpecs();
@@ -231,7 +262,8 @@ namespace CraftForge.Server.GUI.Setup
                 {
                     panel.Controls.Add(fixServerLabel);
                     panel.Controls.Add(noRunButton);
-                    button.Enabled = false;
+
+                    button.Enabled = false; //Disable the button if start.bat is missing, so the user can't open the server until they fix it
                 }
                 else
                 {

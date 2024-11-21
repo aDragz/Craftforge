@@ -43,8 +43,6 @@ namespace CraftForge.Server.GUI.Console
         Normal to textbox: -1px
         Between Labels/Header: 93px
         */
-        public static string applicationVersion = Application.ProductVersion.Substring(0, Application.ProductVersion.Length - 2);
-
         public static Dictionary<int, Process> serverProcesses = new Dictionary<int, Process>();
         bool isRunning = false; //If the server is running & user tries to open console, it will offer to open a new tab or replace the current one
         bool hasStarted = false; //Checks to see if the server is running & started with (! For help, type \"help")
@@ -71,8 +69,8 @@ namespace CraftForge.Server.GUI.Console
         }
 
         private void Terminal_Load(object sender, EventArgs e)
-        {            
-            this.Text = this.Name + $" | CraftForge - v{applicationVersion}";
+        {
+            this.Text = this.Name + $" | CraftForge {Startup.release} - v{Startup.applicationVersion}"; //Remember to change settings name as well if I change this (again)
             this.stopBtn.Name = "";
             settingsNameTextBox.Text = this.Name;
 
@@ -157,43 +155,47 @@ namespace CraftForge.Server.GUI.Console
             string[] name = this.Name.Split(':');
 
             string location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\CraftForge\\Servers\\" + name[0]);
+            string[] serverProperties = null;
 
-            //Read server.properties file
-            string[] serverProperties = File.ReadAllLines(location + "\\server.properties");
+            if (File.Exists(location + "\\server.properties"))
+                serverProperties = File.ReadAllLines(location + "\\server.properties");
 
             //Set the text boxes
             //Read each line and set the text box
-            foreach (string str in serverProperties)
+            if (serverProperties != null && serverProperties.Length > 0)
             {
-                if (str.Contains("server-port="))
+                foreach (string str in serverProperties)
                 {
-                    settingsPortTextBox.Text = str.Replace("server-port=", "");
-                    mainPortLabel.Text = str.Replace("server-port=", "");
-                }
-                else if (str.Contains("server-ip="))
-                {
-                    settingsIpTextBox.Text = str.Replace("server-ip=", "");
-                    mainIpLabel.Text = str.Replace("server-ip=", "");
-                }
-                else if (str.Contains("level-name="))
-                {
-                    settingsWorldTextBox.Text = str.Replace("level-name=", "");
-                }
-                else if (str.Contains("gamemode="))
-                {
-                    settingsGamemodeComboBox.Text = str.Replace("gamemode=", "");
-                }
-                else if (str.Contains("max-players="))
-                {
-                    settingsPlayersTextBox.Text = str.Replace("max-players=", "");
-                }
-                else if (str.Contains("server-name="))
-                {
-                    settingsNameTextBox.Text = str.Replace("server-name=", "");
-                }
-                else if (str.Contains("motd="))
-                {
-                    settingsMotdTextBox.Text = str.Replace("motd=", "");
+                    if (str.Contains("server-port="))
+                    {
+                        settingsPortTextBox.Text = str.Replace("server-port=", "");
+                        mainPortLabel.Text = str.Replace("server-port=", "");
+                    }
+                    else if (str.Contains("server-ip="))
+                    {
+                        settingsIpTextBox.Text = str.Replace("server-ip=", "");
+                        mainIpLabel.Text = str.Replace("server-ip=", "");
+                    }
+                    else if (str.Contains("level-name="))
+                    {
+                        settingsWorldTextBox.Text = str.Replace("level-name=", "");
+                    }
+                    else if (str.Contains("gamemode="))
+                    {
+                        settingsGamemodeComboBox.Text = str.Replace("gamemode=", "");
+                    }
+                    else if (str.Contains("max-players="))
+                    {
+                        settingsPlayersTextBox.Text = str.Replace("max-players=", "");
+                    }
+                    else if (str.Contains("server-name="))
+                    {
+                        settingsNameTextBox.Text = str.Replace("server-name=", "");
+                    }
+                    else if (str.Contains("motd="))
+                    {
+                        settingsMotdTextBox.Text = str.Replace("motd=", "");
+                    }
                 }
             }
 
@@ -1195,7 +1197,7 @@ namespace CraftForge.Server.GUI.Console
 
                 label.Text = "Server moved!";
                 this.Name = settingsNameTextBox.Text;
-                this.Text = this.Name + $" | CraftForge - v{applicationVersion}";
+                this.Text = this.Name + $" | CraftForge {Startup.release} - v{Startup.applicationVersion}";
 
                 updateThreads.UpdateThreads(this.Name, (int)threadCount.Value);
 

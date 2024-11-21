@@ -266,7 +266,7 @@
             this.mainPortLabel.Name = "mainPortLabel";
             this.mainPortLabel.Size = new System.Drawing.Size(344, 26);
             this.mainPortLabel.TabIndex = 35;
-            this.mainPortLabel.Text = "Port:";
+            this.mainPortLabel.Text = "Unknown";
             this.mainPortLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label3
@@ -284,7 +284,7 @@
             this.mainIpLabel.Name = "mainIpLabel";
             this.mainIpLabel.Size = new System.Drawing.Size(344, 26);
             this.mainIpLabel.TabIndex = 33;
-            this.mainIpLabel.Text = "Port:";
+            this.mainIpLabel.Text = "Unknown";
             this.mainIpLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label1
@@ -370,7 +370,7 @@
             this.stopBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.stopBtn.Enabled = false;
             this.stopBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.stopBtn.Location = new System.Drawing.Point(804, 712);
+            this.stopBtn.Location = new System.Drawing.Point(804, 710);
             this.stopBtn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.stopBtn.Name = "stopBtn";
             this.stopBtn.Size = new System.Drawing.Size(170, 72);
@@ -383,7 +383,7 @@
             // 
             this.startBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.startBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.startBtn.Location = new System.Drawing.Point(980, 712);
+            this.startBtn.Location = new System.Drawing.Point(980, 710);
             this.startBtn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.startBtn.Name = "startBtn";
             this.startBtn.Size = new System.Drawing.Size(170, 72);
@@ -502,14 +502,15 @@
             this.backupProgressBar.Location = new System.Drawing.Point(44, 758);
             this.backupProgressBar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.backupProgressBar.Name = "backupProgressBar";
-            this.backupProgressBar.Size = new System.Drawing.Size(1465, 23);
+            this.backupProgressBar.Size = new System.Drawing.Size(1420, 23);
             this.backupProgressBar.TabIndex = 25;
             // 
             // createBackupBtn
             // 
             this.createBackupBtn.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.createBackupBtn.FlatAppearance.BorderSize = 0;
             this.createBackupBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.createBackupBtn.Location = new System.Drawing.Point(444, 695);
+            this.createBackupBtn.Location = new System.Drawing.Point(421, 695);
             this.createBackupBtn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.createBackupBtn.Name = "createBackupBtn";
             this.createBackupBtn.Size = new System.Drawing.Size(666, 58);
@@ -734,6 +735,7 @@
             // settingsSaveBtn
             // 
             this.settingsSaveBtn.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.settingsSaveBtn.FlatAppearance.BorderSize = 0;
             this.settingsSaveBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.settingsSaveBtn.Location = new System.Drawing.Point(421, 695);
             this.settingsSaveBtn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -980,7 +982,7 @@
             this.MinimumSize = new System.Drawing.Size(1691, 857);
             this.Name = "Terminal";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Terminal";
+            this.Text = "ServerName | CraftForge {release} - v{applicationVersion}";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Terminal_Closing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Terminal_Closed);
             this.Load += new System.EventHandler(this.Terminal_Load);
