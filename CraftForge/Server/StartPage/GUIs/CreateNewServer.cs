@@ -115,9 +115,9 @@ namespace CraftForge.Server.GUI.Setup
             }
         }
 
-        private void CreateNewServer_Load(object sender, EventArgs e)
+        private async void CreateNewServer_Load(object sender, EventArgs e)
         {
-            getPaperMcVersions();
+            await getPaperMcVersions();
         }
 
         private async Task getPaperMcVersions()

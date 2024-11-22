@@ -32,12 +32,12 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Terminal));
             this.serverStatusNetwork = new System.Windows.Forms.Timer(this.components);
             this.serverTabs = new System.Windows.Forms.TabControl();
@@ -73,24 +73,24 @@
             this.settingsPage = new System.Windows.Forms.TabPage();
             this.openServerPropertiesLabel = new System.Windows.Forms.Label();
             this.settingsGamemodeComboBox = new System.Windows.Forms.ComboBox();
-            this.label15 = new System.Windows.Forms.Label();
+            this.GamemodeLbl = new System.Windows.Forms.Label();
             this.settingsWorldTextBox = new System.Windows.Forms.TextBox();
-            this.label14 = new System.Windows.Forms.Label();
+            this.WorldLbl = new System.Windows.Forms.Label();
             this.ramSlider = new System.Windows.Forms.TrackBar();
             this.ramNumber = new System.Windows.Forms.NumericUpDown();
-            this.label13 = new System.Windows.Forms.Label();
+            this.RamLbl = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.threadCount = new System.Windows.Forms.NumericUpDown();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
+            this.ThreadsLbl = new System.Windows.Forms.Label();
+            this.PlayersLbl = new System.Windows.Forms.Label();
             this.settingsPlayersTextBox = new System.Windows.Forms.TextBox();
             this.SettingsProgressBar = new System.Windows.Forms.ProgressBar();
             this.settingsSaveBtn = new System.Windows.Forms.Button();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
+            this.MOTDLbl = new System.Windows.Forms.Label();
+            this.PortLbl = new System.Windows.Forms.Label();
+            this.IPAddressLbl = new System.Windows.Forms.Label();
+            this.serverNameLbl = new System.Windows.Forms.Label();
             this.settingsMotdTextBox = new System.Windows.Forms.TextBox();
             this.settingsIpTextBox = new System.Windows.Forms.TextBox();
             this.settingsNameTextBox = new System.Windows.Forms.TextBox();
@@ -132,6 +132,7 @@
             // 
             // serverStatusNetwork
             // 
+            this.serverStatusNetwork.Interval = 5000;
             this.serverStatusNetwork.Tick += new System.EventHandler(this.serverStatusNetwork_Tick);
             // 
             // serverTabs
@@ -184,17 +185,17 @@
             // ramUsageChart
             // 
             this.ramUsageChart.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            chartArea1.Name = "ChartArea1";
-            this.ramUsageChart.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.ramUsageChart.Legends.Add(legend1);
+            chartArea3.Name = "ChartArea1";
+            this.ramUsageChart.ChartAreas.Add(chartArea3);
+            legend3.Name = "Legend1";
+            this.ramUsageChart.Legends.Add(legend3);
             this.ramUsageChart.Location = new System.Drawing.Point(1155, 227);
             this.ramUsageChart.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ramUsageChart.Name = "ramUsageChart";
-            series1.ChartArea = "ChartArea1";
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            this.ramUsageChart.Series.Add(series1);
+            series3.ChartArea = "ChartArea1";
+            series3.Legend = "Legend1";
+            series3.Name = "Series1";
+            this.ramUsageChart.Series.Add(series3);
             this.ramUsageChart.Size = new System.Drawing.Size(349, 151);
             this.ramUsageChart.TabIndex = 41;
             this.ramUsageChart.Text = "chart2";
@@ -202,17 +203,17 @@
             // cpuUsageChart
             // 
             this.cpuUsageChart.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            chartArea2.Name = "ChartArea1";
-            this.cpuUsageChart.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.cpuUsageChart.Legends.Add(legend2);
+            chartArea4.Name = "ChartArea1";
+            this.cpuUsageChart.ChartAreas.Add(chartArea4);
+            legend4.Name = "Legend1";
+            this.cpuUsageChart.Legends.Add(legend4);
             this.cpuUsageChart.Location = new System.Drawing.Point(1155, 383);
             this.cpuUsageChart.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.cpuUsageChart.Name = "cpuUsageChart";
-            series2.ChartArea = "ChartArea1";
-            series2.Legend = "Legend1";
-            series2.Name = "Series1";
-            this.cpuUsageChart.Series.Add(series2);
+            series4.ChartArea = "ChartArea1";
+            series4.Legend = "Legend1";
+            series4.Name = "Series1";
+            this.cpuUsageChart.Series.Add(series4);
             this.cpuUsageChart.Size = new System.Drawing.Size(349, 151);
             this.cpuUsageChart.TabIndex = 40;
             this.cpuUsageChart.Text = "chart1";
@@ -523,24 +524,24 @@
             // 
             this.settingsPage.Controls.Add(this.openServerPropertiesLabel);
             this.settingsPage.Controls.Add(this.settingsGamemodeComboBox);
-            this.settingsPage.Controls.Add(this.label15);
+            this.settingsPage.Controls.Add(this.GamemodeLbl);
             this.settingsPage.Controls.Add(this.settingsWorldTextBox);
-            this.settingsPage.Controls.Add(this.label14);
+            this.settingsPage.Controls.Add(this.WorldLbl);
             this.settingsPage.Controls.Add(this.ramSlider);
             this.settingsPage.Controls.Add(this.ramNumber);
-            this.settingsPage.Controls.Add(this.label13);
+            this.settingsPage.Controls.Add(this.RamLbl);
             this.settingsPage.Controls.Add(this.label12);
             this.settingsPage.Controls.Add(this.label11);
             this.settingsPage.Controls.Add(this.threadCount);
-            this.settingsPage.Controls.Add(this.label10);
-            this.settingsPage.Controls.Add(this.label8);
+            this.settingsPage.Controls.Add(this.ThreadsLbl);
+            this.settingsPage.Controls.Add(this.PlayersLbl);
             this.settingsPage.Controls.Add(this.settingsPlayersTextBox);
             this.settingsPage.Controls.Add(this.SettingsProgressBar);
             this.settingsPage.Controls.Add(this.settingsSaveBtn);
-            this.settingsPage.Controls.Add(this.label4);
-            this.settingsPage.Controls.Add(this.label5);
-            this.settingsPage.Controls.Add(this.label6);
-            this.settingsPage.Controls.Add(this.label7);
+            this.settingsPage.Controls.Add(this.MOTDLbl);
+            this.settingsPage.Controls.Add(this.PortLbl);
+            this.settingsPage.Controls.Add(this.IPAddressLbl);
+            this.settingsPage.Controls.Add(this.serverNameLbl);
             this.settingsPage.Controls.Add(this.settingsMotdTextBox);
             this.settingsPage.Controls.Add(this.settingsIpTextBox);
             this.settingsPage.Controls.Add(this.settingsNameTextBox);
@@ -582,15 +583,15 @@
             this.settingsGamemodeComboBox.Size = new System.Drawing.Size(152, 35);
             this.settingsGamemodeComboBox.TabIndex = 7;
             // 
-            // label15
+            // GamemodeLbl
             // 
-            this.label15.AutoSize = true;
-            this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.label15.Location = new System.Drawing.Point(640, 82);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(140, 29);
-            this.label15.TabIndex = 2003;
-            this.label15.Text = "Gamemode";
+            this.GamemodeLbl.AutoSize = true;
+            this.GamemodeLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.GamemodeLbl.Location = new System.Drawing.Point(640, 82);
+            this.GamemodeLbl.Name = "GamemodeLbl";
+            this.GamemodeLbl.Size = new System.Drawing.Size(140, 29);
+            this.GamemodeLbl.TabIndex = 2003;
+            this.GamemodeLbl.Text = "Gamemode";
             // 
             // settingsWorldTextBox
             // 
@@ -601,15 +602,15 @@
             this.settingsWorldTextBox.Size = new System.Drawing.Size(457, 34);
             this.settingsWorldTextBox.TabIndex = 6;
             // 
-            // label14
+            // WorldLbl
             // 
-            this.label14.AutoSize = true;
-            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.label14.Location = new System.Drawing.Point(10, 295);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(77, 29);
-            this.label14.TabIndex = 2001;
-            this.label14.Text = "World";
+            this.WorldLbl.AutoSize = true;
+            this.WorldLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.WorldLbl.Location = new System.Drawing.Point(10, 295);
+            this.WorldLbl.Name = "WorldLbl";
+            this.WorldLbl.Size = new System.Drawing.Size(77, 29);
+            this.WorldLbl.TabIndex = 2001;
+            this.WorldLbl.Text = "World";
             // 
             // ramSlider
             // 
@@ -655,15 +656,15 @@
             0});
             this.ramNumber.ValueChanged += new System.EventHandler(this.ramNumber_ValueChanged);
             // 
-            // label13
+            // RamLbl
             // 
-            this.label13.AutoSize = true;
-            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.label13.Location = new System.Drawing.Point(10, 460);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(63, 29);
-            this.label13.TabIndex = 32;
-            this.label13.Text = "Ram";
+            this.RamLbl.AutoSize = true;
+            this.RamLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.RamLbl.Location = new System.Drawing.Point(10, 460);
+            this.RamLbl.Name = "RamLbl";
+            this.RamLbl.Size = new System.Drawing.Size(63, 29);
+            this.RamLbl.TabIndex = 32;
+            this.RamLbl.Text = "Ram";
             // 
             // label12
             // 
@@ -693,25 +694,25 @@
             this.threadCount.Size = new System.Drawing.Size(89, 35);
             this.threadCount.TabIndex = 29;
             // 
-            // label10
+            // ThreadsLbl
             // 
-            this.label10.AutoSize = true;
-            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.label10.Location = new System.Drawing.Point(10, 418);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(103, 29);
-            this.label10.TabIndex = 28;
-            this.label10.Text = "Threads";
+            this.ThreadsLbl.AutoSize = true;
+            this.ThreadsLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.ThreadsLbl.Location = new System.Drawing.Point(10, 418);
+            this.ThreadsLbl.Name = "ThreadsLbl";
+            this.ThreadsLbl.Size = new System.Drawing.Size(103, 29);
+            this.ThreadsLbl.TabIndex = 28;
+            this.ThreadsLbl.Text = "Threads";
             // 
-            // label8
+            // PlayersLbl
             // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.label8.Location = new System.Drawing.Point(10, 253);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(93, 29);
-            this.label8.TabIndex = 24;
-            this.label8.Text = "Players";
+            this.PlayersLbl.AutoSize = true;
+            this.PlayersLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.PlayersLbl.Location = new System.Drawing.Point(10, 253);
+            this.PlayersLbl.Name = "PlayersLbl";
+            this.PlayersLbl.Size = new System.Drawing.Size(93, 29);
+            this.PlayersLbl.TabIndex = 24;
+            this.PlayersLbl.Text = "Players";
             // 
             // settingsPlayersTextBox
             // 
@@ -746,45 +747,45 @@
             this.settingsSaveBtn.UseVisualStyleBackColor = true;
             this.settingsSaveBtn.Click += new System.EventHandler(this.button2_ClickAsync);
             // 
-            // label4
+            // MOTDLbl
             // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.label4.Location = new System.Drawing.Point(10, 210);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(85, 29);
-            this.label4.TabIndex = 18;
-            this.label4.Text = "MOTD";
+            this.MOTDLbl.AutoSize = true;
+            this.MOTDLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.MOTDLbl.Location = new System.Drawing.Point(10, 210);
+            this.MOTDLbl.Name = "MOTDLbl";
+            this.MOTDLbl.Size = new System.Drawing.Size(85, 29);
+            this.MOTDLbl.TabIndex = 18;
+            this.MOTDLbl.Text = "MOTD";
             // 
-            // label5
+            // PortLbl
             // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.label5.Location = new System.Drawing.Point(10, 166);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(57, 29);
-            this.label5.TabIndex = 17;
-            this.label5.Text = "Port";
+            this.PortLbl.AutoSize = true;
+            this.PortLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.PortLbl.Location = new System.Drawing.Point(10, 166);
+            this.PortLbl.Name = "PortLbl";
+            this.PortLbl.Size = new System.Drawing.Size(57, 29);
+            this.PortLbl.TabIndex = 17;
+            this.PortLbl.Text = "Port";
             // 
-            // label6
+            // IPAddressLbl
             // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.label6.Location = new System.Drawing.Point(10, 122);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(130, 29);
-            this.label6.TabIndex = 16;
-            this.label6.Text = "IP Address";
+            this.IPAddressLbl.AutoSize = true;
+            this.IPAddressLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.IPAddressLbl.Location = new System.Drawing.Point(10, 122);
+            this.IPAddressLbl.Name = "IPAddressLbl";
+            this.IPAddressLbl.Size = new System.Drawing.Size(130, 29);
+            this.IPAddressLbl.TabIndex = 16;
+            this.IPAddressLbl.Text = "IP Address";
             // 
-            // label7
+            // serverNameLbl
             // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.label7.Location = new System.Drawing.Point(10, 82);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(155, 29);
-            this.label7.TabIndex = 15;
-            this.label7.Text = "Server Name";
+            this.serverNameLbl.AutoSize = true;
+            this.serverNameLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.serverNameLbl.Location = new System.Drawing.Point(10, 82);
+            this.serverNameLbl.Name = "serverNameLbl";
+            this.serverNameLbl.Size = new System.Drawing.Size(155, 29);
+            this.serverNameLbl.TabIndex = 15;
+            this.serverNameLbl.Text = "Server Name";
             // 
             // settingsMotdTextBox
             // 
@@ -1018,10 +1019,10 @@
         private System.Windows.Forms.TabPage filesPage;
         private System.Windows.Forms.Button stopBtn;
         private System.Windows.Forms.TabPage settingsPage;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label MOTDLbl;
+        private System.Windows.Forms.Label PortLbl;
+        private System.Windows.Forms.Label IPAddressLbl;
+        private System.Windows.Forms.Label serverNameLbl;
         private System.Windows.Forms.TextBox settingsMotdTextBox;
         private System.Windows.Forms.TextBox settingsIpTextBox;
         private System.Windows.Forms.TextBox settingsNameTextBox;
@@ -1036,7 +1037,7 @@
         private System.Windows.Forms.TabPage backupPage;
         private System.Windows.Forms.Button settingsSaveBtn;
         private System.Windows.Forms.ProgressBar SettingsProgressBar;
-        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label PlayersLbl;
         private System.Windows.Forms.TextBox settingsPlayersTextBox;
         private System.Windows.Forms.ToolStripMenuItem openLogsToolStripMenuItem;
         public System.Windows.Forms.TabControl serverTabs;
@@ -1064,7 +1065,7 @@
         private System.Windows.Forms.Label backupLabel;
         private System.Windows.Forms.Label SettingsStatusLabel;
         private System.Windows.Forms.NumericUpDown threadCount;
-        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label ThreadsLbl;
         private System.Windows.Forms.Label cpuUsageLabel;
         private System.Windows.Forms.Timer cpuRamUsage;
         private System.Windows.Forms.Label ramUsageLabel;
@@ -1074,14 +1075,14 @@
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label RamLbl;
         private System.Windows.Forms.TrackBar ramSlider;
         private System.Windows.Forms.NumericUpDown ramNumber;
         private System.Windows.Forms.TabPage playersPage;
         private System.Windows.Forms.FlowLayoutPanel playerList;
         private System.Windows.Forms.TextBox settingsWorldTextBox;
-        private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label WorldLbl;
+        private System.Windows.Forms.Label GamemodeLbl;
         private System.Windows.Forms.ComboBox settingsGamemodeComboBox;
         private System.Windows.Forms.Label openServerPropertiesLabel;
         private System.Windows.Forms.ToolStripMenuItem themesToolStripMenuItem;
