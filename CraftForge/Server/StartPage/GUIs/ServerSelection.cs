@@ -1,23 +1,58 @@
-﻿using CraftForge.Server.GUI.Console;
+﻿using CraftForge.Server.Classes.Console.Applications;
+using CraftForge.Server.GUI.Console;
 using CraftForge.Server.StartPage.Classes;
+using Microsoft.VisualBasic.Devices;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Management;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml;
 
 namespace CraftForge.Server.GUI.Setup
 {
     public partial class Startup : Form
     {
         public static List<string> instancesRunning = new List<string>();
+        public static string applicationVersion = Application.ProductVersion.Substring(0, Application.ProductVersion.Length - 2);
+        public static string release = "Unknown"; //Default release
 
         public Startup()
         {
             InitializeComponent();
+
+            try
+            {
+
+                //Load the configuration file
+                XmlDocument configDoc = new XmlDocument();
+                string mainLocation = Assembly.GetExecutingAssembly().Location;
+                string configLocation = mainLocation.Substring(0, mainLocation.Length - 4).Replace("Craft Forge", "") + "CraftForge Updater.exe.config";
+
+                configDoc.Load(configLocation);
+
+                //Find the userSettings section
+                XmlNode userSettingsNode = configDoc.SelectSingleNode("//userSettings/CraftForge_Updater.Properties.Settings");
+                if (userSettingsNode != null)
+                {
+                    XmlNode settingNode = userSettingsNode.SelectSingleNode($"setting[@name='TypeSelected']");
+                    if (settingNode != null)
+                    {
+                        XmlNode valueNode = settingNode.SelectSingleNode("value");
+                        if (valueNode != null)
+                        {
+                            release = valueNode.InnerText;
+                            release = char.ToUpper(release[0]) + release.Substring(1);
+                        }
+                    }
+                }
+            }
+            catch { }
         }
 
         private async void Startup_Load(object sender, EventArgs e)
@@ -29,7 +64,8 @@ namespace CraftForge.Server.GUI.Setup
             this.MinimizeBox = false;
 
             // Perform the loading operations asynchronously
-            await Task.Run(() => LoadServers());
+            // Invoke the LoadServers method on the form thread
+            await Task.Run(() => this.Invoke((MethodInvoker)delegate { LoadServers(); }));
 
             //Adding down here maxed a "cool" effect, showing it's getting maximized
             //Check to see if the form needs to be maximized
@@ -38,8 +74,45 @@ namespace CraftForge.Server.GUI.Setup
                 this.WindowState = FormWindowState.Maximized;
             }
 
+            // Set the title of the form
+            this.Text = $"Server Selection | CraftForge {release} - v{applicationVersion}";
+            welcomeLbl.Text = $"CraftForge\nv{applicationVersion} | {release}";
+            if (Properties.Settings.Default.displaySystemSpecifications)
+            {
+                loadSystemSpecs();
+            } else
+            {
+                systemSpecsLbl.Text = "System Specifications are disabled in settings";
+            }
+
             // Show the form after loading is complete
             this.Show();
+        }
+
+        private void loadSystemSpecs()
+        {
+            ComputerInfo computerInfo = new ComputerInfo();
+            ulong totalPhysicalMemory = computerInfo.TotalPhysicalMemory;
+
+            // Convert bytes to gigabytes
+            double totalMemoryInGB = totalPhysicalMemory / (1024.0 * 1024.0 * 1024.0);
+
+            // Round up to the nearest whole number
+            int roundedMemoryInGB = (int)Math.Ceiling(totalMemoryInGB);
+
+            string cpuName = string.Empty;
+            using (ManagementObjectSearcher searcher = new ManagementObjectSearcher("select Name from Win32_Processor"))
+            {
+                foreach (ManagementObject obj in searcher.Get())
+                {
+                    cpuName = obj["Name"].ToString();
+                    break; // Assuming there's only one CPU
+                }
+            }
+
+            int threadCount = Environment.ProcessorCount;
+
+            systemSpecsLbl.Text = ($"CPU: {cpuName}\nThreads: {threadCount}\nTotal RAM: {roundedMemoryInGB}GB");
         }
 
         private void Startup_Close(object sender, FormClosingEventArgs e)
@@ -50,7 +123,7 @@ namespace CraftForge.Server.GUI.Setup
         private async void LoadServers()
         {
             // Create FlowLayoutPanel where 4 items are displayed per line
-            FlowLayoutPanel flowLayoutPanel = new FlowLayoutPanel
+            /*FlowLayoutPanel flowLayoutPanel = new FlowLayoutPanel
             {
                 Dock = DockStyle.Fill,
                 FlowDirection = FlowDirection.LeftToRight,
@@ -60,7 +133,8 @@ namespace CraftForge.Server.GUI.Setup
                 AutoSize = true,
                 AutoSizeMode = AutoSizeMode.GrowAndShrink,
                 Anchor = AnchorStyles.Top | AnchorStyles.Bottom,
-            };
+            };*/
+
 
             TableLayoutPanel tableLayoutPanel = new TableLayoutPanel
             {
@@ -121,7 +195,7 @@ namespace CraftForge.Server.GUI.Setup
                 Panel panel = new Panel
                 {
                     Name = "Server " + serverName,
-                    Width = 800,
+                    Width = 600,
                     Height = 100,
                     Margin = new Padding(10),
                     BorderStyle = BorderStyle.FixedSingle,
@@ -130,12 +204,12 @@ namespace CraftForge.Server.GUI.Setup
                 //Start button
                 Button button = new Button
                 {
-                    Text = "Start",
+                    Text = "Open Server",
                     Name = "Button " + serverName,
                     Width = 125,
                     Height = 60,
                     Margin = new Padding(10),
-                    Location = new Point(650, 20),
+                    Location = new Point(450, 20),
                     Font = new Font("Consolas", 10),
                 };
 
@@ -146,7 +220,7 @@ namespace CraftForge.Server.GUI.Setup
                     Width = 125,
                     Height = 60,
                     Margin = new Padding(10),
-                    Location = new Point(500, 20),
+                    Location = new Point(300, 20),
                     Font = new Font("Consolas", 10),
                 };
 
@@ -155,20 +229,22 @@ namespace CraftForge.Server.GUI.Setup
                 {
                     Text = serverName,
                     Name = "RichTextBox " + serverName,
-                    Width = 500,
+                    Width = 300,
                     Height = 60,
                     Margin = new Padding(10),
                     Location = new Point(10, 20),
                     Font = new Font("Consolas", 10),
                     ReadOnly = true,
                     BorderStyle = BorderStyle.None,
+                    BackColor = this.BackColor,
+                    ScrollBars = RichTextBoxScrollBars.None,
                 };
 
                 Label fixServerLabel = new Label
                 {
                     Text = serverName + " - Server is missing start.bat",
                     Name = "FixServerLabel " + serverName,
-                    Width = 500,
+                    Width = 300,
                     Height = 60,
                     Margin = new Padding(10),
                     Location = new Point(0, 20),
@@ -186,7 +262,8 @@ namespace CraftForge.Server.GUI.Setup
                 {
                     panel.Controls.Add(fixServerLabel);
                     panel.Controls.Add(noRunButton);
-                    button.Enabled = false;
+
+                    button.Enabled = false; //Disable the button if start.bat is missing, so the user can't open the server until they fix it
                 }
                 else
                 {
@@ -230,7 +307,6 @@ namespace CraftForge.Server.GUI.Setup
                                 }
 
                                 serverPorts.Add(serverPort);
-
                             });
                         }
                     }
@@ -261,51 +337,6 @@ namespace CraftForge.Server.GUI.Setup
                     flowLayoutPanel.Controls.Add(panel);
                 });
             }
-
-            // Create one for "Create Server"
-            Panel createPanel = new Panel
-            {
-                Text = "Create Server",
-                Width = 800,
-                Height = 100,
-                Margin = new Padding(10),
-                BorderStyle = BorderStyle.FixedSingle,
-            };
-
-            Button createButton = new Button
-            {
-                Text = "Create Server",
-                Name = "Create Button",
-                Width = 125,
-                Height = 60,
-                Margin = new Padding(10),
-                Location = new Point(650, 20),
-                Font = new Font("Consolas", 12),
-            };
-
-            RichTextBox createLabel = new RichTextBox
-            {
-                Text = "Create Server",
-                Name = "Create Button",
-                Width = 500,
-                Height = 60,
-                Margin = new Padding(10),
-                Location = new Point(10, 20),
-                Font = new Font("Consolas", 10),
-                ReadOnly = true,
-                BorderStyle = BorderStyle.None,
-                BackColor = this.BackColor,
-            };
-
-            createButton.Click += new EventHandler(createServer_Click);
-
-            createPanel.Controls.Add(createButton);
-            createPanel.Controls.Add(createLabel);
-
-            this.Invoke((MethodInvoker)delegate
-            {
-                flowLayoutPanel.Controls.Add(createPanel);
-            });
         }
 
         private void button_Click(object sender, EventArgs e, string serverName)
@@ -323,8 +354,11 @@ namespace CraftForge.Server.GUI.Setup
 
             Terminal terminal = new Terminal
             {
-                Text = serverName,
                 Name = serverName,
+                Size = this.Size,
+                StartPosition = FormStartPosition.Manual,
+                Location = this.Location,
+                WindowState = this.WindowState,
             };
 
             try
@@ -336,14 +370,6 @@ namespace CraftForge.Server.GUI.Setup
                 this.Hide();
             }
             catch { }
-        }
-
-        private void createServer_Click(object sender, EventArgs e)
-        {
-            // Create a new instance of the CreateNewServer form
-            CreateNewServer createNewServer = new CreateNewServer();
-            createNewServer.Show();
-            this.Hide();
         }
 
         private void fixServer_Click(object sender, EventArgs e, string serverName)
@@ -358,6 +384,23 @@ namespace CraftForge.Server.GUI.Setup
             //Enable the start button
             Button startButton = (Button)this.Controls.Find("Button " + serverName, true)[0];
             startButton.Enabled = true;
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+            CreateNewServer createNewServer = new CreateNewServer();
+            createNewServer.Size = this.Size;
+            createNewServer.StartPosition = FormStartPosition.Manual;
+            createNewServer.Location = this.Location;
+            createNewServer.WindowState = this.WindowState;
+            createNewServer.Show();
+            this.Hide();
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+            //Show the settings Application
+            openSettings.runSettingsApp();
         }
     }
 }

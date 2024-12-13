@@ -1,4 +1,5 @@
-﻿using CraftForge.Server.Events;
+﻿using CraftForge.Server.Classes.Themes.Classes;
+using CraftForge.Server.Events;
 using CraftForge.Server.GUI.Console;
 using CraftForge.Server.Themes.Themes;
 using System;
@@ -30,8 +31,9 @@ namespace CraftForge.Server.GUI.Classes
 
             //Set theme to output
             var theme = defaultTheme.ReadSettings();
-            console.ForeColor = ColorTranslator.FromHtml(theme.Terminal_Terminal_Colour_Fore);
-            console.BackColor = ColorTranslator.FromHtml(theme.Terminal_Terminal_Colour_Back);
+            console.ForeColor = ColorTranslator.FromHtml(theme.Terminal_Console_ForeColour);
+            console.BackColor = ColorTranslator.FromHtml(theme.Terminal_Console_BackColour);
+            console.Font = FontReconstructor.convertFromString(theme.Terminal_Console_Font);
 
             //Create command prompt
             RichTextBox cmd = new RichTextBox();

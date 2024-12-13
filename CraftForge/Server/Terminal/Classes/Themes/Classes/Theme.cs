@@ -23,21 +23,21 @@ namespace CraftForge.Server.Themes.Classes.Applications
             //Set the theme
 
             //Grab each button inside serverTabs
-                TabControl.ApplyThemeToTabControl(terminal.serverTabs);
+            TabControl.ApplyThemeToTabControl(terminal.serverTabs);
 
-                var theme = defaultTheme.ReadSettings();
+            var theme = defaultTheme.ReadSettings();
 
-                foreach (Control control in serverTabsPanel.Controls) // Fixed: Added 'terminal.' to access serverTabsPanel
+            foreach (Control control in serverTabsPanel.Controls) // Fixed: Added 'terminal.' to access serverTabsPanel
+            {
+                if (control is Label)
                 {
-                    if (control is Label)
-                    {
-                        control.ForeColor = ColorTranslator.FromHtml(theme.Terminal_Label_Colour_Text);
-                    }
+                    control.ForeColor = ColorTranslator.FromHtml(theme.Global_Btn_TextColour);
                 }
+            }
 
-                //terminal.statusStrip.BackColor = ColorTranslator.FromHtml(theme.Terminal_StatusBar_Colour);
+            //terminal.statusStrip.BackColor = ColorTranslator.FromHtml(theme.Terminal_StatusBar_Colour);
 
-                serverTabsPanel.BackColor = ColorTranslator.FromHtml(theme.Terminal_SideBar_Colour); // Fixed: Added 'terminal.' to access serverTabsPanel
+            serverTabsPanel.BackColor = ColorTranslator.FromHtml(theme.Terminal_sideBar_BackColour); // Fixed: Added 'terminal.' to access serverTabsPanel
         }
 
         private static void createThemes()

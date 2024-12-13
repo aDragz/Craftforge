@@ -12,24 +12,31 @@ namespace CraftForge.Server.Classes.Themes.Themes.Custom
 {
     internal class blue
     {
-        public string Terminal_Button_Colour_Fore { get; set; }
-        public string Terminal_Button_Colour_Back { get; set; }
-        
-        public string Terminal_Label_Colour_Text { get; set; }
-        
-        public string Terminal_SideBar_Colour_Text { get; set; }
-        
-        public string Terminal_Terminal_Colour_Fore { get; set; }
-        public string Terminal_Terminal_Colour_Back { get; set; }
-        
-        public string Terminal_Background_Colour { get; set; }
-        public string Terminal_SideBar_Colour { get; set; }
-        
-        public string Terminal_StatusBar_Colour { get; set; }
+        public string Terminal_Window_BackColour { get; set; }
+        public string Terminal_Console_ForeColour { get; set; }
+        public string Terminal_Console_BackColour { get; set; }
+        public string Terminal_Console_Font { get; set; }
 
-        public string Terminal_Chart_Colour_Back { get; set; }
-        public string Terminal_Chart_Colour_BackSecondary { get; set; }
-        public string Terminal_Chart_Colour_BackPoints { get; set; }
+        public string Terminal_Chart_BackColour { get; set; }
+        public string Terminal_Chart_BackColourSecondary { get; set; }
+
+        public string Terminal_startBtn_TextColour { get; set; }
+        public string Terminal_startBtn_BackColour { get; set; }
+        public string Terminal_startBtn_Font { get; set; }
+
+        public string Terminal_stopBtn_TextColour { get; set; }
+        public string Terminal_stopBtn_BackColour { get; set; }
+        public string Terminal_stopBtn_Font { get; set; }
+
+        public string Terminal_sideBar_BackColour { get; set; }
+
+        //Global variables
+        public string Global_Btn_TextColour { get; set; }
+        public string Global_Btn_BackColour { get; set; }
+        public string Global_Btn_Font { get; set; }
+
+        public string Global_Lbl_TextColour { get; set; }
+        public string Global_Lbl_BackColour { get; set; }
 
         public static readonly string location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\CraftForge\\Themes");
 
@@ -49,7 +56,7 @@ namespace CraftForge.Server.Classes.Themes.Themes.Custom
         {
             blue blue = new blue
             {
-                Terminal_Button_Colour_Fore = "0, 0, 0, 0",
+                /*Terminal_Button_Colour_Fore = "0, 0, 0, 0",
                 Terminal_Button_Colour_Back = "82, 149, 250",
 
                 Terminal_Label_Colour_Text = "82, 149, 250",
@@ -66,7 +73,32 @@ namespace CraftForge.Server.Classes.Themes.Themes.Custom
 
                 Terminal_Chart_Colour_Back = "42, 42, 50",
                 Terminal_Chart_Colour_BackSecondary = "42, 42, 50",
-                Terminal_Chart_Colour_BackPoints = "42, 42, 50"
+                Terminal_Chart_Colour_BackPoints = "42, 42, 50"*/
+
+                Terminal_Window_BackColour = "42, 42, 50",
+                Terminal_Console_ForeColour = "82, 149, 250",
+                Terminal_Console_BackColour = "42, 42, 50",
+                Terminal_Console_Font = "Consolas, 10",
+
+                Terminal_Chart_BackColour = "42, 42, 50",
+                Terminal_Chart_BackColourSecondary = "42, 42, 50",
+
+                Terminal_startBtn_TextColour = "0, 0, 0, 0",
+                Terminal_startBtn_BackColour = "82, 149, 250",
+                Terminal_startBtn_Font = "Arial, 12",
+
+                Terminal_stopBtn_TextColour = "0, 0, 0, 0",
+                Terminal_stopBtn_BackColour = "82, 149, 250",
+                Terminal_stopBtn_Font = "Arial, 12",
+
+                Terminal_sideBar_BackColour = "42, 42, 55",
+
+                Global_Btn_TextColour = "0, 0, 0, 0",
+                Global_Btn_BackColour = "82, 149, 250",
+                Global_Btn_Font = "Arial, 12",
+
+                Global_Lbl_BackColour = "255, 255, 255, 255",
+                Global_Lbl_TextColour = "0, 0, 0, 0"
             };
 
             blue.writeFile();
