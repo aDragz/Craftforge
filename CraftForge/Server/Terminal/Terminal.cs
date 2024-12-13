@@ -8,6 +8,7 @@ using CraftForge.Server.Classes.Console.Yaml;
 using CraftForge.Server.Classes.Console.Yaml.UpdateSettings;
 using CraftForge.Server.Classes.Logs;
 using CraftForge.Server.Classes.Player.Classes;
+using CraftForge.Server.Classes.Themes.Applications;
 using CraftForge.Server.Classes.Themes.Applications.Charts;
 using CraftForge.Server.Events;
 using CraftForge.Server.GUI.Classes;
@@ -18,6 +19,7 @@ using CraftForge.Server.GUI.Console.Messages.WARN;
 using CraftForge.Server.GUI.Setup;
 using CraftForge.Server.Setup;
 using CraftForge.Server.StartPage.Classes;
+using CraftForge.Server.Classes.OpenApplications;
 using CraftForge.Server.Themes.Classes.Applications;
 using System;
 using System.Collections.Generic;
@@ -26,7 +28,6 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Management;
-using System.Security.Policy;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
@@ -1252,6 +1253,11 @@ namespace CraftForge.Server.GUI.Console
         private void settingsToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             openSettings.runSettingsApp();
+        }
+
+        private void customizeThemeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            openThemesEditor.runThemesEditorApp();
         }
 
         private int cpuUsageCounter = 0;

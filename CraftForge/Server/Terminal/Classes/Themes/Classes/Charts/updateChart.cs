@@ -10,7 +10,7 @@ namespace CraftForge.Server.Classes.Themes.Applications.Charts
             var cpuSeries = new Series
             {
                 Name = "CPU Usage",
-                ChartType = SeriesChartType.Line,
+                ChartType = SeriesChartType.Spline,
                 XValueType = ChartValueType.Int32
             };
 
@@ -30,7 +30,7 @@ namespace CraftForge.Server.Classes.Themes.Applications.Charts
             var ramSeries = new Series
             {
                 Name = "Ram Usage",
-                ChartType = SeriesChartType.Line,
+                ChartType = SeriesChartType.Spline,
                 XValueType = ChartValueType.Int32
             };
 

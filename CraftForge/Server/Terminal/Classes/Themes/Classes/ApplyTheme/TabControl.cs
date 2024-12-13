@@ -1,4 +1,5 @@
-﻿using CraftForge.Server.Themes.Themes;
+﻿using CraftForge.Server.Classes.Themes.Classes;
+using CraftForge.Server.Themes.Themes;
 using System;
 using System.Drawing;
 using System.Globalization;
@@ -21,7 +22,7 @@ namespace CraftForge.Server.Themes.Classes.Applications
                 CultureInfo.CurrentUICulture = new CultureInfo("en-GB");
 
                 //Set background color
-                tabPage.BackColor = ColorTranslator.FromHtml(theme.Terminal_Background_Colour);
+                tabPage.BackColor = ColorTranslator.FromHtml(theme.Terminal_Window_BackColour);
 
                 foreach (Control control in tabPage.Controls)
                 {
@@ -30,26 +31,36 @@ namespace CraftForge.Server.Themes.Classes.Applications
                         if (control is Panel)
                         {
                             //Set background colour
-                            control.BackColor = ColorTranslator.FromHtml(theme.Terminal_Background_Colour);
+                            control.BackColor = ColorTranslator.FromHtml(theme.Terminal_Window_BackColour);
                         }
                         else if (control is Button)
                         {
-
-                            control.ForeColor = ColorTranslator.FromHtml(theme.Terminal_Button_Colour_Fore);
-                            control.BackColor = ColorTranslator.FromHtml(theme.Terminal_Button_Colour_Back);
+                            if (control.Name == "stopBtn")
+                            {
+                                control.BackColor = ColorTranslator.FromHtml(theme.Terminal_stopBtn_BackColour);
+                                control.Font = FontReconstructor.convertFromString(theme.Terminal_stopBtn_Font);
+                            } else if (control.Name == "startBtn") {
+                                control.BackColor = ColorTranslator.FromHtml(theme.Terminal_startBtn_BackColour);
+                                control.Font = FontReconstructor.convertFromString(theme.Terminal_startBtn_Font);
+                            } else {
+                                control.ForeColor = ColorTranslator.FromHtml(theme.Global_Btn_TextColour);
+                                control.BackColor = ColorTranslator.FromHtml(theme.Global_Btn_BackColour);
+                            }
                         }
                         else if (control is Label)
                         {
-                            control.ForeColor = ColorTranslator.FromHtml(theme.Terminal_Label_Colour_Text);
+                            control.ForeColor = ColorTranslator.FromHtml(theme.Global_Lbl_TextColour);
                         }
                         else if (control is RichTextBox)
                         {
-                            //Check if it is the terminal
-                            if (control.Name.Contains("console") || control.Name.Equals("secondaryTerminal"))
+                            //Check if it is the terminal (main terminal is controlled in createConsole.cs)
+                            if (control.Name.Equals("secondaryTerminal"))
                             {
-                                control.ForeColor = ColorTranslator.FromHtml(theme.Terminal_Terminal_Colour_Fore);
+                                control.ForeColor = ColorTranslator.FromHtml(theme.Terminal_Console_ForeColour);
+                                //control.BackColor down below
+                                control.Font = FontReconstructor.convertFromString(theme.Terminal_Console_Font);
 
-                                var backColor = ColorTranslator.FromHtml(theme.Terminal_Terminal_Colour_Back);
+                                var backColor = ColorTranslator.FromHtml(theme.Terminal_Console_BackColour);
                                 if (backColor.A == 255) // Ensure the color is not transparent
                                 {
                                     control.BackColor = backColor;
@@ -65,14 +76,14 @@ namespace CraftForge.Server.Themes.Classes.Applications
                         {
                             Chart chart = (Chart)control;
 
-                            chart.BackColor = ColorTranslator.FromHtml(theme.Terminal_Chart_Colour_Back);
-                            chart.BackSecondaryColor = ColorTranslator.FromHtml(theme.Terminal_Chart_Colour_BackSecondary);
+                            chart.BackColor = ColorTranslator.FromHtml(theme.Terminal_Chart_BackColour);
+                            chart.BackSecondaryColor = ColorTranslator.FromHtml(theme.Terminal_Chart_BackColourSecondary);
 
                             //Set the chart area colours
                             foreach (ChartArea chartArea in chart.ChartAreas)
                             {
-                                chartArea.BackColor = ColorTranslator.FromHtml(theme.Terminal_Chart_Colour_BackPoints);
-                                chartArea.BackSecondaryColor = ColorTranslator.FromHtml(theme.Terminal_Chart_Colour_BackPoints);
+                                chartArea.BackColor = ColorTranslator.FromHtml(theme.Terminal_Chart_BackColour);
+                                chartArea.BackSecondaryColor = ColorTranslator.FromHtml(theme.Terminal_Chart_BackColour);
                             }
                         }
                     }

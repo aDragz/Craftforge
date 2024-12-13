@@ -75,7 +75,7 @@ namespace CraftForge.Server.GUI.Setup
             }
 
             // Set the title of the form
-            this.Text = $"StartUp | CraftForge {release} - v{applicationVersion}";
+            this.Text = $"Server Selection | CraftForge {release} - v{applicationVersion}";
             welcomeLbl.Text = $"CraftForge\nv{applicationVersion} | {release}";
             if (Properties.Settings.Default.displaySystemSpecifications)
             {

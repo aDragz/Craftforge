@@ -21,7 +21,7 @@ namespace CraftForge.Server.Classes
             //settings
             var settingsMenuItem = new ToolStripMenuItem("Settings", null, (sender, e) =>
             {
-                Console.Applications.openSettings.runSettingsApp();
+                openSettings.runSettingsApp();
             });
 
             //exit

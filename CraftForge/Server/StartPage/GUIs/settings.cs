@@ -120,8 +120,6 @@ namespace CraftForge.Server.GUI.Applications
                                 //Grab the selected tab name
                                 string selectedTabName = panel.Name;
 
-                                MessageBox.Show(label.Name.Replace(selectedTabName, ""));
-
                                 if (label.Name.Replace(selectedTabName, "") == childName)
                                 {
                                     label.Focus();
@@ -376,6 +374,9 @@ namespace CraftForge.Server.GUI.Applications
         {
             if (!isLoadingSettings)
             {
+                if (!restartApplicationDialog())
+                    return;
+
                 //Check if you are an admin
                 if (!IsUserAdministrator())
                 {
@@ -463,6 +464,19 @@ namespace CraftForge.Server.GUI.Applications
                 // The user refused the elevation request
                 MessageBox.Show("Cannot update the settings without administrative privileges.", "Permission Denied", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+        }
+
+        public bool restartApplicationDialog()
+        {
+            //Confirm with the user to update, as the Application will restart
+            DialogResult restartApplication = MessageBox.Show("Please close any open servers to avoid data loss. The application will restart to apply the changes.", "Restart Required", MessageBoxButtons.OKCancel);
+
+            if (restartApplication == DialogResult.Cancel)
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

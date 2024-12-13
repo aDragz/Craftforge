@@ -128,6 +128,7 @@
     <Compile Include="Server\Terminal\Classes\Logging\createNewLog.cs" />
     <Compile Include="Server\StartPage\Classes\autoUpdate.cs" />
     <Compile Include="Server\Terminal\Classes\OpenApplications\openSettings.cs" />
+    <Compile Include="Server\Terminal\Classes\OpenApplications\openThemesEditor.cs" />
     <Compile Include="Server\Terminal\Classes\Player\Classes\playerAddPanel.cs" />
     <Compile Include="Server\Terminal\Classes\Player\Classes\playerRemovePanel.cs" />
     <Compile Include="Server\Terminal\Classes\Player\playerJoin.cs" />
@@ -141,7 +142,15 @@
     <Compile Include="Server\Terminal\Classes\notifyIcon.cs" />
     <Compile Include="Server\Terminal\Classes\FileManagement\Yaml\serverSettings.cs" />
     <Compile Include="Server\Terminal\Classes\FileManagement\Yaml\UpdateSettings\updateThreads.cs" />
-    <Compile Include="Server\Terminal\Classes\Themes\Applications\Charts\updateChart.cs" />
+    <Compile Include="Server\Terminal\Classes\Themes\Applications\customizeTheme.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Server\Terminal\Classes\Themes\Applications\customizeTheme.Designer.cs">
+      <DependentUpon>customizeTheme.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Server\Terminal\Classes\Themes\Classes\customizeTheme\saveCustomTheme.cs" />
+    <Compile Include="Server\Terminal\Classes\Themes\Classes\Charts\updateChart.cs" />
+    <Compile Include="Server\Terminal\Classes\Themes\Classes\FontReconstructor.cs" />
     <Compile Include="Server\Terminal\Classes\Themes\Themes\Custom\red.cs" />
     <Compile Include="Server\Terminal\Classes\Themes\Themes\Custom\blue.cs" />
     <Compile Include="Server\StartPage\GUIs\downloadFile.cs">
@@ -160,11 +169,11 @@
     <Compile Include="Server\Terminal\Components\tabButtons.cs" />
     <Compile Include="Server\Terminal\Classes\Messages\INFO\InfoMessage.cs" />
     <Compile Include="Server\Terminal\Classes\Messages\WARN\WarnMessage.cs" />
-    <Compile Include="Server\StartPage\GUIs\Startup.cs">
+    <Compile Include="Server\StartPage\GUIs\ServerSelection.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Server\StartPage\GUIs\Startup.Designer.cs">
-      <DependentUpon>Startup.cs</DependentUpon>
+    <Compile Include="Server\StartPage\GUIs\ServerSelection.Designer.cs">
+      <DependentUpon>ServerSelection.cs</DependentUpon>
     </Compile>
     <Compile Include="Server\Terminal\Classes\Messages\ERROR\ErrorMessage.cs" />
     <Compile Include="Server\Terminal\Terminal.cs">
@@ -183,9 +192,9 @@
     </Compile>
     <Compile Include="Server\Terminal\Classes\generateNewServer.cs" />
     <Compile Include="Server\Terminal\Classes\enterCommand.cs" />
-    <Compile Include="Server\Terminal\Classes\Themes\Applications\ApplyTheme\TabControl.cs" />
-    <Compile Include="Server\Terminal\Classes\Themes\Applications\Theme.cs" />
-    <Compile Include="Server\Terminal\Classes\Themes\Themes\loadTheme.cs" />
+    <Compile Include="Server\Terminal\Classes\Themes\Classes\ApplyTheme\TabControl.cs" />
+    <Compile Include="Server\Terminal\Classes\Themes\Classes\Theme.cs" />
+    <Compile Include="Server\Terminal\Classes\Themes\Themes\default.cs" />
     <Compile Include="Settings.cs" />
     <EmbeddedResource Include="Server\StartPage\GUIs\downloadFile.resx">
       <DependentUpon>downloadFile.cs</DependentUpon>
@@ -193,11 +202,14 @@
     <EmbeddedResource Include="Server\StartPage\GUIs\settings.resx">
       <DependentUpon>settings.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Server\StartPage\GUIs\Startup.resx">
-      <DependentUpon>Startup.cs</DependentUpon>
+    <EmbeddedResource Include="Server\StartPage\GUIs\ServerSelection.resx">
+      <DependentUpon>ServerSelection.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Server\Terminal\about.resx">
       <DependentUpon>about.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Server\Terminal\Classes\Themes\Applications\customizeTheme.resx">
+      <DependentUpon>customizeTheme.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Server\Terminal\Terminal.resx">
       <DependentUpon>Terminal.cs</DependentUpon>

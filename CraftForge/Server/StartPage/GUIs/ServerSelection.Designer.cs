@@ -112,7 +112,7 @@
             this.Name = "Startup";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Startup";
+            this.Text = "Server Selection | CraftForge {release} - v{applicationVersion}";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Startup_Close);
             this.Load += new System.EventHandler(this.Startup_Load);
             this.ResumeLayout(false);

@@ -32,12 +32,12 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Terminal));
             this.serverStatusNetwork = new System.Windows.Forms.Timer(this.components);
             this.serverTabs = new System.Windows.Forms.TabControl();
@@ -108,11 +108,13 @@
             this.openFileLocationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openLogsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.themesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.customizeThemeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openThemesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.serverTabsPanel = new System.Windows.Forms.Panel();
             this.cpuRamUsage = new System.Windows.Forms.Timer(this.components);
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.serverTabs.SuspendLayout();
             this.generalPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ramUsageChart)).BeginInit();
@@ -185,17 +187,17 @@
             // ramUsageChart
             // 
             this.ramUsageChart.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            chartArea3.Name = "ChartArea1";
-            this.ramUsageChart.ChartAreas.Add(chartArea3);
-            legend3.Name = "Legend1";
-            this.ramUsageChart.Legends.Add(legend3);
+            chartArea1.Name = "ChartArea1";
+            this.ramUsageChart.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.ramUsageChart.Legends.Add(legend1);
             this.ramUsageChart.Location = new System.Drawing.Point(1155, 227);
             this.ramUsageChart.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ramUsageChart.Name = "ramUsageChart";
-            series3.ChartArea = "ChartArea1";
-            series3.Legend = "Legend1";
-            series3.Name = "Series1";
-            this.ramUsageChart.Series.Add(series3);
+            series1.ChartArea = "ChartArea1";
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.ramUsageChart.Series.Add(series1);
             this.ramUsageChart.Size = new System.Drawing.Size(349, 151);
             this.ramUsageChart.TabIndex = 41;
             this.ramUsageChart.Text = "chart2";
@@ -203,17 +205,17 @@
             // cpuUsageChart
             // 
             this.cpuUsageChart.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            chartArea4.Name = "ChartArea1";
-            this.cpuUsageChart.ChartAreas.Add(chartArea4);
-            legend4.Name = "Legend1";
-            this.cpuUsageChart.Legends.Add(legend4);
+            chartArea2.Name = "ChartArea1";
+            this.cpuUsageChart.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.cpuUsageChart.Legends.Add(legend2);
             this.cpuUsageChart.Location = new System.Drawing.Point(1155, 383);
             this.cpuUsageChart.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.cpuUsageChart.Name = "cpuUsageChart";
-            series4.ChartArea = "ChartArea1";
-            series4.Legend = "Legend1";
-            series4.Name = "Series1";
-            this.cpuUsageChart.Series.Add(series4);
+            series2.ChartArea = "ChartArea1";
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            this.cpuUsageChart.Series.Add(series2);
             this.cpuUsageChart.Size = new System.Drawing.Size(349, 151);
             this.cpuUsageChart.TabIndex = 40;
             this.cpuUsageChart.Text = "chart1";
@@ -866,38 +868,38 @@
             // startupToolStripMenuItem
             // 
             this.startupToolStripMenuItem.Name = "startupToolStripMenuItem";
-            this.startupToolStripMenuItem.Size = new System.Drawing.Size(183, 26);
+            this.startupToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.startupToolStripMenuItem.Text = "Startup";
             this.startupToolStripMenuItem.Click += new System.EventHandler(this.startupToolStripMenuItem_Click);
             // 
             // dToolStripMenuItem
             // 
             this.dToolStripMenuItem.Name = "dToolStripMenuItem";
-            this.dToolStripMenuItem.Size = new System.Drawing.Size(183, 26);
+            this.dToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.dToolStripMenuItem.Text = "Hide Window";
             this.dToolStripMenuItem.Click += new System.EventHandler(this.dToolStripMenuItem_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(180, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(221, 6);
             // 
             // settingsToolStripMenuItem1
             // 
             this.settingsToolStripMenuItem1.Name = "settingsToolStripMenuItem1";
-            this.settingsToolStripMenuItem1.Size = new System.Drawing.Size(183, 26);
+            this.settingsToolStripMenuItem1.Size = new System.Drawing.Size(224, 26);
             this.settingsToolStripMenuItem1.Text = "Settings";
             this.settingsToolStripMenuItem1.Click += new System.EventHandler(this.settingsToolStripMenuItem1_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(180, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(221, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(183, 26);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -927,15 +929,24 @@
             // themesToolStripMenuItem
             // 
             this.themesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.customizeThemeToolStripMenuItem,
+            this.toolStripSeparator2,
             this.openThemesToolStripMenuItem});
             this.themesToolStripMenuItem.Name = "themesToolStripMenuItem";
             this.themesToolStripMenuItem.Size = new System.Drawing.Size(68, 24);
             this.themesToolStripMenuItem.Text = "Theme";
             // 
+            // customizeThemeToolStripMenuItem
+            // 
+            this.customizeThemeToolStripMenuItem.Name = "customizeThemeToolStripMenuItem";
+            this.customizeThemeToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.customizeThemeToolStripMenuItem.Text = "Customize Theme";
+            this.customizeThemeToolStripMenuItem.Click += new System.EventHandler(this.customizeThemeToolStripMenuItem_Click);
+            // 
             // openThemesToolStripMenuItem
             // 
             this.openThemesToolStripMenuItem.Name = "openThemesToolStripMenuItem";
-            this.openThemesToolStripMenuItem.Size = new System.Drawing.Size(183, 26);
+            this.openThemesToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.openThemesToolStripMenuItem.Text = "Open Themes";
             this.openThemesToolStripMenuItem.Click += new System.EventHandler(this.openThemesToolStripMenuItem_Click);
             // 
@@ -950,7 +961,7 @@
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(133, 26);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -969,6 +980,11 @@
             // 
             this.cpuRamUsage.Interval = 1000;
             this.cpuRamUsage.Tick += new System.EventHandler(this.cpuUsage_Tick);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(221, 6);
             // 
             // Terminal
             // 
@@ -1087,6 +1103,8 @@
         private System.Windows.Forms.Label openServerPropertiesLabel;
         private System.Windows.Forms.ToolStripMenuItem themesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openThemesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem customizeThemeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
     }
 }
 
