@@ -78,7 +78,7 @@ namespace CraftForge.Server.GUI.Console.Components
                     {
                         if (control is Label)
                         {
-                            control.ForeColor = ColorTranslator.FromHtml(theme.Terminal_Label_Colour_Text);
+                            control.ForeColor = ColorTranslator.FromHtml(theme.Global_Btn_TextColour);
                         }
                     }
                 }

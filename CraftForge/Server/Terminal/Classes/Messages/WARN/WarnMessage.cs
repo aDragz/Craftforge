@@ -16,7 +16,7 @@ namespace CraftForge.Server.GUI.Console.Messages.WARN
             errorCount = 0;
         }
 
-        public bool grabWarnMessage(String errorMessage, RichTextBox consoleOutput, RichTextBox secondaryOutput)
+        public bool grabWarnMessage(string errorMessage, RichTextBox consoleOutput, RichTextBox secondaryOutput)
         {
             errorCount++;
 

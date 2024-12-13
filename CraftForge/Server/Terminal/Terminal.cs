@@ -8,6 +8,8 @@ using CraftForge.Server.Classes.Console.Yaml;
 using CraftForge.Server.Classes.Console.Yaml.UpdateSettings;
 using CraftForge.Server.Classes.Logs;
 using CraftForge.Server.Classes.Player.Classes;
+using CraftForge.Server.Classes.Themes.Applications;
+using CraftForge.Server.Classes.Themes.Applications.Charts;
 using CraftForge.Server.Events;
 using CraftForge.Server.GUI.Classes;
 using CraftForge.Server.GUI.Console.Components;
@@ -17,6 +19,7 @@ using CraftForge.Server.GUI.Console.Messages.WARN;
 using CraftForge.Server.GUI.Setup;
 using CraftForge.Server.Setup;
 using CraftForge.Server.StartPage.Classes;
+using CraftForge.Server.Classes.OpenApplications;
 using CraftForge.Server.Themes.Classes.Applications;
 using System;
 using System.Collections.Generic;
@@ -44,8 +47,6 @@ namespace CraftForge.Server.GUI.Console
         */
         public static Dictionary<int, Process> serverProcesses = new Dictionary<int, Process>();
         bool isRunning = false; //If the server is running & user tries to open console, it will offer to open a new tab or replace the current one
-        bool hasStarted = false; //Checks to see if the server is running & started with (! For help, type \"help")
-        bool errorOccured = false; //If an error has occured, it will make sure the current form toggles buttons
         bool jarSelectionChanged = false; //If the user has changed the jar selection
 
         bool formClosing = false; //If the form is closing, alongside the stop button
@@ -60,6 +61,7 @@ namespace CraftForge.Server.GUI.Console
 
         static Dictionary<Process, string> serverProcessesToName = new Dictionary<Process, string>();
 
+        int cmdID = 0;
         int childProcessID = 0; //Name of the child process created by the batch file (start.bat) when you start the server. Used for CPU usage
 
         public Terminal()
@@ -69,7 +71,7 @@ namespace CraftForge.Server.GUI.Console
 
         private void Terminal_Load(object sender, EventArgs e)
         {
-            this.stopBtn.Name = "";
+            this.Text = this.Name + $" | CraftForge {Startup.release} - v{Startup.applicationVersion}"; //Remember to change settings name as well if I change this (again)
             settingsNameTextBox.Text = this.Name;
 
             InitializeSettings(); //Load settings
@@ -78,7 +80,7 @@ namespace CraftForge.Server.GUI.Console
             InitializeFiles(); //Load files
             InitializeBackupFiles(); //Load backup files
             InitializeNotifications(); //Load notifications
-            InitializeChart(); //Load chart
+            updateChart.updateCharts(ramUsageChart, cpuUsageChart); //Load chart
 
             serverTabs.ItemSize = new Size(0, 1); //Hide the tabs
 
@@ -110,11 +112,16 @@ namespace CraftForge.Server.GUI.Console
         {
             try
             {
-                if (this.stopBtn.Enabled == true && isRunning)
+                if (this.isRunning == false)
+                {
+                    Terminal_Closed(sender, e);
+                }
+
+                if (!this.formClosing && this.cmdID != 0)
                 {
                     //If the server is running, stop it (and wait for it to stop
                     e.Cancel = true;
-                    formClosing = true;
+                    this.formClosing = true;
                     stopBtn_Click(sender, e);
                 }
             }
@@ -153,43 +160,47 @@ namespace CraftForge.Server.GUI.Console
             string[] name = this.Name.Split(':');
 
             string location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\CraftForge\\Servers\\" + name[0]);
+            string[] serverProperties = null;
 
-            //Read server.properties file
-            string[] serverProperties = File.ReadAllLines(location + "\\server.properties");
+            if (File.Exists(location + "\\server.properties"))
+                serverProperties = File.ReadAllLines(location + "\\server.properties");
 
             //Set the text boxes
             //Read each line and set the text box
-            foreach (string str in serverProperties)
+            if (serverProperties != null && serverProperties.Length > 0)
             {
-                if (str.Contains("server-port="))
+                foreach (string str in serverProperties)
                 {
-                    settingsPortTextBox.Text = str.Replace("server-port=", "");
-                    mainPortLabel.Text = str.Replace("server-port=", "");
-                }
-                else if (str.Contains("server-ip="))
-                {
-                    settingsIpTextBox.Text = str.Replace("server-ip=", "");
-                    mainIpLabel.Text = str.Replace("server-ip=", "");
-                }
-                else if (str.Contains("level-name="))
-                {
-                    settingsWorldTextBox.Text = str.Replace("level-name=", "");
-                }
-                else if (str.Contains("gamemode="))
-                {
-                    settingsGamemodeComboBox.Text = str.Replace("gamemode=", "");
-                }
-                else if (str.Contains("max-players="))
-                {
-                    settingsPlayersTextBox.Text = str.Replace("max-players=", "");
-                }
-                else if (str.Contains("server-name="))
-                {
-                    settingsNameTextBox.Text = str.Replace("server-name=", "");
-                }
-                else if (str.Contains("motd="))
-                {
-                    settingsMotdTextBox.Text = str.Replace("motd=", "");
+                    if (str.Contains("server-port="))
+                    {
+                        settingsPortTextBox.Text = str.Replace("server-port=", "");
+                        mainPortLabel.Text = str.Replace("server-port=", "");
+                    }
+                    else if (str.Contains("server-ip="))
+                    {
+                        settingsIpTextBox.Text = str.Replace("server-ip=", "");
+                        mainIpLabel.Text = str.Replace("server-ip=", "");
+                    }
+                    else if (str.Contains("level-name="))
+                    {
+                        settingsWorldTextBox.Text = str.Replace("level-name=", "");
+                    }
+                    else if (str.Contains("gamemode="))
+                    {
+                        settingsGamemodeComboBox.Text = str.Replace("gamemode=", "");
+                    }
+                    else if (str.Contains("max-players="))
+                    {
+                        settingsPlayersTextBox.Text = str.Replace("max-players=", "");
+                    }
+                    else if (str.Contains("server-name="))
+                    {
+                        settingsNameTextBox.Text = str.Replace("server-name=", "");
+                    }
+                    else if (str.Contains("motd="))
+                    {
+                        settingsMotdTextBox.Text = str.Replace("motd=", "");
+                    }
                 }
             }
 
@@ -248,12 +259,6 @@ namespace CraftForge.Server.GUI.Console
         {
             Theme.initializeTheme(this, serverTabsPanel);
 
-            //Check if this needs to be maximized
-            if (Settings.Default.terminal_startMaximized)
-            {
-                this.WindowState = FormWindowState.Maximized;
-            }
-
             //Make CPU/Ram labels invisible
             cpuUsageLabel.Visible = false;
             ramUsageLabel.Visible = false;
@@ -297,158 +302,41 @@ namespace CraftForge.Server.GUI.Console
             };
         }
 
-        private void InitializeChart()
-        {
-            cpuUsageChart.Series.Clear();
-            var cpuSeries = new Series
-            {
-                Name = "CPU Usage",
-                ChartType = SeriesChartType.Line,
-                XValueType = ChartValueType.Int32
-            };
-
-            cpuUsageChart.ChartAreas[0].AxisY.Minimum = 0; //Disable negative values (Y axis)
-            cpuUsageChart.ChartAreas[0].AxisX.Minimum = 0; //Disable negative values (X axis)
-            cpuUsageChart.ChartAreas[0].AxisX.Maximum = 6;
-
-            cpuUsageChart.Series.Add(cpuSeries);
-            cpuUsageChart.ChartAreas[0].AxisX.Title = "Time";
-            cpuUsageChart.ChartAreas[0].AxisY.Title = "CPU Usage";
-
-            cpuUsageChart.Legends[0].Enabled = false; //Hide the legend
-            cpuUsageChart.ChartAreas[0].AxisX.MajorGrid.Enabled = false; //Hide the grid
-            cpuUsageChart.ChartAreas[0].AxisX.LabelStyle.Enabled = false; //Hide the label (x)
-
-            ramUsageChart.Series.Clear();
-            var ramSeries = new Series
-            {
-                Name = "Ram Usage",
-                ChartType = SeriesChartType.Line,
-                XValueType = ChartValueType.Int32
-            };
-
-            ramUsageChart.ChartAreas[0].AxisY.Minimum = 0; //Disable negative values (Y axis)
-            ramUsageChart.ChartAreas[0].AxisX.Minimum = 0; //Disable negative values (X axis)
-            ramUsageChart.ChartAreas[0].AxisX.Maximum = 6;
-
-            ramUsageChart.Series.Add(ramSeries);
-            ramUsageChart.ChartAreas[0].AxisX.Title = "Time";
-            ramUsageChart.ChartAreas[0].AxisY.Title = "Ram Usage";
-
-            ramUsageChart.Legends[0].Enabled = false; //Hide the legend
-            ramUsageChart.ChartAreas[0].AxisX.MajorGrid.Enabled = false; //Hide the grid
-            ramUsageChart.ChartAreas[0].AxisX.LabelStyle.Enabled = false; //Hide the label (x)
-        }
-
         private void createButton_Click(object sender, EventArgs e)
         {
             generateNewServer createNewServer = new generateNewServer();
 
             //generateNewServer.create(nameTextBox.Text, IpTextBox.Text, portTextBox.Text, motdTextBox.Text, statusLabel);
         }
-        /*static bool sentStartNotification = false;
-        static bool sentStopNotification = false; - Does not work with multiple windows*/
-        private async void serverStatusNetwork_Tick(object sender, EventArgs e)
+
+        private void serverStatusNetwork_Tick(object sender, EventArgs e)
         {
-            //Grab this.name and remove anything after :
-            string[] name = this.Name.Split(':');
-
-            string location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("/CraftForge/Servers/" + name[0]);
-
-            //Assume the process has only started
-
-            // Check if the server is running
-
-            if (errorOccured)
+            //childProcessID = Java Process
+            try
             {
-                isRunning = false;
-                resetButtons();
+                //Check to see if the Process ID is running
+                Process process = Process.GetProcessById(childProcessID); //If the process is not running, it will throw an exception "ArgumentException"
 
-                /*if (!sentStopNotification)
-                {
-                    notifications.Visible = true;
-                    //Create notification
-                    string serverName = this.Name.Split(':')[0];
-
-                    notifications.BalloonTipText = $"{serverName} has been stopped!";
-                    notifications.BalloonTipTitle = "Server Stopped";
-                    notifications.BalloonTipIcon = ToolTipIcon.Info;
-                    notifications.ShowBalloonTip(3);
-
-                    sentStartNotification = false;
-                    sentStopNotification = true;
-                    notifications.Visible = false;
-                }*/
-                errorOccured = false;
-                return;
+                isRunning = true;
+            }
+            catch (ArgumentException) 
+            {
+                isRunning = false; //Process has exited
             }
 
-            if (hasStarted)
+            if (!isRunning)
             {
-                //Check if name is in serverCheckName
-                //Grab all values and display them
-                using (var client = new System.Net.Sockets.TcpClient())
+                cpuRamUsage.Enabled = false;
+            }
+            else
+            {
+                if (!cpuRamUsage.Enabled)
                 {
-                    //Wait until the output displays "! For help, type "help"
-
-                    //Grab output
-
-                    try
-                    {
-                        await client.ConnectAsync(settingsIpTextBox.Text, int.Parse(settingsPortTextBox.Text));
-
-                        //Grab current process
-                        int consoleID = Convert.ToInt32(this.stopBtn.Name);
-                        Process serverProcess = serverProcesses[consoleID];
-
-                        isRunning = true;
-                        resetButtons();
-
-                        /*if (!sentStartNotification)
-                        {
-                            notifications.Visible = true;
-                            string serverName = this.Name.Split(':')[0];
-
-                            notifications.BalloonTipText = $"{serverName} has started!";
-                            notifications.BalloonTipTitle = "Server started";
-                            notifications.BalloonTipIcon = ToolTipIcon.Info;
-                            notifications.ShowBalloonTip(3);
-
-                            sentStartNotification = true;
-                            sentStopNotification = false;
-                            notifications.Visible = false;
-                        }*/
-                    }
-                    catch (Exception exception)
-                    {
-                        if (serverStatusNetwork.Interval != 10000) //Just started process!
-                        {
-                            isRunning = false;
-                            resetButtons();
-
-                            /*if (!sentStopNotification)
-                            {
-                                notifications.Visible = true;
-                                //Create notification
-                                string serverName = this.Name.Split(':')[0];
-
-                                notifications.BalloonTipText = $"{serverName} has been stopped!";
-                                notifications.BalloonTipTitle = "Server Stopped";
-                                notifications.BalloonTipIcon = ToolTipIcon.Info;
-                                notifications.ShowBalloonTip(3);
-
-                                sentStartNotification = false;
-                                sentStopNotification = true;
-                                notifications.Visible = false;
-                            }*/
-                        }
-                    }
-                    finally
-                    {
-                        serverStatusNetwork.Interval = 1000; // 10 seconds
-                    }
+                    cpuRamUsage.Enabled = true;
                 }
             }
+
+            resetButtons();
         }
 
         private async void startBtn_Click(object sender, EventArgs e)
@@ -506,11 +394,6 @@ namespace CraftForge.Server.GUI.Console
 
             //Start the server
             createOutput(serverProcess, processLock, consoleID);
-
-            //Button logic
-            isRunning = true;
-            hasStarted = false;
-            errorOccured = false;
 
             this.startBtn.Enabled = false;
             this.stopBtn.Enabled = false;
@@ -588,8 +471,6 @@ namespace CraftForge.Server.GUI.Console
                                         {
                                             //Check if /stop command has been run
                                             case string data when data.Contains("Stopping the server"):
-                                                isRunning = false;
-                                                resetButtons();
                                                 //Grab player name
                                                 string[] words = e.Data.Split(' ');
                                                 //grab the first word
@@ -650,14 +531,6 @@ namespace CraftForge.Server.GUI.Console
                                         ErrorMessage errorMessage = new ErrorMessage();
                                         if (errorMessage.grabErrorMessage(e.Data, console, secondaryTerminal))
                                         {
-                                            //Kill process
-
-                                            isRunning = false;
-                                            errorOccured = true;
-
-                                            //Toggle buttons
-                                            resetButtons();
-
                                             // Stop process, to optimize performance because there is no point keeping it running
                                             if (serverProcesses.TryGetValue(consoleID, out Process process))
                                             {
@@ -679,28 +552,19 @@ namespace CraftForge.Server.GUI.Console
                     // Get the child process named java.exe started by the batch file
 
                     Process javaProcess = null;
-                    int attempts = 0;
 
                     Task.Delay(1000).Wait(); // Wait for 1 second before I start due to slower computers not opening instantly
 
-                    while (javaProcess == null && attempts < 5) {
+                    while (javaProcess == null) {
                         javaProcess = GetChildProcesses(serverProcess.Id).FirstOrDefault(p => string.Equals(p.ProcessName, "java", StringComparison.OrdinalIgnoreCase));
                         if (javaProcess == null)
                         {
                             Task.Delay(1000).Wait(); // Wait for 1 second before the next attempt
-                            attempts++;
                         }
                     }
 
-                    if (javaProcess != null)
-                    {
-                        int javaProcessId = javaProcess.Id;
-                        childProcessID = javaProcess.Id;
-                    }
-                    else
-                    {
-                        MessageBox.Show("No java.exe process found.");
-                    }
+                    int javaProcessId = javaProcess.Id;
+                    childProcessID = javaProcess.Id;
 
                     serverProcess.BeginErrorReadLine(); //Start reading the errors
                     serverProcess.BeginOutputReadLine(); //Start reading the output
@@ -722,8 +586,8 @@ namespace CraftForge.Server.GUI.Console
                     consoleID = serverProcess.Id; //Get the console ID, so we can close it later
 
                     //Set stop button name as the console ID
-                    this.stopBtn.Name = consoleID.ToString();
-                    serverProcesses.Add(consoleID, serverProcess); //Add the process to the dictionary
+                    this.cmdID = consoleID;
+                    serverProcesses.Add(this.cmdID, serverProcess); //Add the process to the dictionary
                     serverProcessesToName.Add(serverProcess, this.Name); //Add the process name to the dictionary
 
                     //Add to tab
@@ -775,9 +639,6 @@ namespace CraftForge.Server.GUI.Console
                     secondaryOutput.AppendText("\n");
                     secondaryOutput.AppendText("[CraftForge INFO] Server has started!\n");
                 });
-                terminal.isRunning = true;
-                terminal.hasStarted = true;
-
                 return;
             }
             if (!isSecondary)
@@ -789,11 +650,6 @@ namespace CraftForge.Server.GUI.Console
                     ErrorMessage errorMessage = new ErrorMessage();
                     if (errorMessage.grabErrorMessage(text, consoleOutput, secondaryOutput))
                     {
-                        //Kill process
-
-                        terminal.isRunning = false;
-                        terminal.errorOccured = true;
-
                         // Stop process, to optimize performance because there is no point keeping it running
                         int consoleID = Convert.ToInt32(consoleOutput.Name.Replace("console ", ""));
                         if (serverProcesses.TryGetValue(consoleID, out Process serverProcess))
@@ -823,11 +679,6 @@ namespace CraftForge.Server.GUI.Console
 
                     if (infoMessage.grabInfoMessage(text, consoleOutput, secondaryOutput, location))
                     {
-                        //Kill process
-
-                        terminal.isRunning = false;
-                        terminal.errorOccured = true;
-
                         // Stop process, to optimize performance because there is no point keeping it running
 
                         if (serverProcesses.TryGetValue(consoleID, out Process serverProcess))
@@ -844,11 +695,6 @@ namespace CraftForge.Server.GUI.Console
                     WarnMessage warnMessage = new WarnMessage();
                     if (warnMessage.grabWarnMessage(text, consoleOutput, secondaryOutput))
                     {
-                        //Kill process
-
-                        terminal.isRunning = false;
-                        terminal.errorOccured = true;
-
                         // Stop process, to optimize performance because there is no point keeping it running
                         int consoleID = Convert.ToInt32(consoleOutput.Name.Replace("console ", ""));
                         if (serverProcesses.TryGetValue(consoleID, out Process serverProcess))
@@ -906,7 +752,7 @@ namespace CraftForge.Server.GUI.Console
             try
             {
                 //Grab name of button
-                int consoleID = Convert.ToInt32(this.stopBtn.Name); //Name is process ID
+                int consoleID = Convert.ToInt32(this.cmdID); //Name is process ID
                 Process serverProcess = serverProcesses[consoleID];
 
                 //Run /stop command
@@ -914,13 +760,11 @@ namespace CraftForge.Server.GUI.Console
                 enterCommand.runCommand("/stop", serverProcess, this.serverTabs, consoleID, this);
                 enterCommand.runCommand("stop", serverProcess, this.serverTabs, consoleID, this);
 
-                this.stopBtn.Name = "";
-
                 createNewLog.sendMessage(this, "[Server] Server is stopping");
                 //Wait for the server to stop
-                while (!serverProcess.HasExited)
+                while (this.isRunning)
                 {
-                    // Wait 1 second
+                    // Wait 0.5 second
                     await Task.Run(async () => await Task.Delay(500));
                 }
 
@@ -928,23 +772,12 @@ namespace CraftForge.Server.GUI.Console
                 secondaryTerminal.AppendText("\n[CraftForge INFO] Server has stopped\n");
                 createNewLog.sendMessage(this, "[Server] Server has stopped");
 
-                isRunning = false;
-                resetButtons();
-                serverProcess.Close();
-                serverProcesses.Remove(consoleID);
-
-                cpuRamUsage.Stop();
-                cpuRamUsage.Dispose();
-
-                if (formClosing)
+                if (this.formClosing)
                     this.Close();
             }
             catch (Exception ex)
             {
                 createNewLog.sendMessage(this, $"[Server] An error has occurred: {ex}");
-                this.stopBtn.Name = "";
-                isRunning = false;
-                resetButtons();
             }
         }
 
@@ -993,7 +826,7 @@ namespace CraftForge.Server.GUI.Console
                     //Check if server is open
                     try
                     {
-                        if (serverProcesses.ContainsKey(Convert.ToInt32(this.stopBtn.Name)))
+                        if (serverProcesses.ContainsKey(this.cmdID))
                         {
 
                             SettingsStatusLabel.Text = "Error moving server! Server is open!";
@@ -1024,6 +857,8 @@ namespace CraftForge.Server.GUI.Console
 
                 //Move the directory
                 await CopyDirectoryWithProgressBar(oldDirectory, directory, SettingsStatusLabel, true, SettingsProgressBar, "move");
+                InitializeFiles();
+                InitializeBackupFiles();
                 createNewLog.sendMessage(this, "[Settings] Updated Directory");
             }
 
@@ -1174,6 +1009,7 @@ namespace CraftForge.Server.GUI.Console
 
                     if (type == "backup")
                     {
+                        copiedFiles -= couldNotCopyFiles;
                         createNewLog.sendMessage(this, $"[Backup] {copiedFiles} has been copied");
                         createNewLog.sendMessage(this, $"[Backup] {couldNotCopyFiles} could not be copied");
                     }
@@ -1185,24 +1021,139 @@ namespace CraftForge.Server.GUI.Console
                 await Task.Delay(1000); // Add a delay before deleting the directory
                 if (Directory.Exists(sourceDir))
                 {
-                    await Task.Run(() => Directory.Delete(sourceDir, true));
+                    await deleteDirectory(sourceDir);
                 }
 
+                copiedFiles -= couldNotCopyFiles;
                 createNewLog.sendMessage(this, $"[Settings] {copiedFiles} has been copied");
                 createNewLog.sendMessage(this, $"[Settings] {couldNotCopyFiles} could not be copied");
 
                 label.Text = "Server moved!";
                 this.Name = settingsNameTextBox.Text;
-                this.Text = this.Name;
+                this.Text = this.Name + $" | CraftForge {Startup.release} - v{Startup.applicationVersion}";
 
                 updateThreads.UpdateThreads(this.Name, (int)threadCount.Value);
 
-                File.WriteAllText(destDir + "\\server.properties", "server-port=" + settingsPortTextBox.Text + "\n" + "server-ip=" + settingsIpTextBox.Text + "\n" + "level-name=world\n" + "gamemode=survival\n" + "difficulty=easy\n" + "allow-cheats=false\n" + "max-players=" + settingsPlayersTextBox.Text + "\n" + "online-mode=true\n" + "white-list=false\n" + "server-name=" + settingsNameTextBox.Text + "\n" + "motd=" + settingsMotdTextBox.Text + "\n");
-            }
+                //Check if server.properties exists
+                if (!File.Exists(destDir + "\\server.properties"))
+                {
+                    File.WriteAllText(destDir + "\\server.properties", "server-port=" + settingsPortTextBox.Text + "\n" + "server-ip=" + settingsIpTextBox.Text + "\n" + "level-name=world\n" + "gamemode=survival\n" + "difficulty=easy\n" + "allow-cheats=false\n" + "max-players=" + settingsPlayersTextBox.Text + "\n" + "online-mode=true\n" + "white-list=false\n" + "server-name=" + settingsNameTextBox.Text + "\n" + "motd=" + settingsMotdTextBox.Text + "\n");
+                }
+                else
+                {
+                    //Update server.properties
+                    string[] serverProperties = File.ReadAllLines(destDir + "\\server.properties");
+                    List<string> doesNotContain = new List<string> { "server-port=", "server-ip=" , "level-name=", "gamemode=", "max-players=", "server-name=", "motd=" };
 
+                    foreach (string str in serverProperties)
+                    {
+
+                        if (str.Contains("server-port="))
+                        {
+                            serverProperties[Array.IndexOf(serverProperties, str)] = "server-port=" + settingsPortTextBox.Text;
+                            doesNotContain.Remove("server-port=");
+                        }
+                        else if (str.Contains("server-ip="))
+                        {
+                            serverProperties[Array.IndexOf(serverProperties, str)] = "server-ip=" + settingsIpTextBox.Text;
+                            doesNotContain.Remove("server-ip=");
+                        }
+                        else if (str.Contains("level-name="))
+                        {
+                            serverProperties[Array.IndexOf(serverProperties, str)] = "level-name=" + settingsWorldTextBox.Text;
+                            doesNotContain.Remove("level-name=");
+                        }
+                        else if (str.Contains("gamemode="))
+                        {
+                            serverProperties[Array.IndexOf(serverProperties, str)] = "gamemode=" + settingsGamemodeComboBox.Text;
+                            doesNotContain.Remove("gamemode=");
+                        }
+                        else if (str.Contains("max-players="))
+                        {
+                            serverProperties[Array.IndexOf(serverProperties, str)] = "max-players=" + settingsPlayersTextBox.Text;
+                            doesNotContain.Remove("max-players=");
+                        }
+                        else if (str.Contains("server-name="))
+                        {
+                            serverProperties[Array.IndexOf(serverProperties, str)] = "server-name=" + settingsNameTextBox.Text;
+                            doesNotContain.Remove("server-name=");
+                        }
+                        else if (str.Contains("motd="))
+                        {
+                            serverProperties[Array.IndexOf(serverProperties, str)] = "motd=" + settingsMotdTextBox.Text;
+                            doesNotContain.Remove("motd=");
+                        }
+                    }
+
+                    foreach (string str in doesNotContain)
+                    {
+                        if (str.Equals("server-port="))
+                        {
+                            Array.Resize(ref serverProperties, serverProperties.Length + 1);
+                            serverProperties[serverProperties.Length - 1] = "server-port=" + settingsPortTextBox.Text;
+                            createNewLog.sendMessage(this, "[Properties] Created new Server Port");
+                        }
+                        else if (str.Equals("server-ip="))
+                        {
+                            Array.Resize(ref serverProperties, serverProperties.Length + 1);
+                            serverProperties[serverProperties.Length - 1] = "server-ip=" + settingsIpTextBox.Text;
+                            createNewLog.sendMessage(this, "[Properties] Created new IP Address");
+                        }
+                        else if (str.Equals("level-name="))
+                        {
+                            Array.Resize(ref serverProperties, serverProperties.Length + 1);
+                            serverProperties[serverProperties.Length - 1] = "level-name=" + settingsWorldTextBox.Text;
+                            createNewLog.sendMessage(this, "[Properties] Created new World Name");
+                        }
+                        else if (str.Equals("gamemode="))
+                        {
+                            Array.Resize(ref serverProperties, serverProperties.Length + 1);
+                            serverProperties[serverProperties.Length - 1] = "gamemode=" + settingsGamemodeComboBox.Text;
+                            createNewLog.sendMessage(this, "[Properties] Created new GameMode");
+                        }
+                        else if (str.Equals("max-players="))
+                        {
+                            Array.Resize(ref serverProperties, serverProperties.Length + 1);
+                            serverProperties[serverProperties.Length - 1] = "max-players=" + settingsPlayersTextBox.Text;
+                            createNewLog.sendMessage(this, "[Properties] Created new Max Players");
+                        }
+                        else if (str.Equals("server-name="))
+                        {
+                            Array.Resize(ref serverProperties, serverProperties.Length + 1);
+                            serverProperties[serverProperties.Length - 1] = "server-name=" + settingsNameTextBox.Text;
+                            createNewLog.sendMessage(this, "[Properties] Created new Server Name");
+                        }
+                        else if (str.Equals("motd="))
+                        {
+                            Array.Resize(ref serverProperties, serverProperties.Length + 1);
+                            serverProperties[serverProperties.Length - 1] = "motd=" + settingsMotdTextBox.Text;
+                            createNewLog.sendMessage(this, "[Properties] Created new MOTD");
+                        }
+                    }
+
+                    //save file
+                    File.WriteAllLines(destDir + "\\server.properties", serverProperties);
+                }
+            }
             return true;
         }
 
+        private async Task<bool> deleteDirectory(string path)
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                try
+                {
+                    Directory.Delete(path, true);
+                    return true;
+                }
+                catch (IOException)
+                {
+                    await Task.Delay(1000);
+                }
+            }
+            return false;
+        }
         private void openLogsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //Open Most recent logs
@@ -1302,6 +1253,11 @@ namespace CraftForge.Server.GUI.Console
         private void settingsToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             openSettings.runSettingsApp();
+        }
+
+        private void customizeThemeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            openThemesEditor.runThemesEditorApp();
         }
 
         private int cpuUsageCounter = 0;
@@ -1433,7 +1389,7 @@ namespace CraftForge.Server.GUI.Console
             if (secondaryTerminalInput.Text == "Enter Command")
             {
                 secondaryTerminalInput.Text = string.Empty;
-                secondaryTerminalInput.ForeColor = System.Drawing.Color.Black;
+                secondaryTerminalInput.ForeColor = Color.Black;
             }
         }
 
@@ -1441,7 +1397,7 @@ namespace CraftForge.Server.GUI.Console
         {
             if (string.IsNullOrWhiteSpace(secondaryTerminalInput.Text))
             {
-                secondaryTerminalInput.ForeColor = System.Drawing.Color.DimGray;
+                secondaryTerminalInput.ForeColor = Color.DimGray;
                 secondaryTerminalInput.Text = "Enter Command";
             }
         }

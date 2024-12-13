@@ -47,7 +47,7 @@ namespace CraftForge.Server.Classes.Console.Initialize.Files
             return text;
         }
 
-        public static void initializeFiles(FlowLayoutPanel panel, String directory, String serverName)
+        public static void initializeFiles(FlowLayoutPanel panel, string directory, string serverName)
         {
             //Check contextMenu Items
             if (contextMenu == null)
@@ -94,7 +94,7 @@ namespace CraftForge.Server.Classes.Console.Initialize.Files
             panel.ContextMenu = CreateContextMenu(panel, directory, serverName);
 
             // Add folders
-            foreach (String folder in folders)
+            foreach (string folder in folders)
             {
                 // Create a new panel
                 Panel newPanel = new Panel();
@@ -223,6 +223,7 @@ namespace CraftForge.Server.Classes.Console.Initialize.Files
             ContextMenu customContextMenu = CreateContextMenu(panel, directory, serverName);
 
             MenuItem openFiles = new MenuItem("Open File");
+            MenuItem openInNotepads = new MenuItem("Open in Notepad");
             MenuItem deleteFiles = new MenuItem("Delete File");
             MenuItem spacer = new MenuItem("-");
 
@@ -240,7 +241,13 @@ namespace CraftForge.Server.Classes.Console.Initialize.Files
             customContextMenu.MenuItems.Add(0, deleteFiles);
             customContextMenu.MenuItems.Add(0, openFiles);
 
+            if (!Directory.Exists(fileName)) //If it is a directory, it cannot be opened in notepad
+            {
+                customContextMenu.MenuItems.Add(1, openInNotepads); //Make the option below "Open File"
+            }
+
             openFiles.Click += (sender, dF) => openFile.openFiles(panel, directory, serverName, fileName);
+            openInNotepads.Click += (sender, dF) => openInNotepad.openFile(panel, directory, serverName, fileName);
             deleteFiles.Click += (sender, dF) => deleteFile.deleteFiles(panel, directory, serverName, fileName);
 
             return customContextMenu;

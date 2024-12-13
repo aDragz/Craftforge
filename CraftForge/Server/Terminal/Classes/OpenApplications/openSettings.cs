@@ -7,25 +7,20 @@ namespace CraftForge.Server.Classes.Console.Applications
     {
         public static void runSettingsApp()
         {
-            //Run the settings application
-            settings Settings = new settings();
-
-            //Grab each open window, and if settings is ing, focus on it
-            foreach (Form form in System.Windows.Forms.Application.OpenForms)
+            foreach (Form form in Application.OpenForms) //Grab each open window, and if settings is open, focus on it
             {
                 if (form.Name == "settings")
                 {
-                    // Restore the form if it is minimized
                     if (form.WindowState == FormWindowState.Minimized)
-                        form.WindowState = FormWindowState.Normal;
-                    
+                        form.WindowState = FormWindowState.Normal; // Restore the form if it is minimized
+
                     form.Focus();
                     return;
                 }
             }
 
-            //If settings is not open, open it
-            Settings.Show();
+            settings settings = new settings(); //Run the settings application
+            settings.Show(); //If settings is not open, open it
         }
     }
 }
