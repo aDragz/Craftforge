@@ -72,6 +72,7 @@
             this.Version = new System.Windows.Forms.Label();
             this.TypeVersionPanel = new System.Windows.Forms.Label();
             this.TypeListAppPanel = new System.Windows.Forms.ComboBox();
+            this.customThemeBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -215,6 +216,7 @@
             // 
             // ConsolePanel
             // 
+            this.ConsolePanel.Controls.Add(this.customThemeBtn);
             this.ConsolePanel.Controls.Add(this.ConsoleConsolePanel);
             this.ConsolePanel.Controls.Add(this.autoScrollConsolePanel);
             this.ConsolePanel.Controls.Add(this.AutoStartConsolePanel);
@@ -362,6 +364,17 @@
             this.TypeListAppPanel.TabIndex = 6;
             this.TypeListAppPanel.SelectedIndexChanged += new System.EventHandler(this.TypeListConsolePanel_SelectedIndexChanged);
             // 
+            // customThemeBtn
+            // 
+            this.customThemeBtn.Font = new System.Drawing.Font("Consolas", 8F);
+            this.customThemeBtn.Location = new System.Drawing.Point(393, 57);
+            this.customThemeBtn.Name = "customThemeBtn";
+            this.customThemeBtn.Size = new System.Drawing.Size(166, 30);
+            this.customThemeBtn.TabIndex = 18;
+            this.customThemeBtn.Text = "Customize Theme";
+            this.customThemeBtn.UseVisualStyleBackColor = true;
+            this.customThemeBtn.Click += new System.EventHandler(this.customThemeBtn_Click);
+            // 
             // settings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -415,5 +428,6 @@
         private System.Windows.Forms.CheckBox autoScrollConsolePanel;
         private System.Windows.Forms.CheckBox AutoUpdateAppPanel;
         private System.Windows.Forms.CheckBox SpecificationsStartupPanel;
+        private System.Windows.Forms.Button customThemeBtn;
     }
 }
