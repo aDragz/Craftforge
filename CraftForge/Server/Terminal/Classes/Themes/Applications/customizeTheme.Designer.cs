@@ -54,8 +54,8 @@
             this.secondaryTerminal = new System.Windows.Forms.RichTextBox();
             this.stopBtn = new System.Windows.Forms.Button();
             this.startBtn = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.applyBtn = new System.Windows.Forms.Button();
+            this.cancelBtn = new System.Windows.Forms.Button();
             this.panel8 = new System.Windows.Forms.Panel();
             this.itemFontBtn = new System.Windows.Forms.Button();
             this.itemFontLbl = new System.Windows.Forms.Label();
@@ -329,27 +329,28 @@
             this.startBtn.Text = "Start Server";
             this.startBtn.UseVisualStyleBackColor = true;
             // 
-            // button1
+            // applyBtn
             // 
-            this.button1.Font = new System.Drawing.Font("Consolas", 12F);
-            this.button1.Location = new System.Drawing.Point(335, 769);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(103, 52);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Apply";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.applyBtn.Font = new System.Drawing.Font("Consolas", 12F);
+            this.applyBtn.Location = new System.Drawing.Point(335, 769);
+            this.applyBtn.Name = "applyBtn";
+            this.applyBtn.Size = new System.Drawing.Size(103, 52);
+            this.applyBtn.TabIndex = 0;
+            this.applyBtn.Text = "Apply";
+            this.applyBtn.UseVisualStyleBackColor = true;
+            this.applyBtn.Click += new System.EventHandler(this.button1_Click);
             // 
-            // button2
+            // cancelBtn
             // 
-            this.button2.Font = new System.Drawing.Font("Consolas", 12F);
-            this.button2.Location = new System.Drawing.Point(226, 769);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(103, 52);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "Cancel";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.cancelBtn.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.cancelBtn.Font = new System.Drawing.Font("Consolas", 12F);
+            this.cancelBtn.Location = new System.Drawing.Point(226, 769);
+            this.cancelBtn.Name = "cancelBtn";
+            this.cancelBtn.Size = new System.Drawing.Size(103, 52);
+            this.cancelBtn.TabIndex = 1;
+            this.cancelBtn.Text = "Cancel";
+            this.cancelBtn.UseVisualStyleBackColor = true;
+            this.cancelBtn.Click += new System.EventHandler(this.button2_Click);
             // 
             // panel8
             // 
@@ -465,8 +466,8 @@
             this.panel1.Controls.Add(this.panel9);
             this.panel1.Controls.Add(this.panel8);
             this.panel1.Controls.Add(this.panel2);
-            this.panel1.Controls.Add(this.button2);
-            this.panel1.Controls.Add(this.button1);
+            this.panel1.Controls.Add(this.cancelBtn);
+            this.panel1.Controls.Add(this.applyBtn);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Right;
             this.panel1.Font = new System.Drawing.Font("Consolas", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.panel1.Location = new System.Drawing.Point(1689, 0);
@@ -620,8 +621,10 @@
             // 
             // customizeTheme
             // 
+            this.AcceptButton = this.applyBtn;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.cancelBtn;
             this.ClientSize = new System.Drawing.Size(2132, 826);
             this.Controls.Add(this.themeLbl);
             this.Controls.Add(this.statusBar);
@@ -668,8 +671,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.ComboBox themeList;
         private System.Windows.Forms.FlowLayoutPanel terminalBackground;
         private System.Windows.Forms.DataVisualization.Charting.Chart ramUsageChart;
         private System.Windows.Forms.DataVisualization.Charting.Chart cpuUsageChart;
@@ -688,8 +689,8 @@
         private System.Windows.Forms.RichTextBox secondaryTerminal;
         private System.Windows.Forms.Button stopBtn;
         private System.Windows.Forms.Button startBtn;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button applyBtn;
+        private System.Windows.Forms.Button cancelBtn;
         private System.Windows.Forms.Panel panel8;
         private System.Windows.Forms.Panel panel13;
         private System.Windows.Forms.Panel panel9;
@@ -715,5 +716,6 @@
         private System.Windows.Forms.Label statusBar;
         private System.Windows.Forms.ComboBox selectedItemBox;
         private System.Windows.Forms.Label themeLbl;
+        public System.Windows.Forms.ComboBox themeList;
     }
 }

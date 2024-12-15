@@ -1,4 +1,6 @@
-﻿using CraftForge.Server.GUI.Console;
+﻿using CraftForge.Server.Classes.OpenApplications;
+using CraftForge.Server.GUI.Console;
+using CraftForge.Server.GUI.Setup;
 using CraftForge.Server.StartPage.Classes;
 using Newtonsoft.Json.Linq;
 using System;
@@ -175,6 +177,8 @@ namespace CraftForge.Server.GUI.Applications
 
         private void settings_Load(object sender, EventArgs e)
         {
+            this.Text = $"Settings | CraftForge {Setup.Startup.release} - v{Setup.Startup.applicationVersion}"; //Change this if I change title again (ctrl+f)
+
             //Load themes
             loadThemesList();
 
@@ -477,6 +481,11 @@ namespace CraftForge.Server.GUI.Applications
             }
 
             return true;
+        }
+
+        private void customThemeBtn_Click(object sender, EventArgs e)
+        {
+            openThemesEditor.runThemesEditorApp();
         }
     }
 }

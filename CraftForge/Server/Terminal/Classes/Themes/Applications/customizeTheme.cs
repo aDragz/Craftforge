@@ -1,10 +1,10 @@
 ﻿using CraftForge.Server.Classes.Themes.Classes;
 using CraftForge.Server.GUI.Console;
+using CraftForge.Server.GUI.Setup;
 using CraftForge.Server.Themes.Themes;
 using System;
 using System.Drawing;
 using System.IO;
-using System.Web.UI.DataVisualization.Charting;
 using System.Windows.Forms;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
@@ -13,7 +13,7 @@ namespace CraftForge.Server.Classes.Themes.Applications
 {
     public partial class customizeTheme : Form
     {
-        private readonly string themeLocation = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\CraftForge\\Themes\\");
+        public static readonly string themeLocation = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\CraftForge\\Themes\\");
 
         string currentTheme;
         bool hasChanged = false;
@@ -63,6 +63,8 @@ namespace CraftForge.Server.Classes.Themes.Applications
 
         private void customizeTheme_Load(object sender, EventArgs e)
         {
+            this.Text = $"Customize Theme | CraftForge {Startup.release} - v{Startup.applicationVersion}"; //Change this if I change title again (ctrl+f)
+
             //Set serverJarCombo as readonly
             serverJarCombo.DropDownStyle = ComboBoxStyle.DropDownList;
 
@@ -108,9 +110,56 @@ namespace CraftForge.Server.Classes.Themes.Applications
             hasChanged = false; //Just loaded, so no changes
         }
 
+        public static void createNewTheme(string themeName)
+        {
+            saveCustomTheme themeSettings = new saveCustomTheme
+            {
+                TerminalWindowBackColour = "255, 255, 255, 255", //White
+                TerminalConsoleForeColour = "0, 0, 0, 0", //Black
+                TerminalConsoleBackColour = "255, 255, 255, 255",
+                TerminalConsoleFont = "Consolas, 10",
+
+                TerminalChartBackColour = "255, 255, 255, 255",
+                TerminalChartBackColourSecondary = "255, 255, 255, 255",
+
+                TerminalStartBtnTextColour = "0, 0, 0, 0",
+                TerminalStartBtnBackColour = "255, 255, 255, 255",
+                TerminalStartBtnFont = "Consolas, 14",
+
+                TerminalStopBtnTextColour = "0, 0, 0, 0",
+                TerminalStopBtnBackColour = "255, 255, 255, 255",
+                TerminalStopBtnFont = "Consolas, 14",
+
+                TerminalSideBarBackColour = "255, 255, 255, 255",
+
+                GlobalBtnTextColour = "0, 0, 0, 0",
+                GlobalBtnBackColour = "255, 255, 255, 255",
+                GlobalBtnFont = "Consolas, 14",
+
+                GlobalLblBackColour = "255, 255, 255, 255",
+                GlobalLblTextColour = "0, 0, 0, 0"
+            };
+
+            var serializer = new SerializerBuilder()
+                .WithNamingConvention(CamelCaseNamingConvention.Instance)
+                .Build();
+
+            using (var writer = new StreamWriter($"{themeLocation}\\{themeName}.yaml"))
+            {
+                serializer.Serialize(writer, themeSettings);
+            }
+        }
+
         private void loadThemesList()
         {
+            themeList.Items.Clear();
+
             themeList.Text = Properties.Settings.Default.Theme;
+
+            //Add "Create new theme"
+            themeList.Items.Add("Create a new theme");
+            themeList.Items.Add(""); //Add spacer
+
             //Check if default theme exists
             if (!File.Exists(themeLocation + "Default"))
             {
@@ -445,12 +494,6 @@ namespace CraftForge.Server.Classes.Themes.Applications
 
         private void readThemeSettings()
         {
-            if (!File.Exists(($"{themeLocation}\\{themeList.Text}.yaml")))
-            {
-                MessageBox.Show("Theme does not exist");
-                return;
-            }
-
             if (hasChanged)
             {
                 //Ask if they want to save changes
@@ -458,17 +501,30 @@ namespace CraftForge.Server.Classes.Themes.Applications
 
                 if (dialogResult == DialogResult.Yes)
                 {
-                    //doing
-                    //Save changes
-                    //saveChanges();
+                    applyThemeToFile();
                 }
-                else
+            }
+
+            if (themeList.Text.Equals("Create a new theme"))
+            {
+                createNewTheme createNewTheme = new createNewTheme();
+                createNewTheme.ShowDialog();
+
+                if (createNewTheme.DialogResult == DialogResult.OK)
                 {
-                    themeList.SelectedIndexChanged -= themeList_SelectedIndexChanged; // Remove the event handler temporarily
-                    themeList.Text = currentTheme;
-                    themeList.SelectedIndexChanged += themeList_SelectedIndexChanged; // Add the event handler back
-                    return;
+                    loadThemesList(); //Reload the list
+
+                    //Select the new theme
+                    themeList.Text = createNewTheme.themeName;
                 }
+
+                return;
+            }
+
+            if (!File.Exists(($"{themeLocation}\\{themeList.Text}.yaml")))
+            {
+                MessageBox.Show("Theme does not exist");
+                return;
             }
 
             currentTheme = themeList.Text;
@@ -577,40 +633,28 @@ namespace CraftForge.Server.Classes.Themes.Applications
                 .WithNamingConvention(CamelCaseNamingConvention.Instance)
                 .Build();
 
-            using (var writer = new StreamWriter($"{themeLocation}\\{themeList.Text}.yaml"))
+            using (var writer = new StreamWriter($"{themeLocation}\\{currentTheme}.yaml"))
             {
                 serializer.Serialize(writer, themeSettings);
             }
 
             //Change the theme
 
-                //Change the theme
-                Properties.Settings.Default.Theme = themeList.Text;
-                Properties.Settings.Default.Save();
+            //Change the theme
+            Properties.Settings.Default.Theme = themeList.Text;
+            Properties.Settings.Default.Save();
 
-                //Update the theme
-                foreach (Form form in global::System.Windows.Forms.Application.OpenForms)
-                {
-                    if (form is Terminal)
-                    {
-                        Terminal terminal = (Terminal)form;
-                        Terminal.InitializeThemeStatic(terminal); // Changed to access the static method directly from the class
-                    }
-                }
-            
-            MessageBox.Show("Applied Theme. Please restart the app to apply the full effect. Or some aspects may be broken!", "Applied Theme", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
-        public void saveChanges()
-        {
-            var serializer = new SerializerBuilder()
-                .WithNamingConvention(CamelCaseNamingConvention.Instance)
-                .Build();
-
-            using (var writer = new StreamWriter($"{themeLocation}\\{themeList.Text}-1.yaml"))
+            //Update the theme
+            foreach (Form form in global::System.Windows.Forms.Application.OpenForms)
             {
-                serializer.Serialize(writer, this);
+                if (form is Terminal)
+                {
+                    Terminal terminal = (Terminal)form;
+                    Terminal.InitializeThemeStatic(terminal); // Changed to access the static method directly from the class
+                }
             }
+
+            MessageBox.Show("Applied Theme. Please restart the app to apply the full effect. Or some aspects may be broken!", "Applied Theme", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }
