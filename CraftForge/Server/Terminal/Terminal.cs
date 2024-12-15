@@ -71,7 +71,7 @@ namespace CraftForge.Server.GUI.Console
 
         private void Terminal_Load(object sender, EventArgs e)
         {
-            this.Text = this.Name + $" | CraftForge {Startup.release} - v{Startup.applicationVersion}"; //Remember to change settings name as well if I change this (again)
+            this.Text = this.Name + $" | CraftForge {Startup.release} - v{Startup.applicationVersion}"; //Change this if I change title again (ctrl+f)
             settingsNameTextBox.Text = this.Name;
 
             InitializeSettings(); //Load settings
@@ -1030,7 +1030,7 @@ namespace CraftForge.Server.GUI.Console
 
                 label.Text = "Server moved!";
                 this.Name = settingsNameTextBox.Text;
-                this.Text = this.Name + $" | CraftForge {Startup.release} - v{Startup.applicationVersion}";
+                this.Text = this.Name + $" | CraftForge {Startup.release} - v{Startup.applicationVersion}"; //Change this if I change title again (ctrl+f)
 
                 updateThreads.UpdateThreads(this.Name, (int)threadCount.Value);
 
@@ -1408,6 +1408,11 @@ namespace CraftForge.Server.GUI.Console
             string location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CraftForge\\Themes";
 
             Process.Start("explorer.exe", location);
+        }
+
+        private void supportToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Process.Start("https://craftforge.dev/index.php/category/help/"); //Open the help website
         }
     }
 }
