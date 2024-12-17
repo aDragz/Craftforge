@@ -1501,11 +1501,12 @@ namespace CraftForge.Server.GUI.Console
             string[] name = this.Name.Split(':');
             string location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\CraftForge\\Logs\\" + name[0]);
 
-            string fileName = ("\\" +DateTime.Now.ToString("dd-MM-yyyy-HH-mm-ss") + ".txt");
+            string fileName = ("\\" +DateTime.Now.ToString("dd-MM-yyyy-HH-mm-ss") + ".txt"); //Sets the date of the file
 
             if (!Directory.Exists(location))
                 Directory.CreateDirectory(location);
 
+            //Save the file in the main console
             try
             {
                 RichTextBox console = (RichTextBox)serverTabs.SelectedTab.Controls[0];
@@ -1514,11 +1515,23 @@ namespace CraftForge.Server.GUI.Console
             }
             catch
             {
+                //Save the file in the general(secondary) console
                 secondaryTerminal.SaveFile(location + fileName, RichTextBoxStreamType.PlainText);
             }
 
-            //Open location
-            Process.Start(location + fileName);
+            Process.Start(location + fileName); //Open the file
+        }
+
+        private void openLogsFolderToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string[] name = this.Name.Split(':');
+            string location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\CraftForge\\Logs\\" + name[0]);
+
+            try
+            {
+                Process.Start(location); //Open the folder
+            }
+            catch { }
         }
     }
 }

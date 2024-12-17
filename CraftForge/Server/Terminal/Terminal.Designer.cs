@@ -60,6 +60,8 @@
             this.terminalContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.autoScrollToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteAllTextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.saveTextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stopBtn = new System.Windows.Forms.Button();
             this.startBtn = new System.Windows.Forms.Button();
             this.playersPage = new System.Windows.Forms.TabPage();
@@ -109,7 +111,9 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileLocationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.openLogsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openLogsFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.themesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.customizeThemeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
@@ -121,8 +125,6 @@
             this.supportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.serverTabsPanel = new System.Windows.Forms.Panel();
             this.cpuRamUsage = new System.Windows.Forms.Timer(this.components);
-            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
-            this.saveTextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.serverTabs.SuspendLayout();
             this.generalPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ramUsageChart)).BeginInit();
@@ -402,6 +404,18 @@
             this.deleteAllTextToolStripMenuItem.Size = new System.Drawing.Size(210, 24);
             this.deleteAllTextToolStripMenuItem.Text = "Delete all Text";
             this.deleteAllTextToolStripMenuItem.Click += new System.EventHandler(this.deleteAllTextToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(207, 6);
+            // 
+            // saveTextToolStripMenuItem
+            // 
+            this.saveTextToolStripMenuItem.Name = "saveTextToolStripMenuItem";
+            this.saveTextToolStripMenuItem.Size = new System.Drawing.Size(210, 24);
+            this.saveTextToolStripMenuItem.Text = "Save Text to Logs";
+            this.saveTextToolStripMenuItem.Click += new System.EventHandler(this.saveTextToolStripMenuItem_Click);
             // 
             // stopBtn
             // 
@@ -942,7 +956,9 @@
             // 
             this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openFileLocationToolStripMenuItem,
-            this.openLogsToolStripMenuItem});
+            this.toolStripSeparator6,
+            this.openLogsToolStripMenuItem,
+            this.openLogsFolderToolStripMenuItem});
             this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
             this.viewToolStripMenuItem.Size = new System.Drawing.Size(55, 24);
             this.viewToolStripMenuItem.Text = "View";
@@ -950,16 +966,28 @@
             // openFileLocationToolStripMenuItem
             // 
             this.openFileLocationToolStripMenuItem.Name = "openFileLocationToolStripMenuItem";
-            this.openFileLocationToolStripMenuItem.Size = new System.Drawing.Size(243, 26);
+            this.openFileLocationToolStripMenuItem.Size = new System.Drawing.Size(235, 26);
             this.openFileLocationToolStripMenuItem.Text = "Open Folder Location";
             this.openFileLocationToolStripMenuItem.Click += new System.EventHandler(this.openFileLocationToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator6
+            // 
+            this.toolStripSeparator6.Name = "toolStripSeparator6";
+            this.toolStripSeparator6.Size = new System.Drawing.Size(232, 6);
             // 
             // openLogsToolStripMenuItem
             // 
             this.openLogsToolStripMenuItem.Name = "openLogsToolStripMenuItem";
-            this.openLogsToolStripMenuItem.Size = new System.Drawing.Size(243, 26);
-            this.openLogsToolStripMenuItem.Text = "Open Most Recent Log";
+            this.openLogsToolStripMenuItem.Size = new System.Drawing.Size(235, 26);
+            this.openLogsToolStripMenuItem.Text = "Open latest.log";
             this.openLogsToolStripMenuItem.Click += new System.EventHandler(this.openLogsToolStripMenuItem_Click);
+            // 
+            // openLogsFolderToolStripMenuItem
+            // 
+            this.openLogsFolderToolStripMenuItem.Name = "openLogsFolderToolStripMenuItem";
+            this.openLogsFolderToolStripMenuItem.Size = new System.Drawing.Size(235, 26);
+            this.openLogsFolderToolStripMenuItem.Text = "Open Logs Folder";
+            this.openLogsFolderToolStripMenuItem.Click += new System.EventHandler(this.openLogsFolderToolStripMenuItem_Click);
             // 
             // themesToolStripMenuItem
             // 
@@ -1042,18 +1070,6 @@
             // 
             this.cpuRamUsage.Interval = 1000;
             this.cpuRamUsage.Tick += new System.EventHandler(this.cpuUsage_Tick);
-            // 
-            // toolStripSeparator5
-            // 
-            this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(207, 6);
-            // 
-            // saveTextToolStripMenuItem
-            // 
-            this.saveTextToolStripMenuItem.Name = "saveTextToolStripMenuItem";
-            this.saveTextToolStripMenuItem.Size = new System.Drawing.Size(210, 24);
-            this.saveTextToolStripMenuItem.Text = "Save Text";
-            this.saveTextToolStripMenuItem.Click += new System.EventHandler(this.saveTextToolStripMenuItem_Click);
             // 
             // Terminal
             // 
@@ -1183,6 +1199,8 @@
         private System.Windows.Forms.ToolStripMenuItem autoScrollToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripMenuItem saveTextToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
+        private System.Windows.Forms.ToolStripMenuItem openLogsFolderToolStripMenuItem;
     }
 }
 
