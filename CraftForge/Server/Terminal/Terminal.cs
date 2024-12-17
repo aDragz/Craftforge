@@ -8,7 +8,6 @@ using CraftForge.Server.Classes.Console.Yaml;
 using CraftForge.Server.Classes.Console.Yaml.UpdateSettings;
 using CraftForge.Server.Classes.Logs;
 using CraftForge.Server.Classes.Player.Classes;
-using CraftForge.Server.Classes.Themes.Applications;
 using CraftForge.Server.Classes.Themes.Applications.Charts;
 using CraftForge.Server.Events;
 using CraftForge.Server.GUI.Classes;
@@ -80,6 +79,7 @@ namespace CraftForge.Server.GUI.Console
             InitializeFiles(); //Load files
             InitializeBackupFiles(); //Load backup files
             InitializeNotifications(); //Load notifications
+            InitializeTerminalContextMenu(); //Load terminal's context menu
             updateChart.updateCharts(ramUsageChart, cpuUsageChart); //Load chart
 
             serverTabs.ItemSize = new Size(0, 1); //Hide the tabs
@@ -94,7 +94,8 @@ namespace CraftForge.Server.GUI.Console
 
             //Check if settings file exists
             string location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\CraftForge\\Servers\\");
-            if (!File.Exists(($"{location}\\{this.Name}\\serverSettings.yaml"))) {
+            if (!File.Exists(($"{location}\\{this.Name}\\serverSettings.yaml")))
+            {
                 serverSettings.writeSettingsToFile(this.Name);
             }
             var settings = serverSettings.ReadSettings(this.Name);
@@ -302,6 +303,18 @@ namespace CraftForge.Server.GUI.Console
             };
         }
 
+        private void InitializeTerminalContextMenu()
+        {
+            if (Settings.Default.terminal_autoScroll)
+            {
+                autoScrollToolStripMenuItem.Checked = true;
+            }
+            else
+            {
+                autoScrollToolStripMenuItem.Checked = false;
+            }
+        }
+
         private void createButton_Click(object sender, EventArgs e)
         {
             generateNewServer createNewServer = new generateNewServer();
@@ -319,7 +332,7 @@ namespace CraftForge.Server.GUI.Console
 
                 isRunning = true;
             }
-            catch (ArgumentException) 
+            catch (ArgumentException)
             {
                 isRunning = false; //Process has exited
             }
@@ -555,7 +568,8 @@ namespace CraftForge.Server.GUI.Console
 
                     Task.Delay(1000).Wait(); // Wait for 1 second before I start due to slower computers not opening instantly
 
-                    while (javaProcess == null) {
+                    while (javaProcess == null)
+                    {
                         javaProcess = GetChildProcesses(serverProcess.Id).FirstOrDefault(p => string.Equals(p.ProcessName, "java", StringComparison.OrdinalIgnoreCase));
                         if (javaProcess == null)
                         {
@@ -748,6 +762,15 @@ namespace CraftForge.Server.GUI.Console
 
         private async void stopBtn_Click(object sender, EventArgs e)
         {
+            if (Settings.Default.stopBtnWarning)
+            {
+                DialogResult dialogResult = MessageBox.Show("Are you sure you want to stop the server?", "CraftForge", MessageBoxButtons.YesNo);
+                if (dialogResult == DialogResult.No)
+                {
+                    return;
+                }
+            }
+
             createNewLog.sendMessage(this, "[Server] Server is stopping...");
             try
             {
@@ -1043,7 +1066,7 @@ namespace CraftForge.Server.GUI.Console
                 {
                     //Update server.properties
                     string[] serverProperties = File.ReadAllLines(destDir + "\\server.properties");
-                    List<string> doesNotContain = new List<string> { "server-port=", "server-ip=" , "level-name=", "gamemode=", "max-players=", "server-name=", "motd=" };
+                    List<string> doesNotContain = new List<string> { "server-port=", "server-ip=", "level-name=", "gamemode=", "max-players=", "server-name=", "motd=" };
 
                     foreach (string str in serverProperties)
                     {
@@ -1355,7 +1378,8 @@ namespace CraftForge.Server.GUI.Console
                 }
 
                 return Math.Round(cpuUsageTotal, 2);
-            } catch
+            }
+            catch
             {
                 return 0;
             }
@@ -1413,6 +1437,88 @@ namespace CraftForge.Server.GUI.Console
         private void supportToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Process.Start("https://craftforge.dev/index.php/category/help/"); //Open the help website
+        }
+
+        private void reToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //Show message box to confirm
+            DialogResult dialogResult = MessageBox.Show("Are you sure you reset all themes?", "CraftForge", MessageBoxButtons.YesNo);
+
+            if (dialogResult == DialogResult.Yes)
+            {
+                //Delete all themes
+                string location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CraftForge\\Themes";
+
+                if (Directory.Exists(location))
+                {
+                    Directory.Delete(location, true);
+                }
+
+                Directory.CreateDirectory(location);
+                Theme.createThemes();
+
+                //Set theme to default
+                Settings.Default.Theme = "Default";
+                Settings.Default.Save();
+
+                InitializeTheme();
+            }
+        }
+
+        private void deleteAllTextToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                RichTextBox console = (RichTextBox)serverTabs.SelectedTab.Controls[0];
+                console.Clear();
+            }
+            catch
+            {
+                //Assume it's selecting the chart, and using secondaryTerminal
+                secondaryTerminal.Clear();
+            }
+        }
+
+        private void autoScrollToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //Revert the check
+            if (autoScrollToolStripMenuItem.Checked == true)
+                autoScrollToolStripMenuItem.Checked = false;
+            else
+                autoScrollToolStripMenuItem.Checked = true;
+
+            //Grab the value
+            bool autoScroll = autoScrollToolStripMenuItem.Checked;
+
+            //Save the value
+            Properties.Settings.Default.terminal_autoScroll = autoScroll;
+            Properties.Settings.Default.Save();
+        }
+
+        private void saveTextToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //Save the text to /Documents/CraftForge/Logs/ServerName/Date-Time.txt
+            string[] name = this.Name.Split(':');
+            string location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\CraftForge\\Logs\\" + name[0]);
+
+            string fileName = ("\\" +DateTime.Now.ToString("dd-MM-yyyy-HH-mm-ss") + ".txt");
+
+            if (!Directory.Exists(location))
+                Directory.CreateDirectory(location);
+
+            try
+            {
+                RichTextBox console = (RichTextBox)serverTabs.SelectedTab.Controls[0];
+
+                console.SaveFile(location + fileName, RichTextBoxStreamType.PlainText);
+            }
+            catch
+            {
+                secondaryTerminal.SaveFile(location + fileName, RichTextBoxStreamType.PlainText);
+            }
+
+            //Open location
+            Process.Start(location + fileName);
         }
     }
 }

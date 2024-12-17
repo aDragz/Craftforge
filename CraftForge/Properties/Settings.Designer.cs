@@ -106,5 +106,17 @@ namespace CraftForge.Properties {
                 this["displaySystemSpecifications"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool stopBtnWarning {
+            get {
+                return ((bool)(this["stopBtnWarning"]));
+            }
+            set {
+                this["stopBtnWarning"] = value;
+            }
+        }
     }
 }

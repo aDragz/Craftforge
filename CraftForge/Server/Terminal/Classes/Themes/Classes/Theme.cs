@@ -40,7 +40,7 @@ namespace CraftForge.Server.Themes.Classes.Applications
             serverTabsPanel.BackColor = ColorTranslator.FromHtml(theme.Terminal_sideBar_BackColour); // Fixed: Added 'terminal.' to access serverTabsPanel
         }
 
-        private static void createThemes()
+        public static void createThemes()
         {
             defaultTheme.writeSettingsToFile();
             blue.writeSettingsToFile();

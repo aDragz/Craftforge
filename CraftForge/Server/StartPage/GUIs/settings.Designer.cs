@@ -60,6 +60,7 @@
             this.MaximizeStartupPanel = new System.Windows.Forms.CheckBox();
             this.Startup = new System.Windows.Forms.Label();
             this.ConsolePanel = new System.Windows.Forms.Panel();
+            this.customThemeBtn = new System.Windows.Forms.Button();
             this.ConsoleConsolePanel = new System.Windows.Forms.Label();
             this.autoScrollConsolePanel = new System.Windows.Forms.CheckBox();
             this.AutoStartConsolePanel = new System.Windows.Forms.CheckBox();
@@ -72,7 +73,7 @@
             this.Version = new System.Windows.Forms.Label();
             this.TypeVersionPanel = new System.Windows.Forms.Label();
             this.TypeListAppPanel = new System.Windows.Forms.ComboBox();
-            this.customThemeBtn = new System.Windows.Forms.Button();
+            this.warnStopServerConsolePanel = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -172,7 +173,7 @@
             this.StartupPanel.Controls.Add(this.SpecificationsStartupPanel);
             this.StartupPanel.Controls.Add(this.MaximizeStartupPanel);
             this.StartupPanel.Controls.Add(this.Startup);
-            this.StartupPanel.Location = new System.Drawing.Point(0, 197);
+            this.StartupPanel.Location = new System.Drawing.Point(0, 235);
             this.StartupPanel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.StartupPanel.Name = "StartupPanel";
             this.StartupPanel.Size = new System.Drawing.Size(729, 134);
@@ -216,6 +217,7 @@
             // 
             // ConsolePanel
             // 
+            this.ConsolePanel.Controls.Add(this.warnStopServerConsolePanel);
             this.ConsolePanel.Controls.Add(this.customThemeBtn);
             this.ConsolePanel.Controls.Add(this.ConsoleConsolePanel);
             this.ConsolePanel.Controls.Add(this.autoScrollConsolePanel);
@@ -226,8 +228,19 @@
             this.ConsolePanel.Location = new System.Drawing.Point(0, 0);
             this.ConsolePanel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ConsolePanel.Name = "ConsolePanel";
-            this.ConsolePanel.Size = new System.Drawing.Size(729, 197);
+            this.ConsolePanel.Size = new System.Drawing.Size(729, 235);
             this.ConsolePanel.TabIndex = 10;
+            // 
+            // customThemeBtn
+            // 
+            this.customThemeBtn.Font = new System.Drawing.Font("Consolas", 8F);
+            this.customThemeBtn.Location = new System.Drawing.Point(393, 57);
+            this.customThemeBtn.Name = "customThemeBtn";
+            this.customThemeBtn.Size = new System.Drawing.Size(166, 30);
+            this.customThemeBtn.TabIndex = 18;
+            this.customThemeBtn.Text = "Customize Theme";
+            this.customThemeBtn.UseVisualStyleBackColor = true;
+            this.customThemeBtn.Click += new System.EventHandler(this.customThemeBtn_Click);
             // 
             // ConsoleConsolePanel
             // 
@@ -364,16 +377,18 @@
             this.TypeListAppPanel.TabIndex = 6;
             this.TypeListAppPanel.SelectedIndexChanged += new System.EventHandler(this.TypeListConsolePanel_SelectedIndexChanged);
             // 
-            // customThemeBtn
+            // warnStopServerConsolePanel
             // 
-            this.customThemeBtn.Font = new System.Drawing.Font("Consolas", 8F);
-            this.customThemeBtn.Location = new System.Drawing.Point(393, 57);
-            this.customThemeBtn.Name = "customThemeBtn";
-            this.customThemeBtn.Size = new System.Drawing.Size(166, 30);
-            this.customThemeBtn.TabIndex = 18;
-            this.customThemeBtn.Text = "Customize Theme";
-            this.customThemeBtn.UseVisualStyleBackColor = true;
-            this.customThemeBtn.Click += new System.EventHandler(this.customThemeBtn_Click);
+            this.warnStopServerConsolePanel.AutoSize = true;
+            this.warnStopServerConsolePanel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.warnStopServerConsolePanel.Location = new System.Drawing.Point(18, 200);
+            this.warnStopServerConsolePanel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.warnStopServerConsolePanel.Name = "warnStopServerConsolePanel";
+            this.warnStopServerConsolePanel.Size = new System.Drawing.Size(368, 29);
+            this.warnStopServerConsolePanel.TabIndex = 19;
+            this.warnStopServerConsolePanel.Text = "Warning Popup when Stopping Server";
+            this.warnStopServerConsolePanel.UseVisualStyleBackColor = true;
+            this.warnStopServerConsolePanel.CheckedChanged += new System.EventHandler(this.warnStopServer_CheckedChanged);
             // 
             // settings
             // 
@@ -429,5 +444,6 @@
         private System.Windows.Forms.CheckBox AutoUpdateAppPanel;
         private System.Windows.Forms.CheckBox SpecificationsStartupPanel;
         private System.Windows.Forms.Button customThemeBtn;
+        private System.Windows.Forms.CheckBox warnStopServerConsolePanel;
     }
 }

@@ -28,6 +28,7 @@ namespace CraftForge.Server.GUI.Classes
             //Set font to consolas
             console.Font = new Font("Consolas", 10F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
             console.ReadOnly = true;
+            console.ContextMenuStrip = serverInstance.terminalContextMenu;
 
             //Set theme to output
             var theme = defaultTheme.ReadSettings();
