@@ -42,6 +42,7 @@
             this.serverStatusNetwork = new System.Windows.Forms.Timer(this.components);
             this.serverTabs = new System.Windows.Forms.TabControl();
             this.generalPage = new System.Windows.Forms.TabPage();
+            this.secondaryTerminalInput = new System.Windows.Forms.TextBox();
             this.ramUsageChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.cpuUsageChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.ramUsageLabel = new System.Windows.Forms.Label();
@@ -52,7 +53,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.mainIpLabel = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.secondaryTerminalInput = new System.Windows.Forms.RichTextBox();
             this.serverJarPanel = new System.Windows.Forms.Panel();
             this.label9 = new System.Windows.Forms.Label();
             this.serverJarCombo = new System.Windows.Forms.ComboBox();
@@ -176,12 +176,12 @@
             // 
             // generalPage
             // 
+            this.generalPage.Controls.Add(this.secondaryTerminalInput);
             this.generalPage.Controls.Add(this.ramUsageChart);
             this.generalPage.Controls.Add(this.cpuUsageChart);
             this.generalPage.Controls.Add(this.ramUsageLabel);
             this.generalPage.Controls.Add(this.cpuUsageLabel);
             this.generalPage.Controls.Add(this.serverStatusPanel);
-            this.generalPage.Controls.Add(this.secondaryTerminalInput);
             this.generalPage.Controls.Add(this.serverJarPanel);
             this.generalPage.Controls.Add(this.secondaryTerminal);
             this.generalPage.Controls.Add(this.stopBtn);
@@ -194,6 +194,21 @@
             this.generalPage.TabIndex = 0;
             this.generalPage.Text = "General";
             this.generalPage.UseVisualStyleBackColor = true;
+            // 
+            // secondaryTerminalInput
+            // 
+            this.secondaryTerminalInput.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.secondaryTerminalInput.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.secondaryTerminalInput.ForeColor = System.Drawing.Color.DimGray;
+            this.secondaryTerminalInput.Location = new System.Drawing.Point(3, 639);
+            this.secondaryTerminalInput.Name = "secondaryTerminalInput";
+            this.secondaryTerminalInput.Size = new System.Drawing.Size(1147, 28);
+            this.secondaryTerminalInput.TabIndex = 42;
+            this.secondaryTerminalInput.Text = "Enter Command";
+            this.secondaryTerminalInput.Enter += new System.EventHandler(this.secondaryTerminalInput_Enter);
+            this.secondaryTerminalInput.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.secondaryTerminalInput_KeyPress);
+            this.secondaryTerminalInput.Leave += new System.EventHandler(this.secondaryTerminalInput_Leave);
             // 
             // ramUsageChart
             // 
@@ -312,23 +327,6 @@
             this.label1.TabIndex = 32;
             this.label1.Text = "Server Status";
             // 
-            // secondaryTerminalInput
-            // 
-            this.secondaryTerminalInput.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.secondaryTerminalInput.BackColor = System.Drawing.Color.White;
-            this.secondaryTerminalInput.ForeColor = System.Drawing.Color.DimGray;
-            this.secondaryTerminalInput.Location = new System.Drawing.Point(3, 639);
-            this.secondaryTerminalInput.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.secondaryTerminalInput.Multiline = false;
-            this.secondaryTerminalInput.Name = "secondaryTerminalInput";
-            this.secondaryTerminalInput.Size = new System.Drawing.Size(1147, 30);
-            this.secondaryTerminalInput.TabIndex = 36;
-            this.secondaryTerminalInput.Text = "Enter Command";
-            this.secondaryTerminalInput.Enter += new System.EventHandler(this.secondaryTerminalInput_Enter);
-            this.secondaryTerminalInput.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.secondaryTerminalInput_KeyPress);
-            this.secondaryTerminalInput.Leave += new System.EventHandler(this.secondaryTerminalInput_Leave);
-            // 
             // serverJarPanel
             // 
             this.serverJarPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -345,7 +343,7 @@
             this.label9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.label9.Location = new System.Drawing.Point(111, 2);
+            this.label9.Location = new System.Drawing.Point(111, 19);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(123, 29);
             this.label9.TabIndex = 32;
@@ -356,7 +354,7 @@
             this.serverJarCombo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.serverJarCombo.FormattingEnabled = true;
             this.serverJarCombo.IntegralHeight = false;
-            this.serverJarCombo.Location = new System.Drawing.Point(3, 37);
+            this.serverJarCombo.Location = new System.Drawing.Point(3, 54);
             this.serverJarCombo.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.serverJarCombo.Name = "serverJarCombo";
             this.serverJarCombo.Size = new System.Drawing.Size(344, 35);
@@ -389,31 +387,31 @@
             this.toolStripSeparator5,
             this.saveTextToolStripMenuItem});
             this.terminalContextMenu.Name = "terminalContextMenu";
-            this.terminalContextMenu.Size = new System.Drawing.Size(211, 110);
+            this.terminalContextMenu.Size = new System.Drawing.Size(194, 82);
             // 
             // autoScrollToolStripMenuItem
             // 
             this.autoScrollToolStripMenuItem.Name = "autoScrollToolStripMenuItem";
-            this.autoScrollToolStripMenuItem.Size = new System.Drawing.Size(210, 24);
+            this.autoScrollToolStripMenuItem.Size = new System.Drawing.Size(193, 24);
             this.autoScrollToolStripMenuItem.Text = "AutoScroll";
             this.autoScrollToolStripMenuItem.Click += new System.EventHandler(this.autoScrollToolStripMenuItem_Click);
             // 
             // deleteAllTextToolStripMenuItem
             // 
             this.deleteAllTextToolStripMenuItem.Name = "deleteAllTextToolStripMenuItem";
-            this.deleteAllTextToolStripMenuItem.Size = new System.Drawing.Size(210, 24);
+            this.deleteAllTextToolStripMenuItem.Size = new System.Drawing.Size(193, 24);
             this.deleteAllTextToolStripMenuItem.Text = "Delete all Text";
             this.deleteAllTextToolStripMenuItem.Click += new System.EventHandler(this.deleteAllTextToolStripMenuItem_Click);
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(207, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(190, 6);
             // 
             // saveTextToolStripMenuItem
             // 
             this.saveTextToolStripMenuItem.Name = "saveTextToolStripMenuItem";
-            this.saveTextToolStripMenuItem.Size = new System.Drawing.Size(210, 24);
+            this.saveTextToolStripMenuItem.Size = new System.Drawing.Size(193, 24);
             this.saveTextToolStripMenuItem.Text = "Save Text to Logs";
             this.saveTextToolStripMenuItem.Click += new System.EventHandler(this.saveTextToolStripMenuItem_Click);
             // 
@@ -1148,7 +1146,6 @@
         private System.Windows.Forms.Panel serverTabsPanel;
         private System.Windows.Forms.RichTextBox secondaryTerminal;
         private System.Windows.Forms.Panel serverJarPanel;
-        private System.Windows.Forms.RichTextBox secondaryTerminalInput;
         private System.Windows.Forms.Panel serverStatusPanel;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label mainIpLabel;
@@ -1201,6 +1198,7 @@
         private System.Windows.Forms.ToolStripMenuItem saveTextToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.ToolStripMenuItem openLogsFolderToolStripMenuItem;
+        private System.Windows.Forms.TextBox secondaryTerminalInput;
     }
 }
 

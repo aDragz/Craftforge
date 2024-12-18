@@ -1211,6 +1211,16 @@ namespace CraftForge.Server.GUI.Console
         private void secondaryTerminalInput_KeyPress(object sender, KeyPressEventArgs e)
         {
             KeyPressEventArgs keyPress = (KeyPressEventArgs)e;
+            
+            //Clear the text
+            if (keyPress.KeyChar == (char) Keys.Escape)
+            {
+                secondaryTerminalInput.Text = string.Empty;
+                keyPress.Handled = true;
+                return;
+            }
+
+            //Enter command
             if (keyPress.KeyChar == (char)Keys.Enter)
             {
                 // Grab consoleID
@@ -1225,6 +1235,7 @@ namespace CraftForge.Server.GUI.Console
 
                         // Clear text
                         secondaryTerminalInput.Text = string.Empty;
+                        keyPress.Handled = true; //Remove the beeping sound when hitting enter
                         return;
                     }
                 }
@@ -1234,6 +1245,7 @@ namespace CraftForge.Server.GUI.Console
 
                 //Display console is not running in main console
                 secondaryTerminal.AppendText("Server is not running!\n");
+                keyPress.Handled = true;
             }
         }
 
