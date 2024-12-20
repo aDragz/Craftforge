@@ -202,6 +202,7 @@ namespace CraftForge.Server.GUI.Applications
             string currentTheme = Properties.Settings.Default.Theme;
 
             bool terminal_autoStart = Properties.Settings.Default.terminal_autoStart;
+            bool warnStopServer = Properties.Settings.Default.stopBtnWarning;
 
             bool terminal_autoScroll = Properties.Settings.Default.terminal_autoScroll;
 
@@ -209,6 +210,7 @@ namespace CraftForge.Server.GUI.Applications
             themeListConsolePanel.Text = currentTheme;
 
             AutoStartConsolePanel.Checked = terminal_autoStart;
+            warnStopServerConsolePanel.Checked = warnStopServer;
 
             autoScrollConsolePanel.Checked = terminal_autoScroll;
         }
@@ -216,9 +218,11 @@ namespace CraftForge.Server.GUI.Applications
         private void loadStartupSettings()
         {
             //Grab the startup settings
+            bool terminal_autoClose  = Properties.Settings.Default.terminal_closeOnServerOpen;
             bool startMenu_startMaximized = Properties.Settings.Default.startMenu_startMaximized;
             bool displaySystemSpecifications = Properties.Settings.Default.displaySystemSpecifications;
 
+            AutoCloseStartupPanel.Checked = terminal_autoClose;
             MaximizeStartupPanel.Checked = startMenu_startMaximized;
             SpecificationsStartupPanel.Checked = displaySystemSpecifications;
         }
@@ -334,6 +338,16 @@ namespace CraftForge.Server.GUI.Applications
             }
         }
 
+        private void AutoCloseStartupPanel_CheckedChanged(object sender, EventArgs e)
+        {
+            //Grab the value
+            bool autoClose = AutoCloseStartupPanel.Checked;
+
+            //Save the value
+            Properties.Settings.Default.terminal_closeOnServerOpen = autoClose;
+            Properties.Settings.Default.Save();
+        }
+
         private void MaximizeStartupPanel_CheckedChanged(object sender, EventArgs e)
         {
             //Grab the value
@@ -371,6 +385,16 @@ namespace CraftForge.Server.GUI.Applications
 
             //Save the value
             Properties.Settings.Default.terminal_autoScroll = autoScroll;
+            Properties.Settings.Default.Save();
+        }
+
+        private void warnStopServer_CheckedChanged(object sender, EventArgs e)
+        {
+            //Grab the value
+            bool warnStopServer = warnStopServerConsolePanel.Checked;
+
+            //Save the value
+            Properties.Settings.Default.stopBtnWarning = warnStopServer;
             Properties.Settings.Default.Save();
         }
 

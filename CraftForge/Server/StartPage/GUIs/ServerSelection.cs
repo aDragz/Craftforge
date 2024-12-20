@@ -4,10 +4,8 @@ using CraftForge.Server.StartPage.Classes;
 using Microsoft.VisualBasic.Devices;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Management;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -122,20 +120,6 @@ namespace CraftForge.Server.GUI.Setup
 
         private async void LoadServers()
         {
-            // Create FlowLayoutPanel where 4 items are displayed per line
-            /*FlowLayoutPanel flowLayoutPanel = new FlowLayoutPanel
-            {
-                Dock = DockStyle.Fill,
-                FlowDirection = FlowDirection.LeftToRight,
-                WrapContents = true,
-                AutoScroll = false,
-                BackColor = Color.Transparent,
-                AutoSize = true,
-                AutoSizeMode = AutoSizeMode.GrowAndShrink,
-                Anchor = AnchorStyles.Top | AnchorStyles.Bottom,
-            };*/
-
-
             TableLayoutPanel tableLayoutPanel = new TableLayoutPanel
             {
                 Dock = DockStyle.Fill,
@@ -152,44 +136,34 @@ namespace CraftForge.Server.GUI.Setup
                 this.Controls.Add(tableLayoutPanel);
             });
 
-            // Grab amount of files in Documents/Minecraft Multiplayer Host/Servers
-            string directory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("/CraftForge/Servers/");
+            string directory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("/CraftForge/Servers/"); //Set Directory
 
             if (!Directory.Exists(directory))
-            {
                 Directory.CreateDirectory(directory);
-            }
 
-            // Grab the amount of servers
-            int serverCount = Directory.GetDirectories(directory).Length;
+            int serverCount = Directory.GetDirectories(directory).Length; //Grab amount of servers / folders there are
 
-            // Grab the name of the servers
-            string[] serverNames = Directory.GetDirectories(directory);
+            string[] serverNames = Directory.GetDirectories(directory); //Grab the names of the folder
 
             List<string> serverPorts = new List<string>(); // List of used server ports
-            List<string> serversRunning = new List<string>();
+            List<string> serversRunning = new List<string>(); //List of servers which are open
 
             //Grab each open Terminal windows, and add the server name to the list
             foreach (Form form in Application.OpenForms)
             {
                 if (form is Terminal)
-                {
-                    string name = (form.Name);
-                    serversRunning.Add(name);
-                }
+                    serversRunning.Add(form.Name);
             }
 
             // Add items to the FlowLayoutPanel
             for (int i = 0; i < serverCount; i++)
             {
                 string serverName = Path.GetFileName(serverNames[i]);
+                string serverNameShort = serverName.Length > 33 ? serverName.Substring(0, 33) + "..." : serverName;
                 bool norunbat = false;
 
-                //Check if start.bat exists in the server directory
-                if (!File.Exists(serverNames[i] + "\\start.bat"))
-                {
+                if (!File.Exists(serverNames[i] + "\\start.bat")) //Check to see if start.bat exists, else it will show a "fix" button
                     norunbat = true;
-                }
 
                 //Main panel
                 Panel panel = new Panel
@@ -213,6 +187,7 @@ namespace CraftForge.Server.GUI.Setup
                     Font = new Font("Consolas", 10),
                 };
 
+                //Fix if there is no start.bat (norunbat)
                 Button noRunButton = new Button
                 {
                     Text = "Fix Server",
@@ -225,24 +200,37 @@ namespace CraftForge.Server.GUI.Setup
                 };
 
                 //Location Text
-                RichTextBox label = new RichTextBox
+                Label label = new Label
                 {
-                    Text = serverName,
-                    Name = "RichTextBox " + serverName,
+                    Text = serverNameShort,
+                    Name = "Label " + serverName,
                     Width = 300,
-                    Height = 60,
+                    Height = 20,
                     Margin = new Padding(10),
                     Location = new Point(10, 20),
                     Font = new Font("Consolas", 10),
-                    ReadOnly = true,
                     BorderStyle = BorderStyle.None,
                     BackColor = this.BackColor,
-                    ScrollBars = RichTextBoxScrollBars.None,
                 };
+
+                //Port Label
+                Label labelPort = new Label
+                {
+                    Text = "Unknown", //If it cannot find port, it will display 'Unknown'
+                    Name = "Port " + serverName,
+                    Width = 300,
+                    Height = 20,
+                    Margin = new Padding(10),
+                    Location = new Point(10, 45),
+                    Font = new Font("Consolas", 10),
+                    BorderStyle = BorderStyle.None,
+                    BackColor = this.BackColor,
+                };
+
 
                 Label fixServerLabel = new Label
                 {
-                    Text = serverName + " - Server is missing start.bat",
+                    Text = serverNameShort + " - Server is missing start.bat",
                     Name = "FixServerLabel " + serverName,
                     Width = 300,
                     Height = 60,
@@ -268,7 +256,7 @@ namespace CraftForge.Server.GUI.Setup
                 else
                 {
                     panel.Controls.Add(label);
-
+                    panel.Controls.Add(labelPort);
                 }
 
                 //Grab server.properties file and read server-port
@@ -288,21 +276,16 @@ namespace CraftForge.Server.GUI.Setup
                             {
                                 // Extract the server-port value
                                 string serverPort = line.Substring("server-port=".Length);
-                                // Set the label colour to the previous color
-                                this.Invoke((MethodInvoker)delegate
-                                {
-                                    label.Select(0, serverName.Length);
-                                    label.SelectionColor = label.ForeColor;
-                                });
+                                labelPort.Text = serverPort;
 
-                                label.Text = label.Text + $"\n{serverPort}";
+                                if (string.IsNullOrEmpty(serverPort))
+                                    labelPort.Text = "Empty";
 
                                 foreach (string port in serverPorts)
                                 {
                                     if (port == serverPort)
                                     {
-                                        label.Select(label.Text.IndexOf(serverPort), serverPort.Length);
-                                        label.SelectionColor = Color.Red;
+                                        labelPort.ForeColor = Color.Red;
                                     }
                                 }
 
@@ -310,17 +293,16 @@ namespace CraftForge.Server.GUI.Setup
                             });
                         }
                     }
+                }
 
-                    //Check if the server is running
-                    if (serversRunning.Contains(serverName))
+                //If the serverName is open in a Terminal Application, it will set the label to green.
+                //This displays to the user that the server is running. Does not mean that it is Online.
+                if (serversRunning.Contains(serverName))
+                {
+                    this.Invoke((MethodInvoker)delegate
                     {
-                        //Set the label colour to green
-                        this.Invoke((MethodInvoker)delegate
-                        {
-                            label.Select(0, serverName.Length);
-                            label.SelectionColor = Color.Green;
-                        });
-                    }
+                        label.ForeColor = Color.Green; //Set the text to green to display the server is running in the Terminal Application.
+                    });
                 }
 
                 // Add event handler to the button
@@ -364,10 +346,14 @@ namespace CraftForge.Server.GUI.Setup
             try
             {
                 instancesRunning.Add(serverName);
-                instancesRunning.Remove(this.Name);
                 terminal.Show();
 
-                this.Hide();
+                if (Properties.Settings.Default.terminal_closeOnServerOpen)
+                {
+                    instancesRunning.Remove(this.Name);
+
+                    this.Hide();
+                }
             }
             catch { }
         }

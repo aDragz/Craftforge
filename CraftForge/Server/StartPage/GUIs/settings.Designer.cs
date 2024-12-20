@@ -56,10 +56,13 @@
             this.tabPage = new System.Windows.Forms.TabControl();
             this.Appearance = new System.Windows.Forms.TabPage();
             this.StartupPanel = new System.Windows.Forms.Panel();
+            this.AutoCloseStartupPanel = new System.Windows.Forms.CheckBox();
             this.SpecificationsStartupPanel = new System.Windows.Forms.CheckBox();
             this.MaximizeStartupPanel = new System.Windows.Forms.CheckBox();
             this.Startup = new System.Windows.Forms.Label();
             this.ConsolePanel = new System.Windows.Forms.Panel();
+            this.warnStopServerConsolePanel = new System.Windows.Forms.CheckBox();
+            this.customThemeBtn = new System.Windows.Forms.Button();
             this.ConsoleConsolePanel = new System.Windows.Forms.Label();
             this.autoScrollConsolePanel = new System.Windows.Forms.CheckBox();
             this.AutoStartConsolePanel = new System.Windows.Forms.CheckBox();
@@ -72,7 +75,6 @@
             this.Version = new System.Windows.Forms.Label();
             this.TypeVersionPanel = new System.Windows.Forms.Label();
             this.TypeListAppPanel = new System.Windows.Forms.ComboBox();
-            this.customThemeBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -169,20 +171,34 @@
             // 
             // StartupPanel
             // 
+            this.StartupPanel.Controls.Add(this.AutoCloseStartupPanel);
             this.StartupPanel.Controls.Add(this.SpecificationsStartupPanel);
             this.StartupPanel.Controls.Add(this.MaximizeStartupPanel);
             this.StartupPanel.Controls.Add(this.Startup);
-            this.StartupPanel.Location = new System.Drawing.Point(0, 197);
+            this.StartupPanel.Location = new System.Drawing.Point(0, 235);
             this.StartupPanel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.StartupPanel.Name = "StartupPanel";
-            this.StartupPanel.Size = new System.Drawing.Size(729, 134);
+            this.StartupPanel.Size = new System.Drawing.Size(729, 164);
             this.StartupPanel.TabIndex = 11;
+            // 
+            // AutoCloseStartupPanel
+            // 
+            this.AutoCloseStartupPanel.AutoSize = true;
+            this.AutoCloseStartupPanel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.AutoCloseStartupPanel.Location = new System.Drawing.Point(18, 32);
+            this.AutoCloseStartupPanel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.AutoCloseStartupPanel.Name = "AutoCloseStartupPanel";
+            this.AutoCloseStartupPanel.Size = new System.Drawing.Size(226, 29);
+            this.AutoCloseStartupPanel.TabIndex = 18;
+            this.AutoCloseStartupPanel.Text = "Close On Server Start";
+            this.AutoCloseStartupPanel.UseVisualStyleBackColor = true;
+            this.AutoCloseStartupPanel.CheckedChanged += new System.EventHandler(this.AutoCloseStartupPanel_CheckedChanged);
             // 
             // SpecificationsStartupPanel
             // 
             this.SpecificationsStartupPanel.AutoSize = true;
             this.SpecificationsStartupPanel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.SpecificationsStartupPanel.Location = new System.Drawing.Point(18, 72);
+            this.SpecificationsStartupPanel.Location = new System.Drawing.Point(18, 112);
             this.SpecificationsStartupPanel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.SpecificationsStartupPanel.Name = "SpecificationsStartupPanel";
             this.SpecificationsStartupPanel.Size = new System.Drawing.Size(281, 29);
@@ -195,7 +211,7 @@
             // 
             this.MaximizeStartupPanel.AutoSize = true;
             this.MaximizeStartupPanel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.MaximizeStartupPanel.Location = new System.Drawing.Point(18, 32);
+            this.MaximizeStartupPanel.Location = new System.Drawing.Point(18, 72);
             this.MaximizeStartupPanel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.MaximizeStartupPanel.Name = "MaximizeStartupPanel";
             this.MaximizeStartupPanel.Size = new System.Drawing.Size(212, 29);
@@ -216,6 +232,7 @@
             // 
             // ConsolePanel
             // 
+            this.ConsolePanel.Controls.Add(this.warnStopServerConsolePanel);
             this.ConsolePanel.Controls.Add(this.customThemeBtn);
             this.ConsolePanel.Controls.Add(this.ConsoleConsolePanel);
             this.ConsolePanel.Controls.Add(this.autoScrollConsolePanel);
@@ -226,8 +243,32 @@
             this.ConsolePanel.Location = new System.Drawing.Point(0, 0);
             this.ConsolePanel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ConsolePanel.Name = "ConsolePanel";
-            this.ConsolePanel.Size = new System.Drawing.Size(729, 197);
+            this.ConsolePanel.Size = new System.Drawing.Size(729, 235);
             this.ConsolePanel.TabIndex = 10;
+            // 
+            // warnStopServerConsolePanel
+            // 
+            this.warnStopServerConsolePanel.AutoSize = true;
+            this.warnStopServerConsolePanel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.warnStopServerConsolePanel.Location = new System.Drawing.Point(18, 200);
+            this.warnStopServerConsolePanel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.warnStopServerConsolePanel.Name = "warnStopServerConsolePanel";
+            this.warnStopServerConsolePanel.Size = new System.Drawing.Size(368, 29);
+            this.warnStopServerConsolePanel.TabIndex = 19;
+            this.warnStopServerConsolePanel.Text = "Warning Popup when Stopping Server";
+            this.warnStopServerConsolePanel.UseVisualStyleBackColor = true;
+            this.warnStopServerConsolePanel.CheckedChanged += new System.EventHandler(this.warnStopServer_CheckedChanged);
+            // 
+            // customThemeBtn
+            // 
+            this.customThemeBtn.Font = new System.Drawing.Font("Consolas", 8F);
+            this.customThemeBtn.Location = new System.Drawing.Point(393, 57);
+            this.customThemeBtn.Name = "customThemeBtn";
+            this.customThemeBtn.Size = new System.Drawing.Size(166, 30);
+            this.customThemeBtn.TabIndex = 18;
+            this.customThemeBtn.Text = "Customize Theme";
+            this.customThemeBtn.UseVisualStyleBackColor = true;
+            this.customThemeBtn.Click += new System.EventHandler(this.customThemeBtn_Click);
             // 
             // ConsoleConsolePanel
             // 
@@ -364,17 +405,6 @@
             this.TypeListAppPanel.TabIndex = 6;
             this.TypeListAppPanel.SelectedIndexChanged += new System.EventHandler(this.TypeListConsolePanel_SelectedIndexChanged);
             // 
-            // customThemeBtn
-            // 
-            this.customThemeBtn.Font = new System.Drawing.Font("Consolas", 8F);
-            this.customThemeBtn.Location = new System.Drawing.Point(393, 57);
-            this.customThemeBtn.Name = "customThemeBtn";
-            this.customThemeBtn.Size = new System.Drawing.Size(166, 30);
-            this.customThemeBtn.TabIndex = 18;
-            this.customThemeBtn.Text = "Customize Theme";
-            this.customThemeBtn.UseVisualStyleBackColor = true;
-            this.customThemeBtn.Click += new System.EventHandler(this.customThemeBtn_Click);
-            // 
             // settings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -384,6 +414,8 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(1136, 578);
+            this.MinimumSize = new System.Drawing.Size(1136, 578);
             this.Name = "settings";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "settings";
@@ -429,5 +461,7 @@
         private System.Windows.Forms.CheckBox AutoUpdateAppPanel;
         private System.Windows.Forms.CheckBox SpecificationsStartupPanel;
         private System.Windows.Forms.Button customThemeBtn;
+        private System.Windows.Forms.CheckBox warnStopServerConsolePanel;
+        private System.Windows.Forms.CheckBox AutoCloseStartupPanel;
     }
 }

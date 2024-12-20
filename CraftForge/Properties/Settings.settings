@@ -11,6 +11,9 @@
     <Setting Name="terminal_autoScroll" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
+	<Setting Name="terminal_closeOnServerOpen" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
     <Setting Name="Theme" Type="System.String" Scope="User">
       <Value Profile="(Default)">default</Value>
     </Setting>
@@ -21,6 +24,9 @@
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="displaySystemSpecifications" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="stopBtnWarning" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
   </Settings>
