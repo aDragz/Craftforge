@@ -118,5 +118,17 @@ namespace CraftForge.Properties {
                 this["stopBtnWarning"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool terminal_closeOnServerOpen {
+            get {
+                return ((bool)(this["terminal_closeOnServerOpen"]));
+            }
+            set {
+                this["terminal_closeOnServerOpen"] = value;
+            }
+        }
     }
 }

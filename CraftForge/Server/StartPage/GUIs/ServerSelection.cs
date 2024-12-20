@@ -346,10 +346,14 @@ namespace CraftForge.Server.GUI.Setup
             try
             {
                 instancesRunning.Add(serverName);
-                instancesRunning.Remove(this.Name);
                 terminal.Show();
 
-                this.Hide();
+                if (Properties.Settings.Default.terminal_closeOnServerOpen)
+                {
+                    instancesRunning.Remove(this.Name);
+
+                    this.Hide();
+                }
             }
             catch { }
         }

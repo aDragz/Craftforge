@@ -218,9 +218,11 @@ namespace CraftForge.Server.GUI.Applications
         private void loadStartupSettings()
         {
             //Grab the startup settings
+            bool terminal_autoClose  = Properties.Settings.Default.terminal_closeOnServerOpen;
             bool startMenu_startMaximized = Properties.Settings.Default.startMenu_startMaximized;
             bool displaySystemSpecifications = Properties.Settings.Default.displaySystemSpecifications;
 
+            AutoCloseStartupPanel.Checked = terminal_autoClose;
             MaximizeStartupPanel.Checked = startMenu_startMaximized;
             SpecificationsStartupPanel.Checked = displaySystemSpecifications;
         }
@@ -334,6 +336,16 @@ namespace CraftForge.Server.GUI.Applications
                 //Set the text back to the current theme
                 themeListConsolePanel.Text = Properties.Settings.Default.Theme;
             }
+        }
+
+        private void AutoCloseStartupPanel_CheckedChanged(object sender, EventArgs e)
+        {
+            //Grab the value
+            bool autoClose = AutoCloseStartupPanel.Checked;
+
+            //Save the value
+            Properties.Settings.Default.terminal_closeOnServerOpen = autoClose;
+            Properties.Settings.Default.Save();
         }
 
         private void MaximizeStartupPanel_CheckedChanged(object sender, EventArgs e)
