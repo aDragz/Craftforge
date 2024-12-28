@@ -258,7 +258,7 @@ namespace CraftForge.Server.GUI.Console
 
         private void InitializeTheme()
         {
-            Theme.initializeTheme(this, serverTabsPanel);
+            Theme.initializeTheme(this, serverTabsPanel, menuStrip1);
 
             //Make CPU/Ram labels invisible
             cpuUsageLabel.Visible = false;
@@ -1454,7 +1454,7 @@ namespace CraftForge.Server.GUI.Console
         private void reToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //Show message box to confirm
-            DialogResult dialogResult = MessageBox.Show("Are you sure you reset all themes?", "CraftForge", MessageBoxButtons.YesNo);
+            DialogResult dialogResult = MessageBox.Show("Are you sure you want to delete all themes?", "CraftForge", MessageBoxButtons.YesNo);
 
             if (dialogResult == DialogResult.Yes)
             {

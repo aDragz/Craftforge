@@ -28,13 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Title title1 = new System.Windows.Forms.DataVisualization.Charting.Title();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea7 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend7 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series7 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Title title4 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea8 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend8 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series8 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.themeList = new System.Windows.Forms.ComboBox();
             this.terminalBackground = new System.Windows.Forms.FlowLayoutPanel();
             this.ramUsageChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
@@ -115,42 +115,42 @@
             // ramUsageChart
             // 
             this.ramUsageChart.BackColor = System.Drawing.Color.Transparent;
-            chartArea1.BackSecondaryColor = System.Drawing.Color.Transparent;
-            chartArea1.BorderColor = System.Drawing.Color.Transparent;
-            chartArea1.Name = "ChartArea1";
-            this.ramUsageChart.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            legend1.Title = "Chart";
-            this.ramUsageChart.Legends.Add(legend1);
+            chartArea7.BackSecondaryColor = System.Drawing.Color.Transparent;
+            chartArea7.BorderColor = System.Drawing.Color.Transparent;
+            chartArea7.Name = "ChartArea1";
+            this.ramUsageChart.ChartAreas.Add(chartArea7);
+            legend7.Name = "Legend1";
+            legend7.Title = "Chart";
+            this.ramUsageChart.Legends.Add(legend7);
             this.ramUsageChart.Location = new System.Drawing.Point(1336, 261);
             this.ramUsageChart.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ramUsageChart.Name = "ramUsageChart";
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series1.Legend = "Legend1";
-            series1.Name = "CPU/Ram";
-            this.ramUsageChart.Series.Add(series1);
+            series7.ChartArea = "ChartArea1";
+            series7.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series7.Legend = "Legend1";
+            series7.Name = "CPU/Ram";
+            this.ramUsageChart.Series.Add(series7);
             this.ramUsageChart.Size = new System.Drawing.Size(349, 151);
             this.ramUsageChart.TabIndex = 51;
             this.ramUsageChart.Text = "chart2";
-            title1.Name = "Title1";
-            title1.Text = "CPU/Ram Chart";
-            this.ramUsageChart.Titles.Add(title1);
+            title4.Name = "Title1";
+            title4.Text = "CPU/Ram Chart";
+            this.ramUsageChart.Titles.Add(title4);
             // 
             // cpuUsageChart
             // 
             this.cpuUsageChart.BackColor = System.Drawing.Color.Transparent;
-            chartArea2.Name = "ChartArea1";
-            this.cpuUsageChart.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.cpuUsageChart.Legends.Add(legend2);
+            chartArea8.Name = "ChartArea1";
+            this.cpuUsageChart.ChartAreas.Add(chartArea8);
+            legend8.Name = "Legend1";
+            this.cpuUsageChart.Legends.Add(legend8);
             this.cpuUsageChart.Location = new System.Drawing.Point(1336, 417);
             this.cpuUsageChart.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.cpuUsageChart.Name = "cpuUsageChart";
-            series2.ChartArea = "ChartArea1";
-            series2.Legend = "Legend1";
-            series2.Name = "Series1";
-            this.cpuUsageChart.Series.Add(series2);
+            series8.ChartArea = "ChartArea1";
+            series8.Legend = "Legend1";
+            series8.Name = "Series1";
+            this.cpuUsageChart.Series.Add(series8);
             this.cpuUsageChart.Size = new System.Drawing.Size(349, 151);
             this.cpuUsageChart.TabIndex = 50;
             this.cpuUsageChart.Text = "chart1";
