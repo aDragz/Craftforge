@@ -43,6 +43,9 @@
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.buildSelector = new System.Windows.Forms.ComboBox();
+            this.typeLbl = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.buildLbl = new System.Windows.Forms.Label();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -51,7 +54,7 @@
             this.label3.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.label3.Location = new System.Drawing.Point(516, 204);
+            this.label3.Location = new System.Drawing.Point(516, 210);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(85, 29);
             this.label3.TabIndex = 21;
@@ -62,7 +65,7 @@
             this.label2.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.label2.Location = new System.Drawing.Point(530, 138);
+            this.label2.Location = new System.Drawing.Point(530, 142);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(57, 29);
             this.label2.TabIndex = 20;
@@ -73,7 +76,7 @@
             this.label1.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.label1.Location = new System.Drawing.Point(492, 73);
+            this.label1.Location = new System.Drawing.Point(492, 75);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(130, 29);
             this.label1.TabIndex = 19;
@@ -94,19 +97,19 @@
             // 
             this.motdTextBox.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.motdTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.motdTextBox.Location = new System.Drawing.Point(94, 232);
+            this.motdTextBox.Location = new System.Drawing.Point(94, 240);
             this.motdTextBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.motdTextBox.Name = "motdTextBox";
             this.motdTextBox.Size = new System.Drawing.Size(930, 34);
             this.motdTextBox.TabIndex = 16;
-            this.motdTextBox.Text = "motd";
+            this.motdTextBox.Text = "My Minecraft Server";
             this.motdTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // IpTextBox
             // 
             this.IpTextBox.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.IpTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.IpTextBox.Location = new System.Drawing.Point(439, 101);
+            this.IpTextBox.Location = new System.Drawing.Point(439, 105);
             this.IpTextBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.IpTextBox.Name = "IpTextBox";
             this.IpTextBox.Size = new System.Drawing.Size(241, 34);
@@ -117,12 +120,12 @@
             // versionSelector
             // 
             this.versionSelector.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.versionSelector.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.versionSelector.Font = new System.Drawing.Font("Consolas", 12F);
             this.versionSelector.FormattingEnabled = true;
             this.versionSelector.Location = new System.Drawing.Point(864, 370);
             this.versionSelector.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.versionSelector.Name = "versionSelector";
-            this.versionSelector.Size = new System.Drawing.Size(243, 33);
+            this.versionSelector.Size = new System.Drawing.Size(243, 31);
             this.versionSelector.TabIndex = 13;
             this.versionSelector.SelectedIndexChanged += new System.EventHandler(this.versionSelector_SelectedIndexChanged);
             // 
@@ -130,7 +133,7 @@
             // 
             this.nameTextBox.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.nameTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.nameTextBox.Location = new System.Drawing.Point(437, 35);
+            this.nameTextBox.Location = new System.Drawing.Point(437, 37);
             this.nameTextBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.nameTextBox.MaxLength = 150;
             this.nameTextBox.Name = "nameTextBox";
@@ -142,7 +145,7 @@
             // typeSelector
             // 
             this.typeSelector.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.typeSelector.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.typeSelector.Font = new System.Drawing.Font("Consolas", 12F);
             this.typeSelector.FormattingEnabled = true;
             this.typeSelector.Items.AddRange(new object[] {
             "Paper",
@@ -152,7 +155,7 @@
             this.typeSelector.Location = new System.Drawing.Point(864, 336);
             this.typeSelector.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.typeSelector.Name = "typeSelector";
-            this.typeSelector.Size = new System.Drawing.Size(243, 33);
+            this.typeSelector.Size = new System.Drawing.Size(243, 31);
             this.typeSelector.TabIndex = 12;
             this.typeSelector.Text = "Paper";
             this.typeSelector.SelectedIndexChanged += new System.EventHandler(this.typeSelector_SelectedIndexChanged);
@@ -161,7 +164,7 @@
             // 
             this.portTextBox.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.portTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.portTextBox.Location = new System.Drawing.Point(515, 166);
+            this.portTextBox.Location = new System.Drawing.Point(515, 172);
             this.portTextBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.portTextBox.MaxLength = 5;
             this.portTextBox.Name = "portTextBox";
@@ -203,13 +206,46 @@
             // 
             this.buildSelector.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buildSelector.Enabled = false;
-            this.buildSelector.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.buildSelector.Font = new System.Drawing.Font("Consolas", 12F);
             this.buildSelector.FormattingEnabled = true;
             this.buildSelector.Location = new System.Drawing.Point(864, 406);
             this.buildSelector.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.buildSelector.Name = "buildSelector";
-            this.buildSelector.Size = new System.Drawing.Size(243, 33);
+            this.buildSelector.Size = new System.Drawing.Size(243, 31);
             this.buildSelector.TabIndex = 23;
+            // 
+            // typeLbl
+            // 
+            this.typeLbl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.typeLbl.AutoSize = true;
+            this.typeLbl.Font = new System.Drawing.Font("Consolas", 12F);
+            this.typeLbl.Location = new System.Drawing.Point(788, 339);
+            this.typeLbl.Name = "typeLbl";
+            this.typeLbl.Size = new System.Drawing.Size(65, 23);
+            this.typeLbl.TabIndex = 24;
+            this.typeLbl.Text = "Type:";
+            // 
+            // label4
+            // 
+            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Consolas", 12F);
+            this.label4.Location = new System.Drawing.Point(755, 373);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(98, 23);
+            this.label4.TabIndex = 25;
+            this.label4.Text = "Version:";
+            // 
+            // buildLbl
+            // 
+            this.buildLbl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buildLbl.AutoSize = true;
+            this.buildLbl.Font = new System.Drawing.Font("Consolas", 12F);
+            this.buildLbl.Location = new System.Drawing.Point(777, 409);
+            this.buildLbl.Name = "buildLbl";
+            this.buildLbl.Size = new System.Drawing.Size(76, 23);
+            this.buildLbl.TabIndex = 26;
+            this.buildLbl.Text = "Build:";
             // 
             // CreateNewServer
             // 
@@ -217,6 +253,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1122, 538);
             this.ContextMenuStrip = this.contextMenuStrip1;
+            this.Controls.Add(this.buildLbl);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.typeLbl);
             this.Controls.Add(this.buildSelector);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -257,5 +296,8 @@
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.ComboBox buildSelector;
+        private System.Windows.Forms.Label typeLbl;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label buildLbl;
     }
 }
