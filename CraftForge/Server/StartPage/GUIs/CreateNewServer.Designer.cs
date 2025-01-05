@@ -149,6 +149,7 @@
             this.typeSelector.FormattingEnabled = true;
             this.typeSelector.Items.AddRange(new object[] {
             "Paper",
+            "Spigot",
             "Velocity",
             "Waterfall",
             "Custom"});

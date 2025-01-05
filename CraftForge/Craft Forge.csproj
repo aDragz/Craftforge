@@ -121,6 +121,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Server\StartPage\Classes\runBuildTool.cs" />
     <Compile Include="Server\StartPage\Classes\startBatFile.cs" />
     <Compile Include="Server\Terminal\about.cs">
       <SubType>Form</SubType>

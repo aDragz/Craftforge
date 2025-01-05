@@ -1,7 +1,10 @@
-﻿using CraftForge.Server.GUI.Console;
+﻿using CraftForge.Server.GUI.Applications;
+using CraftForge.Server.GUI.Console;
 using CraftForge.Server.Setup;
+using CraftForge.Server.StartPage.Classes;
 using Newtonsoft.Json.Linq;
 using System;
+using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -48,11 +51,14 @@ namespace CraftForge.Server.GUI.Setup
             {
                 // Url Strings
                 string version = versionSelector.SelectedItem.ToString();
-                string build = buildSelector.SelectedItem.ToString();
 
                 if (type.Equals("paper") || type.Equals("waterfall") || type.Equals("velocity"))
                 {
+                    string build = buildSelector.SelectedItem.ToString();
                     url = string.Format("https://api.papermc.io/v2/projects/{0}/versions/{1}/builds/{2}/downloads/{0}-{1}-{2}.jar", type, version, build);
+                } if (type.Equals("spigot"))
+                {
+                    url = null; //To create the directory
                 }
             }
 
@@ -60,6 +66,9 @@ namespace CraftForge.Server.GUI.Setup
             {
                 return;
             }
+
+            if (type.Equals("spigot")) //Run here so it can create the files/folders without buildTools.jar crashing
+                runBuildTool.runTool(Path.Combine("servers", serverName), versionSelector.SelectedItem.ToString()); //Run Build tool
 
             // Once created, Open terminal
             Terminal terminal = new Terminal
