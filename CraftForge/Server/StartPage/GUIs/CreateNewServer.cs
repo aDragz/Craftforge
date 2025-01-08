@@ -90,6 +90,10 @@ namespace CraftForge.Server.GUI.Setup
             {
                 await getPaperMcVersions();
             }
+            else if (serverType.Equals("spigot"))
+            {
+                await getSpigotVersions();
+            }
             else if (serverType.Equals("custom"))
             {
                 // Tell the user to add their own jar
@@ -117,6 +121,12 @@ namespace CraftForge.Server.GUI.Setup
             if (serverType.Equals("paper") || serverType.Equals("waterfall") || serverType.Equals("velocity"))
             {
                 await getPaperMcBuilds();
+            }
+            else if (serverType.Equals("spigot"))
+            {
+                buildSelector.Text = "Disabled";
+                buildSelector.Items.Clear();
+                buildSelector.Enabled = false;
             }
             else
             {
@@ -190,6 +200,38 @@ namespace CraftForge.Server.GUI.Setup
                     // Though, set text to the most recent one
                     buildSelector.Text = latestVersion;
                     buildSelector.Enabled = true;
+                }
+                catch { }
+            }
+        }
+
+        private async Task getSpigotVersions()
+        {
+            string serverType = typeSelector.SelectedItem.ToString().ToLower();
+
+            string versionUrl = string.Format("https://craftforge.dev/api/CraftForge/Server/Spigot/versions.json");
+
+            using (HttpClient client = new HttpClient())
+            {
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(versionUrl);
+                    response.EnsureSuccessStatusCode();
+                    string responseBody = await response.Content.ReadAsStringAsync();
+
+                    JObject json = JObject.Parse(responseBody);
+                    JArray versions = (JArray)json["versions"];
+                    string latestVersion = versions.Last.ToString();
+
+                    versionSelector.Items.Clear();
+                    // Add all builds to the "build" selector
+                    foreach (var version in versions)
+                    {
+                        versionSelector.Items.Add(version);
+                    }
+
+                    // Though, set text to the most recent one
+                    versionSelector.Text = latestVersion;
                 }
                 catch { }
             }
