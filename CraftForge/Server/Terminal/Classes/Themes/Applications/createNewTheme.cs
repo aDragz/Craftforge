@@ -1,20 +1,22 @@
-﻿using System;
+﻿using CraftForge.Server.GUI.Setup;
+using System;
 using System.IO;
 using System.Windows.Forms;
 
 namespace CraftForge.Server.Classes.Themes.Applications
 {
-    public partial class createNewTheme : Form
+    public partial class CreateNewTheme : Form
     {
         public static string themeName;
 
-        public createNewTheme()
+        public CreateNewTheme()
         {
             InitializeComponent();
         }
 
         private void createNewTheme_Load(object sender, EventArgs e)
         {
+            this.Text = $"Create New Theme | CraftForge {Startup.release} - v{Startup.applicationVersion}"; //Change this if I change title again (ctrl+f)
             loadThemesList(); //Load the themes for the "copyFromList" ComboBox
 
             themeNameTxt.Focus();

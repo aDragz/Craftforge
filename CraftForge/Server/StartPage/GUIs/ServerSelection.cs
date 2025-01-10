@@ -1,4 +1,5 @@
-﻿using CraftForge.Server.Classes.Console.Applications;
+﻿using CraftForge.NewGUI;
+using CraftForge.Server.Classes.Console.Applications;
 using CraftForge.Server.GUI.Console;
 using CraftForge.Server.StartPage.Classes;
 using Microsoft.VisualBasic.Devices;
@@ -385,8 +386,7 @@ namespace CraftForge.Server.GUI.Setup
 
         private void label2_Click(object sender, EventArgs e)
         {
-            //Show the settings Application
-            openSettings.runSettingsApp();
+            openSettings.runSettingsApp(); //Show the settings Application
         }
     }
 }

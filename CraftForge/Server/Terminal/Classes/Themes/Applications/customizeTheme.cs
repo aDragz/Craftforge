@@ -37,6 +37,7 @@ namespace CraftForge.Server.Classes.Themes.Applications
         string Terminal_stopBtn_Font; // Done
 
         string Terminal_sideBar_BackColour; // Doing
+        string Terminal_menuStrip_BackColour;
 
         string Global_Btn_TextColour; //NA
         string Global_Btn_BackColour; //NA
@@ -74,13 +75,10 @@ namespace CraftForge.Server.Classes.Themes.Applications
             selectedItemBox.Items.Add(""); //Add spacer
             selectedItemBox.Items.Add("terminalBackground");
             selectedItemBox.Items.Add("secondaryTerminal");
-            //selectedItemBox.Items.Add("secondaryTerminalInput"); //Needs working on
             selectedItemBox.Items.Add("ramUsageChart");
             selectedItemBox.Items.Add(""); //Add spacer
-            //selectedItemBox.Items.Add("serverJarCombo"); //Needs working on
-            //selectedItemBox.Items.Add("serverStatusPnl"); //Needs working on
-            //selectedItemBox.Items.Add(""); //Add spacer
             selectedItemBox.Items.Add("statusBar");
+            selectedItemBox.Items.Add("menuStrip");
 
             loadThemesList();
             loadGUIValues();
@@ -131,6 +129,7 @@ namespace CraftForge.Server.Classes.Themes.Applications
                 TerminalStopBtnFont = "Consolas, 14",
 
                 TerminalSideBarBackColour = "255, 255, 255, 255",
+                TerminalMenuStripBackColour = "255, 255, 255, 255",
 
                 GlobalBtnTextColour = "0, 0, 0, 0",
                 GlobalBtnBackColour = "255, 255, 255, 255",
@@ -285,6 +284,15 @@ namespace CraftForge.Server.Classes.Themes.Applications
                 case "statusBar":
                     itemColourLbl.Text = "Text Colour: None";
                     itemBackColourLbl.Text = "Back Colour: " + Terminal_sideBar_BackColour;
+                    itemFontLbl.Text = "Font: None";
+                    itemTextColourBtn.Enabled = false;
+                    itemBackColourBtn.Enabled = true;
+                    itemFontBtn.Enabled = false;
+
+                    break;
+                case "menuStrip":
+                    itemColourLbl.Text = "Text Colour: None";
+                    itemBackColourLbl.Text = "Back Colour: " + Terminal_menuStrip_BackColour;
                     itemFontLbl.Text = "Font: None";
                     itemTextColourBtn.Enabled = false;
                     itemBackColourBtn.Enabled = true;
@@ -464,6 +472,12 @@ namespace CraftForge.Server.Classes.Themes.Applications
                     statusBar.BackColor = Color.FromArgb(a, r, g, b);
                     Terminal_sideBar_BackColour = colour;
                 }
+            } else if (forceSelectedItem == "menuStrip" || selectedItem == "menuStrip")
+            {
+                if (isBackColour)
+                {
+                    Terminal_menuStrip_BackColour = colour;
+                }
             }
         }
 
@@ -507,7 +521,7 @@ namespace CraftForge.Server.Classes.Themes.Applications
 
             if (themeList.Text.Equals("Create a new theme"))
             {
-                createNewTheme createNewTheme = new createNewTheme();
+                CreateNewTheme createNewTheme = new CreateNewTheme();
                 createNewTheme.ShowDialog();
 
                 if (createNewTheme.DialogResult == DialogResult.OK)
@@ -515,7 +529,7 @@ namespace CraftForge.Server.Classes.Themes.Applications
                     loadThemesList(); //Reload the list
 
                     //Select the new theme
-                    themeList.Text = createNewTheme.themeName;
+                    themeList.Text = CreateNewTheme.themeName;
                 }
 
                 return;
@@ -570,7 +584,9 @@ namespace CraftForge.Server.Classes.Themes.Applications
                 Terminal_sideBar_BackColour = settings.Terminal_sideBar_BackColour;
                 updateColour(Terminal_sideBar_BackColour, "statusBar", true);
 
-                //Add all NA
+                //Add all NA (Not added) values
+                Terminal_menuStrip_BackColour = settings.Terminal_menuStrip_BackColour;
+
                 Terminal_Chart_BackColourSecondary = settings.Terminal_Chart_BackColourSecondary;
                 Global_Btn_TextColour = settings.Global_Btn_TextColour;
                 Global_Btn_BackColour = settings.Global_Btn_BackColour;
@@ -622,6 +638,7 @@ namespace CraftForge.Server.Classes.Themes.Applications
                 TerminalStopBtnBackColour = Terminal_stopBtn_BackColour,
                 TerminalStopBtnFont = Terminal_stopBtn_Font,
                 TerminalSideBarBackColour = Terminal_sideBar_BackColour,
+                TerminalMenuStripBackColour = Terminal_menuStrip_BackColour,
                 GlobalBtnTextColour = Global_Btn_TextColour,
                 GlobalBtnBackColour = Global_Btn_BackColour,
                 GlobalBtnFont = Global_Btn_Font,

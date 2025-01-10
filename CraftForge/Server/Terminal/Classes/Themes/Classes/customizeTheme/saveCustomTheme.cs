@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CraftForge.Server.Classes.Themes.Applications
+﻿namespace CraftForge.Server.Classes.Themes.Applications
 {
     internal class saveCustomTheme
     {
@@ -21,6 +15,7 @@ namespace CraftForge.Server.Classes.Themes.Applications
         public string TerminalStopBtnBackColour { get; set; }
         public string TerminalStopBtnFont { get; set; }
         public string TerminalSideBarBackColour { get; set; }
+        public string TerminalMenuStripBackColour { get; set; }
         public string GlobalBtnTextColour { get; set; }
         public string GlobalBtnBackColour { get; set; }
         public string GlobalBtnFont { get; set; }

@@ -38,7 +38,7 @@ namespace CraftForge.Server.Themes.Classes.Applications
             //terminal.statusStrip.BackColor = ColorTranslator.FromHtml(theme.Terminal_StatusBar_Colour);
 
             serverTabsPanel.BackColor = ColorTranslator.FromHtml(theme.Terminal_sideBar_BackColour); // Fixed: Added 'terminal.' to access serverTabsPanel
-            menuStrip.BackColor = ColorTranslator.FromHtml(theme.Terminal_sideBar_BackColour);
+            menuStrip.BackColor = ColorTranslator.FromHtml(theme.Terminal_menuStrip_BackColour);
         }
 
         public static void createThemes()

@@ -1,12 +1,9 @@
 ﻿using CraftForge.Server.Classes.OpenApplications;
 using CraftForge.Server.GUI.Console;
-using CraftForge.Server.GUI.Setup;
 using CraftForge.Server.StartPage.Classes;
 using Newtonsoft.Json.Linq;
 using System;
-using System.Configuration;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
 using System.Net.Http;
 using System.Reflection;
@@ -37,129 +34,6 @@ namespace CraftForge.Server.GUI.Applications
         public settings()
         {
             InitializeComponent();
-            InitializeSettings();
-        }
-
-        private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
-        {
-            TreeNode currentNode = e.Node;
-
-            string topChildNode = GetTopChildNodeText(currentNode);
-
-            if (e.Node.Parent == null) //Parent is null, so it is a root node
-            {
-                ChangeTab(e.Node.Text, null, topChildNode);
-            }
-            else
-            {
-                while (currentNode.Parent != null)
-                {
-                    currentNode = currentNode.Parent;
-                }
-                ChangeTab(currentNode.Text, e.Node.Text, topChildNode);
-            }
-        }
-
-        private string GetTopChildNodeText(TreeNode currentNode)
-        {
-            string oldNode = null; //Saves previois node, so it can be used to get the old name before the parent node
-
-            //Loop through the parent nodes until the root node is found
-            while (currentNode.Parent != null)
-            {
-                currentNode = currentNode.Parent;
-
-                //Check if the parent is the root node
-                if (currentNode.Parent == null)
-                {
-                    //Return the old node before it is set, if it is the root node
-                    break;
-                }
-
-                //Not the root node, so set the old node as the second to top node
-                oldNode = currentNode.Text;
-            }
-            return oldNode;
-        }
-
-        private void ChangeTab(string parentName, string childName, string topChildName)
-        {
-            if (childName == null)
-            {
-                //Change to the parent tab
-                foreach (TabPage tabPage in tabPage.TabPages)
-                {
-                    if (tabPage.Text == parentName)
-                    {
-                        this.tabPage.SelectTab(tabPage);
-                    }
-                }
-
-                return;
-            }
-
-            //Change to the child tab
-            foreach (TabPage tabPage in tabPage.TabPages)
-            {
-                if (tabPage.Text == parentName)
-                {
-                    this.tabPage.SelectTab(tabPage);
-                }
-            }
-
-            //Grab each Label from the tab, and check the name. If it is the name of the child, focus on the label
-            foreach (Control control in tabPage.SelectedTab.Controls)
-            {
-                if (control is Panel panel)
-                {
-                    //Check panel name
-                    if (panel.Name.Replace("Panel", "") == topChildName)
-                    {
-                        foreach (Control panelControl in panel.Controls)
-                        {
-                            if (panelControl is Label label)
-                            {
-                                //Grab the selected tab name
-                                string selectedTabName = panel.Name;
-
-                                if (label.Name.Replace(selectedTabName, "") == childName)
-                                {
-                                    label.Focus();
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        private void InitializeSettings()
-        {
-            foreach (TabPage tabPage in tabPage.TabPages)
-            {
-                foreach (Control control in tabPage.Controls)
-                {
-                    if (control is TextBox)
-                    {
-                        try
-                        {
-                            TextBox textBox = (TextBox)control;
-
-                            //Try to get the value from the settings file
-                            string settingValue = Properties.Settings.Default[control.Name] as string; //Using as String to try to convert, and will be null if it fails
-
-                            if (!string.IsNullOrEmpty(settingValue))
-                            {
-                                control.Text = settingValue;
-                            }
-                        }
-                        catch (SettingsPropertyNotFoundException)
-                        {
-                            continue;
-                        }
-                    }
-                }
-            }
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -184,9 +58,6 @@ namespace CraftForge.Server.GUI.Applications
 
             //Load Settings
             loadSettingsText();
-
-            //Tab Control
-            tabPage.ItemSize = new Size(0, 1); //Hide the tabs
         }
 
         private void loadSettingsText()

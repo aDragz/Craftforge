@@ -29,6 +29,7 @@ namespace CraftForge.Server.Classes.Themes.Themes.Custom
         public string Terminal_stopBtn_Font { get; set; }
 
         public string Terminal_sideBar_BackColour { get; set; }
+        public string Terminal_menuStrip_BackColour { get; set; }
 
         //Global variables
         public string Global_Btn_TextColour { get; set; }
@@ -92,6 +93,7 @@ namespace CraftForge.Server.Classes.Themes.Themes.Custom
                 Terminal_stopBtn_Font = "Arial, 12",
 
                 Terminal_sideBar_BackColour = "42, 42, 55",
+                Terminal_menuStrip_BackColour = "42, 42, 55",
 
                 Global_Btn_TextColour = "0, 0, 0, 0",
                 Global_Btn_BackColour = "82, 149, 250",
