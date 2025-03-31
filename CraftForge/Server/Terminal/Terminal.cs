@@ -70,6 +70,7 @@ namespace CraftForge.Server.GUI.Console
 
         private void Terminal_Load(object sender, EventArgs e)
         {
+            System.Console.WriteLine("Terminal Loaded");
             this.Text = this.Name + $" | CraftForge {Startup.release} - v{Startup.applicationVersion}"; //Change this if I change title again (ctrl+f)
             settingsNameTextBox.Text = this.Name;
 
@@ -421,200 +422,207 @@ namespace CraftForge.Server.GUI.Console
         //Use async (another thread) - will be multiple instances of the server, and maybe different windows (in the future)
         public async void createOutput(Process serverProcess, object processLock, int consoleID)
         {
-            //Grab this.name and remove anything after :
-            string[] name = this.Name.Split(':');
-
-            // Set the working directory to the location of the start.bat file
-            string directory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\CraftForge\\Servers\\" + name[0]);
-
-            cpuRamUsage.Enabled = true;
-
-            //Run the task in a new thread (uses 1 thread to maximize performance for server instance)
-            //This also makes the console load faster, and the form does not freeze
-            await Task.Run(() =>
+            try
             {
-                lock (processLock) //Use 1 thread to maximize performance for server instance
-                {
-                    serverProcess.StartInfo = new ProcessStartInfo //Generate the process info
-                    {
-                        FileName = "cmd.exe",
-                        WorkingDirectory = directory,
-                        Arguments = "/c title Minecraft Server && start.bat",
-                        WindowStyle = ProcessWindowStyle.Hidden,
-                        CreateNoWindow = true,
-                        UseShellExecute = false,
-                        RedirectStandardOutput = true,
-                        RedirectStandardInput = true,
-                        RedirectStandardError = true,
-                    };
+                //Grab this.name and remove anything after :
+                string[] name = this.Name.Split(':');
 
-                    serverProcess.OutputDataReceived += async (sender, e) => //When the server outputs something
+                // Set the working directory to the location of the start.bat file
+                string directory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\CraftForge\\Servers\\" + name[0]);
+
+                cpuRamUsage.Enabled = true;
+
+                //Run the task in a new thread (uses 1 thread to maximize performance for server instance)
+                //This also makes the console load faster, and the form does not freeze
+                await Task.Run(() =>
+                {
+                    lock (processLock) //Use 1 thread to maximize performance for server instance
                     {
-                        if (!string.IsNullOrEmpty(e.Data)) //Check if the output is not empty
+                        serverProcess.StartInfo = new ProcessStartInfo //Generate the process info
                         {
-                            //Check each richTextBox and append the output to the correct one
-                            for (int i = 0; i < serverTabs.TabPages.Count; i++)
+                            FileName = "cmd.exe",
+                            WorkingDirectory = directory,
+                            Arguments = "/c title Minecraft Server && start.bat",
+                            WindowStyle = ProcessWindowStyle.Normal,
+                            CreateNoWindow = false,
+                            UseShellExecute = false,
+                            RedirectStandardOutput = true,
+                            RedirectStandardInput = true,
+                            RedirectStandardError = true,
+                        };
+
+                        serverProcess.OutputDataReceived += async (sender, e) => //When the server outputs something
+                        {
+                            if (!string.IsNullOrEmpty(e.Data)) //Check if the output is not empty
                             {
-                                if (serverTabs.TabPages[i].Name == "consoleTab " + consoleID)
+                                //Check each richTextBox and append the output to the correct one
+                                for (int i = 0; i < serverTabs.TabPages.Count; i++)
                                 {
-                                    try
+                                    if (serverTabs.TabPages[i].Name == "consoleTab " + consoleID)
+                                    {
+                                        try
+                                        {
+                                            RichTextBox console = (RichTextBox)serverTabs.TabPages[i].Controls[0];
+                                            secondaryTerminal.Name = "console " + consoleID;
+
+                                            AppendTextToCommandOutput(e.Data, console, secondaryTerminal, false, this);
+
+                                            if (Properties.Settings.Default.terminal_autoScroll)
+                                            {
+
+                                                if (console.InvokeRequired)
+                                                {
+                                                    console.Invoke(new Action(() => console.ScrollToCaret()));
+                                                    secondaryTerminal.Invoke(new Action(() => secondaryTerminal.ScrollToCaret()));
+
+                                                }
+                                                else
+                                                {
+                                                    console.ScrollToCaret();
+                                                    secondaryTerminal.ScrollToCaret();
+                                                }
+                                            }
+
+                                            switch (e.Data)
+                                            {
+                                                //Check if /stop command has been run
+                                                case string data when data.Contains("Stopping the server"):
+                                                    //Grab player name
+                                                    string[] words = e.Data.Split(' ');
+                                                    //grab the first word
+                                                    string playerName = words[2].Replace("[", "").Replace(":", "");
+
+                                                    if (playerName.Equals("Stopping"))
+                                                    {
+                                                        playerName = "Console";
+                                                    }
+                                                    //Check if player name is empty
+                                                    if (string.IsNullOrEmpty(playerName))
+                                                    {
+                                                        playerName = "Unknown";
+                                                    }
+
+                                                    //Send message to console
+                                                    createNewLog.sendMessage(this, $"[Server] Server has been stopped by {playerName}");
+                                                    break;
+                                                case string data when data.Contains("INFO]: UUID of player "):
+                                                    playerAddPanel.playerJoined(e.Data, this, playerList, serverProcess, serverTabs, consoleID);
+                                                    break;
+                                                case string data when data.Contains(" lost connection: "):
+                                                    playerRemovePanel.playerLeft(e.Data, this, playerList, serverProcess, serverTabs, consoleID);
+                                                    break;
+                                                case string data when data.Contains("Disconnecting "):
+                                                    playerRemovePanel.playerBanned(e.Data, this, playerList, serverProcess, serverTabs, consoleID);
+                                                    break;
+                                            }
+                                        }
+                                        catch (ArgumentOutOfRangeException)
+                                        {
+                                            continue; //Ignore the error (Probably closed)
+                                        }
+                                    }
+                                }
+                            }
+                        };
+
+                        serverProcess.ErrorDataReceived += (sender, e) =>
+                        {
+                            if (!string.IsNullOrEmpty(e.Data))
+                            {
+                                //Check each richTextBox and append the output to the correct one
+                                for (int i = 0; i < serverTabs.TabPages.Count; i++)
+                                {
+                                    if (serverTabs.TabPages[i].Name == "consoleTab " + consoleID)
                                     {
                                         RichTextBox console = (RichTextBox)serverTabs.TabPages[i].Controls[0];
-                                        secondaryTerminal.Name = "console " + consoleID;
 
-                                        AppendTextToCommandOutput(e.Data, console, secondaryTerminal, false, this);
-
-                                        if (Properties.Settings.Default.terminal_autoScroll)
+                                        //Check if Error contains "openjdk"
+                                        if (e.Data.ToLower().Contains("openjdk"))
+                                        {
+                                            AppendTextToCommandOutput("[CraftForge JAVA] " + e.Data, console, secondaryTerminal, false, this);
+                                        }
+                                        else
                                         {
 
-                                            if (console.InvokeRequired)
+                                            ErrorMessage errorMessage = new ErrorMessage();
+                                            if (errorMessage.grabErrorMessage(e.Data, console, secondaryTerminal))
                                             {
-                                                console.Invoke(new Action(() => console.ScrollToCaret()));
-                                                secondaryTerminal.Invoke(new Action(() => secondaryTerminal.ScrollToCaret()));
-
-                                            }
-                                            else
-                                            {
-                                                console.ScrollToCaret();
-                                                secondaryTerminal.ScrollToCaret();
-                                            }
-                                        }
-
-                                        switch (e.Data)
-                                        {
-                                            //Check if /stop command has been run
-                                            case string data when data.Contains("Stopping the server"):
-                                                //Grab player name
-                                                string[] words = e.Data.Split(' ');
-                                                //grab the first word
-                                                string playerName = words[2].Replace("[", "").Replace(":", "");
-
-                                                if (playerName.Equals("Stopping"))
+                                                // Stop process, to optimize performance because there is no point keeping it running
+                                                if (serverProcesses.TryGetValue(consoleID, out Process process))
                                                 {
-                                                    playerName = "Console";
+                                                    if (!process.HasExited)
+                                                    {
+                                                        process.Kill();
+                                                        serverProcesses.Remove(consoleID);
+                                                    }
                                                 }
-                                                //Check if player name is empty
-                                                if (string.IsNullOrEmpty(playerName))
-                                                {
-                                                    playerName = "Unknown";
-                                                }
-
-                                                //Send message to console
-                                                createNewLog.sendMessage(this, $"[Server] Server has been stopped by {playerName}");
-                                                break;
-                                            case string data when data.Contains("INFO]: UUID of player "):
-                                                playerAddPanel.playerJoined(e.Data, this, playerList, serverProcess, serverTabs, consoleID);
-                                                break;
-                                            case string data when data.Contains(" lost connection: "):
-                                                playerRemovePanel.playerLeft(e.Data, this, playerList, serverProcess, serverTabs, consoleID);
-                                                break;
-                                            case string data when data.Contains("Disconnecting "):
-                                                playerRemovePanel.playerBanned(e.Data, this, playerList, serverProcess, serverTabs, consoleID);
-                                                break;
+                                            };
                                         }
-                                    }
-                                    catch (ArgumentOutOfRangeException)
-                                    {
-                                        continue; //Ignore the error (Probably closed)
                                     }
                                 }
                             }
-                        }
-                    };
+                        };
 
-                    serverProcess.ErrorDataReceived += (sender, e) =>
-                    {
-                        if (!string.IsNullOrEmpty(e.Data))
+                        serverProcess.Start(); //Start the process
+
+                        // Get the child process named java.exe started by the batch file
+
+                        Process javaProcess = null;
+
+                        Task.Delay(1000).Wait(); // Wait for 1 second before I start due to slower computers not opening instantly
+
+                        while (javaProcess == null)
                         {
-                            //Check each richTextBox and append the output to the correct one
-                            for (int i = 0; i < serverTabs.TabPages.Count; i++)
+                            javaProcess = GetChildProcesses(serverProcess.Id).FirstOrDefault(p => string.Equals(p.ProcessName, "java", StringComparison.OrdinalIgnoreCase));
+                            if (javaProcess == null)
                             {
-                                if (serverTabs.TabPages[i].Name == "consoleTab " + consoleID)
-                                {
-                                    RichTextBox console = (RichTextBox)serverTabs.TabPages[i].Controls[0];
-
-                                    //Check if Error contains "openjdk"
-                                    if (e.Data.ToLower().Contains("openjdk"))
-                                    {
-                                        AppendTextToCommandOutput("[CraftForge JAVA] " + e.Data, console, secondaryTerminal, false, this);
-                                    }
-                                    else
-                                    {
-
-                                        ErrorMessage errorMessage = new ErrorMessage();
-                                        if (errorMessage.grabErrorMessage(e.Data, console, secondaryTerminal))
-                                        {
-                                            // Stop process, to optimize performance because there is no point keeping it running
-                                            if (serverProcesses.TryGetValue(consoleID, out Process process))
-                                            {
-                                                if (!process.HasExited)
-                                                {
-                                                    process.Kill();
-                                                    serverProcesses.Remove(consoleID);
-                                                }
-                                            }
-                                        };
-                                    }
-                                }
+                                Task.Delay(1000).Wait(); // Wait for 1 second before the next attempt
                             }
                         }
-                    };
 
-                    serverProcess.Start(); //Start the process
+                        int javaProcessId = javaProcess.Id;
+                        childProcessID = javaProcess.Id;
 
-                    // Get the child process named java.exe started by the batch file
+                        serverProcess.BeginErrorReadLine(); //Start reading the errors
+                        serverProcess.BeginOutputReadLine(); //Start reading the output
 
-                    Process javaProcess = null;
+                        //Multi-threading:
 
-                    Task.Delay(1000).Wait(); // Wait for 1 second before I start due to slower computers not opening instantly
+                        //Read serverSettings and grab the thread count
+                        serverSettings settings = serverSettings.ReadSettings(this.Name);
 
-                    while (javaProcess == null)
-                    {
-                        javaProcess = GetChildProcesses(serverProcess.Id).FirstOrDefault(p => string.Equals(p.ProcessName, "java", StringComparison.OrdinalIgnoreCase));
-                        if (javaProcess == null)
+                        int threadsCount = Int16.Parse(settings.threadAmount);
+
+                        //Check if threadCount is more than 0, or it uses all cores
+                        if (threadsCount > 0)
                         {
-                            Task.Delay(1000).Wait(); // Wait for 1 second before the next attempt
+                            //Set the affinity
+                            setAffinity.SetProcessAffinity(serverProcess, Process.GetProcessById(childProcessID), threadsCount, this);
                         }
+
+                        consoleID = serverProcess.Id; //Get the console ID, so we can close it later
+
+                        //Set stop button name as the console ID
+                        this.cmdID = consoleID;
+                        serverProcesses.Add(this.cmdID, serverProcess); //Add the process to the dictionary
+                        serverProcessesToName.Add(serverProcess, this.Name); //Add the process name to the dictionary
+
+                        //Add to tab
+                        createConsole createConsole = new createConsole();
+                        createConsole.createConsoleInTab(this, serverProcess, consoleID, this);
+
+                        tabButtons.resetSideBarButtons(serverTabsPanel, serverTabs);
+
+                        serverProcess.WaitForExit(); //Wait for the process to exit
+                                                     //Make sure it inputs a space so it fully exits
+                        serverProcesses.Remove(consoleID); //Remove the process from the dictionary after it has exited
                     }
-
-                    int javaProcessId = javaProcess.Id;
-                    childProcessID = javaProcess.Id;
-
-                    serverProcess.BeginErrorReadLine(); //Start reading the errors
-                    serverProcess.BeginOutputReadLine(); //Start reading the output
-
-                    //Multi-threading:
-
-                    //Read serverSettings and grab the thread count
-                    serverSettings settings = serverSettings.ReadSettings(this.Name);
-
-                    int threadsCount = Int16.Parse(settings.threadAmount);
-
-                    //Check if threadCount is more than 0, or it uses all cores
-                    if (threadsCount > 0)
-                    {
-                        //Set the affinity
-                        setAffinity.SetProcessAffinity(serverProcess, Process.GetProcessById(childProcessID), threadsCount, this);
-                    }
-
-                    consoleID = serverProcess.Id; //Get the console ID, so we can close it later
-
-                    //Set stop button name as the console ID
-                    this.cmdID = consoleID;
-                    serverProcesses.Add(this.cmdID, serverProcess); //Add the process to the dictionary
-                    serverProcessesToName.Add(serverProcess, this.Name); //Add the process name to the dictionary
-
-                    //Add to tab
-                    createConsole createConsole = new createConsole();
-                    createConsole.createConsoleInTab(this, serverProcess, consoleID, this);
-
-                    tabButtons.resetSideBarButtons(serverTabsPanel, serverTabs);
-
-                    serverProcess.WaitForExit(); //Wait for the process to exit
-                    //Make sure it inputs a space so it fully exits
-                    serverProcesses.Remove(consoleID); //Remove the process from the dictionary after it has exited
-                }
-            }).ConfigureAwait(false); //Improves performance (Seems to load console faster)
+                }).ConfigureAwait(false); //Improves performance (Seems to load console faster)
+            }
+            catch (Exception ex)
+            {
+                System.Console.WriteLine(ex);
+            }
         }
 
         public void resetButtons()

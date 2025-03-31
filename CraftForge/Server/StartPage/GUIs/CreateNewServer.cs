@@ -6,6 +6,8 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.IO;
 using System.Net.Http;
+using System.Net.NetworkInformation;
+using System.Net.Sockets;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -56,9 +58,10 @@ namespace CraftForge.Server.GUI.Setup
                 {
                     string build = buildSelector.SelectedItem.ToString();
                     url = string.Format("https://api.papermc.io/v2/projects/{0}/versions/{1}/builds/{2}/downloads/{0}-{1}-{2}.jar", type, version, build);
-                } if (type.Equals("spigot"))
+                }
+                if (type.Equals("spigot"))
                 {
-                    url = null; //To create the directory
+                    url = null; //To create the directory (Does not need to download as it uses buildTools.jar (runBuildTool.runTool())
                 }
             }
 
@@ -137,6 +140,7 @@ namespace CraftForge.Server.GUI.Setup
         private async void CreateNewServer_Load(object sender, EventArgs e)
         {
             await getPaperMcVersions();
+            IpTextBox.Text = getIPv4Address();
         }
 
         private async Task getPaperMcVersions()
@@ -236,5 +240,50 @@ namespace CraftForge.Server.GUI.Setup
                 catch { }
             }
         }
+
+        private string getIPv4Address()
+        {
+            if (Properties.Settings.Default.grabIPv4Address == 0)
+                return string.Empty;
+            else if (Properties.Settings.Default.grabIPv4Address == 2)
+            {
+                //Ask user if they want to enable this setting
+                DialogResult dialogResult = MessageBox.Show("Would you like to automatically grab your IPv4 address?", "Grab IPv4 Address", MessageBoxButtons.YesNo);
+
+                if (dialogResult == DialogResult.Yes)
+                {
+                    Properties.Settings.Default.grabIPv4Address = 1;
+                    Properties.Settings.Default.Save();
+                }
+                else
+                {
+                    Properties.Settings.Default.grabIPv4Address = 0;
+                    Properties.Settings.Default.Save();
+                    return "localhost";
+                }
+            }
+
+            string localIP = string.Empty;
+                foreach (NetworkInterface ni in NetworkInterface.GetAllNetworkInterfaces())
+                {
+                    if (ni.OperationalStatus == OperationalStatus.Up &&
+                        (ni.NetworkInterfaceType == NetworkInterfaceType.Ethernet || ni.NetworkInterfaceType == NetworkInterfaceType.Wireless80211))
+                    {
+                        foreach (UnicastIPAddressInformation ip in ni.GetIPProperties().UnicastAddresses)
+                        {
+                            if (ip.Address.AddressFamily == AddressFamily.InterNetwork)
+                            {
+                                localIP = ip.Address.ToString();
+                                break;
+                            }
+                        }
+                    }
+                    if (string.IsNullOrEmpty(localIP))
+                    {
+                        localIP = "localhost";
+                    }
+                }
+                return localIP;
+            }
     }
 }

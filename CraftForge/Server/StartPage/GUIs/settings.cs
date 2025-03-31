@@ -58,6 +58,9 @@ namespace CraftForge.Server.GUI.Applications
 
             //Load Settings
             loadSettingsText();
+
+            //Load Create Server Settings
+            loadCreateServerSettings();
         }
 
         private void loadSettingsText()
@@ -96,6 +99,25 @@ namespace CraftForge.Server.GUI.Applications
             AutoCloseStartupPanel.Checked = terminal_autoClose;
             MaximizeStartupPanel.Checked = startMenu_startMaximized;
             SpecificationsStartupPanel.Checked = displaySystemSpecifications;
+        }
+
+        private void loadCreateServerSettings()
+        {
+            //Grab the settings
+            int grabIPv4AddressInt = Properties.Settings.Default.grabIPv4Address;
+
+            if (grabIPv4AddressInt == 0)
+            {
+                grabIPv4Address.Checked = false;
+            }
+            else if (grabIPv4AddressInt == 1)
+            {
+                grabIPv4Address.Checked = true;
+            }
+            else if (grabIPv4AddressInt == 2)
+            {
+                grabIPv4Address.Checked = false;
+            }
         }
 
         private async void loadTypeSettings()
@@ -239,6 +261,18 @@ namespace CraftForge.Server.GUI.Applications
             Properties.Settings.Default.Save();
         }
 
+        private void grabIPv4Address_CheckedChanged(object sender, EventArgs e)
+        {
+            //Grab the value
+            bool ischecked = grabIPv4Address.Checked;
+            int result = ischecked ? 1 : 0;
+
+            //Save the value
+            Properties.Settings.Default.grabIPv4Address = result;
+            Properties.Settings.Default.Save();
+        }
+
+
         private void AutoStartConsolePanel_CheckedChanged(object sender, EventArgs e)
         {
             //Grab the value
@@ -292,6 +326,7 @@ namespace CraftForge.Server.GUI.Applications
         private void AutoUpdateAppPanel_CheckedChanged(object sender, EventArgs e)
         {
             //Grab the value
+        
             bool autoUpdate = AutoUpdateAppPanel.Checked;
 
             //Save the value

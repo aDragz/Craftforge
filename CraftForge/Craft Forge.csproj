@@ -121,6 +121,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="debugTerminal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="debugTerminal.Designer.cs">
+      <DependentUpon>debugTerminal.cs</DependentUpon>
+    </Compile>
     <Compile Include="NewGUI\MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -218,6 +224,10 @@
     <Compile Include="Server\Terminal\Classes\Themes\Classes\Theme.cs" />
     <Compile Include="Server\Terminal\Classes\Themes\Themes\default.cs" />
     <Compile Include="Settings.cs" />
+    <Compile Include="terminalOutputWriter.cs" />
+    <EmbeddedResource Include="debugTerminal.resx">
+      <DependentUpon>debugTerminal.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="NewGUI\MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </EmbeddedResource>
