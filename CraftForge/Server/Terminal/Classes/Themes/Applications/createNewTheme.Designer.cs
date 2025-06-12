@@ -1,6 +1,6 @@
 ﻿namespace CraftForge.Server.Classes.Themes.Applications
 {
-    partial class createNewTheme
+    partial class CreateNewTheme
     {
         /// <summary>
         /// Required designer variable.
@@ -93,7 +93,7 @@
             this.copyFromLbl.TabIndex = 5;
             this.copyFromLbl.Text = "Copy From:";
             // 
-            // createNewTheme
+            // CreateNewTheme
             // 
             this.AcceptButton = this.okBtn;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -108,7 +108,7 @@
             this.Controls.Add(this.okBtn);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "createNewTheme";
+            this.Name = "CreateNewTheme";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

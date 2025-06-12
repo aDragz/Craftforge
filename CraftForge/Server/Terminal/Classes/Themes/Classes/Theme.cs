@@ -10,7 +10,7 @@ namespace CraftForge.Server.Themes.Classes.Applications
 {
     internal class Theme
     {
-        public static void initializeTheme(Terminal terminal, Panel serverTabsPanel)
+        public static void initializeTheme(Terminal terminal, Panel serverTabsPanel, MenuStrip menuStrip)
         {
             //Check if themes location exists
             if (!Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CraftForge\\Themes"))
@@ -38,6 +38,7 @@ namespace CraftForge.Server.Themes.Classes.Applications
             //terminal.statusStrip.BackColor = ColorTranslator.FromHtml(theme.Terminal_StatusBar_Colour);
 
             serverTabsPanel.BackColor = ColorTranslator.FromHtml(theme.Terminal_sideBar_BackColour); // Fixed: Added 'terminal.' to access serverTabsPanel
+            menuStrip.BackColor = ColorTranslator.FromHtml(theme.Terminal_menuStrip_BackColour);
         }
 
         public static void createThemes()

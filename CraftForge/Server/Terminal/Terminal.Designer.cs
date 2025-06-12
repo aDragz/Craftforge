@@ -1021,7 +1021,7 @@
             // 
             this.reToolStripMenuItem.Name = "reToolStripMenuItem";
             this.reToolStripMenuItem.Size = new System.Drawing.Size(229, 26);
-            this.reToolStripMenuItem.Text = "Reset All Themes";
+            this.reToolStripMenuItem.Text = "Delete All Themes";
             this.reToolStripMenuItem.Click += new System.EventHandler(this.reToolStripMenuItem_Click);
             // 
             // helpToolStripMenuItem

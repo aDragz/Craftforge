@@ -1,8 +1,13 @@
-﻿using CraftForge.Server.GUI.Console;
+﻿using CraftForge.Server.GUI.Applications;
+using CraftForge.Server.GUI.Console;
 using CraftForge.Server.Setup;
+using CraftForge.Server.StartPage.Classes;
 using Newtonsoft.Json.Linq;
 using System;
+using System.IO;
 using System.Net.Http;
+using System.Net.NetworkInformation;
+using System.Net.Sockets;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -48,11 +53,15 @@ namespace CraftForge.Server.GUI.Setup
             {
                 // Url Strings
                 string version = versionSelector.SelectedItem.ToString();
-                string build = buildSelector.SelectedItem.ToString();
 
                 if (type.Equals("paper") || type.Equals("waterfall") || type.Equals("velocity"))
                 {
+                    string build = buildSelector.SelectedItem.ToString();
                     url = string.Format("https://api.papermc.io/v2/projects/{0}/versions/{1}/builds/{2}/downloads/{0}-{1}-{2}.jar", type, version, build);
+                }
+                if (type.Equals("spigot"))
+                {
+                    url = null; //To create the directory (Does not need to download as it uses buildTools.jar (runBuildTool.runTool())
                 }
             }
 
@@ -60,6 +69,9 @@ namespace CraftForge.Server.GUI.Setup
             {
                 return;
             }
+
+            if (type.Equals("spigot")) //Run here so it can create the files/folders without buildTools.jar crashing
+                runBuildTool.runTool(Path.Combine("servers", serverName), versionSelector.SelectedItem.ToString()); //Run Build tool
 
             // Once created, Open terminal
             Terminal terminal = new Terminal
@@ -80,6 +92,10 @@ namespace CraftForge.Server.GUI.Setup
             if (serverType.Equals("paper") || serverType.Equals("waterfall") || serverType.Equals("velocity"))
             {
                 await getPaperMcVersions();
+            }
+            else if (serverType.Equals("spigot"))
+            {
+                await getSpigotVersions();
             }
             else if (serverType.Equals("custom"))
             {
@@ -109,6 +125,12 @@ namespace CraftForge.Server.GUI.Setup
             {
                 await getPaperMcBuilds();
             }
+            else if (serverType.Equals("spigot"))
+            {
+                buildSelector.Text = "Disabled";
+                buildSelector.Items.Clear();
+                buildSelector.Enabled = false;
+            }
             else
             {
                 buildSelector.Enabled = false;
@@ -118,6 +140,7 @@ namespace CraftForge.Server.GUI.Setup
         private async void CreateNewServer_Load(object sender, EventArgs e)
         {
             await getPaperMcVersions();
+            IpTextBox.Text = getIPv4Address();
         }
 
         private async Task getPaperMcVersions()
@@ -185,5 +208,82 @@ namespace CraftForge.Server.GUI.Setup
                 catch { }
             }
         }
+
+        private async Task getSpigotVersions()
+        {
+            string serverType = typeSelector.SelectedItem.ToString().ToLower();
+
+            string versionUrl = string.Format("https://craftforge.dev/api/CraftForge/Server/Spigot/versions.json");
+
+            using (HttpClient client = new HttpClient())
+            {
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync(versionUrl);
+                    response.EnsureSuccessStatusCode();
+                    string responseBody = await response.Content.ReadAsStringAsync();
+
+                    JObject json = JObject.Parse(responseBody);
+                    JArray versions = (JArray)json["versions"];
+                    string latestVersion = versions.Last.ToString();
+
+                    versionSelector.Items.Clear();
+                    // Add all builds to the "build" selector
+                    foreach (var version in versions)
+                    {
+                        versionSelector.Items.Add(version);
+                    }
+
+                    // Though, set text to the most recent one
+                    versionSelector.Text = latestVersion;
+                }
+                catch { }
+            }
+        }
+
+        private string getIPv4Address()
+        {
+            if (Properties.Settings.Default.grabIPv4Address == 0)
+                return string.Empty;
+            else if (Properties.Settings.Default.grabIPv4Address == 2)
+            {
+                //Ask user if they want to enable this setting
+                DialogResult dialogResult = MessageBox.Show("Would you like to automatically grab your IPv4 address?", "Grab IPv4 Address", MessageBoxButtons.YesNo);
+
+                if (dialogResult == DialogResult.Yes)
+                {
+                    Properties.Settings.Default.grabIPv4Address = 1;
+                    Properties.Settings.Default.Save();
+                }
+                else
+                {
+                    Properties.Settings.Default.grabIPv4Address = 0;
+                    Properties.Settings.Default.Save();
+                    return "localhost";
+                }
+            }
+
+            string localIP = string.Empty;
+                foreach (NetworkInterface ni in NetworkInterface.GetAllNetworkInterfaces())
+                {
+                    if (ni.OperationalStatus == OperationalStatus.Up &&
+                        (ni.NetworkInterfaceType == NetworkInterfaceType.Ethernet || ni.NetworkInterfaceType == NetworkInterfaceType.Wireless80211))
+                    {
+                        foreach (UnicastIPAddressInformation ip in ni.GetIPProperties().UnicastAddresses)
+                        {
+                            if (ip.Address.AddressFamily == AddressFamily.InterNetwork)
+                            {
+                                localIP = ip.Address.ToString();
+                                break;
+                            }
+                        }
+                    }
+                    if (string.IsNullOrEmpty(localIP))
+                    {
+                        localIP = "localhost";
+                    }
+                }
+                return localIP;
+            }
     }
 }

@@ -12,7 +12,7 @@ namespace CraftForge.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.11.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.13.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -56,6 +56,18 @@ namespace CraftForge.Properties {
             }
             set {
                 this["terminal_autoScroll"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool terminal_closeOnServerOpen {
+            get {
+                return ((bool)(this["terminal_closeOnServerOpen"]));
+            }
+            set {
+                this["terminal_closeOnServerOpen"] = value;
             }
         }
         
@@ -121,13 +133,13 @@ namespace CraftForge.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool terminal_closeOnServerOpen {
+        [global::System.Configuration.DefaultSettingValueAttribute("2")]
+        public int grabIPv4Address {
             get {
-                return ((bool)(this["terminal_closeOnServerOpen"]));
+                return ((int)(this["grabIPv4Address"]));
             }
             set {
-                this["terminal_closeOnServerOpen"] = value;
+                this["grabIPv4Address"] = value;
             }
         }
     }

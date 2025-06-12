@@ -101,16 +101,8 @@ namespace CraftForge.Server.GUI.Applications
 
         private static void downloadComplete(object sender, AsyncCompletedEventArgs e)
         {
-            //Ensure the UI update is performed on the main thread
-            if (currentInstance.InvokeRequired)
-            {
+            if (currentInstance.InvokeRequired) //Ensure the UI update is performed on the main thread
                 currentInstance.Invoke(new Action(() => downloadComplete(sender, e)));
-            }
-            else
-            {
-                //Close this window
-                //currentInstance.Close();
-            }
         }
     }
 }

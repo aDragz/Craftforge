@@ -1,6 +1,8 @@
-﻿using CraftForge.Server.Classes.Console.Applications;
+﻿using CraftForge.NewGUI;
+using CraftForge.Server.Classes.Console.Applications;
 using CraftForge.Server.GUI.Console;
 using CraftForge.Server.StartPage.Classes;
+using CraftForge.Server.Themes.Classes.Applications;
 using Microsoft.VisualBasic.Devices;
 using System;
 using System.Collections.Generic;
@@ -61,6 +63,9 @@ namespace CraftForge.Server.GUI.Setup
 
             this.MinimizeBox = false;
 
+            //Check to see if the default folder exists
+            checkDefaultFolders();
+
             // Perform the loading operations asynchronously
             // Invoke the LoadServers method on the form thread
             await Task.Run(() => this.Invoke((MethodInvoker)delegate { LoadServers(); }));
@@ -85,6 +90,20 @@ namespace CraftForge.Server.GUI.Setup
 
             // Show the form after loading is complete
             this.Show();
+        }
+
+        //Check to see if the default folders exist, like Documents/CraftForge/Themes. This is because the Application breaks in certain scenarios. Like settings doesn't work
+        //unless Themes folder exists. (Found out when testing Linux)
+        private void checkDefaultFolders()
+        {
+            //Check if themes location exists
+            if (!Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CraftForge\\Themes"))
+            {
+                //Create the directory
+                Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\CraftForge\\Themes");
+
+                Theme.createThemes();
+            }
         }
 
         private void loadSystemSpecs()
@@ -385,8 +404,7 @@ namespace CraftForge.Server.GUI.Setup
 
         private void label2_Click(object sender, EventArgs e)
         {
-            //Show the settings Application
-            openSettings.runSettingsApp();
+            openSettings.runSettingsApp(); //Show the settings Application
         }
     }
 }

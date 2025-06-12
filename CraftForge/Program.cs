@@ -4,6 +4,8 @@ using CraftForge.Server.GUI.Applications;
 using CraftForge.Server.GUI.Setup;
 using CraftForge.Server.StartPage.Classes;
 using System;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -31,6 +33,22 @@ namespace CraftForge
                 string release = args[index + 1]; // Get the next argument after --settings
 
                 settings.CraftForgeUpdaterConfig("TypeSelected", release); //If stable is selected, it will be updated as stable as an example.
+            }
+
+            if (args.Contains("--debug"))
+            {
+                MessageBox.Show("Debug Mode Enabled");
+
+                //Create terminal and display the "Outputs"
+                debugTerminal terminal = new debugTerminal();
+
+                //get the terminal's rich text box
+                RichTextBox terminalRichTextBox = terminal.Controls.Find("richTextBox", true).FirstOrDefault() as RichTextBox;
+                TextWriter writer = new terminalOutputWriter(terminal);
+                terminal.Show();
+
+                Console.SetOut(writer);
+                Console.SetError(writer);
             }
 
             //Check if auto update is enabled

@@ -1,6 +1,6 @@
-﻿namespace CraftForge.Server.GUI.Applications
+﻿namespace CraftForge
 {
-    partial class downloadFile
+    partial class debugTerminal
     {
         /// <summary>
         /// Required designer variable.
@@ -28,24 +28,32 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.terminalOutput = new System.Windows.Forms.RichTextBox();
             this.SuspendLayout();
             // 
-            // downloadFile
+            // terminalOutput
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.terminalOutput.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.terminalOutput.Location = new System.Drawing.Point(0, 0);
+            this.terminalOutput.Name = "terminalOutput";
+            this.terminalOutput.Size = new System.Drawing.Size(800, 450);
+            this.terminalOutput.TabIndex = 0;
+            this.terminalOutput.Text = "";
+            // 
+            // debugTerminal
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(794, 274);
-            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
-            this.Name = "downloadFile";
-            this.ShowIcon = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "downloadFile";
-            this.Load += new System.EventHandler(this.downloadFile_Load);
+            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.terminalOutput);
+            this.Name = "debugTerminal";
+            this.Text = "debugTerminal";
             this.ResumeLayout(false);
 
         }
+
         #endregion
+
+        private System.Windows.Forms.RichTextBox terminalOutput;
     }
 }
