@@ -173,10 +173,10 @@
             // 
             this.createButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.createButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.createButton.Location = new System.Drawing.Point(1054, 551);
+            this.createButton.Location = new System.Drawing.Point(1030, 566);
             this.createButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.createButton.Name = "createButton";
-            this.createButton.Size = new System.Drawing.Size(191, 74);
+            this.createButton.Size = new System.Drawing.Size(220, 95);
             this.createButton.TabIndex = 11;
             this.createButton.Text = "Download Server Jar";
             this.createButton.UseVisualStyleBackColor = true;
