@@ -7,6 +7,7 @@ using CraftForge.Server.Classes.Console.Initialize.JarSelection;
 using CraftForge.Server.Classes.Console.Yaml;
 using CraftForge.Server.Classes.Console.Yaml.UpdateSettings;
 using CraftForge.Server.Classes.Logs;
+using CraftForge.Server.Classes.OpenApplications;
 using CraftForge.Server.Classes.Player.Classes;
 using CraftForge.Server.Classes.Themes.Applications.Charts;
 using CraftForge.Server.Events;
@@ -18,8 +19,8 @@ using CraftForge.Server.GUI.Console.Messages.WARN;
 using CraftForge.Server.GUI.Setup;
 using CraftForge.Server.Setup;
 using CraftForge.Server.StartPage.Classes;
-using CraftForge.Server.Classes.OpenApplications;
 using CraftForge.Server.Themes.Classes.Applications;
+using Microsoft.VisualBasic.Devices;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -97,7 +98,7 @@ namespace CraftForge.Server.GUI.Console
             string location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\CraftForge\\Servers\\");
             if (!File.Exists(($"{location}\\{this.Name}\\serverSettings.yaml")))
             {
-                serverSettings.writeSettingsToFile(this.Name);
+                serverSettings.writeSettingsToFile(this.Name, "0");
             }
             var settings = serverSettings.ReadSettings(this.Name);
             int cores = Int16.Parse(settings.threadAmount);
@@ -207,14 +208,12 @@ namespace CraftForge.Server.GUI.Console
             }
 
             //Get maximum amount of RAM in the system
-            double maxRamInMB = new ManagementObjectSearcher("SELECT TotalPhysicalMemory FROM Win32_ComputerSystem").Get().Cast<ManagementObject>().Sum(mo => Convert.ToDouble(mo["TotalPhysicalMemory"])) / (1024 * 1024);
-            maxRamInMB -= 1500; //Remove 1.5GB of RAM for the system
-            maxRamInMB = Math.Round(maxRamInMB, 0); //Round to 2 decimal places
+            ComputerInfo computerInfo = new ComputerInfo();
+            ulong totalPhysicalMemory = computerInfo.TotalPhysicalMemory;
+            int maxRamInMB = (int)(totalPhysicalMemory / (1024 * 1024));
 
-            maxRamInMB = Math.Floor(maxRamInMB / 512) * 512; //Round to the nearest 512MB
-
-            ramSlider.Maximum = (int)maxRamInMB;
-            ramNumber.Maximum = (int)maxRamInMB;
+            ramSlider.Maximum = maxRamInMB;
+            ramNumber.Maximum = maxRamInMB;
 
             string startBat = File.ReadAllText(location + "\\start.bat"); //Read start.bat file
 

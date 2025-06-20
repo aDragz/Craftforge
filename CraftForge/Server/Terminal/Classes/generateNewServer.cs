@@ -9,7 +9,7 @@ namespace CraftForge.Server.Setup
 {
     internal class generateNewServer
     {
-        public static async Task<bool> createAsync(string serverName, string serverIP, string serverPort, string serverMOTD, string fileUrl)
+        public static async Task<bool> createAsync(string serverName, string serverIP, string serverPort, string serverMOTD, string fileUrl, int playerMax, int ram)
         {
             string directory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + String.Format("/CraftForge/Servers/{0}", serverName);
             if (Directory.Exists(directory))
@@ -29,9 +29,9 @@ namespace CraftForge.Server.Setup
 
             File.WriteAllText("eula.txt", "eula=false");
 
-            File.WriteAllText("server.properties", "server-port=" + serverPort.ToString() + "\n" + "server-ip=" + serverIP.ToString() + "\n" + "level-name=world\n" + "gamemode=survival\n" + "difficulty=easy\n" + "allow-cheats=false\n" + "max-players=20\n" + "online-mode=true\n" + "white-list=false\n" + "server-name=" + serverName.ToString() + "\n" + "motd=" + serverMOTD.ToString() + "\n");
+            File.WriteAllText("server.properties", "server-port=" + serverPort.ToString() + "\n" + "server-ip=" + serverIP.ToString() + "\n" + "level-name=world\n" + "gamemode=survival\n" + "difficulty=easy\n" + "allow-cheats=false\n" + "max-players=" + playerMax + "\n" + "online-mode=true\n" + "white-list=false\n" + "server-name=" + serverName.ToString() + "\n" + "motd=" + serverMOTD.ToString() + "\n");
 
-            startBatFile.createNewFile(directory, 1024, "server"); //Create the start.bat file
+            startBatFile.createNewFile(directory, ram, "server"); //Create the start.bat file
 
             return true;
         }
