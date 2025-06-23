@@ -2,6 +2,7 @@
 using CraftForge.Server.Classes.Console.Applications;
 using CraftForge.Server.GUI.Console;
 using CraftForge.Server.StartPage.Classes;
+using CraftForge.Server.StartPage.GUIs.Modern;
 using CraftForge.Server.Themes.Classes.Applications;
 using Microsoft.VisualBasic.Devices;
 using System;
@@ -16,7 +17,7 @@ using System.Xml;
 
 namespace CraftForge.Server.GUI.Setup
 {
-    public partial class Startup : Form
+    public partial class Startup : TitleBar
     {
         public static List<string> instancesRunning = new List<string>();
         public static string applicationVersion = Application.ProductVersion.Substring(0, Application.ProductVersion.Length - 2);
@@ -25,6 +26,12 @@ namespace CraftForge.Server.GUI.Setup
         public Startup()
         {
             InitializeComponent();
+
+            this.TitleText = $"Server Selection";
+
+            this.TitleMinimizeButtonEnabled = true;
+            this.TitleMaximizeButtonEnabled = true;
+            this.TitleCloseButtonEnabled = true;
 
             try
             {
@@ -77,8 +84,6 @@ namespace CraftForge.Server.GUI.Setup
                 this.WindowState = FormWindowState.Maximized;
             }
 
-            // Set the title of the form
-            this.Text = $"Server Selection | CraftForge {release} - v{applicationVersion}";
             welcomeLbl.Text = $"CraftForge\nv{applicationVersion} | {release}";
             if (Properties.Settings.Default.displaySystemSpecifications)
             {
@@ -139,10 +144,18 @@ namespace CraftForge.Server.GUI.Setup
 
         private async void LoadServers()
         {
-            TableLayoutPanel tableLayoutPanel = new TableLayoutPanel
+            FlowLayoutPanel flowLayoutPanel = new FlowLayoutPanel
             {
                 Dock = DockStyle.Fill,
-                AutoScroll = true,
+                AutoScroll = true
+            };
+
+            TableLayoutPanel tableLayoutPanel = new TableLayoutPanel
+            {
+                Location = new Point(1, 80),
+                Size = new Size(655, 638),
+                AutoScroll = false,
+                Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left,
             };
 
             //Add flowLayoutPanel to tableLayoutPanel
@@ -192,6 +205,7 @@ namespace CraftForge.Server.GUI.Setup
                     Height = 100,
                     Margin = new Padding(10),
                     BorderStyle = BorderStyle.FixedSingle,
+                    BackColor = Color.FromArgb(42, 42, 55), //55 to make it slightly darker than the background
                 };
 
                 //Start button
@@ -201,9 +215,12 @@ namespace CraftForge.Server.GUI.Setup
                     Name = "Button " + serverName,
                     Width = 125,
                     Height = 60,
-                    Margin = new Padding(10),
                     Location = new Point(450, 20),
                     Font = new Font("Consolas", 10),
+                    ForeColor = Color.FromArgb(240, 240, 240), //Set the text color to white
+                    BackColor = Color.FromArgb(42, 42, 55), //55 to make it slightly darker than the background
+                    FlatStyle = FlatStyle.Flat,
+                    FlatAppearance = { BorderSize = 1, BorderColor = Color.FromArgb(240, 240, 240) },
                 };
 
                 //Fix if there is no start.bat (norunbat)
@@ -213,9 +230,12 @@ namespace CraftForge.Server.GUI.Setup
                     Name = "NoRunButton " + serverName,
                     Width = 125,
                     Height = 60,
-                    Margin = new Padding(10),
                     Location = new Point(300, 20),
                     Font = new Font("Consolas", 10),
+                    ForeColor = Color.FromArgb(240, 240, 240), //Set the text color to white
+                    BackColor = Color.FromArgb(42, 42, 55), //55 to make it slightly darker than the background
+                    FlatStyle = FlatStyle.Flat,
+                    FlatAppearance = { BorderSize = 1, BorderColor=Color.FromArgb(240, 240, 240)}, 
                 };
 
                 //Location Text
@@ -229,7 +249,8 @@ namespace CraftForge.Server.GUI.Setup
                     Location = new Point(10, 20),
                     Font = new Font("Consolas", 10),
                     BorderStyle = BorderStyle.None,
-                    BackColor = this.BackColor,
+                    ForeColor = Color.FromArgb(240, 240, 240), //Set the text color to white
+                    BackColor = Color.FromArgb(42, 42, 55), //55 to make it slightly darker than the background
                 };
 
                 //Port Label
@@ -243,7 +264,8 @@ namespace CraftForge.Server.GUI.Setup
                     Location = new Point(10, 45),
                     Font = new Font("Consolas", 10),
                     BorderStyle = BorderStyle.None,
-                    BackColor = this.BackColor,
+                    ForeColor = Color.FromArgb(240, 240, 240), //Set the text color to white
+                    BackColor = Color.FromArgb(42, 42, 55), //55 to make it slightly darker than the background
                 };
 
 
@@ -256,6 +278,8 @@ namespace CraftForge.Server.GUI.Setup
                     Margin = new Padding(10),
                     Location = new Point(0, 20),
                     Font = new Font("Consolas", 10),
+                    ForeColor = Color.FromArgb(240, 240, 240), //Set the text color to white
+                    BackColor = Color.FromArgb(42, 42, 55), //55 to make it slightly darker than the background
                 };
 
                 // Display the full name on hover
@@ -393,18 +417,27 @@ namespace CraftForge.Server.GUI.Setup
 
         private void label1_Click(object sender, EventArgs e)
         {
-            CreateNewServer createNewServer = new CreateNewServer();
-            createNewServer.Size = this.Size;
-            createNewServer.StartPosition = FormStartPosition.Manual;
-            createNewServer.Location = this.Location;
-            createNewServer.WindowState = this.WindowState;
+            CreateNewServerModern createNewServer = new CreateNewServerModern()
+            {
+                StartPosition = FormStartPosition.CenterScreen,
+
+            };
             createNewServer.Show();
-            this.Hide();
         }
 
-        private void label2_Click(object sender, EventArgs e)
+        private void settingsLbl_Click(object sender, EventArgs e)
         {
             openSettings.runSettingsApp(); //Show the settings Application
+        }
+
+        private void createNewServerLbl_Click(object sender, EventArgs e)
+        {
+            CreateNewServerModern modern = new CreateNewServerModern
+            {
+                StartPosition = FormStartPosition.CenterScreen,
+            };
+
+            modern.Show();
         }
     }
 }

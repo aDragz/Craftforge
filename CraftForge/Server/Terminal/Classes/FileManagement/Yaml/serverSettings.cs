@@ -23,7 +23,7 @@ namespace CraftForge.Server.Classes.Console.Yaml
             }
         }
 
-        public static void writeSettingsToFile(string serverName)
+        public static void writeSettingsToFile(string serverName, string cores)
         {
             if (!Directory.Exists(location))
             {
@@ -32,7 +32,7 @@ namespace CraftForge.Server.Classes.Console.Yaml
 
             serverSettings settings = new serverSettings()
             {
-                threadAmount = "0", //Use all cores
+                threadAmount = cores
             };
 
             settings.writeFile(serverName);

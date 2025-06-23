@@ -13,7 +13,7 @@ using System.Xml;
 
 namespace CraftForge.Server.GUI.Applications
 {
-    public partial class settings : Form
+    public partial class settings : TitleBar
     {
         static bool isLoadingSettings = true; // Flag to track loading state
         /*Naming Scheme for the settings
@@ -34,6 +34,11 @@ namespace CraftForge.Server.GUI.Applications
         public settings()
         {
             InitializeComponent();
+
+            this.TitleText = "Settings";
+            this.TitleCloseButtonEnabled = true;
+            this.TitleMaximizeButtonEnabled = false;
+            this.TitleMinimizeButtonEnabled = false;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -168,7 +173,10 @@ namespace CraftForge.Server.GUI.Applications
                         }
                     }
                 }
-                catch { }
+                catch 
+                {
+                    TypeListAppPanel.Text = "Unknown";
+                }
             }
             isLoadingSettings = false;
 

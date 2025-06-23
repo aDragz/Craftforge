@@ -1,7 +1,8 @@
-﻿using CraftForge.Server.GUI.Applications;
+﻿using CraftForge.Server.Classes.Console.Yaml;
 using CraftForge.Server.GUI.Console;
 using CraftForge.Server.Setup;
 using CraftForge.Server.StartPage.Classes;
+using Microsoft.VisualBasic.Devices;
 using Newtonsoft.Json.Linq;
 using System;
 using System.IO;
@@ -10,78 +11,91 @@ using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
-namespace CraftForge.Server.GUI.Setup
+namespace CraftForge.Server.StartPage.GUIs.Modern
 {
-    public partial class CreateNewServer : Form
+    public partial class CreateNewServerModern : TitleBar
     {
-        public CreateNewServer()
+
+        /*
+         Design Specifications:
+
+           - The labels have a spacing of 45px
+             For example, serverNameLbl is at 24, 125, and serverIPAddressLbl is at 24, 170.
+
+           - The label Font is: Arial, 16px
+        */
+        private int threadCount = Environment.ProcessorCount; // The number of CPU cores available on the system
+
+        public CreateNewServerModern()
         {
             InitializeComponent();
+
+            this.TitleText = "Create New Server";
+            this.TitleMinimizeButtonEnabled = true;
+            this.TitleMaximizeButtonEnabled = false;
+            this.TitleCloseButtonEnabled = true;
         }
 
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        private void CreateNewServerModern_Load(object sender, System.EventArgs e)
         {
-            this.Close();
+            ipAddressTextBox.Text = getIPv4Address();
+
+            CPUCoresNumber.Maximum = threadCount;
+
+            //Get maximum amount of memory (in mb)
+
+            ComputerInfo computerInfo = new ComputerInfo();
+            ulong totalPhysicalMemory = computerInfo.TotalPhysicalMemory;
+            int totalMemoryMB = (int)(totalPhysicalMemory / (1024 * 1024));
+
+            ramNumber.Maximum = totalMemoryMB;
         }
 
-        private async void createButton_Click(object sender, EventArgs e)
+        private string getIPv4Address()
         {
-            // Main Strings
-            string serverName = nameTextBox.Text;
-            string serverIP = IpTextBox.Text;
-            string serverPort = portTextBox.Text;
-            string serverMOTD = motdTextBox.Text;
-
-            if (serverName.Equals("") || serverIP.Equals("") || serverPort.Equals("") || serverMOTD.Equals(""))
+            if (Properties.Settings.Default.grabIPv4Address == 0)
+                return string.Empty;
+            else if (Properties.Settings.Default.grabIPv4Address == 2)
             {
-                MessageBox.Show("Please fill in all fields");
-                return;
-            }
+                //Ask user if they want to enable this setting
+                DialogResult dialogResult = MessageBox.Show("Would you like to automatically grab your IPv4 address?", "Grab IPv4 Address", MessageBoxButtons.YesNo);
 
-            if (serverName.Contains("!"))
-            {
-                MessageBox.Show("Server name cannot contain '!' character");
-                return;
-            }
-
-            // Url Strings
-            string type = typeSelector.SelectedItem.ToString().ToLower();
-            string url = null;
-
-            if (!type.Equals("custom"))
-            {
-                // Url Strings
-                string version = versionSelector.SelectedItem.ToString();
-
-                if (type.Equals("paper") || type.Equals("waterfall") || type.Equals("velocity"))
+                if (dialogResult == DialogResult.Yes)
                 {
-                    string build = buildSelector.SelectedItem.ToString();
-                    url = string.Format("https://api.papermc.io/v2/projects/{0}/versions/{1}/builds/{2}/downloads/{0}-{1}-{2}.jar", type, version, build);
+                    Properties.Settings.Default.grabIPv4Address = 1;
+                    Properties.Settings.Default.Save();
                 }
-                if (type.Equals("spigot"))
+                else
                 {
-                    url = null; //To create the directory (Does not need to download as it uses buildTools.jar (runBuildTool.runTool())
+                    Properties.Settings.Default.grabIPv4Address = 0;
+                    Properties.Settings.Default.Save();
+                    return "localhost";
                 }
             }
 
-            if (!await generateNewServer.createAsync(serverName, serverIP, serverPort, serverMOTD, url, 1, 1024))
+            string localIP = string.Empty;
+            foreach (NetworkInterface ni in NetworkInterface.GetAllNetworkInterfaces())
             {
-                return;
+                if (ni.OperationalStatus == OperationalStatus.Up &&
+                    (ni.NetworkInterfaceType == NetworkInterfaceType.Ethernet || ni.NetworkInterfaceType == NetworkInterfaceType.Wireless80211))
+                {
+                    foreach (UnicastIPAddressInformation ip in ni.GetIPProperties().UnicastAddresses)
+                    {
+                        if (ip.Address.AddressFamily == AddressFamily.InterNetwork)
+                        {
+                            localIP = ip.Address.ToString();
+                            break;
+                        }
+                    }
+                }
+                if (string.IsNullOrEmpty(localIP))
+                {
+                    localIP = "localhost";
+                }
             }
-
-            if (type.Equals("spigot")) //Run here so it can create the files/folders without buildTools.jar crashing
-                runBuildTool.runTool(Path.Combine("servers", serverName), versionSelector.SelectedItem.ToString()); //Run Build tool
-
-            // Once created, Open terminal
-            Terminal terminal = new Terminal
-            {
-                Text = serverName,
-                Name = serverName,
-            };
-
-            terminal.Show();
-            this.Close();
+            return localIP;
         }
 
         private async void typeSelector_SelectedIndexChanged(object sender, EventArgs e)
@@ -135,12 +149,6 @@ namespace CraftForge.Server.GUI.Setup
             {
                 buildSelector.Enabled = false;
             }
-        }
-
-        private void CreateNewServer_Load(object sender, EventArgs e)
-        {
-            //await getPaperMcVersions();
-            IpTextBox.Text = getIPv4Address();
         }
 
         private async Task getPaperMcVersions()
@@ -241,49 +249,68 @@ namespace CraftForge.Server.GUI.Setup
             }
         }
 
-        private string getIPv4Address()
+        private async void createServerBtn_Click(object sender, EventArgs e)
         {
-            if (Properties.Settings.Default.grabIPv4Address == 0)
-                return string.Empty;
-            else if (Properties.Settings.Default.grabIPv4Address == 2)
-            {
-                //Ask user if they want to enable this setting
-                DialogResult dialogResult = MessageBox.Show("Would you like to automatically grab your IPv4 address?", "Grab IPv4 Address", MessageBoxButtons.YesNo);
+            // Main Strings
+            string serverName = serverNameTextBox.Text;
+            string serverIP = ipAddressTextBox.Text;
+            string serverPort = portTextBox.Text;
+            string serverMOTD = motdTextBox.Text;
 
-                if (dialogResult == DialogResult.Yes)
+            if (serverName.Equals("") || serverIP.Equals("") || serverPort.Equals("") || serverMOTD.Equals(""))
+            {
+                MessageBox.Show("Please fill in all fields");
+                return;
+            }
+
+            if (serverName.Contains("!"))
+            {
+                MessageBox.Show("Server name cannot contain '!' character");
+                return;
+            }
+
+            // Url Strings
+            string type = typeSelector.SelectedItem.ToString().ToLower();
+            string url = null;
+
+            if (!type.Equals("custom"))
+            {
+                // Url Strings
+                string version = versionSelector.SelectedItem.ToString();
+
+                if (type.Equals("paper") || type.Equals("waterfall") || type.Equals("velocity"))
                 {
-                    Properties.Settings.Default.grabIPv4Address = 1;
-                    Properties.Settings.Default.Save();
+                    string build = buildSelector.SelectedItem.ToString();
+                    url = string.Format("https://api.papermc.io/v2/projects/{0}/versions/{1}/builds/{2}/downloads/{0}-{1}-{2}.jar", type, version, build);
                 }
-                else
+                if (type.Equals("spigot"))
                 {
-                    Properties.Settings.Default.grabIPv4Address = 0;
-                    Properties.Settings.Default.Save();
-                    return "localhost";
+                    url = null; //To create the directory (Does not need to download as it uses buildTools.jar (runBuildTool.runTool())
                 }
             }
 
-            string localIP = string.Empty;
-            foreach (NetworkInterface ni in NetworkInterface.GetAllNetworkInterfaces())
+            int player = (int)playerCountNumber.Value;
+            int ram = (int)ramNumber.Value;
+            if (!await generateNewServer.createAsync(serverName, serverIP, serverPort, serverMOTD, url, player, ram))
             {
-                if (ni.OperationalStatus == OperationalStatus.Up &&
-                    (ni.NetworkInterfaceType == NetworkInterfaceType.Ethernet || ni.NetworkInterfaceType == NetworkInterfaceType.Wireless80211))
-                {
-                    foreach (UnicastIPAddressInformation ip in ni.GetIPProperties().UnicastAddresses)
-                    {
-                        if (ip.Address.AddressFamily == AddressFamily.InterNetwork)
-                        {
-                            localIP = ip.Address.ToString();
-                            break;
-                        }
-                    }
-                }
-                if (string.IsNullOrEmpty(localIP))
-                {
-                    localIP = "localhost";
-                }
+                return;
             }
-            return localIP;
+
+            if (type.Equals("spigot")) //Run here so it can create the files/folders without buildTools.jar crashing
+                runBuildTool.runTool(Path.Combine("servers", serverName), versionSelector.SelectedItem.ToString()); //Run Build tool
+
+            // Once created, Open terminal
+            Terminal terminal = new Terminal
+            {
+                Text = serverName,
+                Name = serverName,
+            };
+
+            serverSettings.writeSettingsToFile(serverName, CPUCoresNumber.Value.ToString());
+
+
+            terminal.Show();
+            this.Close();
         }
     }
 }
