@@ -34,7 +34,7 @@ using System.Windows.Forms.DataVisualization.Charting;
 
 namespace CraftForge.Server.GUI.Console
 {
-    public partial class Terminal : Form
+    public partial class Terminal : TitleBar
     {
         /* 
         Dimensions:
@@ -45,6 +45,7 @@ namespace CraftForge.Server.GUI.Console
         Normal to textbox: -1px
         Between Labels/Header: 93px
         */
+
         public static Dictionary<int, Process> serverProcesses = new Dictionary<int, Process>();
         bool isRunning = false; //If the server is running & user tries to open console, it will offer to open a new tab or replace the current one
         bool jarSelectionChanged = false; //If the user has changed the jar selection
@@ -67,6 +68,9 @@ namespace CraftForge.Server.GUI.Console
         public Terminal()
         {
             InitializeComponent();
+
+            //Set title bar text to "CraftForge | CraftForge <release> - v<version>"
+            this.TitleText = $"CraftForge {Startup.release} - v{Startup.applicationVersion}"; //Change this if I change title again (ctrl+f)
         }
 
         private void Terminal_Load(object sender, EventArgs e)
@@ -260,6 +264,10 @@ namespace CraftForge.Server.GUI.Console
         {
             Theme.initializeTheme(this, serverTabsPanel, menuStrip1);
 
+            //Set background of main app
+            this.BackColor = generalPage.BackColor;
+            serverTabs.Appearance = TabAppearance.FlatButtons;
+
             //Make CPU/Ram labels invisible
             cpuUsageLabel.Visible = false;
             ramUsageLabel.Visible = false;
@@ -442,8 +450,8 @@ namespace CraftForge.Server.GUI.Console
                             FileName = "cmd.exe",
                             WorkingDirectory = directory,
                             Arguments = "/c title Minecraft Server && start.bat",
-                            WindowStyle = ProcessWindowStyle.Normal,
-                            CreateNoWindow = false,
+                            WindowStyle = ProcessWindowStyle.Hidden,
+                            CreateNoWindow = true,
                             UseShellExecute = false,
                             RedirectStandardOutput = true,
                             RedirectStandardInput = true,
@@ -804,6 +812,13 @@ namespace CraftForge.Server.GUI.Console
 
                 if (this.formClosing)
                     this.Close();
+
+                //check setting checkAutoSave
+                if (Properties.Settings.Default.saveLogsAuto)
+                {
+                    //Make a backup
+                    saveLogsToFile(false);
+                }
             }
             catch (Exception ex)
             {
@@ -1516,11 +1531,16 @@ namespace CraftForge.Server.GUI.Console
 
         private void saveTextToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            saveLogsToFile(true);
+        }
+
+        private void saveLogsToFile(bool openFile)
+        {
             //Save the text to /Documents/CraftForge/Logs/ServerName/Date-Time.txt
             string[] name = this.Name.Split(':');
             string location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\CraftForge\\Logs\\" + name[0]);
 
-            string fileName = ("\\" +DateTime.Now.ToString("dd-MM-yyyy-HH-mm-ss") + ".txt"); //Sets the date of the file
+            string fileName = ("\\" + DateTime.Now.ToString("dd-MM-yyyy-HH-mm-ss") + ".txt"); //Sets the date of the file
 
             if (!Directory.Exists(location))
                 Directory.CreateDirectory(location);
@@ -1538,7 +1558,8 @@ namespace CraftForge.Server.GUI.Console
                 secondaryTerminal.SaveFile(location + fileName, RichTextBoxStreamType.PlainText);
             }
 
-            Process.Start(location + fileName); //Open the file
+            if (openFile)
+                Process.Start(location + fileName); //Open the file
         }
 
         private void openLogsFolderToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1546,11 +1567,64 @@ namespace CraftForge.Server.GUI.Console
             string[] name = this.Name.Split(':');
             string location = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + ("\\CraftForge\\Logs\\" + name[0]);
 
+
+            //Check if Logs exists
+            if (!Directory.Exists(location))
+            {
+                Directory.CreateDirectory(location);
+            }
+
             try
             {
                 Process.Start(location); //Open the folder
             }
             catch { }
+        }
+
+        private async void killServerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                //Grab name of button
+                int consoleID = Convert.ToInt32(this.cmdID); //Name is process ID
+                Process serverProcess = serverProcesses[consoleID];
+
+                createNewLog.sendMessage(this, "[Server] Server is stopping");
+
+                Process.Start(new ProcessStartInfo
+                {
+                    FileName = "taskkill",
+                    Arguments = $"/PID {consoleID} /T /F",
+                    CreateNoWindow = true,
+                    UseShellExecute = false
+                }).WaitForExit();
+
+                //Wait for the server to stop
+                while (this.isRunning)
+                {
+                    // Wait 0.5 second, or it adds messages after the server has already closed, miss-leading the user.
+                    await Task.Run(async () => await Task.Delay(500));
+                }
+
+                //add to terminal the server has stopped
+                secondaryTerminal.AppendText("\n[CraftForge INFO] Server has stopped\n");
+                createNewLog.sendMessage(this, "[Server] Server has stopped");
+
+                //check setting checkAutoSave
+                if (Properties.Settings.Default.saveLogsAuto)
+                {
+                    //Make a backup
+                    saveLogsToFile(false);
+                }
+
+                //Reset main values to default, or visual bugs will occur (Like when closing the Window)
+                this.isRunning = false;
+                this.cmdID = 0;
+            }
+            catch (Exception ex)
+            {
+                createNewLog.sendMessage(this, $"[Server] An error has occurred: {ex}");
+            }
         }
     }
 }

@@ -37,17 +37,17 @@
             // 
             // titleBarPanel
             // 
-            this.titleBarPanel.Size = new System.Drawing.Size(1286, 75);
+            this.titleBarPanel.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.titleBarPanel.Size = new System.Drawing.Size(1929, 115);
             // 
             // welcomeLbl
             // 
             this.welcomeLbl.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.welcomeLbl.Font = new System.Drawing.Font("Consolas", 24F);
             this.welcomeLbl.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-            this.welcomeLbl.Location = new System.Drawing.Point(654, 79);
-            this.welcomeLbl.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.welcomeLbl.Location = new System.Drawing.Point(981, 122);
             this.welcomeLbl.Name = "welcomeLbl";
-            this.welcomeLbl.Size = new System.Drawing.Size(603, 108);
+            this.welcomeLbl.Size = new System.Drawing.Size(904, 166);
             this.welcomeLbl.TabIndex = 1;
             this.welcomeLbl.Text = "CraftForge";
             this.welcomeLbl.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -58,10 +58,9 @@
             this.createNewServerLbl.AutoSize = true;
             this.createNewServerLbl.Font = new System.Drawing.Font("Consolas", 12F);
             this.createNewServerLbl.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-            this.createNewServerLbl.Location = new System.Drawing.Point(1102, 683);
-            this.createNewServerLbl.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.createNewServerLbl.Location = new System.Drawing.Point(1653, 1051);
             this.createNewServerLbl.Name = "createNewServerLbl";
-            this.createNewServerLbl.Size = new System.Drawing.Size(162, 19);
+            this.createNewServerLbl.Size = new System.Drawing.Size(233, 28);
             this.createNewServerLbl.TabIndex = 2;
             this.createNewServerLbl.Text = "Create New Server";
             this.createNewServerLbl.Click += new System.EventHandler(this.label1_Click);
@@ -70,10 +69,9 @@
             // 
             this.systemSpecsLbl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.systemSpecsLbl.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-            this.systemSpecsLbl.Location = new System.Drawing.Point(660, 600);
-            this.systemSpecsLbl.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.systemSpecsLbl.Location = new System.Drawing.Point(990, 923);
             this.systemSpecsLbl.Name = "systemSpecsLbl";
-            this.systemSpecsLbl.Size = new System.Drawing.Size(442, 110);
+            this.systemSpecsLbl.Size = new System.Drawing.Size(663, 169);
             this.systemSpecsLbl.TabIndex = 3;
             this.systemSpecsLbl.Text = "System Specifications";
             this.systemSpecsLbl.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
@@ -84,29 +82,27 @@
             this.settingsLbl.AutoSize = true;
             this.settingsLbl.Font = new System.Drawing.Font("Consolas", 12F);
             this.settingsLbl.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-            this.settingsLbl.Location = new System.Drawing.Point(1176, 660);
-            this.settingsLbl.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.settingsLbl.Location = new System.Drawing.Point(1764, 1015);
             this.settingsLbl.Name = "settingsLbl";
-            this.settingsLbl.Size = new System.Drawing.Size(81, 19);
+            this.settingsLbl.Size = new System.Drawing.Size(116, 28);
             this.settingsLbl.TabIndex = 4;
             this.settingsLbl.Text = "Settings";
             this.settingsLbl.Click += new System.EventHandler(this.settingsLbl_Click);
             // 
             // Startup
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(42)))), ((int)(((byte)(42)))), ((int)(((byte)(60)))));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.ClientSize = new System.Drawing.Size(1286, 717);
+            this.ClientSize = new System.Drawing.Size(1929, 1103);
             this.Controls.Add(this.settingsLbl);
             this.Controls.Add(this.systemSpecsLbl);
             this.Controls.Add(this.createNewServerLbl);
             this.Controls.Add(this.welcomeLbl);
             this.DoubleBuffered = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(2);
-            this.MinimumSize = new System.Drawing.Size(1286, 717);
+            this.MinimumSize = new System.Drawing.Size(1929, 1103);
             this.Name = "Startup";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Server Selection | CraftForge {release} - v{applicationVersion}";

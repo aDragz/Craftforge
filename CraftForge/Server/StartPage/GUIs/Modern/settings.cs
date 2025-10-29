@@ -85,6 +85,8 @@ namespace CraftForge.Server.GUI.Applications
 
             bool terminal_autoScroll = Properties.Settings.Default.terminal_autoScroll;
 
+            bool autoSaveLogs = Properties.Settings.Default.saveLogsAuto;
+
             //Set the current theme textbox
             themeListConsolePanel.Text = currentTheme;
 
@@ -92,6 +94,8 @@ namespace CraftForge.Server.GUI.Applications
             warnStopServerConsolePanel.Checked = warnStopServer;
 
             autoScrollConsolePanel.Checked = terminal_autoScroll;
+
+            autoSaveLogsConsolePanel.Checked = autoSaveLogs;
         }
 
         private void loadStartupSettings()
@@ -308,6 +312,16 @@ namespace CraftForge.Server.GUI.Applications
 
             //Save the value
             Properties.Settings.Default.stopBtnWarning = warnStopServer;
+            Properties.Settings.Default.Save();
+        }
+
+        private void autoSaveLogsConsolePanel_CheckedChanged(object sender, EventArgs e)
+        {
+            //Grab the value
+            bool autoSaveLogs = autoSaveLogsConsolePanel.Checked;
+
+            //Save the value
+            Properties.Settings.Default.saveLogsAuto = autoSaveLogs;
             Properties.Settings.Default.Save();
         }
 

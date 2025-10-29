@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace CraftForge.Server.GUI.Applications
 {
-    public partial class downloadFile : Form
+    public partial class downloadFile : TitleBar
     {
         private static ProgressBar progressBar1Static;
         private static Label downloadLabelStatic;
@@ -19,6 +19,10 @@ namespace CraftForge.Server.GUI.Applications
         public downloadFile()
         {
             InitializeComponent();
+
+            this.TitleCloseButtonEnabled = false;
+            this.TitleMinimizeButtonEnabled = false;
+            this.TitleMaximizeButtonEnabled = false;
 
             progressBar1Static = new ProgressBar();
             downloadLabelStatic = new Label();
@@ -58,7 +62,7 @@ namespace CraftForge.Server.GUI.Applications
             currentInstance = new downloadFile();
             currentInstance.Name = url;
 
-            currentInstance.Text = ("Downloading file from " + url + " to " + path);
+            currentInstance.TitleText = ("Downloading File");
 
             currentInstance.Show();
 
