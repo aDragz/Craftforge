@@ -211,6 +211,8 @@ namespace CraftForge.Server.GUI.Console
                 }
             }
 
+            updateServerNameLbl();
+
             //Get maximum amount of RAM in the system
             ComputerInfo computerInfo = new ComputerInfo();
             ulong totalPhysicalMemory = computerInfo.TotalPhysicalMemory;
@@ -923,12 +925,24 @@ namespace CraftForge.Server.GUI.Console
             mainIpLabel.Text = settingsIpTextBox.Text;
             mainPortLabel.Text = settingsPortTextBox.Text;
 
+            updateServerNameLbl();
+
             updateRam();
 
             createNewLog.sendMessage(this, "[Settings] Server updated!");
             SettingsStatusLabel.Text = "Server updated!";
         }
 
+        private void updateServerNameLbl()
+        {
+            string serverName = this.Name;
+
+            if (serverName.Length > 23) {
+                serverName = serverName.Substring(0, 20) + "...";
+            }
+
+            mainServerNameLabel.Text = serverName;
+        }
         private void updateRam()
         {
             if (ramSlider.Value == ramAmount) return; //The ram value has not changed

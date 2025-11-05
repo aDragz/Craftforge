@@ -48,12 +48,13 @@
             this.ramUsageLabel = new System.Windows.Forms.Label();
             this.cpuUsageLabel = new System.Windows.Forms.Label();
             this.serverStatusPanel = new System.Windows.Forms.Panel();
+            this.label4 = new System.Windows.Forms.Label();
+            this.mainServerNameLabel = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.mainPortLabel = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.mainIpLabel = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.serverJarPanel = new System.Windows.Forms.Panel();
             this.secondaryTerminal = new System.Windows.Forms.RichTextBox();
             this.terminalContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.autoScrollToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -176,7 +177,7 @@
             this.serverTabs.Name = "serverTabs";
             this.serverTabs.Padding = new System.Drawing.Point(0, 0);
             this.serverTabs.SelectedIndex = 0;
-            this.serverTabs.Size = new System.Drawing.Size(1708, 1002);
+            this.serverTabs.Size = new System.Drawing.Size(1708, 1004);
             this.serverTabs.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.serverTabs.TabIndex = 10;
             // 
@@ -188,7 +189,6 @@
             this.generalPage.Controls.Add(this.ramUsageLabel);
             this.generalPage.Controls.Add(this.cpuUsageLabel);
             this.generalPage.Controls.Add(this.serverStatusPanel);
-            this.generalPage.Controls.Add(this.serverJarPanel);
             this.generalPage.Controls.Add(this.secondaryTerminal);
             this.generalPage.Controls.Add(this.stopBtn);
             this.generalPage.Controls.Add(this.startBtn);
@@ -196,7 +196,7 @@
             this.generalPage.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.generalPage.Name = "generalPage";
             this.generalPage.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.generalPage.Size = new System.Drawing.Size(1700, 984);
+            this.generalPage.Size = new System.Drawing.Size(1700, 986);
             this.generalPage.TabIndex = 0;
             this.generalPage.Text = "General";
             this.generalPage.UseVisualStyleBackColor = true;
@@ -207,7 +207,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.secondaryTerminalInput.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.secondaryTerminalInput.ForeColor = System.Drawing.Color.DimGray;
-            this.secondaryTerminalInput.Location = new System.Drawing.Point(3, 797);
+            this.secondaryTerminalInput.Location = new System.Drawing.Point(3, 799);
             this.secondaryTerminalInput.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.secondaryTerminalInput.Name = "secondaryTerminalInput";
             this.secondaryTerminalInput.Size = new System.Drawing.Size(1290, 33);
@@ -276,6 +276,9 @@
             // serverStatusPanel
             // 
             this.serverStatusPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.serverStatusPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.serverStatusPanel.Controls.Add(this.label4);
+            this.serverStatusPanel.Controls.Add(this.mainServerNameLabel);
             this.serverStatusPanel.Controls.Add(this.label2);
             this.serverStatusPanel.Controls.Add(this.mainPortLabel);
             this.serverStatusPanel.Controls.Add(this.label3);
@@ -284,12 +287,30 @@
             this.serverStatusPanel.Location = new System.Drawing.Point(1299, 6);
             this.serverStatusPanel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.serverStatusPanel.Name = "serverStatusPanel";
-            this.serverStatusPanel.Size = new System.Drawing.Size(393, 220);
+            this.serverStatusPanel.Size = new System.Drawing.Size(393, 297);
             this.serverStatusPanel.TabIndex = 36;
+            // 
+            // label4
+            // 
+            this.label4.Location = new System.Drawing.Point(3, 52);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(387, 32);
+            this.label4.TabIndex = 38;
+            this.label4.Text = "Server Name:";
+            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // mainServerNameLabel
+            // 
+            this.mainServerNameLabel.Location = new System.Drawing.Point(3, 87);
+            this.mainServerNameLabel.Name = "mainServerNameLabel";
+            this.mainServerNameLabel.Size = new System.Drawing.Size(387, 32);
+            this.mainServerNameLabel.TabIndex = 37;
+            this.mainServerNameLabel.Text = "Unknown";
+            this.mainServerNameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label2
             // 
-            this.label2.Location = new System.Drawing.Point(3, 132);
+            this.label2.Location = new System.Drawing.Point(3, 222);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(387, 32);
             this.label2.TabIndex = 36;
@@ -298,7 +319,7 @@
             // 
             // mainPortLabel
             // 
-            this.mainPortLabel.Location = new System.Drawing.Point(3, 176);
+            this.mainPortLabel.Location = new System.Drawing.Point(3, 257);
             this.mainPortLabel.Name = "mainPortLabel";
             this.mainPortLabel.Size = new System.Drawing.Size(387, 32);
             this.mainPortLabel.TabIndex = 35;
@@ -307,7 +328,7 @@
             // 
             // label3
             // 
-            this.label3.Location = new System.Drawing.Point(3, 45);
+            this.label3.Location = new System.Drawing.Point(3, 137);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(387, 32);
             this.label3.TabIndex = 34;
@@ -316,7 +337,7 @@
             // 
             // mainIpLabel
             // 
-            this.mainIpLabel.Location = new System.Drawing.Point(3, 89);
+            this.mainIpLabel.Location = new System.Drawing.Point(3, 172);
             this.mainIpLabel.Name = "mainIpLabel";
             this.mainIpLabel.Size = new System.Drawing.Size(387, 32);
             this.mainIpLabel.TabIndex = 33;
@@ -326,22 +347,14 @@
             // label1
             // 
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.label1.Location = new System.Drawing.Point(104, 2);
+            this.label1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(-2, -1);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(185, 32);
+            this.label1.Size = new System.Drawing.Size(392, 43);
             this.label1.TabIndex = 32;
             this.label1.Text = "Server Status";
-            // 
-            // serverJarPanel
-            // 
-            this.serverJarPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.serverJarPanel.Location = new System.Drawing.Point(1299, 860);
-            this.serverJarPanel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.serverJarPanel.Name = "serverJarPanel";
-            this.serverJarPanel.Size = new System.Drawing.Size(393, 126);
-            this.serverJarPanel.TabIndex = 35;
+            this.label1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // secondaryTerminal
             // 
@@ -355,7 +368,7 @@
             this.secondaryTerminal.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.secondaryTerminal.Name = "secondaryTerminal";
             this.secondaryTerminal.ReadOnly = true;
-            this.secondaryTerminal.Size = new System.Drawing.Size(1290, 789);
+            this.secondaryTerminal.Size = new System.Drawing.Size(1290, 791);
             this.secondaryTerminal.TabIndex = 34;
             this.secondaryTerminal.Text = "";
             // 
@@ -401,7 +414,7 @@
             this.stopBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.stopBtn.Enabled = false;
             this.stopBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.stopBtn.Location = new System.Drawing.Point(904, 886);
+            this.stopBtn.Location = new System.Drawing.Point(904, 888);
             this.stopBtn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.stopBtn.Name = "stopBtn";
             this.stopBtn.Size = new System.Drawing.Size(191, 90);
@@ -414,7 +427,7 @@
             // 
             this.startBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.startBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.startBtn.Location = new System.Drawing.Point(1102, 886);
+            this.startBtn.Location = new System.Drawing.Point(1102, 888);
             this.startBtn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.startBtn.Name = "startBtn";
             this.startBtn.Size = new System.Drawing.Size(191, 90);
@@ -429,7 +442,7 @@
             this.playersPage.Location = new System.Drawing.Point(4, 14);
             this.playersPage.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.playersPage.Name = "playersPage";
-            this.playersPage.Size = new System.Drawing.Size(1700, 984);
+            this.playersPage.Size = new System.Drawing.Size(1700, 986);
             this.playersPage.TabIndex = 8;
             this.playersPage.Text = "Players";
             this.playersPage.UseVisualStyleBackColor = true;
@@ -441,7 +454,7 @@
             this.playerList.Location = new System.Drawing.Point(0, 0);
             this.playerList.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.playerList.Name = "playerList";
-            this.playerList.Size = new System.Drawing.Size(1700, 984);
+            this.playerList.Size = new System.Drawing.Size(1700, 986);
             this.playerList.TabIndex = 0;
             // 
             // filesPage
@@ -450,7 +463,7 @@
             this.filesPage.Location = new System.Drawing.Point(4, 14);
             this.filesPage.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.filesPage.Name = "filesPage";
-            this.filesPage.Size = new System.Drawing.Size(1700, 984);
+            this.filesPage.Size = new System.Drawing.Size(1700, 986);
             this.filesPage.TabIndex = 2;
             this.filesPage.Text = "Files";
             this.filesPage.UseVisualStyleBackColor = true;
@@ -462,7 +475,7 @@
             this.folderList.Location = new System.Drawing.Point(0, 0);
             this.folderList.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.folderList.Name = "folderList";
-            this.folderList.Size = new System.Drawing.Size(1700, 984);
+            this.folderList.Size = new System.Drawing.Size(1700, 986);
             this.folderList.TabIndex = 0;
             // 
             // logPage
@@ -471,7 +484,7 @@
             this.logPage.Location = new System.Drawing.Point(4, 14);
             this.logPage.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.logPage.Name = "logPage";
-            this.logPage.Size = new System.Drawing.Size(1700, 984);
+            this.logPage.Size = new System.Drawing.Size(1700, 986);
             this.logPage.TabIndex = 7;
             this.logPage.Text = "Logs";
             this.logPage.UseVisualStyleBackColor = true;
@@ -499,7 +512,7 @@
             this.backupPage.Location = new System.Drawing.Point(4, 14);
             this.backupPage.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.backupPage.Name = "backupPage";
-            this.backupPage.Size = new System.Drawing.Size(1700, 984);
+            this.backupPage.Size = new System.Drawing.Size(1700, 986);
             this.backupPage.TabIndex = 5;
             this.backupPage.Text = "Backups";
             this.backupPage.UseVisualStyleBackColor = true;
@@ -583,7 +596,7 @@
             this.settingsPage.Location = new System.Drawing.Point(4, 14);
             this.settingsPage.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.settingsPage.Name = "settingsPage";
-            this.settingsPage.Size = new System.Drawing.Size(1700, 984);
+            this.settingsPage.Size = new System.Drawing.Size(1700, 986);
             this.settingsPage.TabIndex = 3;
             this.settingsPage.Text = "Settings";
             this.settingsPage.UseVisualStyleBackColor = true;
@@ -926,58 +939,58 @@
             // startupToolStripMenuItem
             // 
             this.startupToolStripMenuItem.Name = "startupToolStripMenuItem";
-            this.startupToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.startupToolStripMenuItem.Size = new System.Drawing.Size(222, 34);
             this.startupToolStripMenuItem.Text = "Startup";
             this.startupToolStripMenuItem.Click += new System.EventHandler(this.startupToolStripMenuItem_Click);
             // 
             // dToolStripMenuItem
             // 
             this.dToolStripMenuItem.Name = "dToolStripMenuItem";
-            this.dToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.dToolStripMenuItem.Size = new System.Drawing.Size(222, 34);
             this.dToolStripMenuItem.Text = "Hide Window";
             this.dToolStripMenuItem.Click += new System.EventHandler(this.dToolStripMenuItem_Click);
             // 
             // toolStripSeparator7
             // 
             this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(267, 6);
+            this.toolStripSeparator7.Size = new System.Drawing.Size(219, 6);
             // 
             // serverToolStripMenuItem
             // 
             this.serverToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.killServerToolStripMenuItem});
             this.serverToolStripMenuItem.Name = "serverToolStripMenuItem";
-            this.serverToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.serverToolStripMenuItem.Size = new System.Drawing.Size(222, 34);
             this.serverToolStripMenuItem.Text = "Server";
             // 
             // killServerToolStripMenuItem
             // 
             this.killServerToolStripMenuItem.Name = "killServerToolStripMenuItem";
-            this.killServerToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.killServerToolStripMenuItem.Size = new System.Drawing.Size(190, 34);
             this.killServerToolStripMenuItem.Text = "&Kill Server";
             this.killServerToolStripMenuItem.Click += new System.EventHandler(this.killServerToolStripMenuItem_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(267, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(219, 6);
             // 
             // settingsToolStripMenuItem1
             // 
             this.settingsToolStripMenuItem1.Name = "settingsToolStripMenuItem1";
-            this.settingsToolStripMenuItem1.Size = new System.Drawing.Size(270, 34);
+            this.settingsToolStripMenuItem1.Size = new System.Drawing.Size(222, 34);
             this.settingsToolStripMenuItem1.Text = "Settings";
             this.settingsToolStripMenuItem1.Click += new System.EventHandler(this.settingsToolStripMenuItem1_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(267, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(219, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(222, 34);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -1092,7 +1105,7 @@
             this.serverTabsPanel.Location = new System.Drawing.Point(0, 106);
             this.serverTabsPanel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.serverTabsPanel.Name = "serverTabsPanel";
-            this.serverTabsPanel.Size = new System.Drawing.Size(200, 987);
+            this.serverTabsPanel.Size = new System.Drawing.Size(200, 993);
             this.serverTabsPanel.TabIndex = 15;
             // 
             // cpuRamUsage
@@ -1127,7 +1140,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.ramUsageChart)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cpuUsageChart)).EndInit();
             this.serverStatusPanel.ResumeLayout(false);
-            this.serverStatusPanel.PerformLayout();
             this.terminalContextMenu.ResumeLayout(false);
             this.playersPage.ResumeLayout(false);
             this.filesPage.ResumeLayout(false);
@@ -1180,7 +1192,6 @@
         public System.Windows.Forms.TabControl serverTabs;
         private System.Windows.Forms.Panel serverTabsPanel;
         private System.Windows.Forms.RichTextBox secondaryTerminal;
-        private System.Windows.Forms.Panel serverJarPanel;
         private System.Windows.Forms.Panel serverStatusPanel;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label mainIpLabel;
@@ -1239,6 +1250,8 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
         private System.Windows.Forms.ToolStripMenuItem serverToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem killServerToolStripMenuItem;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label mainServerNameLabel;
     }
 }
 
