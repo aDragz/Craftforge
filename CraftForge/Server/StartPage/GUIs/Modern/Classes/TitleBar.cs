@@ -1,4 +1,6 @@
 ﻿using System;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
@@ -16,7 +18,7 @@ public class TitleBar : Form
     private const int HTCAPTION = 0x2;
 
     protected Panel titleBarPanel; // Panel for the custom title bar
-    
+
 
     private Label titleLabel; // Label for the title text
     private Panel border; // Black line for the bottom of the title bar (Separator)
@@ -33,6 +35,7 @@ public class TitleBar : Form
     public TitleBar()
     {
         InitializeCustomTitleBar();
+        this.DoubleBuffered = true;
     }
 
     private void InitializeCustomTitleBar()
@@ -156,8 +159,8 @@ public class TitleBar : Form
         }
 
         closeButton.Location = new Point(titleBarPanel.Width - buttonWidth - 20, 5);
-        maximizeButton.Location = new Point(titleBarPanel.Width - 2 * buttonWidth-40, 5);
-        minimizeButton.Location = new Point(titleBarPanel.Width - 3 * buttonWidth-60, 5);
+        maximizeButton.Location = new Point(titleBarPanel.Width - 2 * buttonWidth - 40, 5);
+        minimizeButton.Location = new Point(titleBarPanel.Width - 3 * buttonWidth - 60, 5);
 
         this.Controls.Add(titleBarPanel);
         titleBarPanel.Controls.Add(border);
@@ -174,12 +177,12 @@ public class TitleBar : Form
         titleBarPanel.Resize += (s, e) =>
         {
             int right = titleBarPanel.Width;
-            closeButton.Location = new Point(right - buttonWidth-10, 0);
-            maximizeButton.Location = new Point(right - 2 * buttonWidth-20, 0);
-            minimizeButton.Location = new Point(right - 3 * buttonWidth-30, 0);
+            closeButton.Location = new Point(right - buttonWidth - 10, 0);
+            maximizeButton.Location = new Point(right - 2 * buttonWidth - 20, 0);
+            minimizeButton.Location = new Point(right - 3 * buttonWidth - 30, 0);
 
             // Center the title label between left and the first button
-            titleLabel.Width = right - 3 * buttonWidth-30;
+            titleLabel.Width = right - 3 * buttonWidth - 30;
             titleLabel.Location = new Point(0, 0);
             titleLabel.Height = titleBarPanel.Height;
             closeButton.Height = maximizeButton.Height = minimizeButton.Height = titleBarPanel.Height;
@@ -235,13 +238,38 @@ public class TitleBar : Form
         }
     }
 
+    protected override void OnHandleCreated(EventArgs e)
+    {
+        base.OnHandleCreated(e);
+
+        if (!IsInDesigner)
+            this.MaximizedBounds = Screen.FromHandle(this.Handle).WorkingArea;
+    }
+
     private const int WM_NCHITTEST = 0x84;
     private const int HTBOTTOMRIGHT = 17;
+
+    private bool IsInDesigner
+    {
+        get
+        {
+            return LicenseManager.UsageMode == LicenseUsageMode.Designtime ||
+                   Process.GetCurrentProcess().ProcessName == "devenv";
+        }
+    }
 
     protected override void WndProc(ref Message m)
     {
         const int resizeHandleSize = 10;
+        const int WM_NCCALCSIZE = 0x0083;
 
+        // Remove system title bar & border while keeping snap and resize functionality
+        if (!IsInDesigner && m.Msg == WM_NCCALCSIZE && m.WParam != IntPtr.Zero)
+        {
+                // Removing the default non-client area
+                m.Result = IntPtr.Zero;
+                return;
+        }
         if (m.Msg == WM_NCHITTEST)
         {
             base.WndProc(ref m);
@@ -277,7 +305,7 @@ public class TitleBar : Form
 
         using (Pen pen = new Pen(Color.Gray, triangleSize))
         {
-            for (int i = 0; i < 5; i+=2)
+            for (int i = 0; i < 5; i += 2)
             {
                 e.Graphics.DrawLine(
                     pen,
@@ -286,5 +314,46 @@ public class TitleBar : Form
                 );
             }
         }
+    }
+
+    protected override CreateParams CreateParams
+    {
+        get
+        {
+            CreateParams cp = base.CreateParams;
+
+            if (!IsInDesigner)
+            {
+
+                const int WS_MINIMIZEBOX = 0x00020000;
+                const int WS_MAXIMIZEBOX = 0x00010000;
+                const int WS_THICKFRAME = 0x00040000;
+
+                // Add resize + snap support
+                cp.Style |= WS_THICKFRAME | WS_MAXIMIZEBOX | WS_MINIMIZEBOX;
+
+            }
+
+            if (!IsInDesigner)
+            {
+                const int WS_CAPTION = 0x00C00000;
+
+                cp.Style |= WS_CAPTION; // safe because the designer is skipped
+            }
+
+            return cp;
+        }
+    }
+
+    protected override void OnResizeBegin(EventArgs e)
+    {
+        this.SuspendLayout();
+        base.OnResizeBegin(e);
+    }
+
+    protected override void OnResizeEnd(EventArgs e)
+    {
+        base.OnResizeEnd(e);
+        this.ResumeLayout();
     }
 }
