@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CraftForge.Server.GUI.Setup;
+using System;
 using System.Reflection;
 using System.Windows.Forms;
 using System.Xml;
@@ -16,6 +17,7 @@ namespace CraftForge
 
         private void about_Load(object sender, EventArgs e)
         {
+            this.Text = $"About | CraftForge {Startup.release} - v{Startup.applicationVersion}"; //Change this if I change title again (ctrl+f)
             loadLabel(); //Load the about label to display data
         }
 

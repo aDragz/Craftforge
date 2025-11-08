@@ -31,6 +31,8 @@ using System.Management;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
+using Microsoft.WindowsAPICodePack.Taskbar;
+
 
 namespace CraftForge.Server.GUI.Console
 {
@@ -71,6 +73,8 @@ namespace CraftForge.Server.GUI.Console
 
             //Set title bar text to "CraftForge | CraftForge <release> - v<version>"
             this.TitleText = $"CraftForge {Startup.release} - v{Startup.applicationVersion}"; //Change this if I change title again (ctrl+f)
+
+            this.FormBorderStyle = FormBorderStyle.None;
         }
 
         private void Terminal_Load(object sender, EventArgs e)
@@ -426,6 +430,9 @@ namespace CraftForge.Server.GUI.Console
             ramUsageLabel.Visible = true;
             serverStatusNetwork.Start();
             createNewLog.sendMessage(this, "[Server] Server has started");
+
+            //Enable Kill Button
+            killServerMenuBtn.Enabled = true;
         }
 
         //Use async (another thread) - will be multiple instances of the server, and maybe different windows (in the future)
@@ -812,6 +819,9 @@ namespace CraftForge.Server.GUI.Console
                 secondaryTerminal.AppendText("\n[CraftForge INFO] Server has stopped\n");
                 createNewLog.sendMessage(this, "[Server] Server has stopped");
 
+                //Now that the server has stopped, we do not need the "Kill Server" Menu Item
+                killServerMenuBtn.Enabled = false;
+
                 if (this.formClosing)
                     this.Close();
 
@@ -991,6 +1001,14 @@ namespace CraftForge.Server.GUI.Console
         }
 
         //First time setup is for when the server is first created, and needs to create the necessary files
+
+        private async void updateBackupProgress(double progress)
+        {
+            // progress is from 0.0 to 1.0
+            TaskbarManager.Instance.SetProgressState(TaskbarProgressBarState.Normal);
+            TaskbarManager.Instance.SetProgressValue((int)(progress * 100), 100);
+        }
+
         private async Task<bool> CopyDirectoryWithProgressBar(string sourceDir, string destDir, Label label, bool firstTimeSetup, ProgressBar progressBar, string type)
         {
 
@@ -1035,6 +1053,7 @@ namespace CraftForge.Server.GUI.Console
                 copiedFiles++;
                 int progress = (int)((double)copiedFiles / totalFiles * 100);
                 progressBar.Value = progress;
+                updateBackupProgress((double)copiedFiles / totalFiles);
 
                 //Set status label
                 if (label.IsHandleCreated)
@@ -1059,6 +1078,7 @@ namespace CraftForge.Server.GUI.Console
                     //Wait 1 second
                     await Task.Delay(1000); // Bugs out on smaller servers without sleeping for 1 second
                     progressBar.Value = 0; //Reset progress bar
+                    TaskbarManager.Instance.SetProgressState(TaskbarProgressBarState.NoProgress);
 
                     //Reload the files to display them in the flowLayoutPanel
                     InitializeBackupFiles();
@@ -1623,6 +1643,15 @@ namespace CraftForge.Server.GUI.Console
                 //add to terminal the server has stopped
                 secondaryTerminal.AppendText("\n[CraftForge INFO] Server has stopped\n");
                 createNewLog.sendMessage(this, "[Server] Server has stopped");
+
+                //Make sure the process is removed from the dictionary
+                if (serverProcesses.ContainsKey(consoleID))
+                {
+                    serverProcesses.Remove(consoleID);
+                }
+
+                //Make it so the Kill Server button is disabled
+                killServerMenuBtn.Enabled = false;
 
                 //check setting checkAutoSave
                 if (Properties.Settings.Default.saveLogsAuto)

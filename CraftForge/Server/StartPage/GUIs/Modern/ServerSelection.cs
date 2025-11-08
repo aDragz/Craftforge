@@ -1,5 +1,4 @@
-﻿using CraftForge.NewGUI;
-using CraftForge.Server.Classes.Console.Applications;
+﻿using CraftForge.Server.Classes.Console.Applications;
 using CraftForge.Server.GUI.Console;
 using CraftForge.Server.StartPage.Classes;
 using CraftForge.Server.StartPage.GUIs.Modern;

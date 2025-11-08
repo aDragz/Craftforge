@@ -108,7 +108,7 @@
             this.dToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.serverToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.killServerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.killServerMenuBtn = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.settingsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -129,6 +129,9 @@
             this.supportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.serverTabsPanel = new System.Windows.Forms.Panel();
             this.cpuRamUsage = new System.Windows.Forms.Timer(this.components);
+            this.borderRightLbl = new System.Windows.Forms.Label();
+            this.borderLeftLbl = new System.Windows.Forms.Label();
+            this.borderBottomLbl = new System.Windows.Forms.Label();
             this.serverTabs.SuspendLayout();
             this.generalPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ramUsageChart)).BeginInit();
@@ -224,7 +227,7 @@
             this.ramUsageChart.ChartAreas.Add(chartArea1);
             legend1.Name = "Legend1";
             this.ramUsageChart.Legends.Add(legend1);
-            this.ramUsageChart.Location = new System.Drawing.Point(1299, 446);
+            this.ramUsageChart.Location = new System.Drawing.Point(1299, 591);
             this.ramUsageChart.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ramUsageChart.Name = "ramUsageChart";
             series1.ChartArea = "ChartArea1";
@@ -242,7 +245,7 @@
             this.cpuUsageChart.ChartAreas.Add(chartArea2);
             legend2.Name = "Legend1";
             this.cpuUsageChart.Legends.Add(legend2);
-            this.cpuUsageChart.Location = new System.Drawing.Point(1299, 641);
+            this.cpuUsageChart.Location = new System.Drawing.Point(1299, 786);
             this.cpuUsageChart.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.cpuUsageChart.Name = "cpuUsageChart";
             series2.ChartArea = "ChartArea1";
@@ -257,7 +260,7 @@
             // 
             this.ramUsageLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.ramUsageLabel.AutoSize = true;
-            this.ramUsageLabel.Location = new System.Drawing.Point(1403, 410);
+            this.ramUsageLabel.Location = new System.Drawing.Point(1400, 556);
             this.ramUsageLabel.Name = "ramUsageLabel";
             this.ramUsageLabel.Size = new System.Drawing.Size(75, 33);
             this.ramUsageLabel.TabIndex = 39;
@@ -267,7 +270,7 @@
             // 
             this.cpuUsageLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.cpuUsageLabel.AutoSize = true;
-            this.cpuUsageLabel.Location = new System.Drawing.Point(1302, 410);
+            this.cpuUsageLabel.Location = new System.Drawing.Point(1299, 556);
             this.cpuUsageLabel.Name = "cpuUsageLabel";
             this.cpuUsageLabel.Size = new System.Drawing.Size(45, 33);
             this.cpuUsageLabel.TabIndex = 37;
@@ -287,7 +290,7 @@
             this.serverStatusPanel.Location = new System.Drawing.Point(1299, 6);
             this.serverStatusPanel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.serverStatusPanel.Name = "serverStatusPanel";
-            this.serverStatusPanel.Size = new System.Drawing.Size(393, 297);
+            this.serverStatusPanel.Size = new System.Drawing.Size(393, 402);
             this.serverStatusPanel.TabIndex = 36;
             // 
             // label4
@@ -908,7 +911,6 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.menuStrip1.AutoSize = false;
             this.menuStrip1.Dock = System.Windows.Forms.DockStyle.None;
-            this.menuStrip1.GripMargin = new System.Windows.Forms.Padding(2, 2, 0, 2);
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
@@ -958,17 +960,18 @@
             // serverToolStripMenuItem
             // 
             this.serverToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.killServerToolStripMenuItem});
+            this.killServerMenuBtn});
             this.serverToolStripMenuItem.Name = "serverToolStripMenuItem";
             this.serverToolStripMenuItem.Size = new System.Drawing.Size(222, 34);
             this.serverToolStripMenuItem.Text = "Server";
             // 
-            // killServerToolStripMenuItem
+            // killServerMenuBtn
             // 
-            this.killServerToolStripMenuItem.Name = "killServerToolStripMenuItem";
-            this.killServerToolStripMenuItem.Size = new System.Drawing.Size(190, 34);
-            this.killServerToolStripMenuItem.Text = "&Kill Server";
-            this.killServerToolStripMenuItem.Click += new System.EventHandler(this.killServerToolStripMenuItem_Click);
+            this.killServerMenuBtn.Enabled = false;
+            this.killServerMenuBtn.Name = "killServerMenuBtn";
+            this.killServerMenuBtn.Size = new System.Drawing.Size(190, 34);
+            this.killServerMenuBtn.Text = "&Kill Server";
+            this.killServerMenuBtn.Click += new System.EventHandler(this.killServerToolStripMenuItem_Click);
             // 
             // toolStripSeparator3
             // 
@@ -1105,7 +1108,7 @@
             this.serverTabsPanel.Location = new System.Drawing.Point(0, 106);
             this.serverTabsPanel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.serverTabsPanel.Name = "serverTabsPanel";
-            this.serverTabsPanel.Size = new System.Drawing.Size(200, 993);
+            this.serverTabsPanel.Size = new System.Drawing.Size(200, 990);
             this.serverTabsPanel.TabIndex = 15;
             // 
             // cpuRamUsage
@@ -1113,14 +1116,49 @@
             this.cpuRamUsage.Interval = 1000;
             this.cpuRamUsage.Tick += new System.EventHandler(this.cpuUsage_Tick);
             // 
+            // borderRightLbl
+            // 
+            this.borderRightLbl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.borderRightLbl.BackColor = System.Drawing.Color.Black;
+            this.borderRightLbl.Location = new System.Drawing.Point(1899, 75);
+            this.borderRightLbl.Name = "borderRightLbl";
+            this.borderRightLbl.Size = new System.Drawing.Size(1, 1029);
+            this.borderRightLbl.TabIndex = 43;
+            this.borderRightLbl.Text = "label5";
+            // 
+            // borderLeftLbl
+            // 
+            this.borderLeftLbl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.borderLeftLbl.BackColor = System.Drawing.Color.Black;
+            this.borderLeftLbl.Location = new System.Drawing.Point(0, 75);
+            this.borderLeftLbl.Name = "borderLeftLbl";
+            this.borderLeftLbl.Size = new System.Drawing.Size(1, 1029);
+            this.borderLeftLbl.TabIndex = 44;
+            this.borderLeftLbl.Text = "label6";
+            // 
+            // borderBottomLbl
+            // 
+            this.borderBottomLbl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.borderBottomLbl.BackColor = System.Drawing.Color.Black;
+            this.borderBottomLbl.Location = new System.Drawing.Point(0, 1097);
+            this.borderBottomLbl.Name = "borderBottomLbl";
+            this.borderBottomLbl.Size = new System.Drawing.Size(1899, 1);
+            this.borderBottomLbl.TabIndex = 45;
+            // 
             // Terminal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1900, 1099);
+            this.Controls.Add(this.borderBottomLbl);
+            this.Controls.Add(this.borderLeftLbl);
+            this.Controls.Add(this.borderRightLbl);
             this.Controls.Add(this.menuStrip1);
-            this.Controls.Add(this.serverTabsPanel);
             this.Controls.Add(this.serverTabs);
+            this.Controls.Add(this.serverTabsPanel);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.MinimumSize = new System.Drawing.Size(1900, 1057);
@@ -1130,10 +1168,13 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Terminal_Closing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Terminal_Closed);
             this.Load += new System.EventHandler(this.Terminal_Load);
-            this.Controls.SetChildIndex(this.serverTabs, 0);
             this.Controls.SetChildIndex(this.serverTabsPanel, 0);
+            this.Controls.SetChildIndex(this.serverTabs, 0);
             this.Controls.SetChildIndex(this.menuStrip1, 0);
+            this.Controls.SetChildIndex(this.borderRightLbl, 0);
+            this.Controls.SetChildIndex(this.borderLeftLbl, 0);
             this.Controls.SetChildIndex(this.titleBarPanel, 0);
+            this.Controls.SetChildIndex(this.borderBottomLbl, 0);
             this.serverTabs.ResumeLayout(false);
             this.generalPage.ResumeLayout(false);
             this.generalPage.PerformLayout();
@@ -1249,9 +1290,12 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
         private System.Windows.Forms.ToolStripMenuItem serverToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem killServerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem killServerMenuBtn;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label mainServerNameLabel;
+        private System.Windows.Forms.Label borderRightLbl;
+        private System.Windows.Forms.Label borderLeftLbl;
+        private System.Windows.Forms.Label borderBottomLbl;
     }
 }
 
